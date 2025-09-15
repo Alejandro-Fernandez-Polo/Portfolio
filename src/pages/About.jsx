@@ -1,3 +1,6 @@
 export function About() {
-  return <></>
+  return (
+  <section className="max-container">
+  </section>
+  )
 }
