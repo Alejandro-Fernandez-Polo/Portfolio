@@ -1,3 +1,4 @@
+import { CTA } from "../components/CTA.jsx";
 import { skills, experiences } from "../constants/index.js"
 import { Chrono } from 'react-chrono';
 
@@ -72,6 +73,9 @@ export function About() {
           />
         </div>
       </div>
+
+      <hr className="border-slate-200" />
+      <CTA />
     </section>
   )
 }

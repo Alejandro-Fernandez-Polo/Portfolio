@@ -62,7 +62,7 @@ export function Contact() {
     })
   }
   return (
-    <section className="relative flex lg:flex-row flex-col max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh-80px)]">
+    <section className="relative flex lg:flex-row flex-col max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh)]">
       {alert.show && <Alert {...alert} />}
       <div className="flex-1 min-w-[50%] flex flex-col">
         <h1 className="sm:text-5xl text-3xl font-semibold sm:leading-snug font-poppins">
