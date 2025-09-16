@@ -58,9 +58,7 @@ export function About() {
         </div>
 
         <div className="mt-12 flex">
-          {/* TODO: Formatearlo bien */}
           {/* TODO: Poner mi experiencia */}
-          {/* TODO: Cambiar estilos */}
           <VerticalTimeline>
             {experiences.map((experience) => (
               <VerticalTimelineElement

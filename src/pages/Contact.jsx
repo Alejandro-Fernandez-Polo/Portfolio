@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState } from "react"
+import { Suspense, useState } from "react"
 import emailjs from "@emailjs/browser"
 import { Canvas } from "@react-three/fiber"
 import { Loader } from "../components/Loader"
@@ -7,7 +7,6 @@ import { useAlert } from "../hooks/useAlert.js"
 import { Alert } from "../components/Alert.jsx"
 
 export function Contact() {
-  const formRef = useRef(null)
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -61,6 +60,8 @@ export function Contact() {
       }, 2000)
     })
   }
+  console.log(import.meta.env)
+
   return (
     <section className="relative flex lg:flex-row flex-col max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh)]">
       {alert.show && <Alert {...alert} />}
