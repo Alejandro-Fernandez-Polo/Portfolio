@@ -60,8 +60,7 @@ export function Contact() {
       }, 2000)
     })
   }
-  console.log(import.meta.env)
-
+  
   return (
     <section className="relative flex lg:flex-row flex-col max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh)]">
       {alert.show && <Alert {...alert} />}
