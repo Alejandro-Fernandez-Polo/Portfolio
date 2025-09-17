@@ -1,7 +1,7 @@
 //TODO: poner mis datos
 import { meta, shopify, starbucks, tesla } from "../assets/images"
 import {
-  car,
+  reactlogo,
   contact,
   css,
   estate,
@@ -16,14 +16,14 @@ import {
   mui,
   nextjs,
   nodejs,
-  pricewise,
+  codigodesconocido,
   react,
   redux,
   sass,
   snapgram,
   summiz,
   tailwindcss,
-  threads,
+  design,
   typescript,
 } from "../assets/icons"
 
@@ -165,7 +165,7 @@ export const experiences = [
   },
 ]
 
-
+// TODO: poner en uso
 export const socialLinks = [
   {
     name: "Contact",
@@ -185,29 +185,30 @@ export const socialLinks = [
 ]
 
 export const projects = [
+  //TODO: Añadir tecnologías usadas
   {
-    iconUrl: pricewise,
-    theme: "btn-back-red",
-    name: "Amazon Price Tracker",
+    iconUrl: codigodesconocido,
+    theme: "btn-back-black",
+    name: "Codigo Desconocido",
     description:
-      "Developed a web application that tracks and notifies users of price changes for products on Amazon, helping users find the best deals.",
-    link: "https://github.com/adrianhajdin/pricewise",
+      "Codigo Desconocido is an escape room management platform with a web admin panel, backend services, chat server, and Dockerized infrastructure. It enables users to book, manage, and interact with escape rooms for both educational and entertainment purposes.",
+    link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Final_project/Codigo-Desconocido",
   },
   {
-    iconUrl: threads,
+    iconUrl: design,
     theme: "btn-back-green",
-    name: "Full Stack Threads Clone",
+    name: "Design Projects",
     description:
-      'Created a full-stack replica of the popular discussion platform "Threads," enabling users to post and engage in threaded conversations.',
-    link: "https://github.com/adrianhajdin/threads",
+      "These projects reflect my development as a web designer, each highlighting different skills in HTML, CSS, and JavaScript. They illustrate my growth through diverse assignments and practices, with this portfolio representing the culmination and most polished result of that journey.",
+    link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Design",
   },
   {
-    iconUrl: car,
+    iconUrl: reactlogo,
     theme: "btn-back-blue",
-    name: "Car Finding App",
+    name: "React Practice Projects",
     description:
-      "Designed and built a mobile app for finding and comparing cars on the market, streamlining the car-buying process.",
-    link: "https://github.com/adrianhajdin/project_next13_car_showcase",
+      "My React practice projects highlight my hands-on experience building interactive and dynamic applications. They focus on component-driven development, state management, and responsive interfaces, reflecting the experimentation behind my learning journey. This portfolio combines those skills into a cohesive and polished final work.",
+    link: "https://github.com/Alejandro-Fernandez-Polo/Learn_React/tree/main/projects",
   },
   {
     iconUrl: snapgram,
@@ -219,7 +220,7 @@ export const projects = [
   },
   {
     iconUrl: estate,
-    theme: "btn-back-black",
+    theme: "btn-back-red",
     name: "Real-Estate Application",
     description:
       "Developed a web application for real estate listings, facilitating property searches and connecting buyers with sellers.",

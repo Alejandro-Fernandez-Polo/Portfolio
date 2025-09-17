@@ -31,7 +31,7 @@ export function Projects() {
                 <img 
                   src={project.iconUrl} 
                   alt={project.title + " icon"} 
-                  className="w-1/2 h-1/2 object-contain" 
+                  className="w-[30px] h-[30px] object-contain" 
                 />
               </div>
             </div>
