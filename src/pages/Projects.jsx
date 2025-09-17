@@ -16,9 +16,11 @@ export function Projects() {
       </h1>
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
         <p>
-          Here are some of the projects I've worked on recently. Feel free to
-          explore and check out the code on my GitHub!
-          {/* TODO: Alargar */}
+          This page presents a collection of my projects, spanning web design,
+          React development, and object-oriented programming. Each project
+          highlights different skills and stages of my learning journey,
+          demonstrating experimentation, growth, and practical application.
+          Together, they reflect the evolution of my abilities.
         </p>
       </div>
 
@@ -28,10 +30,10 @@ export function Projects() {
             <div className="block-container w-12 h-12">
               <div className={`btn-back rounded-xl ${project.theme}`}></div>
               <div className="btn-front rounded-xl flex justify-center items-center">
-                <img 
-                  src={project.iconUrl} 
-                  alt={project.title + " icon"} 
-                  className="w-[30px] h-[30px] object-contain" 
+                <img
+                  src={project.iconUrl}
+                  alt={project.title + " icon"}
+                  className="w-[30px] h-[30px] object-contain"
                 />
               </div>
             </div>
@@ -40,9 +42,7 @@ export function Projects() {
               <h4 className="text-2xl font-poppins font-semibold">
                 {project.name}
               </h4>
-              <p className="mt-2 text-slate-500">
-                {project.description}
-              </p>
+              <p className="mt-2 text-slate-500">{project.description}</p>
               <div className="mt-5 flex items-center gap-2 font-poppins">
                 <Link
                   to={project.link}
@@ -52,7 +52,6 @@ export function Projects() {
                 >
                   View Project &rarr;
                 </Link>
-
               </div>
             </div>
           </div>

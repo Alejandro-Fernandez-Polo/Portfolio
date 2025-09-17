@@ -20,8 +20,10 @@ export function About() {
       </h1>
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
         <p>
-          I'm a passionate software developer with a focus on building
-          high-quality web applications.
+          I am a computer engineering student and passionate about web
+          development. I enjoy learning new technologies and applying them to
+          real projects, always seeking to improve my skills and grow
+          professionally.
         </p>
       </div>
 
@@ -32,7 +34,7 @@ export function About() {
 
         <div className="mt-16 flex flex-wrap gap-16">
           {skills.map((skill) => (
-            <div className="block-container w-20 h-20">
+            <div key={skill.name} className="block-container w-20 h-20">
               <div className="btn-back rounded-xl"></div>
               <div className="btn-front rounded-xl flex justify-center items-center">
                 <img
@@ -52,8 +54,10 @@ export function About() {
         </h3>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-            I have worked on various projects, collaborating with
-            cross-functional teams to deliver high-quality products.
+            I may not have years of experience yet, but I’ve already built real
+            web projects, solved tricky bugs, and worked in agile teams. Every
+            challenge so far has been a chance to learn fast, adapt, and prove
+            that enthusiasm can go a long way in development.
           </p>
         </div>
 
