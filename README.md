@@ -1,6 +1,6 @@
 # Portfolio
 
-A modern, interactive portfolio built with React, Vite, and Tailwind CSS. Showcases 3D models, projects, and contact features, designed for developers and creatives.
+A modern, interactive portfolio built with React, Vite, and Tailwind CSS.
 
 ## Features
 - ⚡ Fast and responsive UI with Vite and React
@@ -9,7 +9,6 @@ A modern, interactive portfolio built with React, Vite, and Tailwind CSS. Showca
 - 🗂️ Project showcase and timeline
 - 📧 Contact form with EmailJS integration
 - 🛠️ Custom hooks and reusable components
-- 🌙 Dark mode support (if implemented)
 
 ## Tech Stack
 - **React**
@@ -18,36 +17,6 @@ A modern, interactive portfolio built with React, Vite, and Tailwind CSS. Showca
 - **Three.js** & **@react-three/fiber**
 - **EmailJS**
 - **react-vertical-timeline-component**
-
-## Getting Started
-
-### Prerequisites
-- Node.js >= 18
-- npm >= 9
-
-### Installation
-```bash
-# Clone the repo
-git clone https://github.com/Alejandro-Fernandez-Polo/Portfolio.git
-cd Portfolio
-
-# Install dependencies
-npm install
-```
-
-### Running Locally
-```bash
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Environment Variables
-Create a `.env.local` file for EmailJS:
-```
-VITE_APP_EMAILJS_SERVICE_ID=your_service_id
-VITE_APP_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_APP_EMAILJS_PUBLIC_KEY=your_public_key
-```
 
 ## Folder Structure
 ```
