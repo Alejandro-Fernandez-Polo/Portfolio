@@ -125,7 +125,7 @@ export const experiences = [
     title: "Web Developer Intern",
     company_name: "ATG Analytical",
     icon: atg,
-    iconBg: "#FBCEBC",
+    iconBg: "#ffa987",
     date: "April 2024 - June 2024",
     points: [
       "Built the corporate website from scratch using WordPress, JavaScript, HTML, and CSS.",
@@ -139,7 +139,7 @@ export const experiences = [
     company_name: "Pérgolas y Estructuras Javier Aibar",
     icon: pergolas,
     // TODO: revisar este color
-    iconBg: "#CDC3AF",
+    iconBg: "#544b38",
     date: "June 2023 - September 2023",
     points: [
       "Developed strong work discipline and adaptability in a hands-on environment.",
