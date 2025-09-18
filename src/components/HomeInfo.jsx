@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom"
-import { arrow } from "../assets/icons"
 
 const InfoBox = ({ text, link, btnText }) => (
-  <div className="mx-5 relative flex text-white flex-col gap-3 max-w-2xl neo-brutalism-blue pt-4 pb-12 px-8">
+  <div className="info-box neo-brutalism-blue">
     <p className="font-medium text-center sm:text-xl">{text}</p>
-    <Link
-      to={link}
-      className="neo-brutalism-white py-3 px-6 rounded-lg text-blue-500 text-center font-semibold sm:w-1/2 w-[90%] -bottom-5 absolute mx-auto right-0 left-0 flex justify-center items-center gap-3"
-    >
-      {btnText}
-      <img src={arrow} alt="arrow" className="w-4 h-4 object-contain" />
+    <Link to={link} className="neo-brutalism-white neo-btn">
+      {btnText} &rarr;
     </Link>
   </div>
 )

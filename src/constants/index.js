@@ -202,7 +202,6 @@ export const experiences = [
   // },
 ]
 
-// TODO: poner en uso
 export const socialLinks = [
   {
     name: "Contact",
@@ -212,12 +211,12 @@ export const socialLinks = [
   {
     name: "GitHub",
     iconUrl: github,
-    link: "https://github.com/YourGitHubUsername",
+    link: "https://github.com/Alejandro-Fernandez-Polo",
   },
   {
     name: "LinkedIn",
     iconUrl: linkedin,
-    link: "https://www.linkedin.com/in/YourLinkedInUsername",
+    link: "https://www.linkedin.com/in/alejandro-fern%C3%A1ndez-polo/",
   },
 ]
 

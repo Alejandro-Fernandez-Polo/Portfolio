@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
-import { CTA } from "../components/CTA.jsx";
+import { Link } from "react-router-dom"
+import { CTA } from "../components/CTA.jsx"
 import { projects } from "../constants/index.js"
 
 export function Projects() {
   return (
-    <section className="max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh-80px)]">
-      <h1 className="sm:text-5xl text-3xl font-semibold sm:leading-snug font-poppins">
+    <section className="max-container">
+      <h1 className="head-text">
         My{" "}
         <span
-          className="bg-gradient-to-r from-[#00c6ff] to-[#0072ff] bg-clip-text text-transparent font-semibold 
+          className="blue-gradient_text font-semibold 
             drop-shadow"
         >
           Projects
@@ -48,7 +48,7 @@ export function Projects() {
                   to={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 font-semibold"
+                  className="text-primary-color font-semibold"
                 >
                   View Project &rarr;
                 </Link>

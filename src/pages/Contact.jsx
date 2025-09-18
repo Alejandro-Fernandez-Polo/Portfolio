@@ -62,10 +62,10 @@ export function Contact() {
   }
   
   return (
-    <section className="relative flex lg:flex-row flex-col max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh)]">
+    <section className="relative flex lg:flex-row flex-col max-container">
       {alert.show && <Alert {...alert} />}
       <div className="flex-1 min-w-[50%] flex flex-col">
-        <h1 className="sm:text-5xl text-3xl font-semibold sm:leading-snug font-poppins">
+        <h1 className="head-text">
           Get in Touch
         </h1>
 
@@ -117,7 +117,7 @@ export function Contact() {
           </label>
           <button
             type="submit"
-            className="text-white bg-gradient-to-r from-[#00c6ff] to-[#0072ff] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            className="btn"
             disabled={isLoading}
             onFocus={handleFocus}
             onBlur={handleBlur}
