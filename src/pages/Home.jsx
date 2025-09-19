@@ -43,7 +43,7 @@ export function Home() {
   const [planeScale, planePosition] = adjustPlaneForScreenSize()
 
   return (
-    <section className="w-full h-screen relative">
+    <section className="w-full h-[100dhv] relative">
       <div
         className="absolute top-28 left-0 right-0 z-10 flex
       items-center justify-center"
