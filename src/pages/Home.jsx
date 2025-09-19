@@ -1,4 +1,5 @@
 import { Suspense, useState } from "react"
+import { useEffect } from "react"
 import { Canvas } from "@react-three/fiber"
 import { Loader } from "../components/Loader.jsx"
 import Sky from "../models/Sky"
@@ -8,6 +9,14 @@ import Dragon from "../models/Dragon"
 import Plane from "../models/Plane"
 
 export function Home() {
+  // Aplica overflow hidden al body cuando se monta Home
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
   const [isRotating, setIsRotating] = useState(false)
   const [currentStage, setCurrentStage] = useState(1)
 
