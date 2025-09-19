@@ -33,6 +33,7 @@ export function About() {
         </h3>
 
         <div className="mt-16 flex flex-wrap gap-16">
+          {/* TODO: Poner un hover en el que se vea el nombre de la habilidad */}
           {skills.map((skill) => (
             <div key={skill.name} className="block-container w-20 h-20">
               <div className="btn-back rounded-xl"></div>

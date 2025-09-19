@@ -189,7 +189,7 @@ body {
 
 .cta-text {
   color: var(--black);
-  font-weight: 800;
+  font-weight: 700;
   flex: 1;
   font-size: 1.875rem;
 }
@@ -286,13 +286,13 @@ body {
   position: relative;
   border-radius: 10px;
   border: var(--primary-color);
-  box-shadow: 0.6vmin 0.6vmin var(--primary-red-dark), 1vmin 1vmin var(--primary-red-dark), 1vmin 1vmin var(--primary-red-dark),
-    0.65vmin 1vmin var(--primary-red-light), 1vmin 0.65vmin var(--primary-red-light);
+  box-shadow: 0.6vmin 0.6vmin var(--tertiary-dark), 1vmin 1vmin var(--tertiary-dark), 1vmin 1vmin var(--tertiary-dark),
+    0.65vmin 1vmin var(--tertiary-light), 1vmin 0.65vmin var(--tertiary-light);
 }
 
 .neo-brutalism-white {
   background: var(--white);
   border: var(--white);
-  box-shadow: 0.6vmin 0.6vmin var(--timeline-white), 1vmin 1vmin var(--tertiary-extralight), 1vmin 1vmin var(--tertiary-extralight),
+  box-shadow: 0.6vmin 0.6vmin var(--white), 1vmin 1vmin var(--tertiary-extralight), 1vmin 1vmin var(--tertiary-extralight),
     0.65vmin 1vmin var(--tertiary-extralight), 1vmin 0.65vmin var(--tertiary-extralight);
 }
