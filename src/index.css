@@ -8,7 +8,7 @@
   --gray-200: #e5e7eb;
   --gray-900: #111827;
   --black: #000;
-  --background-color: #F5F5F5;
+  --background-color: #ffe2d2;
   --primary-color: #F94144;
   --secondary-color: #F8961E;
   --tertiary-color: #F96B31;
@@ -226,7 +226,7 @@ body {
   transform-origin: bottom right;
   transform: rotateZ(15deg);
   will-change: transform;
-  box-shadow: 16px 0 40px #e4e4e4;
+  box-shadow: 16px 0 40px #a3a3a3;
 }
 
 .block-container .btn-back-red {

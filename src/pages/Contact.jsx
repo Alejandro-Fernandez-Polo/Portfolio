@@ -2,9 +2,9 @@ import { Suspense, useState } from "react"
 import emailjs from "@emailjs/browser"
 import { Canvas } from "@react-three/fiber"
 import { Loader } from "../components/Loader"
-import { Fox } from "../models/Fox"
 import { useAlert } from "../hooks/useAlert.js"
 import { Alert } from "../components/Alert.jsx"
+import { Viking } from "../models/Viking"
 
 export function Contact() {
   const [form, setForm] = useState({
@@ -13,19 +13,19 @@ export function Contact() {
     message: "",
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [currentAnimation, setCurrentAnimation] = useState("idle")
+  const [currentAnimation, setCurrentAnimation] = useState("Walk")
 
   const { alert, showAlert, hideAlert } = useAlert()
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
-  const handleFocus = () => setCurrentAnimation("walk")
-  const handleBlur = () => setCurrentAnimation("idle")
+  const handleFocus = () => setCurrentAnimation("Crouch")
+  const handleBlur = () => setCurrentAnimation("Walk")
   const handleSubmit = (e) => {
     e.preventDefault()
     setIsLoading(true)
-    setCurrentAnimation("hit")
+    setCurrentAnimation("Run")
 
     emailjs.send(
       import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
@@ -43,12 +43,12 @@ export function Contact() {
       showAlert({ show: true, text: "Message sent successfully!", type: "success" })
       setTimeout(() => {
         hideAlert()
-        setCurrentAnimation("idle")
+        setCurrentAnimation("Walk")
         setForm({ name: "", email: "", message: "" })
       }, 2000)
     }).catch((error) => {
       setIsLoading(false)
-      setCurrentAnimation("idle")
+      setCurrentAnimation("Walk")
       console.log(error)
       showAlert({
         show: true,
@@ -65,9 +65,7 @@ export function Contact() {
     <section className="relative flex lg:flex-row flex-col max-container">
       {alert.show && <Alert {...alert} />}
       <div className="flex-1 min-w-[50%] flex flex-col">
-        <h1 className="head-text">
-          Get in Touch
-        </h1>
+        <h1 className="head-text">Get in Touch</h1>
 
         <form
           className="w-full flex flex-col mt-14 gap-7"
@@ -139,11 +137,11 @@ export function Contact() {
           <directionalLight position={[0, 0, 1]} intensity={2.5} />
           <ambientLight intensity={0.5} />
           <Suspense fallback={<Loader />}>
-            <Fox
+            <Viking
               currentAnimation={currentAnimation}
-              position={[0.5, 0.35, 0]}
-              rotation={[12.6, -0.6, 0]}
-              scale={[0.5, 0.5, 0.5]}
+              position={[0, -2.5, 0]}
+              rotation={[12.6, 0.5, 0]}
+              scale={[1, 1, 1]}
             />
           </Suspense>
         </Canvas>

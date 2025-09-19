@@ -10,14 +10,15 @@
  */
 
 import { a } from "@react-spring/three"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useCallback } from "react"
 import { useGLTF } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber"
 
 import islandScene from "../assets/3d/island.glb"
 
 const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
-  const islandRef = useRef()
+  // Ref for rotating the model about its center
+  const thorGroupRef = useRef()
 
   const { gl, viewport } = useThree()
   const { nodes, materials } = useGLTF(islandScene)
@@ -25,53 +26,64 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
   const lastX = useRef(0)
   const rotationSpeed = useRef(0)
   const dampingFactor = 0.95
-
-  const handlePointerDown = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    setIsRotating(true)
-
-    const clientX = event.touches ? event.touches[0].clientX : event.clientX
-
-    lastX.current = clientX
-  }
-
-  const handlePointerUp = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    setIsRotating(false)
-  }
-
-  const handlePointerMove = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    if (isRotating) {
+  const handlePointerDown = useCallback(
+    (event) => {
+      event.stopPropagation()
+      event.preventDefault()
+      setIsRotating(true)
       const clientX = event.touches ? event.touches[0].clientX : event.clientX
-      const delta = (clientX - lastX.current) / viewport.width
-
-      islandRef.current.rotation.y += delta * 0.01 * Math.PI
       lastX.current = clientX
-      rotationSpeed.current = delta * 0.01 * Math.PI
-    }
-  }
+    },
+    [setIsRotating]
+  )
 
-  const handleKeyDown = (event) => {
-    if (event.key === "ArrowLeft") {
-      if (!isRotating) setIsRotating(true)
-      islandRef.current.rotation.y += 0.008 * Math.PI
-      rotationSpeed.current = 0.0125
-    } else if (event.key === "ArrowRight") {
-      if (!isRotating) setIsRotating(true)
-      islandRef.current.rotation.y -= 0.008 * Math.PI
-      rotationSpeed.current = -0.0125
-    }
-  }
-
-  const handleKeyUp = (event) => {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+  const handlePointerUp = useCallback(
+    (event) => {
+      event.stopPropagation()
+      event.preventDefault()
       setIsRotating(false)
-    }
-  }
+    },
+    [setIsRotating]
+  )
+
+  const handlePointerMove = useCallback(
+    (event) => {
+      event.stopPropagation()
+      event.preventDefault()
+      if (isRotating) {
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX
+        const delta = (clientX - lastX.current) / viewport.width
+        thorGroupRef.current.rotation.y += delta * 0.01 * Math.PI
+        lastX.current = clientX
+        rotationSpeed.current = delta * 0.01 * Math.PI
+      }
+    },
+    [isRotating, viewport.width]
+  )
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === "ArrowLeft") {
+        if (!isRotating) setIsRotating(true)
+        thorGroupRef.current.rotation.y += 0.008 * Math.PI
+        rotationSpeed.current = 0.0125
+      } else if (event.key === "ArrowRight") {
+        if (!isRotating) setIsRotating(true)
+        thorGroupRef.current.rotation.y -= 0.008 * Math.PI
+        rotationSpeed.current = -0.0125
+      }
+    },
+    [isRotating, setIsRotating]
+  )
+
+  const handleKeyUp = useCallback(
+    (event) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        setIsRotating(false)
+      }
+    },
+    [setIsRotating]
+  )
 
   useFrame(() => {
     if (!isRotating) {
@@ -81,45 +93,40 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
         rotationSpeed.current = 0
       }
 
-      islandRef.current.rotation.y += rotationSpeed.current
+      thorGroupRef.current.rotation.y += rotationSpeed.current
     } else {
-      const rotation = islandRef.current.rotation.y
+      const rotation = thorGroupRef.current.rotation.y
 
-      /**
-       * Normalize the rotation value to ensure it stays within the range [0, 2 * Math.PI].
-       * The goal is to ensure that the rotation value remains within a specific range to
-       * prevent potential issues with very large or negative rotation values.
-       *  Here's a step-by-step explanation of what this code does:
-       *  1. rotation % (2 * Math.PI) calculates the remainder of the rotation value when divided
-       *     by 2 * Math.PI. This essentially wraps the rotation value around once it reaches a
-       *     full circle (360 degrees) so that it stays within the range of 0 to 2 * Math.PI.
-       *  2. (rotation % (2 * Math.PI)) + 2 * Math.PI adds 2 * Math.PI to the result from step 1.
-       *     This is done to ensure that the value remains positive and within the range of
-       *     0 to 2 * Math.PI even if it was negative after the modulo operation in step 1.
-       *  3. Finally, ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI) applies another
-       *     modulo operation to the value obtained in step 2. This step guarantees that the value
-       *     always stays within the range of 0 to 2 * Math.PI, which is equivalent to a full
-       *     circle in radians.
-       */
-      const normalizedRotation =
-        ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)
+      // ...existing code...
+      // Desplazar 30 grados (pi/6 radianes) a la izquierda
+      const shiftedRotation = (((rotation - Math.PI / 6) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 
-      // Set the current stage based on the island's orientation
-      switch (true) {
-        case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
-          setCurrentStage(4)
-          break
-        case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
-          setCurrentStage(3)
-          break
-        case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
-          setCurrentStage(2)
-          break
-        case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
-          setCurrentStage(1)
-          break
-        default:
-          setCurrentStage(null)
+      const sector = Math.PI / 2;
+      const offset = sector / 4; // 1/4 de cada cuadrante
+
+      // Divide el círculo en 4 sectores, solo activa en la mitad central de cada cuadrante
+      if (
+        shiftedRotation >= offset &&
+        shiftedRotation < sector - offset
+      ) {
+        setCurrentStage(4); // Norte
+      } else if (
+        shiftedRotation >= sector + offset &&
+        shiftedRotation < 2 * sector - offset
+      ) {
+        setCurrentStage(3); // Este
+      } else if (
+        shiftedRotation >= 2 * sector + offset &&
+        shiftedRotation < 3 * sector - offset
+      ) {
+        setCurrentStage(2); // Sur
+      } else if (
+        shiftedRotation >= 3 * sector + offset &&
+        shiftedRotation < 4 * sector - offset
+      ) {
+        setCurrentStage(1); // Oeste
+      } else {
+        setCurrentStage(null);
       }
     }
   })
@@ -138,38 +145,105 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
       document.removeEventListener("keydown", handleKeyDown)
       document.removeEventListener("keyup", handleKeyUp)
     }
-  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove])
+  }, [
+    gl,
+    handlePointerDown,
+    handlePointerUp,
+    handlePointerMove,
+    handleKeyDown,
+    handleKeyUp,
+  ])
 
+  // The pivot position should be the center of the model. Adjust as needed (example: [0,0,0])
   return (
-    <a.group ref={islandRef} {...props}>
-      <mesh
-        geometry={nodes.polySurface944_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface945_tree1_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface946_tree2_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface947_tree1_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface948_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface949_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.pCube11_rocks1_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
+    <a.group ref={thorGroupRef} {...props}>
+      <group position={[0, 0, 0]} dispose={null}>
+        <group rotation={[-Math.PI / 2, 0, 0]} scale={0.004}>
+          <group rotation={[Math.PI / 2, 0, 0]}>
+            <group scale={100}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.VikingShipObjects001_Objects_0.geometry}
+                material={materials.Objects}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.VikingShipObjects001_Objects_0_1.geometry}
+                material={materials.Objects}
+              />
+            </group>
+            <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle011_SerpentBake_0.geometry}
+                material={materials.SerpentBake}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle011_EyeFire_0.geometry}
+                material={materials.EyeFire}
+              />
+            </group>
+            <group
+              position={[349.569, 32.319, 176.636]}
+              rotation={[-1.727, -0.23, -2.646]}
+              scale={100}
+            >
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Keel002_Boat1Bake_0.geometry}
+                material={materials.Boat1Bake}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Keel002_EyeFire_0.geometry}
+                material={materials.EyeFire}
+              />
+            </group>
+            <group
+              position={[-1018.201, -380.534, 1332.674]}
+              rotation={[-1.046, 0.725, -0.082]}
+              scale={100}
+            >
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Hide003_Boat2Bake_0.geometry}
+                material={materials.Boat2Bake}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Hide003_EyeFire_0.geometry}
+                material={materials.EyeFire}
+              />
+            </group>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Rock021_RockBake_0.geometry}
+              material={materials.RockBake}
+              rotation={[-Math.PI / 2, 0, 0]}
+              scale={100}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Plane044_WaterBake_0.geometry}
+              material={materials.WaterBake}
+              position={[0, 27.066, 0]}
+              rotation={[-Math.PI / 2, 0, 0]}
+              scale={[100, 100, 170.018]}
+            />
+          </group>
+        </group>
+      </group>
     </a.group>
   )
 }

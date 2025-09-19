@@ -1,11 +1,11 @@
 import { Suspense, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { Loader } from "../components/Loader.jsx"
-import Island from "../models/Island"
 import Sky from "../models/Sky"
-import Bird from "../models/Bird"
-import Plane from "../models/Plane"
 import HomeInfo from "../components/HomeInfo.jsx"
+import Island from "../models/Island"
+import Dragon from "../models/Dragon"
+import Plane from "../models/Plane"
 
 export function Home() {
   const [isRotating, setIsRotating] = useState(false)
@@ -16,10 +16,10 @@ export function Home() {
 
     if (window.innerWidth < 768) {
       screenScale = [0.9, 0.9, 0.9]
-      screenPosition = [0, -6.5, -43.4]
+      screenPosition = [0, -4, -13]
     } else {
       screenScale = [1, 1, 1]
-      screenPosition = [0, -6.5, -43.4]
+      screenPosition = [0, -4, -12.4]
     }
 
     return [screenScale, screenPosition]
@@ -29,11 +29,11 @@ export function Home() {
     let screenScale, screenPosition
 
     if (window.innerWidth < 768) {
-      screenScale = [1.5, 1.5, 1.5]
-      screenPosition = [0, -1.5, 0]
+      screenScale = [1.25, 1.25, 1.25]
+      screenPosition = [0, -2.5, 0]
     } else {
-      screenScale = [3, 3, 3]
-      screenPosition = [0, -4, -4]
+      screenScale = [1.5, 1.5, 1.5]
+      screenPosition = [0, -3, -1]
     }
 
     return [screenScale, screenPosition]
@@ -44,8 +44,10 @@ export function Home() {
 
   return (
     <section className="w-full h-screen relative">
-      <div className="absolute top-28 left-0 right-0 z-10 flex
-      items-center justify-center">
+      <div
+        className="absolute top-28 left-0 right-0 z-10 flex
+      items-center justify-center"
+      >
         {currentStage && <HomeInfo currentStage={currentStage} />}
       </div>
       <Canvas
@@ -56,23 +58,22 @@ export function Home() {
       >
         <Suspense fallback={<Loader />}>
           <directionalLight position={[1, 1, 1]} intensity={2} />
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={4} />
           <hemisphereLight
             skyColor={"#b1e1ff"}
             groundColor={"#000000"}
             intensity={1}
           />
-          <Bird />
+          <Plane />
           <Sky isRotating={isRotating} />
           <Island
             scale={islandScale}
             position={islandPosition}
             isRotating={isRotating}
             setIsRotating={setIsRotating}
-            rotation={[0.1, 4.7077, 0]}
             setCurrentStage={setCurrentStage}
           />
-          <Plane
+          <Dragon
             isRotating={isRotating}
             scale={planeScale}
             position={planePosition}
