@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "greeting": "Hi, I am <1>Alejandro</1>👋<br/>A Web Application Development Technician <br/>and Computer Engineering Student from Granada"
+  },
+  "cards": {
+    "about": {
+      "text": "More than code, this is my story",
+      "button": "Learn More"
+    },
+    "projects": {
+      "text": "Ideas turned into real experiences",
+      "button": "Visit my projects"
+    },
+    "contact": {
+      "text": "Got an idea? Let’s make it happen",
+      "button": "Let's Talk"
+    }
+  }
+}

@@ -1,49 +1,61 @@
 import { Link } from "react-router-dom"
+import { useTranslation, Trans } from "react-i18next"
 
-const InfoBox = ({ text, link, btnText }) => (
-  <div className="info-box neo-brutalism-blue">
-    <p className="font-medium text-center sm:text-xl">{text}</p>
-    <Link to={link} className="neo-brutalism-white neo-btn">
-      {btnText} &rarr;
-    </Link>
-  </div>
-)
+export default function HomeInfo ({ currentStage }) {
+  const { t } = useTranslation("home")
+  if (currentStage === 1)
+    return (
+      <h1 className="sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5">
+        <Trans
+          i18nKey="hero.greeting"
+          defaults= {t("hero.greeting")}
+          components={{
+            1: <span className="font-semibold" />,
+            br: <br />,
+          }}
+        />
+      </h1>
+    )
 
-const renderContent = {
-  1: (
-    <h1
-      className="sm:text-xl sm:leading-snug text-center 
-    neo-brutalism-blue py-4 px-8 text-white mx-5"
-    >
-      Hi, I am <span className="font-semibold">Alejandro</span>👋
-      <br />A Software Developer from Granada
-    </h1>
-  ),
-  2: (
-    <InfoBox
-      text="Welcome to Stage 2" //TODO: change text
-      link="/about"
-      btnText="Learn More"
-    />
-  ),
-  3: (
-    <InfoBox
-      text="Welcome to Stage 3" //TODO: change text
-      link="/projects"
-      btnText="Visit Projects"
-    />
-  ),
-  4: (
-    <InfoBox
-      text="Welcome to Stage 4" //TODO: change text
-      link="/contact"
-      btnText="Let's Talk"
-    />
-  ),
+  if (currentStage === 2) {
+    return (
+      <div className="info-box neo-brutalism-blue">
+        <p className="font-medium text-center sm:text-xl">
+          {t("cards.about.text")}
+        </p>
+        <Link to="/about" className="neo-brutalism-white neo-btn">
+          {t("cards.about.button")} &rarr;
+        </Link>
+      </div>
+    )
+  }
+
+  if (currentStage === 3) {
+    return (
+      <div className="info-box neo-brutalism-blue">
+        <p className="font-medium text-center sm:text-xl">
+          {t("cards.projects.text")}
+        </p>
+        <Link to="/projects" className="neo-brutalism-white neo-btn">
+          {t("cards.projects.button")} &rarr;
+        </Link>
+      </div>
+    )
+  }
+
+  if (currentStage === 4) {
+    return (
+      <div className="info-box neo-brutalism-blue">
+        <p className="font-medium text-center sm:text-xl">
+          {t("cards.contact.text")}
+        </p>
+
+        <Link to="/contact" className="neo-brutalism-white neo-btn">
+          {t("cards.contact.button")} &rarr;
+        </Link>
+      </div>
+    )
+  }
+
+  return null
 }
-
-const HomeInfo = ({ currentStage }) => {
-  return renderContent[currentStage] || null
-}
-
-export default HomeInfo

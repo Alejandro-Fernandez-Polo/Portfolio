@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom"
+import { useTranslation } from "react-i18next";
+
 
 export function Navbar() {
+  const { i18n } = useTranslation()
+  const { t } = useTranslation("navbar")
+
   return (
     <header className="header">
       <NavLink
@@ -11,13 +16,15 @@ export function Navbar() {
         <p className="blue-gradient_text">AF</p>
       </NavLink>
       <nav className="flex text-lg gap-7 font-medium">
+        <button onClick={() => i18n.changeLanguage("en")}>EN</button>
+        <button onClick={() => i18n.changeLanguage("es")}>ES</button>
         <NavLink
           to="/about"
           className={({ isActive }) =>
             isActive ? "text-primary-color" : "text-black"
           }
         >
-          About
+          {t("about")}
         </NavLink>
         <NavLink
           to="/projects"
@@ -25,7 +32,7 @@ export function Navbar() {
             isActive ? "text-primary-color" : "text-black"
           }
         >
-          Projects
+          {t("projects")}
         </NavLink>
         <NavLink
           to="/contact"
@@ -33,7 +40,7 @@ export function Navbar() {
             isActive ? "text-primary-color" : "text-black"
           }
         >
-          Contact
+          {t("contact")}
         </NavLink>
       </nav>
     </header>

@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "greeting": "Hola, soy <1>Alejandro</1>👋<br/>Un Técnico en Desarrollo de Aplicaciones Web <br/>y Estudiante de Ingeniería Informática de Granada"
+  },
+  "cards": {
+    "about": {
+      "text": "Más que código, esta es mi historia",
+      "button": "Saber más"
+    },
+    "projects": {
+      "text": "Ideas convertidas en experiencias reales",
+      "button": "Ver mis proyectos"
+    },
+    "contact": {
+      "text": "¿Tienes una idea? Hagámosla realidad",
+      "button": "Hablemos"
+    }
+  }
+}
