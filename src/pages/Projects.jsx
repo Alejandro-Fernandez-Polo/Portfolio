@@ -45,6 +45,12 @@ export function Projects() {
                 <h4 className="text-2xl font-poppins font-semibold">
                   {trans.name}
                 </h4>
+                <p className="mt-2 text-primary-color">
+                  <span className="font-semibold text-black">
+                    {t("projects.made")}{" "}
+                  </span>
+                  {project.technology}
+                </p>
                 <p className="mt-2 text-slate-500">{trans.description}</p>
                 <div className="mt-5 flex items-center gap-2 font-poppins">
                   <Link

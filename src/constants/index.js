@@ -217,25 +217,29 @@ export const projects = [
     id: "codigodesconocido", // clave que conecta con traducciones
     iconUrl: codigodesconocido,
     theme: "btn-back-black",
+    technology: "React, Flask, Node.js, MongoBD, MySQL, Docker",
     link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Final_project/Codigo-Desconocido",
   },
   {
     id: "vehicle", // clave que conecta con traducciones
     iconUrl: vehicle,
     theme: "btn-back-green",
+    technology: "Java",
     link: "https://github.com/Alejandro-Fernandez-Polo/UNED/tree/main/POO/PEC_POO_24-25",
   },
   {
     id: "design", // clave que conecta con traducciones
     iconUrl: design,
     theme: "btn-back-pink",
+    technology: "HTML, CSS, JavaScript",
     link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Design",
   },
   {
     id: "reactlogo", // clave que conecta con traducciones
     iconUrl: reactlogo,
     theme: "btn-back-blue",
-    link: "https://github.com/Alejandro-Fernandez-Polo/Learn_React/tree/main/projects",
+    technology: "React, Flask, Node.js, MongoBD, MySQL, Docker",
+    link: "HTML, CSS, JavaScript, React",
   },
   // {
   //   iconUrl: estate,
