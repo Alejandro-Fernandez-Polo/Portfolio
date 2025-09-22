@@ -122,30 +122,21 @@ export const skills = [
 
 export const experiences = [
   {
-    title: "Web Developer Intern",
-    company_name: "ATG Analytical",
+    id: "atg", // clave que conecta con traducciones
+    company_name: "ATG Analytical", // si también quieres traducir, lo sacamos al JSON
     icon: atg,
     iconBg: "#ffa987",
-    date: "April 2024 - June 2024",
-    points: [
-      "Built the corporate website from scratch using WordPress, JavaScript, HTML, and CSS.",
-      "Improved functionality and design based on company requirements.",
-      "Worked with agile methodologies and solved technical issues independently.",
-      "Successfully delivered a production-ready website that boosted the company's online presence.",
-    ],
+    date: { en: "April 2024 - June 2024", es: "Abril 2024 - Junio 2024" },
   },
   {
-    title: "Carpentry Assistant",
+    id: "pergolas",
     company_name: "Pérgolas y Estructuras Javier Aibar",
     icon: pergolas,
-    // TODO: revisar este color
     iconBg: "#544b38",
-    date: "June 2023 - September 2023",
-    points: [
-      "Developed strong work discipline and adaptability in a hands-on environment.",
-      "Collaborated closely with team members to complete projects efficiently.",
-      "Gained valuable teamwork and responsibility skills transferable to any industry.",
-    ],
+    date: {
+      en: "June 2023 - September 2023",
+      es: "Junio 2023 - Septiembre 2023",
+    },
   },
 
   // {
@@ -223,35 +214,27 @@ export const socialLinks = [
 export const projects = [
   //TODO: Añadir tecnologías usadas
   {
+    id: "codigodesconocido", // clave que conecta con traducciones
     iconUrl: codigodesconocido,
     theme: "btn-back-black",
-    name: "Codigo Desconocido",
-    description:
-      "Codigo Desconocido is an escape room management platform with a web admin panel, backend services, chat server, and Dockerized infrastructure. It enables users to book, manage, and interact with escape rooms for both educational and entertainment purposes.",
     link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Final_project/Codigo-Desconocido",
   },
   {
+    id: "vehicle", // clave que conecta con traducciones
     iconUrl: vehicle,
     theme: "btn-back-green",
-    name: "Vehicle Fleet Management",
-    description:
-      "This project is an electric vehicle fleet management system, developed as part of the Object-Oriented Programming (OOP) practice at UNED. It enables the management of users, vehicles, rates, maintenance, and assignments, applying key OOP principles such as inheritance, polymorphism, and encapsulation.",
     link: "https://github.com/Alejandro-Fernandez-Polo/UNED/tree/main/POO/PEC_POO_24-25",
   },
   {
+    id: "design", // clave que conecta con traducciones
     iconUrl: design,
     theme: "btn-back-pink",
-    name: "Design Projects",
-    description:
-      "These projects reflect my development as a web designer, each highlighting different skills in HTML, CSS, and JavaScript. They illustrate my growth through diverse assignments and practices, with this portfolio representing the culmination and most polished result of that journey.",
     link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Design",
   },
   {
+    id: "reactlogo", // clave que conecta con traducciones
     iconUrl: reactlogo,
     theme: "btn-back-blue",
-    name: "React Practice Projects",
-    description:
-      "My React practice projects highlight my hands-on experience building interactive and dynamic applications. They focus on component-driven development, state management, and responsive interfaces, reflecting the experimentation behind my learning journey. This portfolio combines those skills into a cohesive and polished final work.",
     link: "https://github.com/Alejandro-Fernandez-Polo/Learn_React/tree/main/projects",
   },
   // {

@@ -1,0 +1,17 @@
+{
+  "title": "Escríbeme",
+  "form": {
+    "name": "Nombre",
+    "name_placeholder": "José",
+    "email": "Correo electrónico",
+    "email_placeholder": "jose@ejemplo.com",
+    "message": "Tu mensaje",
+    "message_placeholder": "¡Cuéntame cómo puedo ayudarte!",
+    "send": "Enviar mensaje",
+    "sending": "Enviando..."
+  },
+  "alerts": {
+    "success": "¡Mensaje enviado con éxito!",
+    "error": "Ups, algo salió mal. Inténtalo de nuevo."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Mis <1>proyectos</1>",
+  "intro": "Esta página presenta una recopilación de mis proyectos, que abarcan el diseño web, el desarrollo con React y la programación orientada a objetos. Cada proyecto destaca diferentes habilidades y etapas de mi trayectoria de aprendizaje, lo que demuestra mi capacidad de experimentación, crecimiento y aplicación práctica. En conjunto, reflejan la evolución de mis habilidades.",
+
+  "projects": {
+    "codigodesconocido": {
+      "name": "Código Desconocido",
+      "description": "Código Desconocido es una plataforma de gestión de escape rooms con un panel de administración web, servicios backend, servidor de chat e infraestructura dockerizada. Permite a los usuarios reservar, gestionar e interactuar con escape rooms tanto con fines educativos como de entretenimiento."
+    },
+    "vehicle": {
+      "name": "Gestión de Flota de Vehículos",
+      "description": "Este proyecto es un sistema de gestión de flotas de vehículos eléctricos, desarrollado como parte de la práctica de Programación Orientada a Objetos (POO) en la UNED. Permite gestionar usuarios, vehículos, tarifas, mantenimiento y asignaciones, aplicando principios clave de la POO como la herencia, el polimorfismo y la encapsulación."
+    },
+    "design": {
+      "name": "Proyectos de Diseño",
+      "description": "Estos proyectos reflejan mi desarrollo como diseñador web, cada uno destacando diferentes habilidades en HTML, CSS y JavaScript. Ilustran mi crecimiento a través de diversas tareas y prácticas, con este portafolio representando la culminación y el resultado más pulido de ese recorrido."
+    },
+    "reactlogo": {
+      "name": "Proyectos de Práctica en React",
+      "description": "Mis proyectos de práctica en React destacan mi experiencia práctica construyendo aplicaciones interactivas y dinámicas. Se centran en el desarrollo basado en componentes, la gestión del estado y las interfaces responsivas, reflejando la experimentación detrás de mi proceso de aprendizaje. Este portafolio combina esas habilidades en un trabajo final cohesivo y pulido."
+    },
+    "viewcode": "Ver el código"
+  }
+
+
+}

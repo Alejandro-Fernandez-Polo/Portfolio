@@ -1,6 +1,6 @@
 {
   "hero": {
-    "greeting": "Hola, soy <1>Alejandro</1>👋<br/>Un Técnico en Desarrollo de Aplicaciones Web <br/>y Estudiante de Ingeniería Informática de Granada"
+    "greeting": "Hola, soy <1>Alejandro</1>👋<br/>Desarrollador web y estudiante de <br/>Ingeniería Informática de <1>Granada</1>"
   },
   "cards": {
     "about": {

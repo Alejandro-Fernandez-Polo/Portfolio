@@ -1,0 +1,24 @@
+{
+  "title": "My <1>Projects</1>",
+  "intro": "This page presents a collection of my projects, spanning web design, React development, and object-oriented programming. Each project highlights different skills and stages of my learning journey, demonstrating experimentation, growth, and practical application. Together, they reflect the evolution of my abilities.",
+
+  "projects": {
+    "codigodesconocido": {
+      "name": "Codigo Desconocido",
+      "description": "Codigo Desconocido is an escape room management platform with a web admin panel, backend services, chat server, and Dockerized infrastructure. It enables users to book, manage, and interact with escape rooms for both educational and entertainment purposes."
+    },
+    "vehicle": {
+      "name": "Vehicle Fleet Management",
+      "description": "This project is an electric vehicle fleet management system, developed as part of the Object-Oriented Programming (OOP) practice at UNED. It enables the management of users, vehicles, rates, maintenance, and assignments, applying key OOP principles such as inheritance, polymorphism, and encapsulation."
+    },
+    "design": {
+      "name": "Design Projects",
+      "description": "These projects reflect my development as a web designer, each highlighting different skills in HTML, CSS, and JavaScript. They illustrate my growth through diverse assignments and practices, with this portfolio representing the culmination and most polished result of that journey."
+    },
+    "reactlogo": {
+      "name": "React Practice Projects",
+      "description": "My React practice projects highlight my hands-on experience building interactive and dynamic applications. They focus on component-driven development, state management, and responsive interfaces, reflecting the experimentation behind my learning journey. This portfolio combines those skills into a cohesive and polished final work."
+    },
+    "viewcode": "View Code"
+  }
+}

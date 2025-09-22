@@ -1,0 +1,17 @@
+{
+  "title": "Get in Touch",
+  "form": {
+    "name": "Name",
+    "name_placeholder": "Jose",
+    "email": "Email",
+    "email_placeholder": "jose@example.com",
+    "message": "Your Message",
+    "message_placeholder": "Let me know how I can help you!",
+    "send": "Send Message",
+    "sending": "Sending..."
+  },
+  "alerts": {
+    "success": "Message sent successfully!",
+    "error": "Ahh, something went wrong. Please try again."
+  }
+}

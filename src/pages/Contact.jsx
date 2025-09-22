@@ -5,8 +5,10 @@ import { Loader } from "../components/Loader"
 import { useAlert } from "../hooks/useAlert.js"
 import { Alert } from "../components/Alert.jsx"
 import { Viking } from "../models/Viking"
+import { useTranslation } from "react-i18next"
 
 export function Contact() {
+  const { t } = useTranslation("contact")
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -14,7 +16,6 @@ export function Contact() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [currentAnimation, setCurrentAnimation] = useState("Walk")
-
   const { alert, showAlert, hideAlert } = useAlert()
 
   const handleChange = (e) => {
@@ -40,7 +41,7 @@ export function Contact() {
       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ).then(() => {
       setIsLoading(false)
-      showAlert({ show: true, text: "Message sent successfully!", type: "success" })
+      showAlert({ show: true, text: t("alerts.success"), type: "success" })
       setTimeout(() => {
         hideAlert()
         setCurrentAnimation("Walk")
@@ -52,7 +53,7 @@ export function Contact() {
       console.log(error)
       showAlert({
         show: true,
-        text: "Ahh, something went wrong. Please try again.",
+        text: t("alerts.error"),
         type: "danger",
       })
       setTimeout(() => {
@@ -65,19 +66,19 @@ export function Contact() {
     <section className="relative flex lg:flex-row flex-col max-container">
       {alert.show && <Alert {...alert} />}
       <div className="flex-1 min-w-[50%] flex flex-col">
-        <h1 className="head-text">Get in Touch</h1>
+        <h1 className="head-text">{t("title")}</h1>
 
         <form
           className="w-full flex flex-col mt-14 gap-7"
           onSubmit={handleSubmit}
         >
           <label className="text-black-500 font-semibold">
-            Name
+            {t("form.name")}
             <input
               type="text"
               name="name"
               className="input"
-              placeholder="Jose"
+              placeholder={t("form.name_placeholder")}
               required
               value={form.name}
               onChange={handleChange}
@@ -86,12 +87,12 @@ export function Contact() {
             />
           </label>
           <label className="text-black-500 font-semibold">
-            Email
+            {t("form.email")}
             <input
               type="email"
               name="email"
               className="input"
-              placeholder="jose@example.com"
+              placeholder={t("form.email_placeholder")}
               required
               value={form.email}
               onChange={handleChange}
@@ -100,12 +101,12 @@ export function Contact() {
             />
           </label>
           <label className="text-black-500 font-semibold">
-            Your Message
+            {t("form.message")}
             <textarea
               name="message"
               rows={4}
               className="textarea"
-              placeholder="Let me know how I can help you!"
+              placeholder={t("form.message_placeholder")}
               required
               value={form.message}
               onChange={handleChange}
@@ -120,7 +121,7 @@ export function Contact() {
             onFocus={handleFocus}
             onBlur={handleBlur}
           >
-            {isLoading ? "Sending..." : "Send Message"}
+            {isLoading ? t("form.sending") : t("form.send")}
           </button>
         </form>
       </div>
