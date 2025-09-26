@@ -12,8 +12,8 @@
       "description": "Este proyecto es un sistema de gestión de flotas de vehículos eléctricos, desarrollado como parte de la práctica de Programación Orientada a Objetos (POO) en la UNED. Permite gestionar usuarios, vehículos, tarifas, mantenimiento y asignaciones, aplicando principios clave de la POO como la herencia, el polimorfismo y la encapsulación."
     },
     "design": {
-      "name": "Proyectos de Diseño",
-      "description": "Estos proyectos reflejan mi desarrollo como diseñador web, cada uno destacando diferentes habilidades en HTML, CSS y JavaScript. Ilustran mi crecimiento a través de diversas tareas y prácticas, con este portafolio representando la culminación y el resultado más pulido de ese recorrido."
+      "name": "Proyectos de DAW",
+      "description": "Estos proyectos forman parte de mi recorrido en el ciclo de Desarrollo de Aplicaciones Web (DAW). Incluyen tanto la parte de diseño con HTML, CSS y JavaScript, como el desarrollo de aplicaciones más completas utilizando Laravel y funcionalidades dinámicas implementadas con AJAX. Reflejan mi evolución y aprendizaje en la construcción de aplicaciones web modernas."
     },
     "reactlogo": {
       "name": "Proyectos de Práctica en React",

@@ -231,8 +231,8 @@ export const projects = [
     id: "design", // clave que conecta con traducciones
     iconUrl: design,
     theme: "btn-back-pink",
-    technology: "HTML, CSS, JavaScript",
-    link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Design",
+    technology: "HTML, CSS, JavaScript, Laravel, AJAX, PHP",
+    link: "https://github.com/Alejandro-Fernandez-Polo/DAW",
   },
   {
     id: "reactlogo", // clave que conecta con traducciones
