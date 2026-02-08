@@ -1,5 +1,9 @@
 {
   "title": "Get in Touch",
+  "info": {
+    "location": "Location",
+    "my_location": "Granada, Spain"
+  },
   "form": {
     "name": "Name",
     "name_placeholder": "Jose",

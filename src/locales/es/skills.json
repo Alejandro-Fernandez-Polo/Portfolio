@@ -1,0 +1,9 @@
+{
+  "title": "Mis Habilidades Técnicas",
+  "skills": {
+    "Frontend": "Frontend",
+    "Backend": "Backend",
+    "Database and CMS": "Bases de Datos y CMS",
+    "Tools & Platforms": "Herramientas y Plataformas"
+  }
+}

@@ -6,7 +6,7 @@ export default function Experience() {
   return (
     <section id="experience">
       <div className="section-header">
-        <h2>Work Experience</h2>
+        <h2>{t("experience.title")}</h2>
       </div>
       <div className="timeline">
         {experiences.map((exp) => {
@@ -28,8 +28,8 @@ export default function Experience() {
                 ))}
               </div>
             </div>
-          )})
-        }
+          )
+        })}
       </div>
     </section>
   )

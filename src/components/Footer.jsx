@@ -1,7 +1,9 @@
 export default function Footer() {
+
+  const year = new Date().getFullYear()
   return (
     <footer>
-      <p>© 2024 Alejandro Garcia</p>
+      <p>© {year} Alejandro Fernández Polo</p>
     </footer>
   )
 }

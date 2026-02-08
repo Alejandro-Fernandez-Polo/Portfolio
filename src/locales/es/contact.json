@@ -1,5 +1,9 @@
 {
   "title": "Escríbeme",
+  "info": {
+    "location": "Ubicación",
+    "my_location": "Granada, España"
+  },
   "form": {
     "name": "Nombre",
     "name_placeholder": "José",

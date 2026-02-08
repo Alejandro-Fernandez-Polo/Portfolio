@@ -106,17 +106,22 @@ export default function Contact() {
     <section id="contact">
       <div className="contact-section">
         <div className="contact-info">
-          <h3>Contact Me</h3>
+          <h3>{t("title")}</h3>
           {alert.show && <Alert {...alert} />}
-          {contactInfo.map((info, index) => (
-            <div key={index} className="contact-item">
-              <div className="contact-icon">{info.icon}</div>
-              <div>
-                <h4>{info.label}</h4>
-                <p>{info.value}</p>
-              </div>
+          <div className="contact-item">
+            <div className="contact-icon">📧</div>
+            <div>
+              <h4>Email:</h4>
+              <p>afernanpolo@gmail.com</p>
             </div>
-          ))}
+          </div>
+          <div className="contact-item">
+            <div className="contact-icon">📍</div>
+            <div>
+              <h4>{t("info.location")}</h4>
+              <p>{t("info.my_location")}</p>
+            </div>
+          </div>
           <div className="social-links">
             {socialLinks.map((link, index) => (
               <a

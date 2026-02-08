@@ -2,17 +2,20 @@ import { groupedSkills } from "../constants/index.js"
 import { useTranslation, Trans } from "react-i18next"
 
 export default function Skills() {
-  const { t, i18n } = useTranslation("about")
+  const { t, i18n } = useTranslation("skills")
 
   return (
     <section id="skills">
       <div className="section-header">
-        <h2>{t("skills.title")}</h2>
+        <h2>{t("title")}</h2>
       </div>
       <div className="skills-grid">
-        {groupedSkills.map((skill) => (
+        {groupedSkills.map((skill) => {
+          const trans = t(`skills.${skill.title}`, { returnObjects: true })
+          console.log(trans)
+          return (
           <div key={skill.title} className="skill-card">
-            <h3>{skill.title}</h3>
+            <h3>{trans}</h3>
             <div className="tech-icons">
               {skill.content.map((item) => (
                 <div key={item.name} className="tech-icon">
@@ -26,7 +29,7 @@ export default function Skills() {
               ))}
             </div>
           </div>
-        ))}
+        )})}
       </div>
     </section>
   )
