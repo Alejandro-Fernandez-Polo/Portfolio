@@ -1,19 +1,19 @@
 {
-  "title": "My <1>Projects</1>",
+  "title": "Projects",
   "intro": "This page presents a collection of my projects, spanning web design, React development, and object-oriented programming. Each project highlights different skills and stages of my learning journey, demonstrating experimentation, growth, and practical application. Together, they reflect the evolution of my abilities.",
 
   "projects": {
     "codigodesconocido": {
-      "name": "Codigo Desconocido",
-      "description": "Codigo Desconocido is an escape room management platform with a web admin panel, backend services, chat server, and Dockerized infrastructure. It enables users to book, manage, and interact with escape rooms for both educational and entertainment purposes."
+      "name": "Código Desconocido",
+      "description": "Código Desconocido is an escape room management platform with a web admin panel, backend services, chat server, and Dockerized infrastructure. It enables users to book, manage, and interact with escape rooms for both educational and entertainment purposes."
     },
     "vehicle": {
       "name": "Vehicle Fleet Management",
       "description": "This project is an electric vehicle fleet management system, developed as part of the Object-Oriented Programming (OOP) practice at UNED. It enables the management of users, vehicles, rates, maintenance, and assignments, applying key OOP principles such as inheritance, polymorphism, and encapsulation."
     },
     "design": {
-      "name": "Design Projects",
-      "description": "These projects reflect my development as a web designer, each highlighting different skills in HTML, CSS, and JavaScript. They illustrate my growth through diverse assignments and practices, with this portfolio representing the culmination and most polished result of that journey."
+      "name": "DAW Projects",
+      "description": "These projects are part of my journey in the Web Application Development (DAW) program. They include both the design side with HTML, CSS, and JavaScript, as well as the development of more complete applications using Laravel and dynamic features implemented with AJAX. They reflect my growth and learning in building modern web applications."
     },
     "reactlogo": {
       "name": "React Practice Projects",

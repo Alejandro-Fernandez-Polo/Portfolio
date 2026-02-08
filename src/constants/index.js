@@ -1,5 +1,5 @@
 //TODO: poner mis datos
-import { meta, shopify, starbucks, tesla, atg, pergolas } from "../assets/images"
+import { atg, pergolas } from "../assets/images"
 import {
   reactlogo,
   contact,
@@ -120,6 +120,47 @@ export const skills = [
   },
 ]
 
+export const groupedSkills = [
+  {
+    title: "Frontend",
+    content: [
+      { imageUrl: html, name: "HTML", type: "Frontend" },
+      { imageUrl: css, name: "CSS", type: "Frontend" },
+      { imageUrl: javascript, name: "JavaScript", type: "Frontend" },
+      { imageUrl: react, name: "React", type: "Frontend" },
+      { imageUrl: tailwindcss, name: "Tailwind CSS", type: "Frontend" },
+      { imageUrl: bootstrap, name: "Bootstrap", type: "Frontend" },
+    ],
+  },
+  {
+    title: "Backend",
+    content: [
+      { imageUrl: php, name: "Php", type: "Backend" },
+      { imageUrl: java, name: "Java", type: "Backend" },
+      { imageUrl: laravel, name: "Laravel", type: "Backend" },
+      { imageUrl: nodejs, name: "Node.js", type: "Backend" },
+      { imageUrl: express, name: "Express", type: "Backend" },
+    ],
+  },
+  {
+    title: "Database and CMS",
+    content: [
+      { imageUrl: sql, name: "SQL", type: "Database" },
+      { imageUrl: mongodb, name: "MongoDB", type: "Database" },
+      { imageUrl: wordpress, name: "WordPress", type: "CMS" },
+    ],
+  },
+  {
+    title: "Tools & Platforms",
+    content: [
+      { imageUrl: docker, name: "Docker", type: "DevOps" },
+      { imageUrl: git, name: "Git", type: "Version Control" },
+      { imageUrl: github, name: "GitHub", type: "Version Control" },
+      { imageUrl: postman, name: "POSTMAN", type: "Testing" },
+    ],
+  },
+]
+
 export const experiences = [
   {
     id: "atg", // clave que conecta con traducciones
@@ -231,8 +272,8 @@ export const projects = [
     id: "design", // clave que conecta con traducciones
     iconUrl: design,
     theme: "btn-back-pink",
-    technology: "HTML, CSS, JavaScript",
-    link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Design",
+    technology: "HTML, CSS, JavaScript, Laravel, AJAX, PHP",
+    link: "https://github.com/Alejandro-Fernandez-Polo/DAW",
   },
   {
     id: "reactlogo", // clave que conecta con traducciones
