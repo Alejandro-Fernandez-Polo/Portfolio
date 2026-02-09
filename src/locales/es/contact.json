@@ -5,11 +5,8 @@
     "my_location": "Granada, España"
   },
   "form": {
-    "name": "Nombre",
     "name_placeholder": "José",
-    "email": "Correo electrónico",
     "email_placeholder": "jose@ejemplo.com",
-    "message": "Tu mensaje",
     "message_placeholder": "¡Cuéntame cómo puedo ayudarte!",
     "send": "Enviar mensaje",
     "sending": "Enviando..."

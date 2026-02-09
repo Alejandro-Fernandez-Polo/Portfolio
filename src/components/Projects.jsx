@@ -41,16 +41,16 @@ export default function Projects() {
           const trans = t(`projects.${project.id}`, { returnObjects: true })
           return (
             <div key={project.id} className="project-card">
-              <div className="project-image">{project.emoji}</div>
+              <div className="project-image">{project.emoji}lista de tecnologias usadas</div>
               <div className="project-content">
                 <h3>{trans.name}</h3>
                 <p>{trans.description}</p>
                 <div className="project-buttons">
                   <a href={project.link} className="btn btn-primary">
-                    View Code
+                    {t("projects.viewcode")}
                   </a>
                   <a href={project.demoUrl} className="btn btn-secondary">
-                    Live Demo
+                    {t("projects.livedemo")}
                   </a>
                 </div>
               </div>

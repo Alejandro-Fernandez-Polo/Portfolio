@@ -1,7 +1,7 @@
 import { useTranslation, Trans } from "react-i18next"
 import { experiences } from "../constants/index.js"
 export default function Experience() {
-  const { t, i18n } = useTranslation("about")
+  const { t, i18n } = useTranslation("experience")
 
   return (
     <section id="experience">

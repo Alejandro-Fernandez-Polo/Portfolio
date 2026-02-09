@@ -2,7 +2,7 @@ import { useTranslation, Trans } from "react-i18next"
 import recImage from "../assets/images/perfil.png"
 
 export default function Hero() {
-  const { t, i18n } = useTranslation("about")
+  const { t, i18n } = useTranslation("hero")
 
   const socialLinks = [
     {

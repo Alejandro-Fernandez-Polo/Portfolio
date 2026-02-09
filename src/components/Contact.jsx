@@ -16,8 +16,7 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // alert('¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.')
-    // setFormData({ name: '', email: '', message: '' })
+    setIsLoading(true)
     emailjs
       .send(
         import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
