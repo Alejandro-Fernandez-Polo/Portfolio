@@ -370,6 +370,12 @@ nav {
   filter: drop-shadow(0 20px 60px var(--shadow));
 }
 
+.perfil {
+  aspect-ratio: 1/1;
+  width: 200px;
+  position: relative;
+}
+
 .social-links {
   display: flex;
   gap: 15px;

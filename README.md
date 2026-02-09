@@ -1,4 +1,4 @@
-# Portfolio React - Alejandro Garcia
+# Portfolio React - Alejandro Fernández Polo
 
 Portfolio personal moderno desarrollado en React con Vite, diseño glassmorphic y animaciones suaves.
 
@@ -101,4 +101,4 @@ MIT
 
 ---
 
-Desarrollado con ❤️ por Alejandro Garcia
+Desarrollado con ❤️ por Alejandro Fernández Polo

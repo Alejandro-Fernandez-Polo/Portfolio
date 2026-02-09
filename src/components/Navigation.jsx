@@ -60,11 +60,11 @@ export default function Navigation({ toggleTheme }) {
   }, [])
 
   const navItems = [
-    { href: "#home", label: "Home" },
-    { href: "#experience", label: "Experience" },
-    { href: "#skills", label: "Skills" },
+    { href: "#home", label: t("home") },
+    { href: "#experience", label: t("experience") },
+    { href: "#skills", label: t("skills") },
     { href: "#projects", label: t("projects") },
-    { href: "#contact", label: "Contact" },
+    { href: "#contact", label: t("contact") },
   ]
 
   return (

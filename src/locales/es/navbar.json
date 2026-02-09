@@ -1,5 +1,7 @@
 {
-  "about": "Sobre mí",
+  "home": "Inicio",
+  "experience": "Experiencia",
+  "skills": "Habilidades",
   "projects": "Proyectos",
   "contact": "Contacto"
 }
