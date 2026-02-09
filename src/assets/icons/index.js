@@ -17,12 +17,10 @@ import nodejs from './nodejs.svg'
 import react from './react.svg'
 import tailwindcss from './tailwindcss.svg'
 import linkedin from './linkedin.svg'
-import twitter from './twitter.svg'
 import reactlogo from './reactlogo.png'
 import codigodesconocido from './codigodesconocido.ico'
 import vehicle from './vehicle.png'
 import design from './desing.png'
-import arrow from './arrow.svg'
 import contact from './contact.svg'
 
 export {
@@ -37,12 +35,10 @@ export {
   react,
   tailwindcss,
   linkedin,
-  twitter,
   reactlogo,
   codigodesconocido,
   vehicle,
   design,
-  arrow,
   contact,
   postman,
   laravel,
