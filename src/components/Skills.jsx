@@ -12,7 +12,6 @@ export default function Skills() {
       <div className="skills-grid">
         {groupedSkills.map((skill) => {
           const trans = t(`skills.${skill.title}`, { returnObjects: true })
-          console.log(trans)
           return (
           <div key={skill.title} className="skill-card">
             <h3>{trans}</h3>

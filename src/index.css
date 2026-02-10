@@ -245,26 +245,13 @@ nav {
   font-size: 14px;
   transition: color 0.3s ease;
   position: relative;
+  cursor: pointer;
 }
 
 .nav-pill a:hover {
   color: var(--accent);
 }
 
-.nav-pill a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-
-.nav-pill a:hover::after {
-  width: 100%;
-}
 
 /* From Uiverse.io by Creatlydev */ 
 .toggle {
@@ -883,17 +870,6 @@ section {
               inset 0 1px 1px rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
-}
-
-.contact-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.1), transparent);
-  pointer-events: none;
 }
 
 .contact-info h3 {

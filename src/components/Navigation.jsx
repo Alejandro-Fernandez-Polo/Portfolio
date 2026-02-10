@@ -64,6 +64,7 @@ export default function Navigation({ toggleTheme }) {
     { href: "#experience", label: t("experience") },
     { href: "#skills", label: t("skills") },
     { href: "#projects", label: t("projects") },
+    { href: "#education", label: t("education") },
     { href: "#contact", label: t("contact") },
   ]
 
@@ -86,6 +87,50 @@ export default function Navigation({ toggleTheme }) {
               {item.label}
             </a>
           ))}
+          <a
+            onClick={() => i18n.changeLanguage("en")}
+            style={{
+              color:
+                i18n.language === "en"
+                  ? "var(--accent)"
+                  : "var(--text-primary)",
+            }}
+          >
+            ENG
+          </a>
+          <a
+            onClick={() => i18n.changeLanguage("es")}
+            style={{
+              color:
+                i18n.language === "es"
+                  ? "var(--accent)"
+                  : "var(--text-primary)",
+            }}
+          >
+            ESP
+          </a>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            style={{ display: "none" }}
+          >
+            <defs>
+              <filter id="goo">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="10"
+                  result="blur"
+                />
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                  result="goo"
+                />
+                <feBlend in="SourceGraphic" in2="goo" />
+              </filter>
+            </defs>
+          </svg>
           <div>
             <label htmlFor="switch" className="toggle">
               <input
@@ -109,7 +154,6 @@ export default function Navigation({ toggleTheme }) {
                   ></path>
                 </svg>
               </div>
-
               <div className="icon icon--sun">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -123,26 +167,6 @@ export default function Navigation({ toggleTheme }) {
               </div>
             </label>
           </div>
-          <input
-            type="checkbox"
-            id="language-toggle"
-            checked={i18n.language === "en"}
-            onChange={() =>
-              i18n.changeLanguage(i18n.language === "en" ? "es" : "en")
-            }
-          />
-          <label id="button" htmlFor="language-toggle">
-            <div
-              id="knob"
-              className="w-6 h-6 rounded-full bg-center bg-cover"
-              style={{
-                backgroundImage: `url(${lang === "en" ? ukFlag : spainFlag})`,
-              }}
-            ></div>
-            <div id="language-text">
-              {i18n.language === "en" ? "English" : "Español"}
-            </div>
-          </label>
         </div>
       </div>
     </nav>

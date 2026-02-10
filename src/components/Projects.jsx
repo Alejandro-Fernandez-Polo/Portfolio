@@ -4,32 +4,6 @@ import { useTranslation, Trans } from "react-i18next"
 
 export default function Projects() {
   const { t } = useTranslation("projects")
-  const p = [
-    {
-      emoji: "🤖",
-      title: "AI-POWERED CHATBOT",
-      description:
-        "Explore the special copperheated application, from our leamy beeps to your smarters antitelaies.",
-      codeUrl: "#",
-      demoUrl: "#",
-    },
-    {
-      emoji: "💬",
-      title: "MEINDE CHATBOT",
-      description:
-        "Cloxteed venvennion into istliklethy at powered virtualets.",
-      codeUrl: "#",
-      demoUrl: "#",
-    },
-    {
-      emoji: "🤖",
-      title: "AI-POWERED CHATBOT",
-      description:
-        "Develoja evert project for media and comprehensater soft ord xtere are the amics.",
-      codeUrl: "#",
-      demoUrl: "#",
-    },
-  ]
 
   return (
     <section id="projects">
