@@ -7,9 +7,9 @@ export default function Hero() {
   const socialLinks = [
     {
       icon: (
-        <svg viewBox="0 0 24 24">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-          <polyline points="22,6 12,13 2,6" />
+        <svg viewBox="0 0 24 24" >
+          <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/>
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
         </svg>
       ),
       href: "mailto:contact@example.com",
@@ -44,7 +44,8 @@ export default function Hero() {
         </h1>
         <h2>{t("title")}</h2>
         <p>{t("intro")}</p>
-        <div className="social-links">
+
+        <div className="social-links ">
           {socialLinks.map((link, index) => (
             <a
               key={index}
@@ -56,6 +57,28 @@ export default function Hero() {
               {link.icon}
             </a>
           ))}
+        </div>
+        <div className="social-links">
+            <a
+              className="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-mail-icon lucide-mail"
+              >
+                <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+              </svg>
+            </a>
         </div>
       </div>
       <div className="hero-image">
@@ -129,7 +152,7 @@ export default function Hero() {
                 repeatCount="indefinite"
               />
             </circle>
-            
+
             {/* Imagen central redonda */}
             <defs>
               <clipPath id="circleClip">
@@ -144,7 +167,7 @@ export default function Hero() {
                 />
               </radialGradient>
             </defs>
-            
+
             <image
               href={recImage}
               x="70"
@@ -154,13 +177,7 @@ export default function Hero() {
               clipPath="url(#circleClip)"
               preserveAspectRatio="xMidYMid slice"
             />
-            <circle
-              cx="195"
-              cy="155"
-              r="127"
-              fill="none"
-              opacity="0.6"
-            />
+            <circle cx="195" cy="155" r="127" fill="none" opacity="0.6" />
           </svg>
         </div>
       </div>
