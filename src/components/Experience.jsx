@@ -1,6 +1,8 @@
 import { useTranslation, Trans } from "react-i18next"
 import { useState, useEffect } from "react"
 import { experiences } from "../constants/index.js"
+import "./css/Experience.css"
+
 export default function Experience() {
   const { t, i18n } = useTranslation("experience")
   const [lang, setLang] = useState(i18n.language || i18n.resolvedLanguage || 'en')

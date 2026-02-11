@@ -1,6 +1,7 @@
 //import { CTA } from "../components/CTA.jsx"
 import { projects } from "../constants/index.js"
 import { useTranslation, Trans } from "react-i18next"
+import './css/Projects.css'
 
 export default function Projects() {
   const { t } = useTranslation("projects")
@@ -17,7 +18,7 @@ export default function Projects() {
             <div key={project.id} className="project-card">
               <div className="project-image">
                 <img src={project.img} alt={trans.name} />
-                <p>lista de tecnologias usadas</p>
+                {/* <p>lista de tecnologias usadas</p> */}
               </div>
               <div className="project-content">
                 <h3>{trans.name}</h3>
@@ -26,9 +27,9 @@ export default function Projects() {
                   <a href={project.link} className="btn btn-primary">
                     {t("projects.viewcode")}
                   </a>
-                  <a href={project.demoUrl} className="btn btn-secondary">
+                  {/* <a href={project.demoUrl} className="btn btn-secondary">
                     {t("projects.livedemo")}
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>

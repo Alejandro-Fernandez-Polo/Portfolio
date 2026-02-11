@@ -1,6 +1,6 @@
 import { useTranslation, Trans } from "react-i18next"
 import recImage from "../assets/images/perfil.png"
-// import { socialLinks } from "../constants/index.js"
+import "./css/Hero.css"
 
 export default function Hero() {
   const { t, i18n } = useTranslation("hero")
@@ -65,17 +65,17 @@ const socialLinks = [
       <div className="hero-image">
         <div className="hero-illustration">
           <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="350" cy="80" r="30" fill="var(--accent)" opacity="0.2">
+            <circle cx="350" cy="100" r="30" fill="var(--accent)" opacity="0.2">
               <animate
                 attributeName="cy"
-                values="80;60;80"
+                values="100;80;100"
                 dur="4s"
                 repeatCount="indefinite"
               />
             </circle>
             <circle
               cx="320"
-              cy="150"
+              cy="170"
               r="20"
               fill="var(--accent-light)"
               opacity="0.3"
@@ -89,7 +89,7 @@ const socialLinks = [
             </circle>
             <circle
               cx="370"
-              cy="200"
+              cy="220"
               r="15"
               fill="var(--accent)"
               opacity="0.25"
@@ -103,7 +103,7 @@ const socialLinks = [
             </circle>
             <circle
               cx="80"
-              cy="220"
+              cy="240"
               r="35"
               fill="none"
               stroke="var(--accent)"
@@ -119,7 +119,7 @@ const socialLinks = [
             </circle>
             <circle
               cx="50"
-              cy="100"
+              cy="120"
               r="25"
               fill="none"
               stroke="var(--accent-light)"
@@ -133,11 +133,12 @@ const socialLinks = [
                 repeatCount="indefinite"
               />
             </circle>
+            
 
             {/* Imagen central redonda */}
             <defs>
               <clipPath id="circleClip">
-                <circle cx="195" cy="155" r="125" />
+                <circle cx="195" cy="175" r="125" />
               </clipPath>
               <radialGradient id="screenGlow">
                 <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.8" />
@@ -152,13 +153,13 @@ const socialLinks = [
             <image
               href={recImage}
               x="70"
-              y="30"
+              y="50"
               width="250"
               height="250"
               clipPath="url(#circleClip)"
               preserveAspectRatio="xMidYMid slice"
             />
-            <circle cx="195" cy="155" r="127" fill="none" opacity="0.6" />
+            <circle cx="195" cy="175" r="127" fill="none" opacity="0.6" />
           </svg>
         </div>
       </div>

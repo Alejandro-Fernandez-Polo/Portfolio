@@ -1,6 +1,8 @@
 import { useTranslation, Trans } from "react-i18next"
 import { useState, useEffect } from "react"
 import { education } from "../constants/index.js"
+import "./css/Education.css"
+
 export default function Education() {
   const { t, i18n } = useTranslation("education")
   const educationItems = education

@@ -1,3 +1,5 @@
+import "./css/Certifications.css"
+
 export default function Certifications() {
   const certifications = [
     {

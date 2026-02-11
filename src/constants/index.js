@@ -199,6 +199,6 @@ export const projects = [
     id: "reactlogo",
     img: proyectosreact,
     technology: "React, Flask, Node.js, MongoBD, MySQL, Docker",
-    link: "HTML, CSS, JavaScript, React",
+    link: "https://github.com/Alejandro-Fernandez-Polo/Learn_React",
   },
 ]

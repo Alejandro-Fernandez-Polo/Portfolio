@@ -1,3 +1,5 @@
+import './css/Alert.css'
+
 export function Alert({ type, text }) {
   return (
     <div className="alert-container">

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import spainFlag from "../assets/flags/spain.png"
-import ukFlag from "../assets/flags/unitedkingdom.png"
+import "./css/Navigation.css"
 
 export default function Navigation({ toggleTheme }) {
   const [activeSection, setActiveSection] = useState("home")
   const { t, i18n } = useTranslation("navbar")
   const [lang, setLang] = useState(i18n.language || i18n.resolvedLanguage || 'en')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     // Actualizar inmediatamente con el idioma actual resuelto
@@ -19,6 +19,7 @@ export default function Navigation({ toggleTheme }) {
 
   const handleClick = (e, targetId) => {
     e.preventDefault()
+    setIsMenuOpen(false) // Cerrar menú al hacer click
 
     if (targetId === "#" || targetId === "#home") {
       window.scrollTo({
@@ -38,6 +39,10 @@ export default function Navigation({ toggleTheme }) {
         })
       }
     }
+  }
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
   }
 
   useEffect(() => {
@@ -73,8 +78,20 @@ export default function Navigation({ toggleTheme }) {
 
   return (
     <nav>
+      {/* Backdrop para cerrar el menú */}
+      {isMenuOpen && (
+        <div className="nav-backdrop" onClick={() => setIsMenuOpen(false)}></div>
+      )}
+      
       <div className="nav-background">
-        <div className="nav-pill">
+        {/* Botón hamburguesa para móvil */}
+        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
+          <span className={isMenuOpen ? "open" : ""}></span>
+          <span className={isMenuOpen ? "open" : ""}></span>
+          <span className={isMenuOpen ? "open" : ""}></span>
+        </button>
+
+        <div className={`nav-pill ${isMenuOpen ? "mobile-open" : ""}`}>
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -90,28 +107,36 @@ export default function Navigation({ toggleTheme }) {
               {item.label}
             </a>
           ))}
-          <a
-            onClick={() => i18n.changeLanguage("en")}
-            style={{
-              color:
-                lang === "en"
-                  ? "var(--accent)"
-                  : "var(--text-primary)",
-            }}
-          >
-            ENG
-          </a>
-          <a
-            onClick={() => i18n.changeLanguage("es")}
-            style={{
-              color:
-                lang === "es"
-                  ? "var(--accent)"
-                  : "var(--text-primary)",
-            }}
-          >
-            ESP
-          </a>
+          <div className="language-switcher">
+            <a
+              onClick={() => {
+                i18n.changeLanguage("en")
+                setIsMenuOpen(false)
+              }}
+              style={{
+                color:
+                  lang === "en"
+                    ? "var(--accent)"
+                    : "var(--text-primary)",
+              }}
+            >
+              ENG
+            </a>
+            <a
+              onClick={() => {
+                i18n.changeLanguage("es")
+                setIsMenuOpen(false)
+              }}
+              style={{
+                color:
+                  lang === "es"
+                    ? "var(--accent)"
+                    : "var(--text-primary)",
+              }}
+            >
+              ESP
+            </a>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"

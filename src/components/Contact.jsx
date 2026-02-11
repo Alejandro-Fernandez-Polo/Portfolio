@@ -3,6 +3,7 @@ import emailjs from "@emailjs/browser"
 import { useTranslation } from "react-i18next"
 import { useAlert } from "../hooks/useAlert.js"
 import { Alert } from "../components/Alert.jsx"
+import "./css/Contact.css"
 
 export default function Contact() {
   const { t } = useTranslation("contact")

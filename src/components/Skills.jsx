@@ -1,5 +1,6 @@
 import { groupedSkills } from "../constants/index.js"
 import { useTranslation, Trans } from "react-i18next"
+import "./css/Skills.css"
 
 export default function Skills() {
   const { t, i18n } = useTranslation("skills")
