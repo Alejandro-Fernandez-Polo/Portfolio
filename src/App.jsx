@@ -37,7 +37,7 @@ function App() {
   return (
     <>
       <Navigation theme={theme} toggleTheme={toggleTheme} />
-      <div className="container">
+      <main className="container">
         <Hero />
         <Suspense fallback={<div>Loading...</div>}>
           <Experience />
@@ -47,7 +47,7 @@ function App() {
           <Contact />
           <Footer />
         </Suspense>
-      </div>
+      </main>
     </>
   )
 }

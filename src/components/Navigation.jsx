@@ -45,27 +45,41 @@ export default function Navigation({ toggleTheme }) {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  useEffect(() => {
-    const sections = document.querySelectorAll("section[id]")
-    const updateActiveNav = () => {
-      const scrollY = window.pageYOffset
+useEffect(() => {
+  const handleScroll = () => {
+    // Usar requestAnimationFrame para throttling
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrollY = window.scrollY // Una sola lectura
 
-      sections.forEach((section) => {
-        const sectionHeight = section.offsetHeight
-        const sectionTop = section.offsetTop - 150
-        const sectionId = section.getAttribute("id")
+        // Batch todas las lecturas de geometría
+        const sections = document.querySelectorAll("section")
+        const offsets = Array.from(sections).map((section) => ({
+          id: section.id,
+          offsetTop: section.offsetTop,
+          offsetHeight: section.offsetHeight,
+        }))
 
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-          setActiveSection(sectionId)
-        }
+        // Ahora hacer los cálculos
+        offsets.forEach(({ id, offsetTop, offsetHeight }) => {
+          if (
+            scrollY >= offsetTop - 100 &&
+            scrollY < offsetTop + offsetHeight - 100
+          ) {
+            setActiveSection(id)
+          }
+        })
+
+        ticking = false
       })
+      ticking = true
     }
+  }
 
-    window.addEventListener("scroll", updateActiveNav)
-    updateActiveNav()
-
-    return () => window.removeEventListener("scroll", updateActiveNav)
-  }, [])
+  let ticking = false
+  window.addEventListener("scroll", handleScroll)
+  return () => window.removeEventListener("scroll", handleScroll)
+}, [])
 
   const navItems = [
     { href: "#home", label: t("home") },
