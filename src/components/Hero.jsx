@@ -133,7 +133,6 @@ const socialLinks = [
                 repeatCount="indefinite"
               />
             </circle>
-            
 
             {/* Imagen central redonda */}
             <defs>
@@ -149,9 +148,11 @@ const socialLinks = [
                 />
               </radialGradient>
             </defs>
-
             <image
               href={recImage}
+              alt="Profile"
+              loading="eager" // Añadir eager para contenido above the fold
+              fetchpriority="high" // Priorizar esta imagen
               x="70"
               y="50"
               width="250"

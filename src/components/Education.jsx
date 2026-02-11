@@ -1,6 +1,6 @@
 import { useTranslation, Trans } from "react-i18next"
 import { useState, useEffect } from "react"
-import { education } from "../constants/index.js"
+import { education } from "../constants/education.js"
 import "./css/Education.css"
 
 export default function Education() {

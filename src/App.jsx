@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from "react"
 import Navigation from './components/Navigation'
 import GradientBackground from './components/GradientBackground'
 import Hero from './components/Hero'
@@ -13,6 +13,13 @@ import "./libs/i18n/i18n"
 
 function App() {
   const [theme, setTheme] = useState("dark")
+  const Experience = lazy(() => import("./components/Experience"))
+  const Skills = lazy(() => import("./components/Skills"))
+  const Projects = lazy(() => import("./components/Projects"))
+  const Education = lazy(() => import("./components/Education"))
+  const Certifications = lazy(() => import("./components/Certifications"))
+  const Contact = lazy(() => import("./components/Contact"))
+  const Footer = lazy(() => import("./components/Footer"))
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light'
@@ -32,12 +39,14 @@ function App() {
       <Navigation theme={theme} toggleTheme={toggleTheme} />
       <div className="container">
         <Hero />
-        <Experience />
-        <Skills />
-        <Projects />
-        <Education />
-        <Contact />
-        <Footer />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Experience />
+          <Skills />
+          <Projects />
+          <Education />
+          <Contact />
+          <Footer />
+        </Suspense>
       </div>
     </>
   )

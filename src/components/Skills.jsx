@@ -1,4 +1,4 @@
-import { groupedSkills } from "../constants/index.js"
+import { skills } from "../constants/skills.js"
 import { useTranslation, Trans } from "react-i18next"
 import "./css/Skills.css"
 
@@ -11,7 +11,7 @@ export default function Skills() {
         <h2>{t("title")}</h2>
       </div>
       <div className="skills-grid">
-        {groupedSkills.map((skill) => {
+        {skills.map((skill) => {
           const trans = t(`skills.${skill.title}`, { returnObjects: true })
           return (
             <div key={skill.title} className="skill-card">

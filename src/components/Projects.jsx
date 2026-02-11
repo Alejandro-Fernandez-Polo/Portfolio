@@ -1,5 +1,5 @@
 //import { CTA } from "../components/CTA.jsx"
-import { projects } from "../constants/index.js"
+import { projects } from "../constants/projects.js"
 import { useTranslation, Trans } from "react-i18next"
 import './css/Projects.css'
 

@@ -1,6 +1,6 @@
 import { useTranslation, Trans } from "react-i18next"
 import { useState, useEffect } from "react"
-import { experiences } from "../constants/index.js"
+import { experiences } from "../constants/experience.js"
 import "./css/Experience.css"
 
 export default function Experience() {
