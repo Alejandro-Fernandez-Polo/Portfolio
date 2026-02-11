@@ -1,26 +1,27 @@
 {
-  "title": "Mis <1>proyectos</1>",
+  "title": "Proyectos",
   "intro": "Esta página presenta una recopilación de mis proyectos, que abarcan el diseño web, el desarrollo con React y la programación orientada a objetos. Cada proyecto destaca diferentes habilidades y etapas de mi trayectoria de aprendizaje, lo que demuestra mi capacidad de experimentación, crecimiento y aplicación práctica. En conjunto, reflejan la evolución de mis habilidades.",
 
   "projects": {
     "codigodesconocido": {
       "name": "Código Desconocido",
-      "description": "Código Desconocido es una plataforma de gestión de escape rooms con un panel de administración web, servicios backend, servidor de chat e infraestructura dockerizada. Permite a los usuarios reservar, gestionar e interactuar con escape rooms tanto con fines educativos como de entretenimiento."
+      "description": "Plataforma de gestión de escape rooms con panel web, backend y chat dockerizado. Permite reservar y gestionar salas con fines educativos y de entretenimiento."
     },
     "vehicle": {
       "name": "Gestión de Flota de Vehículos",
-      "description": "Este proyecto es un sistema de gestión de flotas de vehículos eléctricos, desarrollado como parte de la práctica de Programación Orientada a Objetos (POO) en la UNED. Permite gestionar usuarios, vehículos, tarifas, mantenimiento y asignaciones, aplicando principios clave de la POO como la herencia, el polimorfismo y la encapsulación."
+      "description": "Sistema para flotas eléctricas desarrollado en la UNED. Gestiona usuarios, tarifas y mantenimiento aplicando herencia, polimorfismo y encapsulación (POO)."
     },
     "design": {
       "name": "Proyectos de DAW",
-      "description": "Estos proyectos forman parte de mi recorrido en el ciclo de Desarrollo de Aplicaciones Web (DAW). Incluyen tanto la parte de diseño con HTML, CSS y JavaScript, como el desarrollo de aplicaciones más completas utilizando Laravel y funcionalidades dinámicas implementadas con AJAX. Reflejan mi evolución y aprendizaje en la construcción de aplicaciones web modernas."
+      "description": "Desarrollos del ciclo DAW, desde diseño con HTML/CSS/JS hasta aplicaciones dinámicas con Laravel y AJAX, mostrando mi evolución en la web moderna."
     },
     "reactlogo": {
       "name": "Proyectos de Práctica en React",
-      "description": "Mis proyectos de práctica en React destacan mi experiencia práctica construyendo aplicaciones interactivas y dinámicas. Se centran en el desarrollo basado en componentes, la gestión del estado y las interfaces responsivas, reflejando la experimentación detrás de mi proceso de aprendizaje. Este portafolio combina esas habilidades en un trabajo final cohesivo y pulido."
+      "description": "Aplicaciones interactivas centradas en componentes, gestión de estado e interfaces responsivas que consolidan mi aprendizaje y habilidades en el ecosistema React."
     },
     "made": "Hecho con: ",
-    "viewcode": "Ver el código"
+    "viewcode": "Ver el código",
+    "livedemo": "Demo en vivo"
   }
 
 

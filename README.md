@@ -1,43 +1,104 @@
-# Portfolio
+# Portfolio React - Alejandro Fernández Polo
 
-A modern, interactive portfolio built with React, Vite, and Tailwind CSS.
+Portfolio personal moderno desarrollado en React con Vite, diseño glassmorphic y animaciones suaves.
 
-## Features
-- ⚡ Fast and responsive UI with Vite and React
-- 🎨 Styled with Tailwind CSS
-- 🖼️ 3D models using Three.js and @react-three/fiber
-- 🗂️ Project showcase and timeline
-- 📧 Contact form with EmailJS integration
-- 🛠️ Custom hooks and reusable components
+## 🚀 Características
 
-## Tech Stack
-- **React**
-- **Vite**
-- **Tailwind CSS**
-- **Three.js** & **@react-three/fiber**
-- **EmailJS**
-- **react-vertical-timeline-component**
+- ✨ Diseño moderno con efecto glassmorphic
+- 🌓 Modo oscuro/claro
+- 📱 Totalmente responsive
+- ⚡ Construido con Vite para desarrollo rápido
+- 🎨 Animaciones suaves y transiciones
+- 🧩 Componentizado y modular
 
-## Folder Structure
-```
-src/
-  assets/         # Images, icons, 3D models
-  components/     # Reusable React components
-  constants/      # Static data and config
-  hooks/          # Custom React hooks
-  libs/           # Third-party libraries
-  models/         # 3D model components
-  pages/          # Main pages (Home, About, Contact, Projects)
-  App.jsx         # Main app component
-  main.jsx        # Entry point
+## 📦 Instalación
+
+```bash
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
+npm run dev
+
+# Construir para producción
+npm run build
+
+# Preview de build de producción
+npm run preview
 ```
 
-## Credits
-- [react-vertical-timeline-component](https://github.com/stephane-monnot/react-vertical-timeline)
-- [EmailJS](https://www.emailjs.com/)
-- [Three.js](https://threejs.org/)
-- [@react-three/fiber](https://github.com/pmndrs/react-three-fiber)
-- [Tailwind CSS](https://tailwindcss.com/)
+## 🛠️ Tecnologías
 
-## License
-This project is licensed under the MIT License.
+- **React 18** - Biblioteca de interfaz de usuario
+- **Vite** - Build tool y servidor de desarrollo
+- **CSS3** - Estilos modernos con variables CSS y glassmorphism
+
+## 📁 Estructura del Proyecto
+
+```
+react-portfolio/
+├── public/              # Archivos estáticos
+├── src/
+│   ├── components/      # Componentes de React
+│   │   ├── Navigation.jsx
+│   │   ├── GradientBackground.jsx
+│   │   ├── Hero.jsx
+│   │   ├── Experience.jsx
+│   │   ├── Skills.jsx
+│   │   ├── Projects.jsx
+│   │   ├── Education.jsx
+│   │   ├── Certifications.jsx
+│   │   ├── Contact.jsx
+│   │   └── Footer.jsx
+│   ├── App.jsx         # Componente principal
+│   ├── main.jsx        # Punto de entrada
+│   └── index.css       # Estilos globales
+├── index.html          # HTML base
+├── package.json        # Dependencias
+└── vite.config.js      # Configuración de Vite
+```
+
+## 🎨 Componentes
+
+- **Navigation** - Barra de navegación con cambio de tema
+- **GradientBackground** - Fondo animado con partículas
+- **Hero** - Sección principal con presentación
+- **Experience** - Timeline de experiencia laboral
+- **Skills** - Grid de habilidades técnicas
+- **Projects** - Galería de proyectos
+- **Education** - Formación académica
+- **Certifications** - Certificaciones profesionales
+- **Contact** - Formulario de contacto
+- **Footer** - Pie de página
+
+## ⚙️ Scripts Disponibles
+
+- `npm run dev` - Inicia el servidor de desarrollo
+- `npm run build` - Crea build de producción
+- `npm run preview` - Preview del build de producción
+
+## 📝 Personalización
+
+Puedes personalizar el portfolio editando:
+
+1. **Contenido**: Edita los componentes en `src/components/`
+2. **Estilos**: Modifica las variables CSS en `src/index.css`
+3. **Tema**: Ajusta los colores en las variables CSS `:root` y `[data-theme="dark"]`
+
+## 🌐 Deploy
+
+Para desplegar en producción:
+
+```bash
+npm run build
+```
+
+Los archivos optimizados estarán en la carpeta `dist/` listos para ser desplegados en cualquier servicio de hosting estático (Vercel, Netlify, GitHub Pages, etc.).
+
+## 📄 Licencia
+
+MIT
+
+---
+
+Desarrollado con ❤️ por Alejandro Fernández Polo

@@ -1,0 +1,23 @@
+{
+  "experience": {
+    "title": "Work Experience",
+    "description": "I may not have years of experience yet, but I’ve already built real web projects, solved tricky bugs, and worked in agile teams. Every challenge so far has been a chance to learn fast, adapt, and prove that enthusiasm can go a long way in development.",
+    "atg": {
+      "title": "Web Developer Intern",
+      "points": [
+        "Built the corporate website from scratch using WordPress, JavaScript, HTML, and CSS.",
+        "Improved functionality and design based on company requirements.",
+        "Worked with agile methodologies and solved technical issues independently.",
+        "Successfully delivered a production-ready website that boosted the company's online presence."
+      ]
+    },
+    "pergolas": {
+      "title": "Carpentry Assistant",
+      "points": [
+        "Developed strong work discipline and adaptability in a hands-on environment.",
+        "Collaborated closely with team members to complete projects efficiently.",
+        "Gained valuable teamwork and responsibility skills transferable to any industry."
+      ]
+    }
+  }
+}

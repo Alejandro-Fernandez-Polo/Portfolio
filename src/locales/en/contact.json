@@ -1,11 +1,12 @@
 {
   "title": "Get in Touch",
+  "info": {
+    "location": "Location",
+    "my_location": "Granada, Spain"
+  },
   "form": {
-    "name": "Name",
     "name_placeholder": "Jose",
-    "email": "Email",
     "email_placeholder": "jose@example.com",
-    "message": "Your Message",
     "message_placeholder": "Let me know how I can help you!",
     "send": "Send Message",
     "sending": "Sending..."

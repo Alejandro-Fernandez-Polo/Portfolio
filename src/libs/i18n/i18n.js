@@ -2,19 +2,21 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import LanguageDetector from "i18next-browser-languagedetector"
 
-import homeEn from "../../locales/en/home.json"
 import navbarEn from "../../locales/en/navbar.json"
-import aboutEn from "../../locales/en/about.json"
+import heroEn from "../../locales/en/hero.json"
+import experienceEn from "../../locales/en/experience.json"
 import projectsEn from "../../locales/en/projects.json"
+import educationEn from "../../locales/en/education.json"
 import contactEn from "../../locales/en/contact.json"
-import ctaEn from "../../locales/en/cta.json"
+import skillsEn from "../../locales/en/skills.json"
 
-import homeEs from "../../locales/es/home.json"
 import navbarEs from "../../locales/es/navbar.json"
-import aboutEs from "../../locales/es/about.json"
+import heroEs from "../../locales/es/hero.json"
+import experienceEs from "../../locales/es/experience.json"
 import projectsEs from "../../locales/es/projects.json"
+import educationEs from "../../locales/es/education.json"
 import contactEs from "../../locales/es/contact.json"
-import ctaEs from "../../locales/es/cta.json"
+import skillsEs from "../../locales/es/skills.json"
 
 i18n
   .use(LanguageDetector) // 👈 aquí añadimos el detector
@@ -22,25 +24,27 @@ i18n
   .init({
     resources: {
       en: {
-        home: homeEn,
-        about: aboutEn,
+        hero: heroEn,
+        experience: experienceEn,
         contact: contactEn,
         projects: projectsEn,
         navbar: navbarEn,
-        cta: ctaEn,
+        education: educationEn,
+        skills: skillsEn,
       },
       es: {
-        home: homeEs,
-        about: aboutEs,
+        hero: heroEs,
+        experience: experienceEs,
         contact: contactEs,
         projects: projectsEs,
         navbar: navbarEs,
-        cta: ctaEs,
+        education: educationEs,
+        skills: skillsEs,
       },
     },
     fallbackLng: "en", // idioma por defecto si no encuentra el del navegador
-    ns: ["home", "about", "contact", "projects", "navbar", "cta"],
-    defaultNS: "home", // 👈 como no usas "common", mejor apunta a uno real
+    ns: ["hero","experience", "contact", "projects", "navbar", "education", "skills"], // namespaces disponibles
+    defaultNS: "hero", // 👈 como no usas "common", mejor apunta a uno real
     interpolation: { escapeValue: false },
     detection: {
       order: [
@@ -52,6 +56,10 @@ i18n
         "subdomain",
       ],
       caches: ["localStorage", "cookie"], // guarda la preferencia
+    },
+    react: {
+      useSuspense: false,
+      bindI18n: 'languageChanged loaded',
     },
   })
 

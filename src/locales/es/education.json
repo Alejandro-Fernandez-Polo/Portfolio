@@ -1,0 +1,12 @@
+{
+  "title": "Educación",
+
+  "education": {
+     "grado" : {
+      "title": "Grado Superior en Desarrollo de Aplicaciones Web"
+    },
+    "carrera" : {
+      "title": "Grado en Ingeniería Informática"
+    }
+  }
+}

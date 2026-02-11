@@ -1,36 +1,46 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
-import { Navbar } from "./components/Navbar"
-import { Footer } from "./components/Footer"
-import { Home, About, Projects, Contact } from "./pages"
-import "./libs/i18n/i18n"; // importante para inicializar i18n
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { useState, useEffect, lazy, Suspense } from "react"
+import Navigation from './components/Navigation'
+import Hero from './components/Hero'
+import "./libs/i18n/i18n"
 
 function App() {
+  const [theme, setTheme] = useState("dark")
+  const Experience = lazy(() => import("./components/Experience"))
+  const Skills = lazy(() => import("./components/Skills"))
+  const Projects = lazy(() => import("./components/Projects"))
+  const Education = lazy(() => import("./components/Education"))
+  const Certifications = lazy(() => import("./components/Certifications"))
+  const Contact = lazy(() => import("./components/Contact"))
+  const Footer = lazy(() => import("./components/Footer"))
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light'
+    setTheme(savedTheme)
+    document.documentElement.setAttribute('data-theme', savedTheme)
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    setTheme(newTheme)
+    document.documentElement.setAttribute('data-theme', newTheme)
+    localStorage.setItem('theme', newTheme)
+  }
+
   return (
-    <main className="background">
-      <Analytics />
-      <SpeedInsights />
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/*"
-            element={
-              <>
-                <Routes>
-                  <Route path="/about" element={<About />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/contact" element={<Contact />} />
-                </Routes>
-                <Footer />
-              </>
-            }
-          />
-        </Routes>
-      </Router>
-    </main>
+    <>
+      <Navigation theme={theme} toggleTheme={toggleTheme} />
+      <main className="container">
+        <Hero />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Experience />
+          <Skills />
+          <Projects />
+          <Education />
+          <Contact />
+          <Footer />
+        </Suspense>
+      </main>
+    </>
   )
 }
 
