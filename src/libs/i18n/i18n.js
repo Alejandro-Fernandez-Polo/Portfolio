@@ -57,6 +57,10 @@ i18n
       ],
       caches: ["localStorage", "cookie"], // guarda la preferencia
     },
+    react: {
+      useSuspense: false,
+      bindI18n: 'languageChanged loaded',
+    },
   })
 
 export default i18n

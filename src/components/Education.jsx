@@ -1,8 +1,18 @@
 import { useTranslation, Trans } from "react-i18next"
+import { useState, useEffect } from "react"
 import { education } from "../constants/index.js"
 export default function Education() {
   const { t, i18n } = useTranslation("education")
   const educationItems = education
+  const [lang, setLang] = useState(i18n.language || i18n.resolvedLanguage || 'en')
+
+  useEffect(() => {
+    setLang(i18n.resolvedLanguage || i18n.language || 'en')
+    
+    const handler = () => setLang(i18n.language)
+    i18n.on("languageChanged", handler)
+    return () => i18n.off("languageChanged", handler)
+  }, [i18n])
 
   return (
     <section id="education">
@@ -15,7 +25,7 @@ export default function Education() {
           return (
             <div key={item.id} className="education-card">
               <h3>{trans.title}</h3>
-              <p>{item.date[i18n.language]}</p>
+              <p>{item.date[lang] || item.date.en}</p>
             </div>
           )
         })}

@@ -6,9 +6,12 @@ import ukFlag from "../assets/flags/unitedkingdom.png"
 export default function Navigation({ toggleTheme }) {
   const [activeSection, setActiveSection] = useState("home")
   const { t, i18n } = useTranslation("navbar")
-  const [lang, setLang] = useState(i18n.language)
+  const [lang, setLang] = useState(i18n.language || i18n.resolvedLanguage || 'en')
 
   useEffect(() => {
+    // Actualizar inmediatamente con el idioma actual resuelto
+    setLang(i18n.resolvedLanguage || i18n.language || 'en')
+    
     const handler = () => setLang(i18n.language)
     i18n.on("languageChanged", handler)
     return () => i18n.off("languageChanged", handler)
@@ -91,7 +94,7 @@ export default function Navigation({ toggleTheme }) {
             onClick={() => i18n.changeLanguage("en")}
             style={{
               color:
-                i18n.language === "en"
+                lang === "en"
                   ? "var(--accent)"
                   : "var(--text-primary)",
             }}
@@ -102,7 +105,7 @@ export default function Navigation({ toggleTheme }) {
             onClick={() => i18n.changeLanguage("es")}
             style={{
               color:
-                i18n.language === "es"
+                lang === "es"
                   ? "var(--accent)"
                   : "var(--text-primary)",
             }}

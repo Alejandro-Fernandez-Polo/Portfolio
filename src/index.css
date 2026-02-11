@@ -388,6 +388,11 @@ nav {
   overflow: hidden;
   text-decoration: none;
 }
+.mail-link {
+  fill: none!important;
+  stroke: var(--text-primary);
+  stroke-width: 2;
+}
 
 .social-link:hover {
   background: var(--accent);
@@ -946,7 +951,7 @@ section {
 }
 
 .form-group textarea {
-  resize: vertical;
+  resize: none;
   min-height: 120px;
 }
 
