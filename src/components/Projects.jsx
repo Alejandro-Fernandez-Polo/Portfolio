@@ -15,7 +15,10 @@ export default function Projects() {
           const trans = t(`projects.${project.id}`, { returnObjects: true })
           return (
             <div key={project.id} className="project-card">
-              <div className="project-image">{project.emoji}lista de tecnologias usadas</div>
+              <div className="project-image">
+                <img src={project.img} alt={trans.name} />
+                <p>lista de tecnologias usadas</p>
+              </div>
               <div className="project-content">
                 <h3>{trans.name}</h3>
                 <p>{trans.description}</p>

@@ -1,38 +1,30 @@
 import { useTranslation, Trans } from "react-i18next"
 import recImage from "../assets/images/perfil.png"
+// import { socialLinks } from "../constants/index.js"
 
 export default function Hero() {
   const { t, i18n } = useTranslation("hero")
 
-  const socialLinks = [
-    {
-      icon: (
-        <svg className="mail-link" viewBox="0 0 24 24" >
-          <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/>
-          <rect x="2" y="4" width="20" height="16" rx="2"/>
-        </svg>
-      ),
-      href: "mailto:contact@example.com",
-    },
-    {
-      icon: (
-        <svg viewBox="0 0 24 24">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-          <rect x="2" y="9" width="4" height="12" />
-          <circle cx="4" cy="4" r="2" />
-        </svg>
-      ),
-      href: "#",
-    },
-    {
-      icon: (
-        <svg viewBox="0 0 24 24">
-          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-        </svg>
-      ),
-      href: "#",
-    },
-  ]
+const socialLinks = [
+  {
+    icon: (
+      <svg viewBox="0 0 24 24">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
+    href: "https://www.linkedin.com/in/alejandro-fernández-polo",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+      </svg>
+    ),
+    href: "https://github.com/Alejandro-Fernandez-Polo",
+  },
+]
 
   return (
     <section className="hero" id="home">
@@ -46,6 +38,17 @@ export default function Hero() {
         <p>{t("intro")}</p>
 
         <div className="social-links ">
+          <a
+            href="mailto:afernanpolo@gmail.com"
+            className="social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg className="mail-link" viewBox="0 0 24 24">
+              <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+            </svg>
+          </a>
           {socialLinks.map((link, index) => (
             <a
               key={index}

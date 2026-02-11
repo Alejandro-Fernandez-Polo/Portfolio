@@ -13,22 +13,19 @@ export default function Skills() {
         {groupedSkills.map((skill) => {
           const trans = t(`skills.${skill.title}`, { returnObjects: true })
           return (
-          <div key={skill.title} className="skill-card">
-            <h3>{trans}</h3>
-            <div className="tech-icons">
-              {skill.content.map((item) => (
-                <div key={item.name} className="tech-icon">
-                  {/* {icon} */}
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="w-1/2 h-1/2 object-contain tech-icon"
-                  />
-                </div>
-              ))}
+            <div key={skill.title} className="skill-card">
+              <h3>{trans}</h3>
+              <div className="tech-icons">
+                {skill.content.map((item) => (
+                  <div key={item.name} className="tech-icon">
+                    <svg viewBox="0 0 24 24">
+                      <path d={item.imageUrl} />
+                    </svg>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )})}
+          )})}
       </div>
     </section>
   )
