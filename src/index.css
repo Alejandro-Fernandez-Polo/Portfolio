@@ -24,6 +24,7 @@ html {
   --gradient-end: rgba(236, 72, 153, 0.15);
   --glass-border: rgba(255, 255, 255, 0.5);
   --glass-shadow: rgba(31, 38, 135, 0.15);
+  --glass-shadow-hover: rgba(31, 38, 135, 0.8);
 }
 
 [data-theme="dark"] {
@@ -40,6 +41,7 @@ html {
   --gradient-end: rgba(236, 72, 153, 0.25);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-shadow: rgba(168, 85, 247, 0.2);
+  --glass-shadow-hover: rgba(168, 85, 247, 0.8);
 }
 
 body {

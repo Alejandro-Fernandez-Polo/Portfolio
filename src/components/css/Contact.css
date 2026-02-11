@@ -40,7 +40,10 @@
   box-shadow: 0 4px 15px var(--glass-shadow),
               inset 0 1px 1px rgba(255, 255, 255, 0.3);
   padding: 10px;
-  fill: var(--text-primary);
+  fill: var(--bg-primary);
+}
+.contact-icon .mail-link {
+  stroke: var(--bg-primary)!important;
 }
 
 .contact-item div h4 {
