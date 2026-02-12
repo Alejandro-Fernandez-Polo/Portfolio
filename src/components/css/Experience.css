@@ -118,14 +118,21 @@
 }
 
 @media (max-width: 768px) {
-  .timeline::before {
-    left: 30px;
-    transform: none;
+  .timeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
+
+  .timeline::before {
+    display: none;
+  }
+
 
   .timeline-item {
     width: calc(100% - 60px);
-    left: 60px !important;
+    left: 0 !important;
     transform: translateX(0) !important;
     margin-bottom: 30px;
   }
