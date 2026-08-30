@@ -263,6 +263,7 @@
   // ─── Update All ─────────────────────────────────────────────
   function updateAll() {
     detectConflicts();
+    renderSubjects();
     renderGroupConfig();
     renderCalendar();
     renderConflicts();
