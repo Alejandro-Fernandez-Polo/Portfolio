@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {
+      "src": "/ugr",
+      "headers": { "Location": "/ugr/" },
+      "status": 301
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
