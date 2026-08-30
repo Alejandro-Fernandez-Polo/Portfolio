@@ -1,8 +1,16 @@
-{
-  "rewrites": [
+﻿{
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/ugr",
+      "headers": { "Location": "/ugr/" },
+      "status": 301
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }

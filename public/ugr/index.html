@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UGR Horario - Planificador de Horarios</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>UGR Horario</h1>
+      <p>Planificador de Horarios - Grado en Ingeniería Informática</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Panel de configuración del usuario -->
+    <section id="user-config" class="panel">
+      <h2>Configuración</h2>
+      <div class="config-row">
+        <div class="config-field">
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" placeholder="Ej: García" autocomplete="off">
+          <small>Para auto-asignar subgrupos de práctica</small>
+        </div>
+        <div class="config-field">
+          <label for="turno-preferente">Turno preferente:</label>
+          <select id="turno-preferente">
+            <option value="indiferente">Indiferente</option>
+            <option value="mañana">Mañana</option>
+            <option value="tarde">Tarde</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel de selección de asignaturas -->
+    <section id="subject-selection" class="panel">
+      <div class="panel-header">
+        <h2>Asignaturas</h2>
+        <div class="summary-bar">
+          <span id="selected-count">0</span> / <span id="total-subjects">0</span> asignaturas
+          &middot;
+          <span id="total-credits">0</span> ECTS
+          <span id="credit-meta" class="credit-meta">(meta: 30)</span>
+        </div>
+      </div>
+
+      <!-- Cuatrimestre tabs -->
+      <div class="tabs">
+        <button class="tab active" data-cuatrimestre="1">1er Cuatrimestre</button>
+        <button class="tab" data-cuatrimestre="2">2º Cuatrimestre</button>
+      </div>
+
+      <div id="subjects-container"></div>
+    </section>
+
+    <!-- Calendario + Configuración de grupos -->
+    <section id="calendar-section" class="panel">
+      <div class="calendar-header-row">
+        <h2>Calendario Semanal</h2>
+        <button id="toggle-group-config" class="btn-toggle" style="display:none;">
+          <span class="toggle-icon">&#9660;</span> Configurar grupos
+        </button>
+      </div>
+
+      <!-- Panel de configuración de grupos (colapsable) -->
+      <div id="group-config" style="display:none;">
+        <div id="group-config-content"></div>
+      </div>
+
+      <div id="calendar-wrapper">
+        <div id="calendar"></div>
+      </div>
+    </section>
+
+    <!-- Panel de conflictos -->
+    <section id="conflicts-panel" class="panel" style="display:none;">
+      <h2>⚠ Conflictos Detectados</h2>
+      <div id="conflicts-list"></div>
+    </section>
+
+    <!-- Resumen -->
+    <section id="summary-panel" class="panel">
+      <h2>Resumen</h2>
+      <div id="summary-content">
+        <p class="empty-state">Selecciona asignaturas para ver el resumen.</p>
+      </div>
+    </section>
+
+    <!-- Acciones -->
+    <section id="actions" class="panel">
+      <button id="btn-export" class="btn btn-primary" disabled>Exportar Horario (Imagen)</button>
+      <button id="btn-share" class="btn btn-secondary" disabled>Compartir Enlace</button>
+      <button id="btn-clear" class="btn btn-danger">Limpiar Todo</button>
+    </section>
+  </main>
+
+  <!-- Tooltip -->
+  <div id="tooltip" class="tooltip" style="display:none;"></div>
+
+  <!-- Toast notifications -->
+  <div id="toast-container"></div>
+
+  <footer>
+    <p>UGR Horario &copy; 2026 - Planificador de Horarios UGR</p>
+  </footer>
+
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
