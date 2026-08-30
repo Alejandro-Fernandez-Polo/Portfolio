@@ -1,16 +1,15 @@
 ﻿{
-  "routes": [
+  "redirects": [
     {
-      "src": "/ugr",
-      "headers": { "Location": "/ugr/" },
-      "status": 301
-    },
+      "source": "/ugr",
+      "destination": "/ugr/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
