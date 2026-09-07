@@ -14,88 +14,259 @@
     </div>
   </header>
 
+  <!-- Navegación principal -->
+  <nav id="main-nav">
+    <button class="nav-tab active" data-view="horario">Horario</button>
+    <button class="nav-tab" data-view="asignaturas">Asignaturas</button>
+    <button class="nav-tab" data-view="convalidaciones">Convalidaciones</button>
+  </nav>
+
   <main>
-    <!-- Panel de configuración del usuario -->
-    <section id="user-config" class="panel">
-      <h2>Configuración</h2>
-      <div class="config-row">
-        <div class="config-field">
-          <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" placeholder="Ej: García" autocomplete="off">
-          <small>Para auto-asignar subgrupos de práctica</small>
+    <!-- ═══ VISTA: HORARIO ═══ -->
+    <div id="view-horario" class="view active">
+      <!-- Panel de configuración del usuario -->
+      <section id="user-config" class="panel">
+        <h2>Configuración</h2>
+        <div class="config-row">
+          <div class="config-field">
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" placeholder="Ej: García" autocomplete="off">
+            <small>Para auto-asignar subgrupos de práctica</small>
+          </div>
+          <div class="config-field">
+            <label for="turno-preferente">Turno preferente:</label>
+            <select id="turno-preferente">
+              <option value="indiferente">Indiferente</option>
+              <option value="mañana">Mañana</option>
+              <option value="tarde">Tarde</option>
+            </select>
+          </div>
         </div>
-        <div class="config-field">
-          <label for="turno-preferente">Turno preferente:</label>
-          <select id="turno-preferente">
-            <option value="indiferente">Indiferente</option>
-            <option value="mañana">Mañana</option>
-            <option value="tarde">Tarde</option>
-          </select>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Panel de selección de asignaturas -->
-    <section id="subject-selection" class="panel">
+      <!-- Panel de selección de asignaturas -->
+      <section id="subject-selection" class="panel">
+        <div class="panel-header">
+          <h2>Asignaturas</h2>
+          <div class="summary-bar">
+            <span id="selected-count">0</span> / <span id="total-subjects">0</span> asignaturas
+            &middot;
+            <span id="total-credits">0</span> ECTS
+            <span id="credit-meta" class="credit-meta">(meta: 30)</span>
+          </div>
+        </div>
+
+        <!-- Cuatrimestre tabs -->
+        <div class="tabs">
+          <button class="tab active" data-cuatrimestre="1">1er Cuatrimestre</button>
+          <button class="tab" data-cuatrimestre="2">2º Cuatrimestre</button>
+        </div>
+
+        <div id="subjects-container"></div>
+      </section>
+
+      <!-- Calendario + Configuración de grupos -->
+      <section id="calendar-section" class="panel">
+        <div class="calendar-header-row">
+          <h2>Calendario Semanal</h2>
+          <button id="toggle-group-config" class="btn-toggle" style="display:none;">
+            <span class="toggle-icon">&#9660;</span> Configurar grupos
+          </button>
+        </div>
+
+        <!-- Panel de configuración de grupos (colapsable) -->
+        <div id="group-config" style="display:none;">
+          <div id="group-config-content"></div>
+        </div>
+
+        <div id="calendar-wrapper">
+          <div id="calendar"></div>
+        </div>
+      </section>
+
+      <!-- Panel de conflictos -->
+      <section id="conflicts-panel" class="panel" style="display:none;">
+        <h2>⚠ Conflictos Detectados</h2>
+        <div id="conflicts-list"></div>
+      </section>
+
+      <!-- Acciones -->
+      <section id="actions" class="panel">
+        <button id="btn-export" class="btn btn-primary" disabled>Exportar Horario (Imagen)</button>
+        <button id="btn-share" class="btn btn-secondary" disabled>Compartir Enlace</button>
+        <button id="btn-clear-selected" class="btn btn-danger">Eliminar Seleccionadas</button>
+      </section>
+
+      <!-- Resumen -->
+      <section id="summary-panel" class="panel">
+        <h2>Resumen</h2>
+        <div id="summary-content">
+          <p class="empty-state">Selecciona asignaturas para ver el resumen.</p>
+        </div>
+      </section>
+
+    <!-- Configuraciones guardadas -->
+    <section id="saved-configs" class="panel">
       <div class="panel-header">
-        <h2>Asignaturas</h2>
-        <div class="summary-bar">
-          <span id="selected-count">0</span> / <span id="total-subjects">0</span> asignaturas
-          &middot;
-          <span id="total-credits">0</span> ECTS
-          <span id="credit-meta" class="credit-meta">(meta: 30)</span>
+        <h2>Configuraciones Guardadas</h2>
+        <div class="saved-configs-header-actions">
+          <button id="btn-export-all-configs" class="btn btn-sm btn-secondary">Exportar Todas</button>
+          <button id="btn-import-config" class="btn btn-sm btn-secondary">Importar Config</button>
+          <input type="file" id="import-config-input" accept=".json" style="display:none;">
         </div>
       </div>
-
-      <!-- Cuatrimestre tabs -->
-      <div class="tabs">
-        <button class="tab active" data-cuatrimestre="1">1er Cuatrimestre</button>
-        <button class="tab" data-cuatrimestre="2">2º Cuatrimestre</button>
+      <div class="save-config-row">
+        <input type="text" id="config-name" placeholder="Nombre de la configuración" autocomplete="off">
+        <button id="btn-save-config" class="btn btn-primary">Guardar</button>
       </div>
-
-      <div id="subjects-container"></div>
+      <div id="saved-configs-list"></div>
     </section>
+    </div>
 
-    <!-- Calendario + Configuración de grupos -->
-    <section id="calendar-section" class="panel">
-      <div class="calendar-header-row">
-        <h2>Calendario Semanal</h2>
-        <button id="toggle-group-config" class="btn-toggle" style="display:none;">
-          <span class="toggle-icon">&#9660;</span> Configurar grupos
-        </button>
-      </div>
+    <!-- ═══ VISTA: ASIGNATURAS ═══ -->
+    <div id="view-asignaturas" class="view" style="display:none;">
+      <!-- Datos -->
+      <section id="data-section" class="panel">
+        <h2>Datos</h2>
+        <div class="data-actions">
+          <button id="btn-export-json" class="btn btn-secondary">Exportar Todo (JSON)</button>
+          <button id="btn-import-json" class="btn btn-secondary">Importar JSON</button>
+          <input type="file" id="import-json-input" accept=".json" style="display:none;">
+          <button id="btn-reset-defaults" class="btn btn-danger">Restaurar por Defecto</button>
+        </div>
+      </section>
 
-      <!-- Panel de configuración de grupos (colapsable) -->
-      <div id="group-config" style="display:none;">
-        <div id="group-config-content"></div>
-      </div>
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Gestionar Asignaturas</h2>
+          <button id="btn-add-subject" class="btn btn-primary">+ Añadir Asignatura</button>
+        </div>
+        <div id="manage-subjects-container"></div>
+      </section>
+    </div>
 
-      <div id="calendar-wrapper">
-        <div id="calendar"></div>
-      </div>
-    </section>
-
-    <!-- Panel de conflictos -->
-    <section id="conflicts-panel" class="panel" style="display:none;">
-      <h2>⚠ Conflictos Detectados</h2>
-      <div id="conflicts-list"></div>
-    </section>
-
-    <!-- Resumen -->
-    <section id="summary-panel" class="panel">
-      <h2>Resumen</h2>
-      <div id="summary-content">
-        <p class="empty-state">Selecciona asignaturas para ver el resumen.</p>
-      </div>
-    </section>
-
-    <!-- Acciones -->
-    <section id="actions" class="panel">
-      <button id="btn-export" class="btn btn-primary" disabled>Exportar Horario (Imagen)</button>
-      <button id="btn-share" class="btn btn-secondary" disabled>Compartir Enlace</button>
-      <button id="btn-clear" class="btn btn-danger">Limpiar Todo</button>
-    </section>
+    <!-- ═══ VISTA: CONVALIDACIONES ═══ -->
+    <div id="view-convalidaciones" class="view" style="display:none;">
+      <!-- Propuestas en bloque -->
+      <section class="panel" id="propuestas-panel">
+        <div class="panel-header">
+          <h2>Propuestas de convalidación</h2>
+          <div class="summary-bar" id="propuestas-summary"></div>
+        </div>
+        <div class="propuestas-bar">
+          <select id="propuesta-select" class="filter-select" style="min-width:280px;"></select>
+          <span id="propuesta-badge" class="propuesta-badge"></span>
+          <div class="propuestas-actions">
+            <button id="btn-nueva-propuesta" class="btn btn-sm btn-secondary">+ Nueva</button>
+            <button id="btn-nueva-vacia-propuesta" class="btn btn-sm btn-primary">+ Vacía</button>
+            <button id="btn-duplicar-propuesta" class="btn btn-sm btn-secondary">Duplicar</button>
+            <button id="btn-renombrar-propuesta" class="btn btn-sm btn-secondary">Renombrar</button>
+            <button id="btn-eliminar-propuesta" class="btn btn-sm btn-danger">Eliminar</button>
+          </div>
+        </div>
+        <div class="propuestas-bar" style="margin-top:0.6rem;">
+          <div class="convalidaciones-vista-toggle">
+            <button class="btn btn-sm btn-secondary active" data-vista="oficial">Oficial</button>
+            <button class="btn btn-sm btn-secondary" data-vista="propuesta">Propuesta</button>
+            <button class="btn btn-sm btn-secondary" data-vista="comparativa">Comparativa</button>
+          </div>
+          <div class="propuestas-actions">
+            <button id="btn-compartir-propuesta" class="btn btn-sm btn-secondary">Compartir Propuesta</button>
+            <button id="btn-export-propuesta" class="btn btn-sm btn-secondary">Exportar JSON</button>
+            <button id="btn-import-propuesta" class="btn btn-sm btn-secondary">Importar JSON</button>
+            <input type="file" id="import-propuesta-input" accept=".json" style="display:none;">
+          </div>
+        </div>
+        <div id="propuesta-detalle"></div>
+        <!-- Propuestas guardadas (igual que configuraciones de horario) -->
+        <div class="panel" style="margin-top:1rem; border-top:2px solid var(--border); padding-top:1rem;">
+          <div class="panel-header">
+            <h3>Propuestas guardadas</h3>
+            <div class="saved-configs-header-actions">
+              <button id="btn-export-all-propuestas" class="btn btn-sm btn-secondary">Exportar todas</button>
+              <button id="btn-import-propuesta-guardada" class="btn btn-sm btn-secondary">Importar</button>
+              <input type="file" id="import-propuesta-guardada-input" accept=".json" style="display:none;">
+            </div>
+          </div>
+          <div class="save-config-row">
+            <input type="text" id="propuesta-guardada-nombre" placeholder="Nombre para guardar la propuesta activa" autocomplete="off">
+            <button id="btn-guardar-propuesta-interna" class="btn btn-primary">Guardar propuesta</button>
+          </div>
+          <div id="propuestas-guardadas-list"></div>
+        </div>
+      </section>
+    </div>
   </main>
+
+  <!-- Modal: Editar/Añadir Asignatura -->
+  <div id="subject-modal" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Nueva Asignatura</h2>
+        <button id="modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="modal-edit-codigo">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="modal-codigo">Código</label>
+            <input type="text" id="modal-codigo" placeholder="Ej: FTP" maxlength="10">
+          </div>
+          <div class="form-field">
+            <label for="modal-nombre">Nombre</label>
+            <input type="text" id="modal-nombre" placeholder="Ej: Fundamentos de Tecnología de la Programación">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="modal-curso">Curso</label>
+            <select id="modal-curso">
+              <option value="1">1º</option>
+              <option value="2">2º</option>
+              <option value="3">3º</option>
+              <option value="4">4º</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="modal-cuatrimestre">Cuatrimestre</label>
+            <select id="modal-cuatrimestre">
+              <option value="1">1er Cuatrimestre</option>
+              <option value="2">2º Cuatrimestre</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="modal-creditos">Créditos ECTS</label>
+            <input type="number" id="modal-creditos" min="1" max="30" value="6">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+            <input type="checkbox" id="modal-aprobada" style="width: auto;">
+            <label for="modal-aprobada" style="margin: 0;">Aprobada</label>
+          </div>
+          <div class="form-field">
+            <label for="modal-corresponde">Convalida / Corresponde a</label>
+            <input type="text" id="modal-corresponde" placeholder="Ej: FMI">
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-header">
+            <h3>Grupos</h3>
+            <button id="btn-add-group" class="btn btn-sm btn-secondary">+ Añadir Grupo</button>
+          </div>
+          <div id="modal-groups-container"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-cancel" class="btn btn-danger">Cancelar</button>
+        <button id="modal-save" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Tooltip -->
   <div id="tooltip" class="tooltip" style="display:none;"></div>
@@ -107,7 +278,89 @@
     <p>UGR Horario &copy; 2026 - Planificador de Horarios UGR</p>
   </footer>
 
+  <!-- Modal Propuesta -->
+  <div id="propuesta-modal" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="propuesta-modal-title">Nueva Propuesta</h2>
+        <button id="propuesta-modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <label for="propuesta-nombre">Nombre</label>
+          <input type="text" id="propuesta-nombre" placeholder="Ej: Propuesta ETSIIT 54 ECTS">
+        </div>
+        <div class="form-field" style="flex-direction:row;align-items:center;gap:0.5rem;">
+          <input type="checkbox" id="propuesta-enbloque" checked style="width:auto;">
+          <label for="propuesta-enbloque" style="margin:0;">En bloque (concesión conjunta)</label>
+        </div>
+        <div class="form-field">
+          <label for="propuesta-nota">Nota</label>
+          <input type="text" id="propuesta-nota" placeholder="Ej: 54 (*) pendiente resolución">
+        </div>
+        <input type="hidden" id="propuesta-edit-id">
+      </div>
+      <div class="modal-footer">
+        <button id="propuesta-modal-cancel" class="btn btn-danger">Cancelar</button>
+        <button id="propuesta-modal-save" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Mapeo Propuesta (individual o bloque 4↔4) -->
+  <div id="propuesta-mapeo-modal" class="modal-overlay" style="display:none;">
+    <div class="modal" style="max-width:720px;">
+      <div class="modal-header">
+        <h2 id="propuesta-mapeo-title">Añadir mapeo</h2>
+        <button id="propuesta-mapeo-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="mapeo-edit-index">
+        <div class="form-field">
+          <label for="mapeo-tipo">Tipo</label>
+          <select id="mapeo-tipo">
+            <option value="individual">Asignatura suelta (1↔1)</option>
+            <option value="bloque">Bloque 4↔4 (conjunto)</option>
+          </select>
+        </div>
+        <div id="mapeo-individual-fields">
+          <div class="form-row">
+            <div class="form-field"><label for="mapeo-cursada-select">Cursada (UNED / DAW)</label><select id="mapeo-cursada-select"></select></div>
+            <div class="form-field"><label for="mapeo-cursada-codigo">Cód. cursada</label><input type="text" id="mapeo-cursada-codigo" placeholder="Se rellena automático" readonly style="background:#f8f9fa;"></div>
+          </div>
+          <!-- inputs ocultos para compatibilidad -->
+          <input type="hidden" id="mapeo-cursada">
+          <div class="form-row">
+            <div class="form-field"><label for="mapeo-reconocida-select">Reconocida UGR</label><select id="mapeo-reconocida-select"></select></div>
+            <div class="form-field"><label for="mapeo-reconocida-codigo">Cód. UGR</label><input type="text" id="mapeo-reconocida-codigo" placeholder="Se rellena automático" readonly style="background:#f8f9fa;"></div>
+          </div>
+          <input type="hidden" id="mapeo-reconocida">
+          <div class="form-row">
+            <div class="form-field"><label for="mapeo-calif">Calificación</label><input type="number" step="0.1" min="0" max="10" id="mapeo-calif" value="7.5"></div>
+            <div class="form-field"><label for="mapeo-creditos">Créditos</label><input type="number" min="1" max="30" id="mapeo-creditos" value="6"></div>
+          </div>
+        </div>
+        <div id="mapeo-bloque-fields" style="display:none;">
+          <p style="font-size:0.85rem;color:var(--text-light);">Bloque 4 asignaturas cursadas ↔ 4 reconocidas con calificación única. Se convalida en conjunto.</p>
+          <div class="form-field"><label>Cursadas (4)</label><div id="bloque-cursadas"></div><button type="button" id="btn-add-bloque-cursada" class="btn btn-sm btn-secondary">+ Añadir cursada</button></div>
+          <div class="form-field"><label>Reconocidas UGR (4)</label><div id="bloque-reconocidas"></div><button type="button" id="btn-add-bloque-reconocida" class="btn btn-sm btn-secondary">+ Añadir reconocida</button></div>
+          <div class="form-row">
+            <div class="form-field"><label for="bloque-calif">Calificación bloque</label><input type="number" step="0.1" min="0" max="10" id="bloque-calif" value="7.5"></div>
+            <div class="form-field"><label for="bloque-creditos">Créditos bloque</label><input type="number" min="1" max="48" id="bloque-creditos" value="24"></div>
+          </div>
+          <div class="form-field"><label for="bloque-nota">Nota bloque</label><input type="text" id="bloque-nota" value="Bloque 4↔4 — concesión conjunta"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="propuesta-mapeo-cancel" class="btn btn-danger">Cancelar</button>
+        <button id="propuesta-mapeo-save" class="btn btn-primary">Guardar mapeo</button>
+      </div>
+    </div>
+  </div>
+
   <script src="/ugr/data.js"></script>
+  <script src="/ugr/convalidaciones.js"></script>
+  <script src="/ugr/propuestas.js"></script>
   <script src="/ugr/app.js"></script>
 </body>
 </html>
