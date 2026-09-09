@@ -10,6 +10,46 @@
   const DAY_LABELS = { lunes: 'Lunes', martes: 'Martes', miercoles: 'Miércoles', jueves: 'Jueves', viernes: 'Viernes' };
   const START_HOUR = 8;
   const END_HOUR = 21;
+  let compareIds = [];
+
+  const PROFESORES_MAP = {
+    'SO-A':  { nombre: 'Miguel Lastra Leidinger',      razon: 'Correcto pero menos evidencia pública', dificultad: 'gris', opinion: '' },
+    'SO-B':  { nombre: 'Pablo Antonio Pico Valencia',   razon: 'Menos evidencia de docencia en SO', dificultad: 'gris', opinion: '' },
+    'SO-C':  { nombre: 'Patricia Paderewski Rodríguez', razon: 'Larga trayectoria en SO, experiencia con Linux', dificultad: 'naranja', opinion: 'Explica medianamente bien, si asistes a las clases te llevas cosillas entendidas a casa, que se agradece mucho en esta asignatura, pero no esperes enterarte de todo. Va rapídito pero es soportable. Es simpática y atiende bien las dudas en tutoría. Los exámenes son asefables pero corrige de forma dura.' },
+    'SO-D':  { nombre: 'Alejandro José León Salas',     razon: 'Experiencia directa, vinculación con Linux', dificultad: 'naranja', opinion: 'Le echa ganas a la asignatura pero explica demasiado rápido y la asignatura es infumable. Sus exámenes son a papel y muy largos. Es normal corrigiendo y no tarda mucho. Puede bajar la nota mínima para aprobarste (4 con algo en vez de 5)' },
+    'SO-E':  { nombre: 'José Luis Garrido Bullejos',    razon: 'Catedrático. Máxima categoría. Experiencia consolidada', dificultad: 'naranja', opinion: 'Este hombre es una enciclopedia andante, saber sabe como ninguno por lo que también espera que tu sepas lo mismo que Google, es muy apagado a la bibliografía de la asignatura, sí o si te va a hacer falta rellenar información de ellos ya que las diapositivas son meh, lo que de verdad importa es atender a lo que te dice, porque habla entre líneas y te da el examen hecho, lo que pasa que cualquiera se acuerda tan específicamente de lo que dijo. Importantísimo también que te vea con interés e incluso participando en clase, le gusta mucho que tomes parte en ellas sobre todo si hacéis preguntas interesantes, que vea que entendéis el tema. De igual manera es recomendable ir a tutoría a preguntarle cualquier cosa. Os pide que le hagáis la relación de ejercicios y que la corrijáis juntos porque si no él no hace ejercicios en clase. No es muy frecuente pero a lo mejor le da por hacer un ejercicio que cuenta un 10% de la nota de algo que haya puesto énfasis o que vea interesante de cara al examen o que investiguemos por nuestra cuenta. Los exámenes son otro rollo, preguntas complejas e incluso rebuscadas de verdadero o falso justificando y luego algún ejercicio práctico que normalmente también estará dado con una vuelta de rosca. Tarda MUCHÍSIMO en corregir osea que se sufre mucho teniendo en cuenta que es SO.' },
+    'IG-A':  { nombre: 'Germán Arroyo Moreno',          razon: '+20 años en gráficos, OpenGL/GLSL. Enfoque práctico', dificultad: 'amarillo', opinion: 'Suele explicar las prácticas a su manera y las defensas consiste en hacer modificaciones en los códigos de tus prácticas para ver si lo has hecho tú (a veces las defensas son muy enredadas). Profesor que deja un poco que desees en las explicaciones pero si que trabajas y te esfuerzas puedes sacar muy buena nota con él.' },
+    'IG-B':  { nombre: 'Juan Carlos Torres Cantero',    razon: 'Catedrático, máximo dominio pero enfoque teórico', dificultad: 'naranja', opinion: 'Aunque de primeras parezca que no, es un buen profesor y se preocupa por que entiendas las cosas. Además, súper recommendable ir a revisión para el examen final de teoría. Si tienes más de un 3, puedes llevarte una sorpresa. Sus explicaciones en clase dejan mucho que desear. Es mejor ir a tutorías en donde lo explica todo mejor. Es estricto corrigiendo pero aconsejable ir a revisión ya que es posible subir nota pero tienes que rebatirle mucho dado que hay cosas que pones bien en el examen pero él te dice que está mal y luego no sabe muy bien como argumentarlo. El examen no se parece al modelo que proporciona además de que corrige totalmente aleatorio. En las revisiones dice que él tiene su método y no te explica nada, además de equivocarse intentando defender cómo ha corregido, te dice que solicites tribu nal y resulta que él es el director del departamento.' },
+    'IG-C':  { nombre: 'Antonio López Fernández',       razon: 'Continuidad teoría-prácticas, accesible', dificultad: 'cyan', opinion: 'Es muy buena gente y todo lo que te preguntas se va a implica en ayudarte pero las clases son muy aburridas y probablemente no te enteres de nada ni de las diapositivas ni de sus explicaciones de teoría pero no importa demasiado ya que el examen no es nada difícil y de hecho prácticamente dice como hacer los ejercicios durante el examen. La parte más importante de esta asignatura y donde realmente vas a dedicar el tiempo (al menos con este profesor) es en las prácticas. Como consejo diría que es conveniente tener más o menos buena relación con él (haciendo bien las prácticas, yendo a clase...) y sobre todo atender mucho y copiad con todo detalle cuando hace los ejercicios en clase porque no vais a tener más ejercicios ni explicaciones que las de clase y los ejercicios del examen son prácticamente iguales así que si no los copiáis (y muy prefiblemente entendéis) luego cuando vayáis a estudiar no vais a tener nada más allá de lo que os pasen.' },
+    'IG-D':  { nombre: 'Juan Carlos Torres Cantero',    razon: 'Mismo profesor que B, decidir por horario', dificultad: 'naranja', opinion: 'Aunque de primeras parezca que no, es un buen profesor y se preocupa por que entiendas las cosas. Además, súper recommendable ir a revisión para el examen final de teoría. Si tienes más de un 3, puedes llevarte una sorpresa. Sus explicaciones en clase dejan mucho que desear. Es mejor ir a tutorías en donde lo explica todo mejor. Es estricto corrigiendo pero aconsejable ir a revisión ya que es posible subir nota pero tienes que rebatirle mucho dado que hay cosas que pones bien en el examen pero él te dice que está mal y luego no sabe muy bien como argumentarlo. El examen no se parece al modelo que proporciona además de que corrige totalmente aleatorio. En las revisiones dice que él tiene su método y no te explica nada, además de equivocarse intentando defender cómo ha corregido, te dice que solicites tribu nal y resulta que él es el director del departamento.' },
+    'IG-E':  { nombre: 'Domingo Martín Perandrés',      razon: 'Buen perfil técnico pero menos evidencia pública', dificultad: 'naranja', opinion: 'Explica el temario de prácticas de forma detallada a nivel teórico. Saca a los alumnos a la pizarra a hacer ejercicios que propone y suele hacer preguntas en clase. Es MUY estricto corrigiendo el examen de la ordinaria. Realmente no es tan tan malo, pero es una persona metódica y le gustan las cosas bien hechas. Valora muchísimo que asistas, que le pongas interés, que preguntes, que hagas los ejercicios, que corrijas las cosas que te diga, etc... Si bien es algo estricto a la hora de corregir y de hacer ejercicios, explica bastante bien la asignatura y habiendo asistido a todas las clases puedo afirmar que todo lo que pide en el examen lo da en clase. Además de que el trato al alumnado fue bastante bueno, se le pueden preguntar dudas sin problema y más allá de que pueda asustar un poco el inicio de curso con la tarea que pone de "para quién quiera aprobar" a mí me parece un buen profesor. Nos permitió hacer dos clases de dudas cerca del examen lo cual se agradece bastante porque explica como quiere que hagamos los ejercicios y algunos consejos para ejercicios algo difíciles de suelen. Suela aprobar el 50% de los matriculados.' },
+    'ISE-A': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
+    'ISE-B': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
+    'ISE-C': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
+    'ISE-D': { nombre: 'Pablo García Sánchez',          razon: 'Práctico, cercano al sector, Software Libre', dificultad: 'verde', opinion: 'Es bastante bueno y sabe del tema. Pone empeño y resuelve dudas aunque no da tiempo a copiar las explicaciones en clase. Se lleva genial con los alumnos y como es joven es más comprensible con las cosas, explica bien, fomenta que participes y es muy enrollao. Le gusta mucho charlar de otra cosa que no sea dar clase. Los exámenes, dentro de lo que cabean, son asequibles y corrige bien, además es muy propenso a ayudarte en cuanto a dudas' },
+    'ISE-E': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
+    'DDSI-A':{ nombre: 'Carlos Jesús Fernández Basso',  razon: 'Enfoque práctico, menos evidencia pública', dificultad: 'gris', opinion: '' },
+    'DDSI-B':{ nombre: 'Ignacio José Blanco Medina',    razon: 'Trayectoria consolidada en bases de datos y SI', dificultad: 'verde', opinion: 'Extrovertido y buena gente, se hace el duro a veces pero no lo es. Te suele aprobar con buena nota y te busca horario de tutoría aunque no aparezca esa hora como disponible en Prado. Explica bien, aunque a veces es difícil de seguir y es fácil aprobar' },
+    'DDSI-C':{ nombre: 'Carlos Alberto Cruz Corona',    razon: 'Titular, enfoque multidisciplinar aplicado', dificultad: 'cyan', opinion: 'De los mejores de la asignatura. Es muy despreocupado y la carga es mínima.' },
+    'DDSI-D':{ nombre: 'David Criado Ramón',            razon: 'Menos información pública verificable', dificultad: 'gris', opinion: '' },
+    'ALEM-A':{ nombre: 'José Carlos Rosales González',  razon: 'Catedrático, +100 artículos, muy teórico y denso', dificultad: 'naranja', opinion: 'En clase solo lee PDF aunque tiene clases grabadas y sus apuntes son buenos. Estricto a la hora de corregir ya que es todo bien o todo mal. Conviene ir a tutorías pero no a las revisiones del examen final (no se lo toma bien). Llevando la asignatura al día se aprueba.' },
+    'ALEM-B':{ nombre: 'Juan Manuel Urbano Blanco',     razon: 'Enseñanza estructurada, pausado y metódico', dificultad: 'negro', opinion: 'La relación con el alumnado es de todo menos buena, su forma de corregir es terrible, en las clases explica demasiado rápido (así todo el curso) y no te enteras de nada, reprocha la poca comprensión de sus clases a los alumnos por "no estudiar". No te da ninguna información de cómo va a evaluarte, no te explica nada sobre los exámenes finales y si le preguntas se enfada. Es un tío muy estricto pero si haces las cosas como a él le gusta puedes aprobar.' },
+    'ALEM-C':{ nombre: 'Juan Manuel Urbano Blanco',     razon: 'Enseñanza estructurada, pausado y metódico', dificultad: 'negro', opinion: 'La relación con el alumnado es de todo menos buena, su forma de corregir es terrible, en las clases explica demasiado rápido (así todo el curso) y no te enteras de nada, reprocha la poca comprensión de sus clases a los alumnos por "no estudiar". No te da ninguna información de cómo va a evaluarte, no te explica nada sobre los exámenes finales y si le preguntas se enfada. Es un tío muy estricto pero si haces las cosas como a él le gusta puedes aprobar.' },
+    'ALEM-D':{ nombre: 'José Carlos Rosales González',  razon: 'Catedrático, +100 artículos, muy teórico y denso', dificultad: 'naranja', opinion: 'En clase solo lee PDF aunque tiene clases grabadas y sus apuntes son buenos. Estricto a la hora de corregir ya que es todo bien o todo mal. Conviene ir a tutorías pero no a las revisiones del examen final (no se lo toma bien). Llevando la asignatura al día se aprueba.' },
+    'ALEM-E':{ nombre: 'Jesús García Miranda',          razon: 'Veterano, opción intermedia', dificultad: 'amarillo', opinion: 'Mejor profesor de la ETSIIT. Pone preguntas con "una vuelta de tornillo" de más, pero sus explicaciones y su implicación están a la altura. Está siempre disponible y te explica lo que haga falta, es cercano y amable. En las clases de teoría no suele apuntar mucho en la pizarra, explica las diapositivas y de vez en cuando hace algún ejemplo. No hay parciales, el examen final no es fácil y es largo (3 horas aproximadamente). Además el examen consta con bastantes ejercicios que cambian cada año, aunque la estructura general del examen es similar (un ejercicio por tema más o menos). A la hora de la corrección es relativamente estricto.' },
+    'ALEM-F':{ nombre: 'José Antonio Jiménez Madrid',   razon: 'Enfoque teórico pero metódico', dificultad: 'amarillo', opinion: 'Es muy buena gente, sus clases no son una maravilla pero es bueno. La relación con el alumnado es excelente, responde a todas las dudas y da muchas más horas de tutoría de las que debería ya que se nota que es profesor por vocación. En prado sube multitud de contenido de ampliación y divulgación para quienes estén interesados. Tiene muy buen carácter y le encanta resolver dudas en tutorías. Es un poco caótico pero le gusta mucho su asignatura.' },
+    'SCD-A': { nombre: 'Carlos Ureña Almagro',          razon: 'Perfil dual gráficas+concurrencia, menos directo', dificultad: 'amarillo', opinion: 'Explica bien la teoría y sus exámenes son asefables. Corrige de manera justa.' },
+    'SCD-B': { nombre: 'Luis Gonzaga Baca Ruiz',        razon: 'Titular, +45 publicaciones, especialista en concurrencia', dificultad: 'cyan', opinion: 'Muy buen profesor y muy buena relacion con el alumnado, sus examenes son super asefables, suele preguntar unos 6 puntos de teoria en tipo test (bastante sencillo) y el resto en uno o dos problemas de la teoria dada en clase (semáforos, monitores...). Regala puntos por participar, tanto en teoria como practicas, por lo que hay gente que aprueba la asignatura sin hacer ni siquiera un examen. Corrige muy rápido y la probabilidad de sacar muy buena nota con él es alta si te lo propones. Con estudiar sus diapositivas vas sobrado tanto en el test como los ejercicios.' },
+    'SCD-C': { nombre: 'José Ángel Segura Muros',       razon: 'Experiencia consolidada en sistemas distribuidos', dificultad: 'gris', opinion: '' },
+    'SCD-D': { nombre: 'Luis Gonzaga Baca Ruiz',        razon: 'Titular, +45 publicaciones, especialista en concurrencia', dificultad: 'cyan', opinion: 'Muy buen profesor y muy buena relacion con el alumnado, sus examenes son super asefables, suele preguntar unos 6 puntos de teoria en tipo test (bastante sencillo) y el resto en uno o dos problemas de la teoria dada en clase (semáforos, monitores...). Regala puntos por participar, tanto en teoria como practicas, por lo que hay gente que aprueba la asignatura sin hacer ni siquiera un examen. Corrige muy rápido y la probabilidad de sacar muy buena nota con él es alta si te lo propones. Con estudiar sus diapositivas vas sobrado tanto en el test como los ejercicios.' },
+    'SCD-E': { nombre: 'Pedro Villar Castro',           razon: 'Titular, experiencia continua en SCD', dificultad: 'amarillo', opinion: 'Explica las diapositivas de memoria aunque los ejercicios los explica bien y hace bastantes. En las tutorías no es malo pero tampoco esperes que te arregle el código. Corrige los exámenes muy a la baja. No hace parciales como otros profesores y su examen de la ordinaria son ejercicios de la relación, así que aunque sea larga conviene hacerla entera porque suelen ser muchos ejercicios de ahí.' },
+    'FFT-A': { nombre: 'Pedro Cartujo Cassinello',  razon: 'Bonachón pero explica fatal, bueno corrigiendo', dificultad: 'amarillo', opinion: 'Bonachón pero explica fatal. Muy recomendable acudir a tutorías para la revisión del examen. Repite preguntas de hace años y es bueno corrigiendo. Si suspendes en la extraordinaria con al menos un 3 ve a la revisión, puedes llevarte una sorpresa y aprobar.' },
+    'FFT-B': { nombre: 'José Luis Padilla De la Torre', razon: 'Explica bien pero muchísimo temario, examen muy duro', dificultad: 'rojo', opinion: 'Explica muy bien pero es muchísimo temario y a diferencia de otros no hace parciales. Examen final muy duro y aprueba poca gente.' },
+    'FFT-C': { nombre: 'Ignacio Melchor Ferrer',     razon: 'Explica muy bien, muchos ejámplos, recomendado', dificultad: 'verde', opinion: 'Explica muy bien, se hacen muchos ejercicios (incluso clases de repaso antes del examen). Sus videos son clave. Muy recomendado.' },
+    'FFT-D': { nombre: 'Ignacio Melchor Ferrer',     razon: 'Explica muy bien, muchos ejámplos, recomendado', dificultad: 'verde', opinion: 'Explica muy bien, se hacen muchos ejercicios (incluso clases de repaso antes del examen). Sus videos son clave. Muy recomendado.' },
+    'FFT-E': { nombre: 'Pedro Cartujo Cassinello',  razon: 'Bonachón pero explica fatal, tutorías recomendadas', dificultad: 'naranja', opinion: 'Bonachón pero explica fatal. Muy recomendable acudir a tutorías para la revisión del examen. Repite preguntas de hace años y es bueno corrigiendo. Si suspendes en la extraordinaria con al menos un 3 ve a la revisión, puedes llevarte una sorpresa y aprobar.' },
+    'FFT-F': { nombre: 'Pedro García Fernández',    razon: 'Perfil desconocido', dificultad: 'gris', opinion: '' },
+  };
 
   let state = {
     selectedSubjects: {},  // { codigo: true }
@@ -24,6 +64,9 @@
 
   let savedConfigs = JSON.parse(localStorage.getItem('ugr-horario-saved-configs') || '[]');
   let savedPropuestasInternas = JSON.parse(localStorage.getItem('ugr-propuestas-guardadas') || '[]');
+  let configSortField = 'name';
+  let configSortDir = 'asc';
+  let configBlockFilters = [];
 
   const DEFAULT_SUBJECTS = JSON.parse(JSON.stringify(SUBJECTS));
 
@@ -47,6 +90,7 @@
     updateAll();
     checkUrlShare();
     checkUrlPropuesta();
+    renderBlockFilters();
   }
 
   // ─── LocalStorage ───────────────────────────────────────────
@@ -469,6 +513,7 @@
           nombre: subject.nombre,
           tipo: 'Teoría',
           grupo: `Grupo ${group.letra}`,
+          letra: group.letra,
           dia: session.dia,
           inicio: session.inicio,
           fin: session.fin,
@@ -484,6 +529,7 @@
             nombre: subject.nombre,
             tipo: 'Práctica',
             grupo: `Subgrupo ${choice.practica}`,
+            letra: null,
             dia: session.dia,
             inicio: session.inicio,
             fin: session.fin,
@@ -493,6 +539,304 @@
       }
     });
     return entries;
+  }
+
+  // ─── Config Metrics ─────────────────────────────────────────
+  const PROF_SCORE_MAP = {
+    cyan: 6, verde: 5, amarillo: 4, naranja: 3,
+    rojo: 2, negro: 1, gris: 3
+  };
+
+  function calculateConfigMetrics(selectedSubjects, groupChoices) {
+    let manana = 0, tarde = 0;
+    let profScore = 0, profCount = 0;
+    const cursoGrupos = {};
+
+    Object.keys(selectedSubjects).forEach(codigo => {
+      if (!selectedSubjects[codigo]) return;
+      const subject = SUBJECTS.find(s => s.codigo === codigo);
+      if (!subject) return;
+      const choice = groupChoices[codigo];
+      if (!choice) return;
+      const group = subject.grupos.find(g => g.letra === choice.teoria);
+      if (!group) return;
+
+      const sumHours = (sessions) => {
+        sessions.forEach(s => {
+          const hrs = (timeToMinutes(s.fin) - timeToMinutes(s.inicio)) / 60;
+          if (group.turno === 'ma\u00F1ana') manana += hrs;
+          else tarde += hrs;
+        });
+      };
+      sumHours(group.teoria);
+      if (choice.practica && group.practicas[choice.practica]) {
+        sumHours(group.practicas[choice.practica]);
+      }
+
+      const dificultad = getDificultad(codigo, group.letra);
+      if (dificultad) {
+        profScore += PROF_SCORE_MAP[dificultad] || 3;
+        profCount++;
+      }
+
+      if (!cursoGrupos[subject.curso]) cursoGrupos[subject.curso] = new Set();
+      cursoGrupos[subject.curso].add(group.letra);
+    });
+
+    const sameGroupPerYear = Object.values(cursoGrupos).every(s => s.size === 1);
+
+    return {
+      manana: Math.round(manana * 10) / 10,
+      tarde: Math.round(tarde * 10) / 10,
+      profScore,
+      profCount,
+      sameGroupPerYear
+    };
+  }
+
+  function isConfigBlocked(config) {
+    return configBlockFilters.some(filter => {
+      if (filter.type === 'subject') {
+        return config.selectedSubjects[filter.codigo] &&
+               config.groupChoices[filter.codigo] &&
+               config.groupChoices[filter.codigo].teoria === filter.letra;
+      }
+      if (filter.type === 'curso') {
+        return Object.keys(config.selectedSubjects).some(codigo => {
+          if (!config.selectedSubjects[codigo]) return false;
+          const subject = SUBJECTS.find(s => s.codigo === codigo);
+          if (!subject || subject.curso !== filter.curso) return false;
+          const choice = config.groupChoices[codigo];
+          return choice && choice.teoria === filter.letra;
+        });
+      }
+      return false;
+    });
+  }
+
+  function addBlockFilter(type) {
+    if (type === 'subject') {
+      const sel = document.getElementById('block-subject-select');
+      const grp = document.getElementById('block-subject-group');
+      if (!sel || !grp || !sel.value || !grp.value) return;
+      configBlockFilters.push({ type: 'subject', codigo: sel.value, letra: grp.value });
+    } else if (type === 'curso') {
+      const sel = document.getElementById('block-curso-select');
+      const grp = document.getElementById('block-curso-group');
+      if (!sel || !grp || !sel.value || !grp.value) return;
+      configBlockFilters.push({ type: 'curso', curso: parseInt(sel.value), letra: grp.value });
+    }
+    renderBlockFilters();
+    renderSavedConfigs();
+  }
+
+  function removeBlockFilter(index) {
+    configBlockFilters.splice(index, 1);
+    renderBlockFilters();
+    renderSavedConfigs();
+  }
+
+  function renderBlockFilters() {
+    const panel = document.getElementById('block-filters-panel');
+    if (!panel) return;
+
+    const subjects = SUBJECTS.filter(s => s.grupos && s.grupos.length > 0);
+    const allGroups = new Set();
+    subjects.forEach(s => s.grupos.forEach(g => allGroups.add(g.letra)));
+    const groupOptions = [...allGroups].sort().map(g => `<option value="${g}">${g}</option>`).join('');
+
+    const cursoGroups = {};
+    subjects.forEach(s => {
+      if (!cursoGroups[s.curso]) cursoGroups[s.curso] = new Set();
+      s.grupos.forEach(g => cursoGroups[s.curso].add(g.letra));
+    });
+
+    let html = '<div class="block-filters-container">';
+    html += '<button class="btn btn-sm btn-secondary block-filters-toggle" id="btn-toggle-block-filters">';
+    html += `Bloqueos${configBlockFilters.length > 0 ? ` (${configBlockFilters.length})` : ''}`;
+    html += '</button>';
+    html += '<div class="block-filters-body" style="display:none">';
+
+    if (configBlockFilters.length > 0) {
+      html += '<div class="block-filters-active">';
+      configBlockFilters.forEach((f, i) => {
+        const label = f.type === 'subject'
+          ? `${f.codigo} \u00D7 Grupo ${f.letra}`
+          : `${f.curso}\u00BA Curso \u00D7 Grupo ${f.letra}`;
+        html += `<span class="block-chip">${label}<button class="block-chip-remove" data-block-idx="${i}">\u00D7</button></span>`;
+      });
+      html += '</div>';
+    }
+
+    html += '<div class="block-filters-form">';
+    html += '<div class="block-filter-row">';
+    html += '<span class="block-filter-label">Asignatura:</span>';
+    html += '<select id="block-subject-select" class="block-filter-select">';
+    html += '<option value="">Seleccionar...</option>';
+    subjects.forEach(s => {
+      html += `<option value="${s.codigo}">${s.nombre} (${s.curso}\u00BA)</option>`;
+    });
+    html += '</select>';
+    html += '<select id="block-subject-group" class="block-filter-select"><option value="">Grupo</option></select>';
+    html += '<button class="btn btn-sm btn-primary" data-block-add="subject">+ Bloquear</button>';
+    html += '</div>';
+
+    html += '<div class="block-filter-row">';
+    html += '<span class="block-filter-label">Curso:</span>';
+    html += '<select id="block-curso-select" class="block-filter-select">';
+    html += '<option value="">Seleccionar...</option>';
+    [1, 2, 3, 4].forEach(c => {
+      html += `<option value="${c}">${c}\u00BA Curso</option>`;
+    });
+    html += '</select>';
+    html += '<select id="block-curso-group" class="block-filter-select"><option value="">Grupo</option></select>';
+    html += '<button class="btn btn-sm btn-primary" data-block-add="curso">+ Bloquear Curso</button>';
+    html += '</div>';
+
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+
+    panel.innerHTML = html;
+
+    panel.querySelector('#btn-toggle-block-filters').addEventListener('click', () => {
+      const body = panel.querySelector('.block-filters-body');
+      body.style.display = body.style.display === 'none' ? 'block' : 'none';
+    });
+
+    panel.querySelectorAll('.block-chip-remove').forEach(btn => {
+      btn.addEventListener('click', () => removeBlockFilter(parseInt(btn.dataset.blockIdx)));
+    });
+
+    panel.querySelectorAll('[data-block-add]').forEach(btn => {
+      btn.addEventListener('click', () => addBlockFilter(btn.dataset.blockAdd));
+    });
+
+    const subjectSelect = panel.querySelector('#block-subject-select');
+    const subjectGroup = panel.querySelector('#block-subject-group');
+    if (subjectSelect && subjectGroup) {
+      subjectSelect.addEventListener('change', () => {
+        const subj = subjects.find(s => s.codigo === subjectSelect.value);
+        if (subj) {
+          subjectGroup.innerHTML = '<option value="">Grupo</option>' +
+            subj.grupos.map(g => `<option value="${g.letra}">${g.letra} (${g.turno})</option>`).join('');
+        } else {
+          subjectGroup.innerHTML = '<option value="">Grupo</option>';
+        }
+      });
+    }
+
+    const cursoSelect = panel.querySelector('#block-curso-select');
+    const cursoGroup = panel.querySelector('#block-curso-group');
+    if (cursoSelect && cursoGroup) {
+      cursoSelect.addEventListener('change', () => {
+        const c = parseInt(cursoSelect.value);
+        if (c && cursoGroups[c]) {
+          cursoGroup.innerHTML = '<option value="">Grupo</option>' +
+            [...cursoGroups[c]].sort().map(g => `<option value="${g}">${g}</option>`).join('');
+        } else {
+          cursoGroup.innerHTML = '<option value="">Grupo</option>';
+        }
+      });
+    }
+  }
+
+  function getEntriesForConfig(config) {
+    const savedSel = { ...state.selectedSubjects };
+    const savedGrp = JSON.parse(JSON.stringify(state.groupChoices));
+    state.selectedSubjects = { ...config.selectedSubjects };
+    state.groupChoices = JSON.parse(JSON.stringify(config.groupChoices));
+    const entries = getActiveSchedule();
+    state.selectedSubjects = savedSel;
+    state.groupChoices = savedGrp;
+    return entries;
+  }
+
+  function renderMiniCalendar(container, entries) {
+    let html = '<div class="cal-header"></div>';
+    DAYS.forEach(d => { html += `<div class="cal-header">${DAY_LABELS[d]}</div>`; });
+    for (let h = START_HOUR; h < END_HOUR; h++) {
+      html += `<div class="cal-time">${h}:00</div>`;
+      DAYS.forEach(dia => {
+        html += `<div class="cal-cell" data-dia="${dia}" data-hour="${h}"></div>`;
+      });
+    }
+    container.innerHTML = html;
+
+    entries.forEach(entry => {
+      const startMin = timeToMinutes(entry.inicio);
+      const endMin = timeToMinutes(entry.fin);
+      const startRow = Math.floor((startMin - START_HOUR * 60) / 60);
+      const topOffset = ((startMin - START_HOUR * 60) % 60) / 60 * 100;
+      const height = ((endMin - startMin) / 60) * 100;
+      const cell = container.querySelector(`.cal-cell[data-dia="${entry.dia}"][data-hour="${START_HOUR + startRow}"]`);
+      if (!cell) return;
+      const eventDiv = document.createElement('div');
+      eventDiv.className = 'cal-event';
+      eventDiv.dataset.subject = entry.codigo;
+      eventDiv.style.top = topOffset + '%';
+      eventDiv.style.height = height + '%';
+      eventDiv.innerHTML = `<div class="event-label">${entry.codigo}</div><div class="event-type">${entry.tipo}</div>`;
+      if (entry.letra) {
+        const diff = getDificultad(entry.codigo, entry.letra);
+        if (diff) {
+          const dot = document.createElement('span');
+          dot.className = 'event-diff-dot mini';
+          dot.style.background = getDificultadColor(diff);
+          dot.title = getDificultadLabel(diff);
+          eventDiv.appendChild(dot);
+        }
+      }
+      cell.style.position = 'relative';
+      cell.appendChild(eventDiv);
+    });
+  }
+
+  function toggleCompareId(id) {
+    const idx = compareIds.indexOf(id);
+    if (idx >= 0) {
+      compareIds.splice(idx, 1);
+    } else if (compareIds.length < 4) {
+      compareIds.push(id);
+    }
+    updateCompareButton();
+    renderSavedConfigs();
+  }
+
+  function updateCompareButton() {
+    const btn = document.getElementById('btn-compare-floating');
+    const countEl = document.getElementById('compare-count');
+    if (compareIds.length >= 2) {
+      btn.style.display = 'flex';
+      countEl.textContent = compareIds.length;
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+
+  function openCompare(ids) {
+    const configs = ids.map(id => savedConfigs.find(c => c.id === id)).filter(Boolean);
+    if (configs.length < 2) return;
+
+    const container = document.getElementById('compare-content');
+    let html = `<div class="compare-grid">`;
+
+    configs.forEach(cfg => {
+      html += `<div class="compare-side">`;
+      html += `<div class="compare-label">${cfg.name}</div>`;
+      html += `<div class="compare-calendar-wrap"><div class="compare-cal mini-calendar" data-cfg-id="${cfg.id}"></div></div>`;
+      html += `</div>`;
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+
+    configs.forEach(cfg => {
+      const calEl = container.querySelector(`.compare-cal[data-cfg-id="${cfg.id}"]`);
+      if (calEl) renderMiniCalendar(calEl, getEntriesForConfig(cfg));
+    });
+
+    document.getElementById('compare-modal').style.display = 'flex';
   }
 
   // ─── Conflict Detection ─────────────────────────────────────
@@ -533,6 +877,43 @@
     return h * 60 + m;
   }
 
+  // ─── Professor Preferences Helpers ──────────────────────────
+  function getProfKey(codigo, letra) {
+    return codigo + '-' + letra;
+  }
+
+  function getProfName(codigo, letra) {
+    const key = getProfKey(codigo, letra);
+    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].nombre : '';
+  }
+
+  function getProfRazon(codigo, letra) {
+    const key = getProfKey(codigo, letra);
+    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].razon : '';
+  }
+
+  function getDificultad(codigo, letra) {
+    const key = getProfKey(codigo, letra);
+    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].dificultad : null;
+  }
+
+  function getOpinion(codigo, letra) {
+    const key = getProfKey(codigo, letra);
+    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].opinion : '';
+  }
+
+  function getDificultadLabel(d) {
+    const map = { cyan:'Muy fácil', verde:'Fácil', amarillo:'Normal',
+                  naranja:'Difícil', rojo:'Muy difícil', negro:'Extremo', gris:'Desconocido' };
+    return map[d] || 'Desconocido';
+  }
+
+  function getDificultadColor(d) {
+    const map = { cyan:'#00e5ff', verde:'#28a745', amarillo:'#ffc107',
+                  naranja:'#fd7e14', rojo:'#dc3545', negro:'#1a1a1a', gris:'#6c757d' };
+    return map[d] || '#6c757d';
+  }
+
   // ─── Render Group Config ────────────────────────────────────
   function renderGroupConfig() {
     const panel = document.getElementById('group-config');
@@ -569,6 +950,9 @@
         html += `data-codigo="${codigo}" data-letra="${group.letra}" data-type="teoria">`;
         html += `<input type="radio" name="teoria-${codigo}" ${isSelected ? 'checked' : ''}>`;
         html += `<div class="group-info">`;
+        const profName = getProfName(codigo, group.letra);
+        const profRazon = getProfRazon(codigo, group.letra);
+
         html += `<div class="group-label">G${group.letra} <span style="font-weight:400;color:#888;font-size:0.65rem;">${group.turno}</span></div>`;
         html += `<div class="group-schedule">`;
         group.teoria.forEach(s => {
@@ -577,7 +961,22 @@
         if (group.teoria.length === 0) {
           html += `<span class="session" style="color:#999;">-</span>`;
         }
-        html += `</div></div></div>`;
+        html += `</div>`;
+        if (profName) {
+          const diff = getDificultad(codigo, group.letra);
+          const opinion = getOpinion(codigo, group.letra);
+          html += `<div class="group-profesor">`;
+          html += `<span class="prof-name">${profName}</span>`;
+          if (diff) {
+            html += `<span class="dificultad-badge" style="background:${getDificultadColor(diff)}">${getDificultadLabel(diff)}</span>`;
+          }
+          html += `<span class="prof-razon">${profRazon}</span>`;
+          if (opinion) {
+            html += `<span class="prof-opinion">${opinion}</span>`;
+          }
+          html += `</div>`;
+        }
+        html += `</div></div>`;
       });
       html += `</div>`;
 
@@ -620,7 +1019,7 @@
 
     // Bind events
     content.querySelectorAll('.group-option').forEach(opt => {
-      opt.addEventListener('click', () => {
+      opt.addEventListener('click', (e) => {
         const codigo = opt.dataset.codigo;
         if (opt.dataset.type === 'teoria') {
           state.groupChoices[codigo].teoria = opt.dataset.letra;
@@ -695,6 +1094,17 @@
         <div class="event-type">${entry.tipo} ${entry.grupo}</div>
       `;
 
+      if (entry.letra) {
+        const diff = getDificultad(entry.codigo, entry.letra);
+        if (diff) {
+          const dot = document.createElement('span');
+          dot.className = 'event-diff-dot';
+          dot.style.background = getDificultadColor(diff);
+          dot.title = getDificultadLabel(diff);
+          eventDiv.appendChild(dot);
+        }
+      }
+
       // Tooltip
       eventDiv.addEventListener('mouseenter', (e) => showTooltip(e, entry));
       eventDiv.addEventListener('mouseleave', hideTooltip);
@@ -707,10 +1117,15 @@
   // ─── Tooltip ────────────────────────────────────────────────
   function showTooltip(e, entry) {
     const tt = document.getElementById('tooltip');
+    const prof = entry.letra ? getProfName(entry.codigo, entry.letra) : '';
+    const diff = entry.letra ? getDificultad(entry.codigo, entry.letra) : null;
+    const diffLabel = diff ? getDificultadLabel(diff) : '';
+    const diffColor = diff ? getDificultadColor(diff) : '';
     tt.innerHTML = `
       <div class="tt-title">${entry.nombre}</div>
       <div>${entry.tipo} - ${entry.grupo}</div>
       <div>${DAY_LABELS[entry.dia]} ${entry.inicio} - ${entry.fin}</div>
+      ${prof ? `<div class="tt-prof">${prof}${diffLabel ? ` — <span style="color:${diffColor}">${diffLabel}</span>` : ''}</div>` : ''}
     `;
     tt.style.display = 'block';
     const rect = e.target.getBoundingClientRect();
@@ -875,10 +1290,39 @@
     document.getElementById('import-json-input').addEventListener('change', importAllJSON);
     document.getElementById('btn-reset-defaults').addEventListener('click', resetDefaults);
     document.getElementById('btn-export-all-configs').addEventListener('click', exportAllSavedConfigs);
+    document.getElementById('btn-seed-configs').addEventListener('click', () => {
+      seedPredefinedSchedules();
+      showToast('10 horarios generados añadidos', 'success');
+    });
+    document.getElementById('btn-delete-all-configs').addEventListener('click', () => {
+      if (savedConfigs.length === 0) {
+        showToast('No hay configuraciones que borrar', 'info');
+        return;
+      }
+      if (!confirm('¿Eliminar todas las configuraciones guardadas?')) return;
+      savedConfigs = [];
+      localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+      renderSavedConfigs();
+      showToast('Todas las configuraciones eliminadas', 'success');
+    });
     document.getElementById('btn-import-config').addEventListener('click', () => {
       document.getElementById('import-config-input').click();
     });
     document.getElementById('import-config-input').addEventListener('change', importSavedConfig);
+    document.getElementById('compare-modal-close').addEventListener('click', () => {
+      document.getElementById('compare-modal').style.display = 'none';
+    });
+    document.getElementById('compare-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) e.target.style.display = 'none';
+    });
+    document.getElementById('btn-compare-floating').addEventListener('click', () => {
+      if (compareIds.length >= 2) {
+        openCompare(compareIds);
+        compareIds = [];
+        updateCompareButton();
+        renderSavedConfigs();
+      }
+    });
     setupGroupConfigToggle();
     renderSavedConfigs();
   }
@@ -1000,6 +1444,35 @@
   }
 
   // ─── Saved Configs ─────────────────────────────────────────
+  // ─── Predefined Schedules ──────────────────────────────────
+  function seedPredefinedSchedules() {
+    const existingIds = new Set(savedConfigs.map(c => c.id));
+    PREDEFINED_SCHEDULES.forEach(cfg => {
+      if (!existingIds.has(cfg.id)) {
+        savedConfigs.push({
+          ...cfg,
+          selectedSubjects: { ...cfg.selectedSubjects },
+          groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
+        });
+      }
+    });
+    localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+    renderSavedConfigs();
+  }
+
+  function findDuplicateConfig(newGroupChoices, newSelectedSubjects) {
+    return savedConfigs.find(cfg => {
+      const sameSubjects = Object.keys(newSelectedSubjects).every(
+        k => !!newSelectedSubjects[k] === !!cfg.selectedSubjects[k]
+      );
+      if (!sameSubjects) return false;
+      return Object.keys(newGroupChoices).every(k =>
+        cfg.groupChoices[k] &&
+        cfg.groupChoices[k].teoria === newGroupChoices[k].teoria
+      );
+    });
+  }
+
   function saveConfig() {
     const nameInput = document.getElementById('config-name');
     const name = nameInput.value.trim();
@@ -1023,7 +1496,11 @@
       turnoPreferente: state.turnoPreferente,
     };
 
+    const duplicate = findDuplicateConfig(state.groupChoices, state.selectedSubjects);
     savedConfigs.push(config);
+    if (duplicate) {
+      showToast(`Aviso: "${duplicate.name}" tiene los mismos grupos`, 'info');
+    }
     localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
     nameInput.value = '';
     renderSavedConfigs();
@@ -1058,6 +1535,53 @@
     showToast(`"${config.name}" eliminada`, 'info');
   }
 
+  function sortSavedConfigs(configs) {
+    const sorted = [...configs];
+    sorted.sort((a, b) => {
+      let va, vb;
+      switch (configSortField) {
+        case 'name': {
+          const na = parseInt(a.name.match(/#(\d+)/)?.[1] || '0');
+          const nb = parseInt(b.name.match(/#(\d+)/)?.[1] || '0');
+          return configSortDir === 'asc' ? na - nb : nb - na;
+        }
+        case 'count':
+          va = Object.keys(a.selectedSubjects).filter(c => a.selectedSubjects[c]).length;
+          vb = Object.keys(b.selectedSubjects).filter(c => b.selectedSubjects[c]).length;
+          break;
+        case 'turno':
+          va = a.turnoPreferente; vb = b.turnoPreferente;
+          return configSortDir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+        case 'manana': {
+          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
+          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
+          va = ma.manana; vb = mb.manana; break;
+        }
+        case 'tarde': {
+          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
+          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
+          va = ma.tarde; vb = mb.tarde; break;
+        }
+        case 'profScore': {
+          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
+          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
+          va = ma.profScore; vb = mb.profScore; break;
+        }
+        case 'sameGroup': {
+          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
+          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
+          va = ma.sameGroupPerYear ? 1 : 0; vb = mb.sameGroupPerYear ? 1 : 0; break;
+        }
+        default: return 0;
+      }
+      if (configSortField !== 'name' && configSortField !== 'turno') {
+        return configSortDir === 'asc' ? va - vb : vb - va;
+      }
+      return 0;
+    });
+    return sorted;
+  }
+
   function renderSavedConfigs() {
     const container = document.getElementById('saved-configs-list');
     if (savedConfigs.length === 0) {
@@ -1065,23 +1589,57 @@
       return;
     }
 
-    let html = '<div class="saved-configs-grid">';
-    savedConfigs.forEach(config => {
+    const sorted = sortSavedConfigs(savedConfigs);
+    const arrow = (field) => configSortField === field ? (configSortDir === 'asc' ? ' \u25B2' : ' \u25BC') : '';
+
+    let html = '<table class="saved-configs-table">';
+    html += '<thead><tr>';
+    html += `<th data-sort="name" class="sortable${configSortField === 'name' ? ' sort-active' : ''}">Nombre${arrow('name')}</th>`;
+    html += `<th data-sort="count" class="sortable${configSortField === 'count' ? ' sort-active' : ''}">N. Asig${arrow('count')}</th>`;
+    html += `<th data-sort="turno" class="sortable${configSortField === 'turno' ? ' sort-active' : ''}">Turno${arrow('turno')}</th>`;
+    html += `<th data-sort="manana" class="sortable${configSortField === 'manana' ? ' sort-active' : ''}">Horas M${arrow('manana')}</th>`;
+    html += `<th data-sort="tarde" class="sortable${configSortField === 'tarde' ? ' sort-active' : ''}">Horas T${arrow('tarde')}</th>`;
+    html += `<th data-sort="profScore" class="sortable${configSortField === 'profScore' ? ' sort-active' : ''}">Prof${arrow('profScore')}</th>`;
+    html += `<th data-sort="sameGroup" class="sortable${configSortField === 'sameGroup' ? ' sort-active' : ''}">Grupo${arrow('sameGroup')}</th>`;
+    html += '<th class="col-actions-head">Acciones</th>';
+    html += '</tr></thead><tbody>';
+
+    sorted.forEach(config => {
+      if (isConfigBlocked(config)) return;
       const count = Object.keys(config.selectedSubjects).filter(c => config.selectedSubjects[c]).length;
-      html += `<div class="saved-config-item">`;
-      html += `<div class="saved-config-info">`;
-      html += `<div class="saved-config-name">${config.name}</div>`;
-      html += `<div class="saved-config-meta">${count} asignatura(s) &middot; ${config.turnoPreferente}</div>`;
-      html += `</div>`;
-      html += `<div class="saved-config-actions">`;
+      const m = calculateConfigMetrics(config.selectedSubjects, config.groupChoices);
+      html += '<tr>';
+      html += `<td class="col-name">${config.name}</td>`;
+      html += `<td class="col-count">${count}</td>`;
+      html += `<td class="col-turno">${config.turnoPreferente}</td>`;
+      html += `<td class="col-manana">${m.manana}h</td>`;
+      html += `<td class="col-tarde">${m.tarde}h</td>`;
+      html += `<td class="col-prof">${m.profScore}/${m.profCount * 6}</td>`;
+      html += `<td class="col-group ${m.sameGroupPerYear ? 'group-ok' : 'group-warn'}">${m.sameGroupPerYear ? '\u2713 Uniforme' : '\u2717 Mixtos'}</td>`;
+      html += '<td class="col-actions">';
       html += `<button class="btn btn-sm btn-secondary" data-action="load" data-id="${config.id}">Cargar</button>`;
+      html += `<button class="btn btn-sm ${compareIds.includes(config.id) ? 'btn-danger' : 'btn-secondary'}" data-action="compare" data-id="${config.id}">${compareIds.includes(config.id) ? 'Quitar' : 'Comparar'}</button>`;
       html += `<button class="btn btn-sm btn-secondary" data-action="export-config" data-id="${config.id}">Exportar</button>`;
       html += `<button class="btn btn-sm btn-danger" data-action="delete" data-id="${config.id}">Eliminar</button>`;
-      html += `</div>`;
-      html += `</div>`;
+      html += '</td>';
+      html += '</tr>';
     });
-    html += '</div>';
+
+    html += '</tbody></table>';
     container.innerHTML = html;
+
+    container.querySelectorAll('th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const field = th.dataset.sort;
+        if (configSortField === field) {
+          configSortDir = configSortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          configSortField = field;
+          configSortDir = (field === 'name' || field === 'turno') ? 'asc' : 'desc';
+        }
+        renderSavedConfigs();
+      });
+    });
 
     container.querySelectorAll('[data-action]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1089,6 +1647,7 @@
         if (btn.dataset.action === 'load') loadConfig(id);
         else if (btn.dataset.action === 'delete') deleteConfig(id);
         else if (btn.dataset.action === 'export-config') exportSingleConfig(id);
+        else if (btn.dataset.action === 'compare') toggleCompareId(id);
       });
     });
   }
