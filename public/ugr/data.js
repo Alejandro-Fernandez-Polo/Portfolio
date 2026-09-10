@@ -864,7 +864,13 @@ const SUBJECTS = [
       {
         "letra": "D",
         "turno": "tarde",
-        "teoria": [],
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
         "practicas": {
           "subgrupos": [
             "D1"

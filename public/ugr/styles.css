@@ -803,6 +803,43 @@ main {
   flex-wrap: wrap;
   flex-shrink: 0;
 }
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  font-size: 0.85rem;
+}
+.page-info {
+  color: var(--text-secondary);
+}
+.pagination .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.saved-configs-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.col-fav-head { text-align: center; width: 40px; }
+.col-fav { text-align: center; }
+.btn-fav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.2rem;
+  color: #aaa;
+  transition: all var(--transition);
+}
+.btn-fav.active {
+  color: #f5a623;
+}
+.btn-fav:hover {
+  transform: scale(1.2);
+}
 .btn-sm {
   padding: 0.3rem 0.6rem;
   font-size: 0.75rem;
@@ -897,6 +934,20 @@ main {
   border-radius: 4px;
   background: var(--bg-primary);
   color: var(--text-primary);
+}
+.block-filter-input {
+  width: 50px;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.78rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  text-align: center;
+}
+.day-filter-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
 }
 
 /* ─── Data Section ─────────────────────────────────────────── */
@@ -1235,6 +1286,8 @@ footer {
   .data-actions { flex-direction: column; }
   .data-actions .btn { width: 100%; }
   .saved-configs-header-actions { flex-wrap: wrap; }
+  .pagination { flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem; }
+  .saved-configs-toolbar { flex-wrap: wrap; }
   .compare-grid { grid-template-columns: 1fr; }
   .compare-side { border-right: none; border-bottom: 1px solid var(--border); }
   .compare-side:last-child { border-bottom: none; }

@@ -67,6 +67,11 @@
   let configSortField = 'name';
   let configSortDir = 'asc';
   let configBlockFilters = [];
+  let configMaxManana = 0;
+  let configMaxTarde = 0;
+  let configPage = 1;
+  let configShowFavoritesOnly = false;
+  const CONFIG_PAGE_SIZE = 50;
 
   const DEFAULT_SUBJECTS = JSON.parse(JSON.stringify(SUBJECTS));
 
@@ -594,12 +599,42 @@
     };
   }
 
+  function calculateConfigDays(selectedSubjects, groupChoices) {
+    const morningDays = new Set();
+    const afternoonDays = new Set();
+    Object.keys(selectedSubjects).forEach(codigo => {
+      if (!selectedSubjects[codigo]) return;
+      const subject = SUBJECTS.find(s => s.codigo === codigo);
+      if (!subject) return;
+      const choice = groupChoices[codigo];
+      if (!choice) return;
+      const group = subject.grupos.find(g => g.letra === choice.teoria);
+      if (!group) return;
+
+      const addDays = (sessions) => {
+        sessions.forEach(s => {
+          const hour = parseInt(s.inicio.split(':')[0]);
+          if (hour < 14) morningDays.add(s.dia);
+          else afternoonDays.add(s.dia);
+        });
+      };
+      addDays(group.teoria);
+      if (choice.practica && group.practicas[choice.practica]) {
+        addDays(group.practicas[choice.practica]);
+      }
+    });
+    return { manana: morningDays.size, tarde: afternoonDays.size };
+  }
+
   function isConfigBlocked(config) {
     return configBlockFilters.some(filter => {
       if (filter.type === 'subject') {
         return config.selectedSubjects[filter.codigo] &&
                config.groupChoices[filter.codigo] &&
                config.groupChoices[filter.codigo].teoria === filter.letra;
+      }
+      if (filter.type === 'subject-only') {
+        return config.selectedSubjects[filter.codigo];
       }
       if (filter.type === 'curso') {
         return Object.keys(config.selectedSubjects).some(codigo => {
@@ -620,18 +655,24 @@
       const grp = document.getElementById('block-subject-group');
       if (!sel || !grp || !sel.value || !grp.value) return;
       configBlockFilters.push({ type: 'subject', codigo: sel.value, letra: grp.value });
+    } else if (type === 'subject-only') {
+      const sel = document.getElementById('block-subject-select');
+      if (!sel || !sel.value) return;
+      configBlockFilters.push({ type: 'subject-only', codigo: sel.value });
     } else if (type === 'curso') {
       const sel = document.getElementById('block-curso-select');
       const grp = document.getElementById('block-curso-group');
       if (!sel || !grp || !sel.value || !grp.value) return;
       configBlockFilters.push({ type: 'curso', curso: parseInt(sel.value), letra: grp.value });
     }
+    configPage = 1;
     renderBlockFilters();
     renderSavedConfigs();
   }
 
   function removeBlockFilter(index) {
     configBlockFilters.splice(index, 1);
+    configPage = 1;
     renderBlockFilters();
     renderSavedConfigs();
   }
@@ -660,9 +701,14 @@
     if (configBlockFilters.length > 0) {
       html += '<div class="block-filters-active">';
       configBlockFilters.forEach((f, i) => {
-        const label = f.type === 'subject'
-          ? `${f.codigo} \u00D7 Grupo ${f.letra}`
-          : `${f.curso}\u00BA Curso \u00D7 Grupo ${f.letra}`;
+        let label;
+        if (f.type === 'subject') {
+          label = `${f.codigo} \u00D7 Grupo ${f.letra}`;
+        } else if (f.type === 'subject-only') {
+          label = `${f.codigo} (todas)`;
+        } else {
+          label = `${f.curso}\u00BA Curso \u00D7 Grupo ${f.letra}`;
+        }
         html += `<span class="block-chip">${label}<button class="block-chip-remove" data-block-idx="${i}">\u00D7</button></span>`;
       });
       html += '</div>';
@@ -679,6 +725,7 @@
     html += '</select>';
     html += '<select id="block-subject-group" class="block-filter-select"><option value="">Grupo</option></select>';
     html += '<button class="btn btn-sm btn-primary" data-block-add="subject">+ Bloquear</button>';
+    html += '<button class="btn btn-sm btn-primary" data-block-add="subject-only">+ Bloquear Asig.</button>';
     html += '</div>';
 
     html += '<div class="block-filter-row">';
@@ -691,6 +738,18 @@
     html += '</select>';
     html += '<select id="block-curso-group" class="block-filter-select"><option value="">Grupo</option></select>';
     html += '<button class="btn btn-sm btn-primary" data-block-add="curso">+ Bloquear Curso</button>';
+    html += '</div>';
+
+    html += '<div class="block-filter-row">';
+    html += '<span class="block-filter-label">M\u00E1x d\u00EDas:</span>';
+    html += '<label class="day-filter-label">Ma\u00F1ana:</label>';
+    html += '<input type="number" id="block-max-manana" class="block-filter-input" min="0" max="5" value="' + configMaxManana + '">';
+    html += '<label class="day-filter-label">Tarde:</label>';
+    html += '<input type="number" id="block-max-tarde" class="block-filter-input" min="0" max="5" value="' + configMaxTarde + '">';
+    html += '<button class="btn btn-sm btn-primary" id="btn-apply-day-filter">Aplicar</button>';
+    if (configMaxManana > 0 || configMaxTarde > 0) {
+      html += '<button class="btn btn-sm btn-danger" id="btn-clear-day-filter">Limpiar</button>';
+    }
     html += '</div>';
 
     html += '</div>';
@@ -737,6 +796,30 @@
         } else {
           cursoGroup.innerHTML = '<option value="">Grupo</option>';
         }
+      });
+    }
+
+    const applyDayBtn = panel.querySelector('#btn-apply-day-filter');
+    if (applyDayBtn) {
+      applyDayBtn.addEventListener('click', () => {
+        const mananaInput = panel.querySelector('#block-max-manana');
+        const tardeInput = panel.querySelector('#block-max-tarde');
+        configMaxManana = parseInt(mananaInput.value) || 0;
+        configMaxTarde = parseInt(tardeInput.value) || 0;
+        configPage = 1;
+        renderBlockFilters();
+        renderSavedConfigs();
+      });
+    }
+
+    const clearDayBtn = panel.querySelector('#btn-clear-day-filter');
+    if (clearDayBtn) {
+      clearDayBtn.addEventListener('click', () => {
+        configMaxManana = 0;
+        configMaxTarde = 0;
+        configPage = 1;
+        renderBlockFilters();
+        renderSavedConfigs();
       });
     }
   }
@@ -801,6 +884,15 @@
     }
     updateCompareButton();
     renderSavedConfigs();
+  }
+
+  function toggleFavorite(id) {
+    const config = savedConfigs.find(c => c.id === id);
+    if (config) {
+      config.favorite = !config.favorite;
+      localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+      renderSavedConfigs();
+    }
   }
 
   function updateCompareButton() {
@@ -1457,6 +1549,7 @@
       }
     });
     localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+    configPage = 1;
     renderSavedConfigs();
   }
 
@@ -1503,6 +1596,7 @@
     }
     localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
     nameInput.value = '';
+    configPage = 1;
     renderSavedConfigs();
     showToast(`"${name}" guardada`, 'success');
   }
@@ -1531,6 +1625,7 @@
 
     savedConfigs = savedConfigs.filter(c => c.id !== id);
     localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+    configPage = 1;
     renderSavedConfigs();
     showToast(`"${config.name}" eliminada`, 'info');
   }
@@ -1538,6 +1633,10 @@
   function sortSavedConfigs(configs) {
     const sorted = [...configs];
     sorted.sort((a, b) => {
+      const favA = a.favorite ? 1 : 0;
+      const favB = b.favorite ? 1 : 0;
+      if (favA !== favB) return favB - favA;
+
       let va, vb;
       switch (configSortField) {
         case 'name': {
@@ -1553,14 +1652,14 @@
           va = a.turnoPreferente; vb = b.turnoPreferente;
           return configSortDir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
         case 'manana': {
-          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
-          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
-          va = ma.manana; vb = mb.manana; break;
+          const da = calculateConfigDays(a.selectedSubjects, a.groupChoices);
+          const db = calculateConfigDays(b.selectedSubjects, b.groupChoices);
+          va = da.manana; vb = db.manana; break;
         }
         case 'tarde': {
-          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
-          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
-          va = ma.tarde; vb = mb.tarde; break;
+          const da = calculateConfigDays(a.selectedSubjects, a.groupChoices);
+          const db = calculateConfigDays(b.selectedSubjects, b.groupChoices);
+          va = da.tarde; vb = db.tarde; break;
         }
         case 'profScore': {
           const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
@@ -1589,31 +1688,58 @@
       return;
     }
 
-    const sorted = sortSavedConfigs(savedConfigs);
+    let filtered = sortSavedConfigs(savedConfigs).filter(c => !isConfigBlocked(c));
+    if (configShowFavoritesOnly) {
+      filtered = filtered.filter(c => c.favorite);
+    }
+    if (configMaxManana > 0 || configMaxTarde > 0) {
+      filtered = filtered.filter(c => {
+        const d = calculateConfigDays(c.selectedSubjects, c.groupChoices);
+        if (configMaxManana > 0 && d.manana > configMaxManana) return false;
+        if (configMaxTarde > 0 && d.tarde > configMaxTarde) return false;
+        return true;
+      });
+    }
+    const totalEntries = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(totalEntries / CONFIG_PAGE_SIZE));
+
+    if (configPage > totalPages) configPage = totalPages;
+    if (configPage < 1) configPage = 1;
+
+    const start = (configPage - 1) * CONFIG_PAGE_SIZE;
+    const end = start + CONFIG_PAGE_SIZE;
+    const pageEntries = filtered.slice(start, end);
+
     const arrow = (field) => configSortField === field ? (configSortDir === 'asc' ? ' \u25B2' : ' \u25BC') : '';
 
-    let html = '<table class="saved-configs-table">';
+    let html = '<div class="saved-configs-toolbar">';
+    html += `<button class="btn btn-sm ${configShowFavoritesOnly ? 'btn-primary' : 'btn-secondary'}" id="btn-toggle-favorites">\u2605 Favoritos${configShowFavoritesOnly ? ' (activado)' : ''}</button>`;
+    html += '</div>';
+
+    html += '<table class="saved-configs-table">';
     html += '<thead><tr>';
+    html += '<th class="col-fav-head">\u2605</th>';
     html += `<th data-sort="name" class="sortable${configSortField === 'name' ? ' sort-active' : ''}">Nombre${arrow('name')}</th>`;
     html += `<th data-sort="count" class="sortable${configSortField === 'count' ? ' sort-active' : ''}">N. Asig${arrow('count')}</th>`;
     html += `<th data-sort="turno" class="sortable${configSortField === 'turno' ? ' sort-active' : ''}">Turno${arrow('turno')}</th>`;
-    html += `<th data-sort="manana" class="sortable${configSortField === 'manana' ? ' sort-active' : ''}">Horas M${arrow('manana')}</th>`;
-    html += `<th data-sort="tarde" class="sortable${configSortField === 'tarde' ? ' sort-active' : ''}">Horas T${arrow('tarde')}</th>`;
+    html += `<th data-sort="manana" class="sortable${configSortField === 'manana' ? ' sort-active' : ''}">D\u00EDas M${arrow('manana')}</th>`;
+    html += `<th data-sort="tarde" class="sortable${configSortField === 'tarde' ? ' sort-active' : ''}">D\u00EDas T${arrow('tarde')}</th>`;
     html += `<th data-sort="profScore" class="sortable${configSortField === 'profScore' ? ' sort-active' : ''}">Prof${arrow('profScore')}</th>`;
     html += `<th data-sort="sameGroup" class="sortable${configSortField === 'sameGroup' ? ' sort-active' : ''}">Grupo${arrow('sameGroup')}</th>`;
     html += '<th class="col-actions-head">Acciones</th>';
     html += '</tr></thead><tbody>';
 
-    sorted.forEach(config => {
-      if (isConfigBlocked(config)) return;
+    pageEntries.forEach(config => {
       const count = Object.keys(config.selectedSubjects).filter(c => config.selectedSubjects[c]).length;
       const m = calculateConfigMetrics(config.selectedSubjects, config.groupChoices);
+      const d = calculateConfigDays(config.selectedSubjects, config.groupChoices);
       html += '<tr>';
+      html += `<td class="col-fav"><button class="btn-fav ${config.favorite ? 'active' : ''}" data-action="favorite" data-id="${config.id}">${config.favorite ? '\u2605' : '\u2606'}</button></td>`;
       html += `<td class="col-name">${config.name}</td>`;
       html += `<td class="col-count">${count}</td>`;
       html += `<td class="col-turno">${config.turnoPreferente}</td>`;
-      html += `<td class="col-manana">${m.manana}h</td>`;
-      html += `<td class="col-tarde">${m.tarde}h</td>`;
+      html += `<td class="col-manana">${d.manana}</td>`;
+      html += `<td class="col-tarde">${d.tarde}</td>`;
       html += `<td class="col-prof">${m.profScore}/${m.profCount * 6}</td>`;
       html += `<td class="col-group ${m.sameGroupPerYear ? 'group-ok' : 'group-warn'}">${m.sameGroupPerYear ? '\u2713 Uniforme' : '\u2717 Mixtos'}</td>`;
       html += '<td class="col-actions">';
@@ -1626,7 +1752,25 @@
     });
 
     html += '</tbody></table>';
+
+    if (totalPages > 1) {
+      html += '<div class="pagination">';
+      html += `<button class="btn btn-sm btn-secondary" id="cfg-page-prev" ${configPage <= 1 ? 'disabled' : ''}>\u2190 Anterior</button>`;
+      html += `<span class="page-info">P\u00e1gina ${configPage} de ${totalPages} (${totalEntries} entradas)</span>`;
+      html += `<button class="btn btn-sm btn-secondary" id="cfg-page-next" ${configPage >= totalPages ? 'disabled' : ''}>Siguiente \u2192</button>`;
+      html += '</div>';
+    }
+
     container.innerHTML = html;
+
+    const toggleFavBtn = container.querySelector('#btn-toggle-favorites');
+    if (toggleFavBtn) {
+      toggleFavBtn.addEventListener('click', () => {
+        configShowFavoritesOnly = !configShowFavoritesOnly;
+        configPage = 1;
+        renderSavedConfigs();
+      });
+    }
 
     container.querySelectorAll('th.sortable').forEach(th => {
       th.addEventListener('click', () => {
@@ -1637,6 +1781,7 @@
           configSortField = field;
           configSortDir = (field === 'name' || field === 'turno') ? 'asc' : 'desc';
         }
+        configPage = 1;
         renderSavedConfigs();
       });
     });
@@ -1648,8 +1793,14 @@
         else if (btn.dataset.action === 'delete') deleteConfig(id);
         else if (btn.dataset.action === 'export-config') exportSingleConfig(id);
         else if (btn.dataset.action === 'compare') toggleCompareId(id);
+        else if (btn.dataset.action === 'favorite') toggleFavorite(id);
       });
     });
+
+    const prevBtn = container.querySelector('#cfg-page-prev');
+    const nextBtn = container.querySelector('#cfg-page-next');
+    if (prevBtn) prevBtn.addEventListener('click', () => { configPage--; renderSavedConfigs(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { configPage++; renderSavedConfigs(); });
   }
 
   // ─── Export/Import JSON ────────────────────────────────────
@@ -1782,6 +1933,7 @@
     });
     state.cuatrimestreActivo = 1;
 
+    configPage = 1;
     renderSavedConfigs();
     renderPropuestasGuardadas();
     renderPropuestasBar();
@@ -1848,6 +2000,7 @@
         });
 
         localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+        configPage = 1;
         renderSavedConfigs();
         showToast(`${configsToAdd.length} configuración(es) importada(s)`, 'success');
       } catch (err) {
