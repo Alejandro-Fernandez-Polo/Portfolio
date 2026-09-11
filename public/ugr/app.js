@@ -49,6 +49,16 @@
     'FFT-D': { nombre: 'Ignacio Melchor Ferrer',     razon: 'Explica muy bien, muchos ejámplos, recomendado', dificultad: 'verde', opinion: 'Explica muy bien, se hacen muchos ejercicios (incluso clases de repaso antes del examen). Sus videos son clave. Muy recomendado.' },
     'FFT-E': { nombre: 'Pedro Cartujo Cassinello',  razon: 'Bonachón pero explica fatal, tutorías recomendadas', dificultad: 'naranja', opinion: 'Bonachón pero explica fatal. Muy recomendable acudir a tutorías para la revisión del examen. Repite preguntas de hace años y es bueno corrigiendo. Si suspendes en la extraordinaria con al menos un 3 ve a la revisión, puedes llevarte una sorpresa y aprobar.' },
     'FFT-F': { nombre: 'Pedro García Fernández',    razon: 'Perfil desconocido', dificultad: 'gris', opinion: '' },
+    'EC-A':  { nombre: 'Francisco Javier Fernández Baldomero', razon: 'Estadísticas bajas, material incompleto', dificultad: 'naranja', opinion: 'Imposible seguir en clase y se refleja en sus estadísticas (60% aprobado con 5 o 6, solo 3 personas con un 7, 1 persona con un 8). Cambia mucho de tema y se concentra en cosas 0 importantes (por ejemplo sin exageración, el 80% de las clases se te pasaba los primeros 15 min explicando el sistema de evaluación porque un alumno empanado le había mandado un correo y otra vez se pasó unos 5 min escribiendo 1s para explicar lo que era FFFFFFFF en binario). Esto desmotiva al alumno para ir a clases pero el gran problema es que sus apuntes no están NADA completos. No se puede estudiar de ellos. Mucha gente cree aprobar su examen final es solo una cuestion de hacer infinitos tests, y yo no lo recomiendo. Es mucho mejor, hacer menos tests y tratar de conseguir su bibliografía principal en pdf y ir haciendo Ctrl+F en conceptos que no entiendas, o conseguir los libros en biblioteca e ir leyendo. Además de buscar en YouTube explicaciones de otras universidades españolas. Muy recomendable apuntar como hacer los problemas de clase a medida que vas entregando (si es que entregas alguno porque no te motiva para nada el decir que cuentan poco) porque para el examen final ya te habras olvidado el procedimiento para resolverlos. Es casi imposible aprobar la asignatura sin tener un máximo en la nota de clase (problemas + tests de clase), priorizar esto. Por estas razones, por su forma de dar la clase y armar el material para que el alumnno estudie, rojo sangre es el color correcto.' },
+    'EC-B':  { nombre: 'Antonio Cañas Vargas',       razon: 'Creador de SWAD, muy buen recurso', dificultad: 'verde', opinion: 'Un profesor muy bueno y cercano. Te responde las dudas de forma ULTRA completa y muy rápido en cualquier momento. Explica bien, pero entre que la asignatura NO es fácil de seguir y que él tampoco es precisamente el alma de la fiesta, como te pierdas o te distraigas más de la cuenta (que no es raro) la clase se te puede hacer bastante aburrida porque no le enteres de nada. Corrige bien y te da muchos recursos para poder subir nota (los "kahoots" de todas las clases, los ejercicios...) y aunque creas que el examen final te lo haya hechoWTal, la magia de cañas lo mismo te te have llevarte una sorpresa. Recomendable. Es el creador de SWAD btw.' },
+    'EC-C':  { nombre: 'Francisco Javier Fernández Baldomero', razon: 'Estadísticas bajas, material incompleto', dificultad: 'naranja', opinion: 'Imposible seguir en clase y se refleja en sus estadísticas (60% aprobado con 5 o 6, solo 3 personas con un 7, 1 persona con un 8). Cambia mucho de tema y se concentra en cosas 0 importantes (por ejemplo sin exageración, el 80% de las clases se te pasaba los primeros 15 min explicando el sistema de evaluación porque un alumno empanado le había mandado un correo y otra vez se pasó unos 5 min escribiendo 1s para explicar lo que era FFFFFFFF en binario). Esto desmotiva al alumno para ir a clases pero el gran problema es que sus apuntes no están NADA completos. No se puede estudiar de ellos. Mucha gente cree aprobar su examen final es solo una cuestion de hacer infinitos tests, y yo no lo recomiendo. Es mucho mejor, hacer menos tests y tratar de conseguir su bibliografía principal en pdf y ir haciendo Ctrl+F en conceptos que no entiendas, o conseguir los libros en biblioteca e ir leyendo. Además de buscar en YouTube explicaciones de otras universidades españolas. Muy recomendable apuntar como hacer los problemas de clase a medida que vas entregando (si es que entregas alguno porque no te motiva para nada el decir que cuentan poco) porque para el examen final ya te habras olvidado el procedimiento para resolverlos. Es casi imposible aprobar la asignatura sin tener un máximo en la nota de clase (problemas + tests de clase), priorizar esto. Por estas razones, por su forma de dar la clase y armar el material para que el alumnno estudie, rojo sangre es el color correcto.' },
+    'EC-D':  { nombre: 'Francisco Javier Fernández Baldomero', razon: 'Estadísticas bajas, material incompleto', dificultad: 'naranja', opinion: 'Imposible seguir en clase y se refleja en sus estadísticas (60% aprobado con 5 o 6, solo 3 personas con un 7, 1 persona con un 8). Cambia mucho de tema y se concentra en cosas 0 importantes (por ejemplo sin exageración, el 80% de las clases se te pasaba los primeros 15 min explicando el sistema de evaluación porque un alumno empanado le había mandado un correo y otra vez se pasó unos 5 min escribiendo 1s para explicar lo que era FFFFFFFF en binario). Esto desmotiva al alumno para ir a clases pero el gran problema es que sus apuntes no están NADA completos. No se puede estudiar de ellos. Mucha gente cree aprobar su examen final es solo una cuestion de hacer infinitos tests, y yo no lo recomiendo. Es mucho mejor, hacer menos tests y tratar de conseguir su bibliografía principal en pdf y ir haciendo Ctrl+F en conceptos que no entiendas, o conseguir los libros en biblioteca e ir leyendo. Además de buscar en YouTube explicaciones de otras universidades españolas. Muy recomendable apuntar como hacer los problemas de clase a medida que vas entregando (si es que entregas alguno porque no te motiva para nada el decir que cuentan poco) porque para el examen final ya te habras olvidado el procedimiento para resolverlos. Es casi imposible aprobar la asignatura sin tener un máximo en la nota de clase (problemas + tests de clase), priorizar esto. Por estas razones, por su forma de dar la clase y armar el material para que el alumnno estudie, rojo sangre es el color correcto.' },
+    'EC-E':  { nombre: 'Antonio Cañas Vargas',       razon: 'Creador de SWAD, muy buen recurso', dificultad: 'verde', opinion: 'Un profesor muy bueno y cercano. Te responde las dudas de forma ULTRA completa y muy rápido en cualquier momento. Explica bien, pero entre que la asignatura NO es fácil de seguir y que él tampoco es precisamente el alma de la fiesta, como te pierdas o te distraigas más de la cuenta (que no es raro) la clase se te puede hacer bastante aburrida porque no le enteres de nada. Corrige bien y te da muchos recursos para poder subir nota (los "kahoots" de todas las clases, los ejercicios...) y aunque creas que el examen final te lo haya hechoWTal, la magia de cañas lo mismo te te have llevarte una sorpresa. Recomendable. Es el creador de SWAD btw.' },
+    'ED-A':  { nombre: 'Francisco Javier Rodríguez Díaz', razon: 'Estricto corrigiendo, buena persona', dificultad: 'naranja', opinion: 'Sus clases son muy aburridas y se dedica a leer los PDFs (el material subido a Prado no aporta demasiado). A la hora de corregir los exámenes es muy estricto y al mínimo error pone un 0 directamente en el ejercicio. Recomendable tener buena nota en las prácticas y prepararte muy bien al menos tres ejercicios del examen para no llevarse sorpresas. Es muy buena persona. Te resuelve las dudas que tengas con mucha amabilidad. Incluso ofrece aumentar los deadlines de las tareas si el alumnno lo necesita.' },
+    'ED-B':  { nombre: 'Joaquín Fernández Valdivia',   razon: '100% recomendable, el mejor de ED', dificultad: 'verde', opinion: 'Puedes aprobar la asignatura sacando un 2 en el final, ya que da varios puntos entre prácticas y entregas de teoría. Además, explica muy bien, es rápido corrigiendo y siempre está disponible para lo que haga falta. Ayuda en todo lo que pueda. Profesor que vive por y para sus alumnos. Es muy cercano y además facilita todo para poder aprobar la asignatura. Explicaciones claras y muchísimo temario y ejercicios disponibles para poder practicar de cara al examen. Se nota que le gusta su asignatura y dar clase; lo mejor de ED sin duda alguna. Al final del cuatrimestre, da una charla muy interesante acerca del futuro que se nos viene como ingenieros. 100% recomendable.' },
+    'ED-C':  { nombre: 'Miguel García Silvente',       razon: 'Organización deficiente, exámenes duros', dificultad: 'rojo', opinion: 'El profesor se organiza bastante mal en cuanto a tiempos y coordinación entre teoría y prácticas, lo que hace que algunos temas se den tarde, con prisas o incluso no se lleguen a ver (grafos no se da). Además, a veces lo explicado en teoría no es suficiente para resolver los ejercicios (como por ejemplo en árboles binarios). Los exámenes son más difíciles que los del departamento y los enunciados no siempre son claros, ni en exámenes ni en la relación de ejercicios. La comunicación con el profesor no es muy fluida durante el curso, aunque mejora antes de los exámenes. Eso sí, si vas a tutoría, te resuelve las dudas.' },
+    'ED-D':  { nombre: 'Rosa María Rodríguez Sánchez', razon: 'Explicaciones desde 0, muy completa', dificultad: 'verde', opinion: 'Explica todo desde 0. Las explicaciones son buenas y en profundidad. Si vas al día es casi imposible perderse. Las clases son algunas aburridas y lentas pero dado que es una asignatura que se basa en la comprensión lo acabas agradeciendo. Además pone a disposición de los alumnos videos de las clases por lo que si no vas puedes igualmente verlos y enterarte.' },
+    'ED-E':  { nombre: 'Rosa María Rodríguez Sánchez', razon: 'Explicaciones desde 0, muy completa', dificultad: 'verde', opinion: 'Explica todo desde 0. Las explicaciones son buenas y en profundidad. Si vas al día es casi imposible perderse. Las clases son algunas aburridas y lentas pero dado que es una asignatura que se basa en la comprensión lo acabas agradeciendo. Además pone a disposición de los alumnos videos de las clases por lo que si no vas puedes igualmente verlos y enterarte.' },
   };
 
   let state = {
@@ -62,7 +72,42 @@
     vistaConvalidaciones: 'oficial',
   };
 
-  let savedConfigs = JSON.parse(localStorage.getItem('ugr-horario-saved-configs') || '[]');
+  const CONFIG_STORAGE_SLOTS = 3;
+
+  function getStorageKey(slot) {
+    return `ugr-horario-saved-configs-${slot}`;
+  }
+
+  function loadSavedConfigs() {
+    let allConfigs = [];
+    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
+      const key = getStorageKey(i);
+      const data = localStorage.getItem(key);
+      if (data) {
+        try {
+          allConfigs = allConfigs.concat(JSON.parse(data));
+        } catch (e) { /* ignore corrupt data */ }
+      }
+    }
+    return allConfigs;
+  }
+
+  function saveAllConfigs(savedConfigs) {
+    // Clear all slots first
+    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
+      localStorage.removeItem(getStorageKey(i));
+    }
+    // Distribute configs across slots
+    for (let i = 0; i < savedConfigs.length; i++) {
+      const slot = i % CONFIG_STORAGE_SLOTS;
+      const key = getStorageKey(slot);
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.push(savedConfigs[i]);
+      localStorage.setItem(key, JSON.stringify(existing));
+    }
+  }
+
+  let savedConfigs = loadSavedConfigs();
   let savedPropuestasInternas = JSON.parse(localStorage.getItem('ugr-propuestas-guardadas') || '[]');
   let configSortField = 'name';
   let configSortDir = 'asc';
@@ -71,6 +116,7 @@
   let configMaxTarde = 0;
   let configPage = 1;
   let configShowFavoritesOnly = false;
+  let configPredefinedSource = localStorage.getItem('ugr-predefined-source') || '570';
   const CONFIG_PAGE_SIZE = 50;
 
   const DEFAULT_SUBJECTS = JSON.parse(JSON.stringify(SUBJECTS));
@@ -145,6 +191,9 @@
     const turnoSelect = document.getElementById('turno-preferente');
     if (apellidoInput) apellidoInput.value = state.apellido || '';
     if (turnoSelect) turnoSelect.value = state.turnoPreferente || 'indiferente';
+    const predefinedSelect = document.getElementById('predefined-source-select');
+    if (predefinedSelect) predefinedSelect.value = configPredefinedSource;
+    if (configPredefinedSource !== '570') loadPredefinedScript(configPredefinedSource);
   }
 
   function loadPropuestas() {
@@ -886,11 +935,24 @@
     renderSavedConfigs();
   }
 
+  function isPredefinedConfig(id) {
+    return getPredefinedArray().some(c => c.id === id);
+  }
+
   function toggleFavorite(id) {
+    if (isPredefinedConfig(id)) {
+      let favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
+      const idx = favPredefined.indexOf(id);
+      if (idx >= 0) favPredefined.splice(idx, 1);
+      else favPredefined.push(id);
+      localStorage.setItem('ugr-fav-predefined', JSON.stringify(favPredefined));
+      renderSavedConfigs();
+      return;
+    }
     const config = savedConfigs.find(c => c.id === id);
     if (config) {
       config.favorite = !config.favorite;
-      localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+      saveAllConfigs(savedConfigs);
       renderSavedConfigs();
     }
   }
@@ -907,7 +969,8 @@
   }
 
   function openCompare(ids) {
-    const configs = ids.map(id => savedConfigs.find(c => c.id === id)).filter(Boolean);
+    const allConfigs = getDisplayConfigs();
+    const configs = ids.map(id => allConfigs.find(c => c.id === id)).filter(Boolean);
     if (configs.length < 2) return;
 
     const container = document.getElementById('compare-content');
@@ -1382,25 +1445,28 @@
     document.getElementById('import-json-input').addEventListener('change', importAllJSON);
     document.getElementById('btn-reset-defaults').addEventListener('click', resetDefaults);
     document.getElementById('btn-export-all-configs').addEventListener('click', exportAllSavedConfigs);
-    document.getElementById('btn-seed-configs').addEventListener('click', () => {
-      seedPredefinedSchedules();
-      showToast('10 horarios generados añadidos', 'success');
-    });
     document.getElementById('btn-delete-all-configs').addEventListener('click', () => {
       if (savedConfigs.length === 0) {
-        showToast('No hay configuraciones que borrar', 'info');
+        showToast('No hay configuraciones propias que borrar', 'info');
         return;
       }
-      if (!confirm('¿Eliminar todas las configuraciones guardadas?')) return;
+      if (!confirm('¿Eliminar todas tus configuraciones guardadas?')) return;
       savedConfigs = [];
-      localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+      saveAllConfigs(savedConfigs);
       renderSavedConfigs();
-      showToast('Todas las configuraciones eliminadas', 'success');
+      showToast('Tus configuraciones eliminadas', 'success');
     });
     document.getElementById('btn-import-config').addEventListener('click', () => {
       document.getElementById('import-config-input').click();
     });
     document.getElementById('import-config-input').addEventListener('change', importSavedConfig);
+    document.getElementById('predefined-source-select').addEventListener('change', async (e) => {
+      configPredefinedSource = e.target.value;
+      localStorage.setItem('ugr-predefined-source', configPredefinedSource);
+      configPage = 1;
+      await loadPredefinedScript(configPredefinedSource);
+      renderSavedConfigs();
+    });
     document.getElementById('compare-modal-close').addEventListener('click', () => {
       document.getElementById('compare-modal').style.display = 'none';
     });
@@ -1536,21 +1602,55 @@
   }
 
   // ─── Saved Configs ─────────────────────────────────────────
-  // ─── Predefined Schedules ──────────────────────────────────
-  function seedPredefinedSchedules() {
-    const existingIds = new Set(savedConfigs.map(c => c.id));
-    PREDEFINED_SCHEDULES.forEach(cfg => {
-      if (!existingIds.has(cfg.id)) {
-        savedConfigs.push({
-          ...cfg,
-          selectedSubjects: { ...cfg.selectedSubjects },
-          groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
-        });
-      }
+  // ─── Predefined Schedules (lazy loading) ──────────────────
+  const PREDEFINED_SCRIPTS = {
+    grande:   '/ugr/predefined/predefined_grande.js',
+    final:    '/ugr/predefined/predefined_final.js',
+    alembueno: '/ugr/predefined/predefined_alembueno.js',
+  };
+
+  function loadPredefinedScript(source) {
+    return new Promise((resolve) => {
+      if (source === '570') { resolve(); return; }
+      const varMap = {
+        grande: 'PREDEFINED_SCHEDULES_GRANDE',
+        final: 'PREDEFINED_SCHEDULES_FINAL',
+        alembueno: 'PREDEFINED_SCHEDULES_ALEM_BUENO',
+      };
+      if (typeof window[varMap[source]] !== 'undefined') { resolve(); return; }
+      const script = document.createElement('script');
+      script.src = PREDEFINED_SCRIPTS[source];
+      script.onload = () => resolve();
+      script.onerror = () => {
+        console.error('Error cargando predefined:', source);
+        resolve();
+      };
+      document.body.appendChild(script);
     });
-    localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
-    configPage = 1;
-    renderSavedConfigs();
+  }
+
+  function getPredefinedArray() {
+    switch (configPredefinedSource) {
+      case 'grande':   return typeof PREDEFINED_SCHEDULES_GRANDE !== 'undefined' ? PREDEFINED_SCHEDULES_GRANDE : [];
+      case 'final':    return typeof PREDEFINED_SCHEDULES_FINAL !== 'undefined' ? PREDEFINED_SCHEDULES_FINAL : [];
+      case 'alembueno': return typeof PREDEFINED_SCHEDULES_ALEM_BUENO !== 'undefined' ? PREDEFINED_SCHEDULES_ALEM_BUENO : [];
+      default:         return typeof PREDEFINED_SCHEDULES_570 !== 'undefined' ? PREDEFINED_SCHEDULES_570 : [];
+    }
+  }
+
+  function getDisplayConfigs() {
+    const predefined = getPredefinedArray().map(c => ({ ...c, predefined: true }));
+    const favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
+    predefined.forEach(c => { if (favPredefined.includes(c.id)) c.favorite = true; });
+    return savedConfigs.concat(predefined);
+  }
+
+  function isConfigFavorited(config) {
+    if (config.predefined) {
+      const favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
+      return favPredefined.includes(config.id);
+    }
+    return !!config.favorite;
   }
 
   function findDuplicateConfig(newGroupChoices, newSelectedSubjects) {
@@ -1594,7 +1694,7 @@
     if (duplicate) {
       showToast(`Aviso: "${duplicate.name}" tiene los mismos grupos`, 'info');
     }
-    localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+    saveAllConfigs(savedConfigs);
     nameInput.value = '';
     configPage = 1;
     renderSavedConfigs();
@@ -1602,7 +1702,7 @@
   }
 
   function loadConfig(id) {
-    const config = savedConfigs.find(c => c.id === id);
+    const config = getDisplayConfigs().find(c => c.id === id);
     if (!config) return;
 
     state.selectedSubjects = { ...config.selectedSubjects };
@@ -1619,12 +1719,16 @@
   }
 
   function deleteConfig(id) {
+    if (isPredefinedConfig(id)) {
+      showToast('No se pueden eliminar horarios predefinidos', 'info');
+      return;
+    }
     const config = savedConfigs.find(c => c.id === id);
     if (!config) return;
     if (!confirm(`¿Eliminar "${config.name}"?`)) return;
 
     savedConfigs = savedConfigs.filter(c => c.id !== id);
-    localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+    saveAllConfigs(savedConfigs);
     configPage = 1;
     renderSavedConfigs();
     showToast(`"${config.name}" eliminada`, 'info');
@@ -1683,14 +1787,15 @@
 
   function renderSavedConfigs() {
     const container = document.getElementById('saved-configs-list');
-    if (savedConfigs.length === 0) {
+    const displayConfigs = getDisplayConfigs();
+    if (displayConfigs.length === 0) {
       container.innerHTML = '<p class="empty-state">No hay configuraciones guardadas.</p>';
       return;
     }
 
-    let filtered = sortSavedConfigs(savedConfigs).filter(c => !isConfigBlocked(c));
+    let filtered = sortSavedConfigs(displayConfigs).filter(c => !isConfigBlocked(c));
     if (configShowFavoritesOnly) {
-      filtered = filtered.filter(c => c.favorite);
+      filtered = filtered.filter(c => isConfigFavorited(c));
     }
     if (configMaxManana > 0 || configMaxTarde > 0) {
       filtered = filtered.filter(c => {
@@ -1734,7 +1839,7 @@
       const m = calculateConfigMetrics(config.selectedSubjects, config.groupChoices);
       const d = calculateConfigDays(config.selectedSubjects, config.groupChoices);
       html += '<tr>';
-      html += `<td class="col-fav"><button class="btn-fav ${config.favorite ? 'active' : ''}" data-action="favorite" data-id="${config.id}">${config.favorite ? '\u2605' : '\u2606'}</button></td>`;
+      html += `<td class="col-fav"><button class="btn-fav ${isConfigFavorited(config) ? 'active' : ''}" data-action="favorite" data-id="${config.id}">${isConfigFavorited(config) ? '\u2605' : '\u2606'}</button></td>`;
       html += `<td class="col-name">${config.name}</td>`;
       html += `<td class="col-count">${count}</td>`;
       html += `<td class="col-turno">${config.turnoPreferente}</td>`;
@@ -1746,7 +1851,9 @@
       html += `<button class="btn btn-sm btn-secondary" data-action="load" data-id="${config.id}">Cargar</button>`;
       html += `<button class="btn btn-sm ${compareIds.includes(config.id) ? 'btn-danger' : 'btn-secondary'}" data-action="compare" data-id="${config.id}">${compareIds.includes(config.id) ? 'Quitar' : 'Comparar'}</button>`;
       html += `<button class="btn btn-sm btn-secondary" data-action="export-config" data-id="${config.id}">Exportar</button>`;
-      html += `<button class="btn btn-sm btn-danger" data-action="delete" data-id="${config.id}">Eliminar</button>`;
+      if (!config.predefined) {
+        html += `<button class="btn btn-sm btn-danger" data-action="delete" data-id="${config.id}">Eliminar</button>`;
+      }
       html += '</td>';
       html += '</tr>';
     });
@@ -1862,7 +1969,7 @@
 
         if (data.savedConfigs && Array.isArray(data.savedConfigs)) {
           savedConfigs = data.savedConfigs;
-          localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+          saveAllConfigs(savedConfigs);
         }
 
         if (data.convalidaciones) {
@@ -1901,7 +2008,10 @@
 
     localStorage.removeItem('ugr-horario-state');
     localStorage.removeItem('ugr-horario-subjects');
-    localStorage.removeItem('ugr-horario-saved-configs');
+    localStorage.removeItem('ugr-fav-predefined');
+    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
+      localStorage.removeItem(getStorageKey(i));
+    }
     localStorage.removeItem('ugr-convalidaciones');
     localStorage.removeItem('ugr-propuestas');
     localStorage.removeItem('ugr-propuestas-guardadas');
@@ -1944,7 +2054,8 @@
 
   // ─── Export/Import Single Config ───────────────────────────
   function exportSingleConfig(id) {
-    const config = savedConfigs.find(c => c.id === id);
+    const allConfigs = getDisplayConfigs();
+    const config = allConfigs.find(c => c.id === id);
     if (!config) return;
 
     const data = {
@@ -1959,7 +2070,7 @@
 
   function exportAllSavedConfigs() {
     if (savedConfigs.length === 0) {
-      showToast('No hay configuraciones guardadas', 'info');
+      showToast('No hay configuraciones propias que exportar', 'info');
       return;
     }
 
@@ -1999,7 +2110,7 @@
           savedConfigs.push(c);
         });
 
-        localStorage.setItem('ugr-horario-saved-configs', JSON.stringify(savedConfigs));
+        saveAllConfigs(savedConfigs);
         configPage = 1;
         renderSavedConfigs();
         showToast(`${configsToAdd.length} configuración(es) importada(s)`, 'success');

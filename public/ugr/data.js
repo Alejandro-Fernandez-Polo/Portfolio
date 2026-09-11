@@ -23,7 +23,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -33,6 +35,30 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -56,7 +82,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -66,6 +94,30 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -89,7 +141,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2"
           ],
           "C1": [
             {
@@ -101,6 +154,18 @@ const SUBJECTS = [
               "dia": "lunes",
               "inicio": "12:30",
               "fin": "13:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -122,7 +187,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2",
+            "D3"
           ],
           "D1": [
             {
@@ -132,6 +199,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D3": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -155,7 +246,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2",
+            "E3"
           ],
           "E1": [
             {
@@ -167,6 +260,30 @@ const SUBJECTS = [
               "dia": "miercoles",
               "inicio": "18:30",
               "fin": "19:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E3": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
             }
           ]
         }
@@ -188,7 +305,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "F1"
+            "F1",
+            "F2"
           ],
           "F1": [
             {
@@ -200,6 +318,18 @@ const SUBJECTS = [
               "dia": "miercoles",
               "inicio": "16:30",
               "fin": "17:30"
+            }
+          ],
+          "F2": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
             }
           ]
         }
@@ -235,13 +365,29 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
               "dia": "miercoles",
               "inicio": "10:30",
               "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
             }
           ]
         }
@@ -268,11 +414,27 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
               "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "lunes",
               "inicio": "9:30",
               "fin": "10:30"
             }
@@ -301,13 +463,21 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2"
           ],
           "C1": [
             {
               "dia": "martes",
               "inicio": "12:30",
               "fin": "13:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
             }
           ]
         }
@@ -334,9 +504,31 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2",
+            "D3"
           ],
-          "D1": []
+          "D1": [
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D3": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            }
+          ]
         }
       },
       {
@@ -361,13 +553,29 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2",
+            "E3"
           ],
           "E1": [
             {
               "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            }
+          ],
+          "E3": [
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
             }
           ]
         }
@@ -394,13 +602,21 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "F1"
+            "F1",
+            "F2"
           ],
           "F1": [
             {
               "dia": "viernes",
               "inicio": "18:30",
               "fin": "19:30"
+            }
+          ],
+          "F2": [
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
             }
           ]
         }
@@ -431,7 +647,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -441,6 +659,30 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -464,7 +706,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -474,6 +718,30 @@ const SUBJECTS = [
             },
             {
               "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -497,7 +765,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2",
+            "C3"
           ],
           "C1": [
             {
@@ -509,6 +779,30 @@ const SUBJECTS = [
               "dia": "miercoles",
               "inicio": "9:30",
               "fin": "10:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "C3": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
             }
           ]
         }
@@ -530,7 +824,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2",
+            "D3"
           ],
           "D1": [
             {
@@ -540,6 +836,30 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "D3": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -563,7 +883,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2",
+            "E3"
           ],
           "E1": [
             {
@@ -573,6 +895,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E3": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -605,7 +951,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -615,6 +963,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -638,7 +1010,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -648,6 +1022,30 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -671,7 +1069,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2",
+            "C3"
           ],
           "C1": [
             {
@@ -683,6 +1083,30 @@ const SUBJECTS = [
               "dia": "jueves",
               "inicio": "12:30",
               "fin": "13:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "C3": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -704,7 +1128,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2",
+            "D3"
           ],
           "D1": [
             {
@@ -714,6 +1140,30 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "D3": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -737,7 +1187,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2"
           ],
           "E1": [
             {
@@ -747,6 +1198,18 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -4617,9 +5080,7 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1",
-            "A2",
-            "A3"
+            "A1"
           ],
           "A1": [
             {
@@ -4629,30 +5090,6 @@ const SUBJECTS = [
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
-            }
-          ],
-          "A2": [
-            {
-              "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
-            },
-            {
-              "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
-            }
-          ],
-          "A3": [
-            {
-              "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
-            },
-            {
-              "dia": "viernes",
               "inicio": "9:30",
               "fin": "10:30"
             }
@@ -4756,11 +5193,6 @@ const SUBJECTS = [
               "dia": "martes",
               "inicio": "10:30",
               "fin": "11:30"
-            },
-            {
-              "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
             }
           ],
           "C3": [
@@ -4800,7 +5232,7 @@ const SUBJECTS = [
           ],
           "D1": [
             {
-              "dia": "jueves",
+              "dia": "miercoles",
               "inicio": "15:30",
               "fin": "16:30"
             },
@@ -4863,7 +5295,7 @@ const SUBJECTS = [
               "fin": "18:30"
             },
             {
-              "dia": "miercoles",
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -4875,7 +5307,7 @@ const SUBJECTS = [
               "fin": "18:30"
             },
             {
-              "dia": "martes",
+              "dia": "lunes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -4883,8 +5315,8 @@ const SUBJECTS = [
         }
       }
     ],
-    "aprobada": true,
-    "corresponde": "IC2"
+    "aprobada": false,
+    "descripcion": "Asignatura de hardware complicada pero facil gracias a los juegos (tipo tests modo kahoot). La teoria es muy densa y complicada. Imprescindible ir a clase. Recomiendo hacer muchos, muchos tests en swad y buscar apuntes en wuolah. Las practicas veréis ensamblador, también os evaluan con tipo tests."
   },
   {
     "codigo": "ED",
@@ -5112,7 +5544,8 @@ const SUBJECTS = [
         "practicas": {
           "subgrupos": [
             "E1",
-            "E2"
+            "E2",
+            "E3"
           ],
           "E1": [
             {
@@ -5127,12 +5560,19 @@ const SUBJECTS = [
               "inicio": "17:30",
               "fin": "18:30"
             }
+          ],
+          "E3": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            }
           ]
         }
       }
     ],
-    "aprobada": true,
-    "corresponde": "EPED"
+    "aprobada": false,
+    "descripcion": "Trata sobre abstracciones de programación (plas, vectores, mapas, hashes) en C++. En la teoría os explicarán como funcionan las estructuras de antes y como implementarlas con lo que sabéis. Para aprobar las prácticas son 3 puntos. Se consiguen 2 con 4 exámenes (4 prácticos y uno test) y el último punto a través de la práctica final."
   },
   {
     "codigo": "PDOO",

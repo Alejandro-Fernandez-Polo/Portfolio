@@ -118,7 +118,12 @@
       <div class="panel-header">
         <h2>Configuraciones Guardadas</h2>
         <div class="saved-configs-header-actions">
-          <button id="btn-seed-configs" class="btn btn-sm btn-secondary">Añadir horarios generados</button>
+          <select id="predefined-source-select" class="btn btn-sm btn-secondary">
+            <option value="570">6 asig + máx 2 tardes (570)</option>
+            <option value="grande">5-7 asig: 1 curso fuera máx (4.201)</option>
+            <option value="final">5 asig: ALEM+FFT+ED+SO+SCD (37.481)</option>
+            <option value="alembueno">6 asig sin B/C ALEM (53.275)</option>
+          </select>
           <button id="btn-delete-all-configs" class="btn btn-sm btn-danger">Borrar Todas</button>
           <button id="btn-export-all-configs" class="btn btn-sm btn-secondary">Exportar Todas</button>
           <button id="btn-import-config" class="btn btn-sm btn-secondary">Importar Config</button>
