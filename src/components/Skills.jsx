@@ -1,5 +1,5 @@
 import { skills } from "../constants/skills.js"
-import { useTranslation, Trans } from "react-i18next"
+import { useTranslation } from "react-i18next"
 import "./css/Skills.css"
 
 export default function Skills() {

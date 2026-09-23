@@ -10,7 +10,7 @@ export const projects = [
   {
     id: "codigodesconocido", // clave que conecta con traducciones
     img: codigodesconocido,
-    technology: "React, Flask, Node.js, MongoBD, MySQL, Docker",
+    technology: "React, Flask, Node.js, MongoDB, MySQL, Docker",
     link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Final_project/Codigo-Desconocido",
   },
   {
@@ -28,7 +28,7 @@ export const projects = [
   {
     id: "reactlogo",
     img: proyectosreact,
-    technology: "React, Flask, Node.js, MongoBD, MySQL, Docker",
+    technology: "React, Flask, Node.js, MongoDB, MySQL, Docker",
     link: "https://github.com/Alejandro-Fernandez-Polo/Learn_React",
   },
 ]

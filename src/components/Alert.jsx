@@ -1,6 +1,8 @@
+import { useTranslation } from "react-i18next"
 import './css/Alert.css'
 
 export function Alert({ type, text }) {
+  const { t } = useTranslation("contact")
   return (
     <div className="alert-container">
       <div
@@ -14,7 +16,7 @@ export function Alert({ type, text }) {
             type === "danger" ? "alert-badge-danger" : "alert-badge-success"
           }`}
         >
-          {type === "danger" ? "Failed" : "Success"}
+          {type === "danger" ? t("alerts.failed") : t("alerts.success_badge")}
         </p>
         <p className="alert-text">{text}</p>
       </div>

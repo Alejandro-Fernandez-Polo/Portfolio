@@ -1,29 +1,34 @@
 import { useState, useEffect, lazy, Suspense } from "react"
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
-import "./libs/i18n/i18n"
+import { useLang } from "./hooks/useLang.js"
 
 function App() {
-  const [theme, setTheme] = useState("dark")
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "light",
+  )
+  const lang = useLang()
   const Experience = lazy(() => import("./components/Experience"))
   const Skills = lazy(() => import("./components/Skills"))
   const Projects = lazy(() => import("./components/Projects"))
   const Education = lazy(() => import("./components/Education"))
-  const Certifications = lazy(() => import("./components/Certifications"))
   const Contact = lazy(() => import("./components/Contact"))
   const Footer = lazy(() => import("./components/Footer"))
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light'
-    setTheme(savedTheme)
-    document.documentElement.setAttribute('data-theme', savedTheme)
-  }, [])
+    document.documentElement.setAttribute("data-theme", theme)
+  }, [theme])
+
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark'
-    setTheme(newTheme)
-    document.documentElement.setAttribute('data-theme', newTheme)
-    localStorage.setItem('theme', newTheme)
+    setTheme((prev) => {
+      const newTheme = prev === "dark" ? "light" : "dark"
+      localStorage.setItem("theme", newTheme)
+      return newTheme
+    })
   }
 
   return (

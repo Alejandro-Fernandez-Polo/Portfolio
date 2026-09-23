@@ -2,7 +2,8 @@
   "title": "Get in Touch",
   "info": {
     "location": "Location",
-    "my_location": "Granada, Spain"
+    "my_location": "Granada, Spain",
+    "email": "Email:"
   },
   "form": {
     "name_placeholder": "Your Name",
@@ -13,6 +14,8 @@
   },
   "alerts": {
     "success": "Message sent successfully!",
-    "error": "Ahh, something went wrong. Please try again."
+    "error": "Ahh, something went wrong. Please try again.",
+    "failed": "Failed",
+    "success_badge": "Success"
   }
 }

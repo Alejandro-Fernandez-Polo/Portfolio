@@ -2,7 +2,8 @@
   "title": "Escríbeme",
   "info": {
     "location": "Ubicación",
-    "my_location": "Granada, España"
+    "my_location": "Granada, España",
+    "email": "Email:"
   },
   "form": {
     "name_placeholder": "Tu nombre",
@@ -13,6 +14,8 @@
   },
   "alerts": {
     "success": "¡Mensaje enviado con éxito!",
-    "error": "Ups, algo salió mal. Inténtalo de nuevo."
+    "error": "Ups, algo salió mal. Inténtalo de nuevo.",
+    "failed": "Error",
+    "success_badge": "Éxito"
   }
 }
