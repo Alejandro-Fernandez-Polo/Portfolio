@@ -5080,7 +5080,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -5092,6 +5094,30 @@ const SUBJECTS = [
               "dia": "lunes",
               "inicio": "9:30",
               "fin": "10:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
