@@ -1607,6 +1607,7 @@
     grande:   '/ugr/predefined/predefined_grande.js',
     final:    '/ugr/predefined/predefined_final.js',
     alembueno: '/ugr/predefined/predefined_alembueno.js',
+    ec:       '/ugr/predefined/predefined_ec.js',
   };
 
   function loadPredefinedScript(source) {
@@ -1616,6 +1617,7 @@
         grande: 'PREDEFINED_SCHEDULES_GRANDE',
         final: 'PREDEFINED_SCHEDULES_FINAL',
         alembueno: 'PREDEFINED_SCHEDULES_ALEM_BUENO',
+        ec: 'PREDEFINED_SCHEDULES_EC',
       };
       if (typeof window[varMap[source]] !== 'undefined') { resolve(); return; }
       const script = document.createElement('script');
@@ -1634,6 +1636,7 @@
       case 'grande':   return typeof PREDEFINED_SCHEDULES_GRANDE !== 'undefined' ? PREDEFINED_SCHEDULES_GRANDE : [];
       case 'final':    return typeof PREDEFINED_SCHEDULES_FINAL !== 'undefined' ? PREDEFINED_SCHEDULES_FINAL : [];
       case 'alembueno': return typeof PREDEFINED_SCHEDULES_ALEM_BUENO !== 'undefined' ? PREDEFINED_SCHEDULES_ALEM_BUENO : [];
+      case 'ec':       return typeof PREDEFINED_SCHEDULES_EC !== 'undefined' ? PREDEFINED_SCHEDULES_EC : [];
       default:         return typeof PREDEFINED_SCHEDULES_570 !== 'undefined' ? PREDEFINED_SCHEDULES_570 : [];
     }
   }

@@ -5217,6 +5217,11 @@ const SUBJECTS = [
           "C2": [
             {
               "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "10:30",
               "fin": "11:30"
             }
