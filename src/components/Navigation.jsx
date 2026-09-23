@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { useLang } from "../hooks/useLang.js"
 import "./css/Navigation.css"
 
-export default function Navigation({ toggleTheme }) {
+export default function Navigation({ theme, toggleTheme }) {
   const [activeSection, setActiveSection] = useState("home")
   const { t, i18n } = useTranslation("navbar")
-  const [lang, setLang] = useState(i18n.language || i18n.resolvedLanguage || 'en')
+  const lang = useLang()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  useEffect(() => {
-    // Actualizar inmediatamente con el idioma actual resuelto
-    setLang(i18n.resolvedLanguage || i18n.language || 'en')
-    
-    const handler = () => setLang(i18n.language)
-    i18n.on("languageChanged", handler)
-    return () => i18n.off("languageChanged", handler)
-  }, [i18n])
 
   const handleClick = (e, targetId) => {
     e.preventDefault()
@@ -179,7 +171,8 @@ useEffect(() => {
                 type="checkbox"
                 className="input"
                 id="switch"
-                onClick={toggleTheme}
+                checked={theme === "dark"}
+                onChange={toggleTheme}
               />
               <div className="icon icon--moon">
                 <svg

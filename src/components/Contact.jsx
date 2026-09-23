@@ -3,6 +3,7 @@ import emailjs from "@emailjs/browser"
 import { useTranslation } from "react-i18next"
 import { useAlert } from "../hooks/useAlert.js"
 import { Alert } from "../components/Alert.jsx"
+import { socialLinks } from "../constants/social.jsx"
 import "./css/Contact.css"
 
 export default function Contact() {
@@ -17,11 +18,27 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const serviceId = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID
+    const templateId = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID
+    const publicKey = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+
+    if (!serviceId || !templateId || !publicKey) {
+      showAlert({
+        show: true,
+        text: t("alerts.error"),
+        type: "danger",
+      })
+      setTimeout(() => {
+        hideAlert()
+      }, 2000)
+      return
+    }
+
     setIsLoading(true)
     emailjs
       .send(
-        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+        serviceId,
+        templateId,
         {
           from_name: formData.name,
           to_name: "Alejandro",
@@ -29,7 +46,7 @@ export default function Contact() {
           to_email: "afernanpolo@gmail.com",
           message: formData.message,
         },
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
+        publicKey,
       )
       .then(() => {
         setIsLoading(false)
@@ -39,9 +56,8 @@ export default function Contact() {
           setFormData({ name: "", email: "", message: "" })
         }, 2000)
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false)
-        console.log(error)
         showAlert({
           show: true,
           text: t("alerts.error"),
@@ -60,27 +76,6 @@ export default function Contact() {
     })
   }
 
-const socialLinks = [
-  {
-    icon: (
-      <svg viewBox="0 0 24 24">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect x="2" y="9" width="4" height="12" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
-    ),
-    href: "https://www.linkedin.com/in/alejandro-fernández-polo",
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24">
-        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-      </svg>
-    ),
-    href: "https://github.com/Alejandro-Fernandez-Polo",
-  },
-]
-
   return (
     <section id="contact">
       <div className="contact-section">
@@ -95,7 +90,7 @@ const socialLinks = [
               </svg>
             </div>
             <div>
-              <h4>Email:</h4>
+              <h4>{t("info.email")}</h4>
               <p>afernanpolo@gmail.com</p>
             </div>
           </div>
@@ -116,9 +111,9 @@ const socialLinks = [
             </div>
           </div>
           <div className="social-links">
-            {socialLinks.map((link, index) => (
+            {socialLinks.map((link) => (
               <a
-                key={index}
+                key={link.id}
                 href={link.href}
                 className="social-link"
                 target="_blank"

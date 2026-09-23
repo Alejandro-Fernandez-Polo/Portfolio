@@ -1,19 +1,11 @@
-import { useTranslation, Trans } from "react-i18next"
-import { useState, useEffect } from "react"
+import { useTranslation } from "react-i18next"
+import { useLang } from "../hooks/useLang.js"
 import { experiences } from "../constants/experience.js"
 import "./css/Experience.css"
 
 export default function Experience() {
-  const { t, i18n } = useTranslation("experience")
-  const [lang, setLang] = useState(i18n.language || i18n.resolvedLanguage || 'en')
-
-  useEffect(() => {
-    setLang(i18n.resolvedLanguage || i18n.language || 'en')
-    
-    const handler = () => setLang(i18n.language)
-    i18n.on("languageChanged", handler)
-    return () => i18n.off("languageChanged", handler)
-  }, [i18n])
+  const { t } = useTranslation("experience")
+  const lang = useLang()
 
   return (
     <section id="experience">
@@ -30,9 +22,9 @@ export default function Experience() {
                 {exp.company_name} ({exp.date[lang] || exp.date.en})
               </div>
               <div className="date">
-                {trans.points.map((point, index) => (
+                {trans.points.map((point) => (
                   <li
-                    key={index}
+                    key={point}
                     className="text-black-500/50 font-normal pl-1 text-sm"
                   >
                     {point}
