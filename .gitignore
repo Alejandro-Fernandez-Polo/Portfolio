@@ -19,6 +19,9 @@ dist-ssr
 # Markdown
 *.md
 
+# Legacy predefined generators (local only)
+tools/ugr/predefined-legacy/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
