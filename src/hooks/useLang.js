@@ -13,8 +13,11 @@ export function useLang() {
     setLang(base())
 
     const handler = () => setLang(base())
-    i18n.on("languageChanged", handler)
-    return () => i18n.off("languageChanged", handler)
+    const emitter = i18n.services?.events
+    if (emitter) {
+      emitter.on("languageChanged", handler)
+      return () => emitter.off("languageChanged", handler)
+    }
   }, [i18n])
 
   return lang

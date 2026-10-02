@@ -12,7 +12,7 @@ export default function Projects() {
       </div>
       <div className="projects-grid">
         {projects.map((project) => {
-          const trans = t(`projects.${project.id}`, { returnObjects: true })
+          const trans = t(`${project.id}`, { returnObjects: true })
           return (
             <div key={project.id} className="project-card">
               <div className="project-image">
@@ -24,7 +24,7 @@ export default function Projects() {
                 <p>{trans.description}</p>
                 <div className="project-buttons">
                   <a href={project.link} className="btn btn-primary">
-                    {t("projects.viewcode")}
+                    {t("viewcode")}
                   </a>
                   {/* <a href={project.demoUrl} className="btn btn-secondary">
                     {t("projects.livedemo")}

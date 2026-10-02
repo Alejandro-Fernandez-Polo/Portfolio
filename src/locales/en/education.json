@@ -1,12 +1,9 @@
 {
   "title": "Education",
-
-  "education": {
-     "grado" : {
-      "title": "Higher Degree in Web Application Development"
-    },
-    "carrera" : {
-      "title": "Degree in Computer Engineering"
-    }
+  "grado": {
+    "title": "Higher Degree in Web Application Development"
+  },
+  "carrera": {
+    "title": "Degree in Computer Engineering"
   }
 }

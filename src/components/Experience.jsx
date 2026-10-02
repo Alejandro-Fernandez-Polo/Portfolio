@@ -10,11 +10,11 @@ export default function Experience() {
   return (
     <section id="experience">
       <div className="section-header">
-        <h2>{t("experience.title")}</h2>
+        <h2>{t("title")}</h2>
       </div>
       <div className="timeline">
         {experiences.map((exp) => {
-          const trans = t(`experience.${exp.id}`, { returnObjects: true })
+          const trans = t(exp.id, { returnObjects: true })
           return (
             <div key={exp.id} className="timeline-item">
               <h3>{trans.title}</h3>

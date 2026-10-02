@@ -129,6 +129,7 @@
 
   // ─── Init ───────────────────────────────────────────────────
   function init() {
+    console.log('UGR Horario v1.0.0');
     loadSubjectsFromStorage();
     loadPropuestas();
     loadState();
@@ -146,6 +147,9 @@
 
   // ─── LocalStorage ───────────────────────────────────────────
   function saveState() {
+    if (window.__ugr && window.__ugr.legacy && window.__ugr.legacy.start) {
+      window.dispatchEvent(new CustomEvent("ugr:stateChanged", { detail: state }));
+    }
     localStorage.setItem('ugr-horario-state', JSON.stringify(state));
   }
 
@@ -155,6 +159,12 @@
   }
 
   function loadState() {
+    if (window.__ugr && window.__ugr.legacy && window.__ugr.legacy.start) {
+      const newState = window.__ugr.legacy.getState?.();
+      if (newState) {
+        state = { ...state, ...newState };
+      }
+    }
     try {
       const saved = localStorage.getItem('ugr-horario-state');
       if (saved) {
@@ -2136,8 +2146,10 @@
 
   // ─── Navigation ─────────────────────────────────────────────
   function setupNavigation() {
+    console.log('Setting up navigation...');
     document.querySelectorAll('.nav-tab').forEach(tab => {
       tab.addEventListener('click', () => {
+        console.log('Nav pulsado:', tab.dataset.view);
         const view = tab.dataset.view;
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
@@ -3328,6 +3340,9 @@
   }
 
   // ─── Start ──────────────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', init);
+  window.__ugrLegacy = {
+    init,
+    getState: () => ({ ...state }),
+  };
 
 })();

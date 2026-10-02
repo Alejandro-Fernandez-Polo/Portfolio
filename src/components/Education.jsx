@@ -14,7 +14,7 @@ export default function Education() {
       </div>
       <div className="education-grid">
         {education.map((item) => {
-          const trans = t(`education.${item.id}`, { returnObjects: true })
+          const trans = t(`${item.id}`, { returnObjects: true })
           return (
             <div key={item.id} className="education-card">
               <h3>{trans.title}</h3>

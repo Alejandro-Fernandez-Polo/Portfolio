@@ -1,26 +1,23 @@
 {
   "title": "Projects",
   "intro": "This page presents a collection of my projects, spanning web design, React development, and object-oriented programming. Each project highlights different skills and stages of my learning journey, demonstrating experimentation, growth, and practical application. Together, they reflect the evolution of my abilities.",
-
-  "projects": {
-    "codigodesconocido": {
-      "name": "Código Desconocido",
-      "description": "Escape room management platform with a web panel, backend, and Dockerized chat. Supports bookings and interaction for educational and entertainment use."
-    },
-    "vehicle": {
-      "name": "Vehicle Fleet Management",
-      "description": "EV fleet system developed at UNED. Manages users, rates, and maintenance using OOP principles like inheritance, polymorphism, and encapsulation."
-    },
-    "design": {
-      "name": "DAW Projects",
-      "description": "Web development projects ranging from HTML/CSS/JS design to full Laravel applications with AJAX, showing my progression in modern web building."
-    },
-    "reactlogo": {
-      "name": "React Practice Projects",
-      "description": "Interactive apps focused on component-driven development, state management, and responsive UI, showcasing my hands-on experience with the React ecosystem."
-    },
-    "made": "Made with: ",
-    "viewcode": "View Code",
-    "livedemo": "Live Demo"
-  }
+  "codigodesconocido": {
+    "name": "Código Desconocido",
+    "description": "Escape room management platform with a web panel, backend, and Dockerized chat. Supports bookings and interaction for educational and entertainment use."
+  },
+  "vehicle": {
+    "name": "Vehicle Fleet Management",
+    "description": "EV fleet system developed at UNED. Manages users, rates, and maintenance using OOP principles like inheritance, polymorphism, and encapsulation."
+  },
+  "design": {
+    "name": "DAW Projects",
+    "description": "Web development projects ranging from HTML/CSS/JS design to full Laravel applications with AJAX, showing my progression in modern web building."
+  },
+  "reactlogo": {
+    "name": "React Practice Projects",
+    "description": "Interactive apps focused on component-driven development, state management, and responsive UI, showcasing my hands-on experience with the React ecosystem."
+  },
+  "made": "Made with: ",
+  "viewcode": "View Code",
+  "livedemo": "Live Demo"
 }

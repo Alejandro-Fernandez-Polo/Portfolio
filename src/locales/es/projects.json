@@ -1,28 +1,23 @@
 {
   "title": "Proyectos",
   "intro": "Esta página presenta una recopilación de mis proyectos, que abarcan el diseño web, el desarrollo con React y la programación orientada a objetos. Cada proyecto destaca diferentes habilidades y etapas de mi trayectoria de aprendizaje, lo que demuestra mi capacidad de experimentación, crecimiento y aplicación práctica. En conjunto, reflejan la evolución de mis habilidades.",
-
-  "projects": {
-    "codigodesconocido": {
-      "name": "Código Desconocido",
-      "description": "Plataforma de gestión de escape rooms con panel web, backend y chat dockerizado. Permite reservar y gestionar salas con fines educativos y de entretenimiento."
-    },
-    "vehicle": {
-      "name": "Gestión de Flota de Vehículos",
-      "description": "Sistema para flotas eléctricas desarrollado en la UNED. Gestiona usuarios, tarifas y mantenimiento aplicando herencia, polimorfismo y encapsulación (POO)."
-    },
-    "design": {
-      "name": "Proyectos de DAW",
-      "description": "Desarrollos del ciclo DAW, desde diseño con HTML/CSS/JS hasta aplicaciones dinámicas con Laravel y AJAX, mostrando mi evolución en la web moderna."
-    },
-    "reactlogo": {
-      "name": "Proyectos de Práctica en React",
-      "description": "Aplicaciones interactivas centradas en componentes, gestión de estado e interfaces responsivas que consolidan mi aprendizaje y habilidades en el ecosistema React."
-    },
-    "made": "Hecho con: ",
-    "viewcode": "Ver el código",
-    "livedemo": "Demo en vivo"
-  }
-
-
+  "codigodesconocido": {
+    "name": "Código Desconocido",
+    "description": "Plataforma de gestión de escape rooms con panel web, backend y chat dockerizado. Permite reservar y gestionar salas con fines educativos y de entretenimiento."
+  },
+  "vehicle": {
+    "name": "Gestión de Flota de Vehículos",
+    "description": "Sistema para flotas eléctricas desarrollado en la UNED. Gestiona usuarios, tarifas y mantenimiento aplicando herencia, polimorfismo y encapsulación (POO)."
+  },
+  "design": {
+    "name": "Proyectos de DAW",
+    "description": "Desarrollos del ciclo DAW, desde diseño con HTML/CSS/JS hasta aplicaciones dinámicas con Laravel y AJAX, mostrando mi evolución en la web moderna."
+  },
+  "reactlogo": {
+    "name": "Proyectos de Práctica en React",
+    "description": "Aplicaciones interactivas centradas en componentes, gestión de estado e interfaces responsivas que consolidan mi aprendizaje y habilidades en el ecosistema React."
+  },
+  "made": "Hecho con: ",
+  "viewcode": "Ver el código",
+  "livedemo": "Demo en vivo"
 }
