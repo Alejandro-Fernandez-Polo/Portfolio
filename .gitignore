@@ -28,6 +28,10 @@ pruebas/
 # Planes de trabajo (local only)
 planes/
 
+# Configuración de agentes (local only)
+.agents/
+skills-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
