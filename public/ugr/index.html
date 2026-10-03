@@ -114,6 +114,23 @@
       </section>
 
     <!-- Configuraciones guardadas -->
+    <section id="solver-panel" class="panel">
+      <div class="panel-header">
+        <h2>Generar horarios</h2>
+      </div>
+      <div id="solver-filters-panel"></div>
+      <div class="solver-actions">
+        <label for="solver-topk">Nº de horarios</label>
+        <input type="number" id="solver-topk" min="1" max="500" value="200">
+        <button id="btn-solver-generate" class="btn btn-primary">Generar horarios</button>
+        <button id="btn-solver-cancel" class="btn btn-danger" style="display:none;">Cancelar</button>
+      </div>
+      <div id="solver-progress" class="solver-progress" style="display:none;">
+        <div id="solver-progress-fill"></div>
+      </div>
+      <div id="solver-status" class="solver-status"></div>
+    </section>
+
     <section id="saved-configs" class="panel">
       <div class="panel-header">
         <h2>Configuraciones Guardadas</h2>

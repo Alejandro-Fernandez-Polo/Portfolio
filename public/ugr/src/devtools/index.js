@@ -3,6 +3,10 @@ import { get, getAll, stats, isAvailable, getStoreMode } from "../store/db.js";
 import { reducer, initialState } from "../store/reducer.js";
 import { buildPlan, snapshotAllKeys, verify, cleanupLegacy } from "../migrate/legacyKeys.js";
 import { validateBundle, buildMergePlan } from "../backup/bundle.js";
+import { fromLegacySubjects } from "../solver/catalog.js";
+import { solve } from "../solver/engine.js";
+import { runBench } from "../solver/bench.js";
+import { EC_SUBJECTS, EC_CODES, EC_EXPECTED_COUNT } from "../solver/fixtures.js";
 
 let bootStart = performance.now();
 const bootTimings = {};
@@ -98,14 +102,38 @@ function selfTest() {
   assert(mergePlan.actions.some((a) => a.section === "userState" && a.action === "replace"), "merge: newer userState wins");
   assert(mergePlan.actions.some((a) => a.section === "configs" && a.action === "upsert"), "merge: newer config wins");
 
+  // Solver tests (fixture EC reproducible)
+  try {
+    const ecCatalog = fromLegacySubjects(EC_SUBJECTS);
+    const ecSolve = solve(
+      { subjects: EC_CODES, filters: [], catalogVersion: "selftest" },
+      ecCatalog,
+      { k: 200, seed: 1 },
+    );
+    assert(ecSolve.stats.found === EC_EXPECTED_COUNT, `solver: EC = ${EC_EXPECTED_COUNT}`);
+    assert(ecSolve.items.length === EC_EXPECTED_COUNT, "solver: EC items length");
+    assert(ecSolve.items.every((i) => i.cost >= 0), "solver: non-negative costs");
+    assert(ecSolve.items[0].groupChoices && ecSolve.items[0].costBreakdown, "solver: solution shape");
+  } catch (err) {
+    failed++;
+    console.error("[selfTest] FAIL: solver", err);
+  }
+
   console.log(`[selfTest] ${passed}/${passed + failed} OK`);
   return { passed, failed };
 }
 
 function bench() {
   const t0 = performance.now();
+  let solver = null;
+  try {
+    solver = runBench();
+  } catch (err) {
+    solver = { error: err?.message || String(err) };
+  }
   return {
     boot: bootTimings,
+    solver,
     now: performance.now() - t0,
   };
 }

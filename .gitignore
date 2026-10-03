@@ -22,6 +22,12 @@ dist-ssr
 # Legacy predefined generators (local only)
 tools/ugr/predefined-legacy/
 
+# Pruebas
+pruebas/
+
+# Planes de trabajo (local only)
+planes/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

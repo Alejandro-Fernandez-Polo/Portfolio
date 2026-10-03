@@ -119,6 +119,25 @@
   let configPredefinedSource = localStorage.getItem('ugr-predefined-source') || '570';
   const CONFIG_PAGE_SIZE = 50;
 
+  // ─── Solver (Fase 1) ────────────────────────────────────────
+  const LEGACY_PREDEFINED = new URLSearchParams(location.search).get('legacyPredefined') === '1';
+  let solverResults = [];
+  let solverFilters = loadSolverFilters();
+  let solverBusy = false;
+  let solverRunSeq = 0;
+  let solverIdSeq = 1000000000;
+
+  const SOLVER_STRATEGIES = {
+    balanced:   { label: 'Equilibrado',        weights: { deadHours: 1, days: 0.8, afternoons: 0.6, mornings: 0, earlyStart: 0.4, loadVariance: 0.5, filters: 1, professor: 0.5 } },
+    professors: { label: 'Mejores profesores', weights: { professor: 1000, deadHours: 1, days: 0.3, afternoons: 0, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
+    morning:    { label: 'Priorizar mañana',   weights: { afternoons: 1000, professor: 1, deadHours: 0.5, days: 0.3, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
+    afternoon:  { label: 'Priorizar tarde',    weights: { mornings: 1000, professor: 1, deadHours: 0.5, days: 0.3, afternoons: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
+    compact:    { label: 'Menos horas muertas', weights: { deadHours: 1000, professor: 1, days: 0.3, afternoons: 0, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
+    shortWeek:  { label: 'Menos días',         weights: { days: 1000, deadHours: 1, professor: 0.5, afternoons: 0, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
+  };
+  let solverStrategy = localStorage.getItem('ugr-solver-strategy') || 'balanced';
+  if (!SOLVER_STRATEGIES[solverStrategy]) solverStrategy = 'balanced';
+
   const DEFAULT_SUBJECTS = JSON.parse(JSON.stringify(SUBJECTS));
 
   let convalidacionesEstados = JSON.parse(localStorage.getItem('ugr-convalidaciones') || '{}');
@@ -143,6 +162,7 @@
     checkUrlShare();
     checkUrlPropuesta();
     renderBlockFilters();
+    setupSolver();
   }
 
   // ─── LocalStorage ───────────────────────────────────────────
@@ -203,7 +223,8 @@
     if (turnoSelect) turnoSelect.value = state.turnoPreferente || 'indiferente';
     const predefinedSelect = document.getElementById('predefined-source-select');
     if (predefinedSelect) predefinedSelect.value = configPredefinedSource;
-    if (configPredefinedSource !== '570') loadPredefinedScript(configPredefinedSource);
+    if (predefinedSelect) predefinedSelect.style.display = LEGACY_PREDEFINED ? '' : 'none';
+    if (LEGACY_PREDEFINED && configPredefinedSource !== '570') loadPredefinedScript(configPredefinedSource);
   }
 
   function loadPropuestas() {
@@ -656,6 +677,47 @@
       profCount,
       sameGroupPerYear
     };
+  }
+
+  function calculateConfigDeadHours(selectedSubjects, groupChoices) {
+    const byDay = {};
+    Object.keys(selectedSubjects).forEach(codigo => {
+      if (!selectedSubjects[codigo]) return;
+      const subject = SUBJECTS.find(s => s.codigo === codigo);
+      if (!subject) return;
+      const choice = groupChoices[codigo];
+      if (!choice) return;
+      const group = subject.grupos.find(g => g.letra === choice.teoria);
+      if (!group) return;
+      const collect = (sessions) => {
+        sessions.forEach(s => {
+          if (!byDay[s.dia]) byDay[s.dia] = [];
+          byDay[s.dia].push({ inicio: timeToMinutes(s.inicio), fin: timeToMinutes(s.fin) });
+        });
+      };
+      collect(group.teoria);
+      if (choice.practica && group.practicas[choice.practica]) {
+        collect(group.practicas[choice.practica]);
+      }
+    });
+
+    let total = 0;
+    const shiftDead = (sessions) => {
+      if (sessions.length < 2) return 0;
+      let first = Infinity, last = -Infinity, sum = 0;
+      sessions.forEach(s => {
+        if (s.inicio < first) first = s.inicio;
+        if (s.fin > last) last = s.fin;
+        sum += s.fin - s.inicio;
+      });
+      return (last - first - sum) / 60;
+    };
+    Object.values(byDay).forEach(sessions => {
+      const manana = sessions.filter(s => s.inicio < 14 * 60);
+      const tarde = sessions.filter(s => s.inicio >= 14 * 60);
+      total += shiftDead(manana) + shiftDead(tarde);
+    });
+    return Math.round(total * 10) / 10;
   }
 
   function calculateConfigDays(selectedSubjects, groupChoices) {
@@ -1622,6 +1684,7 @@
 
   function loadPredefinedScript(source) {
     return new Promise((resolve) => {
+      if (!LEGACY_PREDEFINED) { resolve(); return; }
       if (source === '570') { resolve(); return; }
       const varMap = {
         grande: 'PREDEFINED_SCHEDULES_GRANDE',
@@ -1642,6 +1705,7 @@
   }
 
   function getPredefinedArray() {
+    if (!LEGACY_PREDEFINED) return [];
     switch (configPredefinedSource) {
       case 'grande':   return typeof PREDEFINED_SCHEDULES_GRANDE !== 'undefined' ? PREDEFINED_SCHEDULES_GRANDE : [];
       case 'final':    return typeof PREDEFINED_SCHEDULES_FINAL !== 'undefined' ? PREDEFINED_SCHEDULES_FINAL : [];
@@ -1655,7 +1719,343 @@
     const predefined = getPredefinedArray().map(c => ({ ...c, predefined: true }));
     const favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
     predefined.forEach(c => { if (favPredefined.includes(c.id)) c.favorite = true; });
-    return savedConfigs.concat(predefined);
+    return savedConfigs.concat(solverResults).concat(predefined);
+  }
+
+  // ─── Solver UI (Fase 1) ─────────────────────────────────────
+  function loadSolverFilters() {
+    const KNOWN = [
+      'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
+      'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
+    ];
+    try {
+      const parsed = JSON.parse(localStorage.getItem('ugr-solver-filters') || '[]');
+      if (!Array.isArray(parsed)) return [];
+      return parsed.filter(f => f && KNOWN.includes(f.type));
+    } catch (e) { return []; }
+  }
+
+  function saveSolverFilters() {
+    localStorage.setItem('ugr-solver-filters', JSON.stringify(solverFilters));
+  }
+
+  function findSolverFilter(type) {
+    return solverFilters.find(f => f.type === type);
+  }
+
+  function setSolverFilter(type, value) {
+    solverFilters = solverFilters.filter(f => f.type !== type);
+    if (value !== null && value !== undefined && value !== '') {
+      solverFilters.push({ type, value, weight: 1 });
+    }
+    saveSolverFilters();
+  }
+
+  function getSolverProfessorOptions() {
+    const byName = new Map();
+    SUBJECTS.forEach(s => {
+      (s.grupos || []).forEach(g => {
+        const key = `${s.codigo}-${g.letra}`;
+        const info = PROFESORES_MAP[key];
+        if (!info || !info.nombre) return;
+        if (!byName.has(info.nombre)) {
+          byName.set(info.nombre, { name: info.nombre, dificultad: info.dificultad, keys: [], subjects: new Set() });
+        }
+        const entry = byName.get(info.nombre);
+        entry.keys.push(key);
+        entry.subjects.add(s.codigo);
+      });
+    });
+    return [...byName.values()].sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  function toggleProfessorBlock(name, blocked, options) {
+    const option = options.find(o => o.name === name);
+    if (!option) return;
+    const set = new Set(findSolverFilter('blockGroups')?.value || []);
+    option.keys.forEach(k => { if (blocked) set.add(k); else set.delete(k); });
+    setSolverFilter('blockGroups', set.size ? [...set] : null);
+  }
+
+  function renderSolverFilters() {
+    const panel = document.getElementById('solver-filters-panel');
+    if (!panel) return;
+
+    const maxDays = findSolverFilter('maxDays')?.value;
+    const maxMorning = findSolverFilter('maxMorningDays')?.value;
+    const maxAfternoon = findSolverFilter('maxAfternoonDays')?.value;
+    const turno = findSolverFilter('preferTurno')?.value || 'indiferente';
+    const earliestStart = findSolverFilter('earliestStart')?.value || '';
+    const latestEnd = findSolverFilter('latestEnd')?.value || '';
+    const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
+    const profOptions = getSolverProfessorOptions();
+    const blockedCount = profOptions.filter(o => o.keys.every(k => blocked.has(k))).length;
+
+    let html = '';
+    html += '<div class="solver-filter-row">';
+    html += '<label>Preferencia <select id="solver-strategy">';
+    Object.entries(SOLVER_STRATEGIES).forEach(([key, s]) => {
+      html += `<option value="${key}" ${solverStrategy === key ? 'selected' : ''}>${s.label}</option>`;
+    });
+    html += '</select></label>';
+    html += '</div>';
+    html += '<div class="solver-filter-row">';
+    html += '<span class="solver-filter-label">Días libres:</span>';
+    DAYS.forEach(d => {
+      const active = (findSolverFilter('freeDays')?.value || []).includes(d);
+      html += `<label class="solver-day-check"><input type="checkbox" data-solver-day="${d}" ${active ? 'checked' : ''}> ${DAY_LABELS[d]}</label>`;
+    });
+    html += '</div>';
+
+    html += '<div class="solver-filter-row">';
+    html += `<label>Máx. días con clase <input type="number" id="solver-max-days" min="0" max="5" value="${maxDays ?? ''}"></label>`;
+    html += `<label>Máx. días de mañana <input type="number" id="solver-max-morning" min="0" max="5" value="${maxMorning ?? ''}"></label>`;
+    html += `<label>Máx. días de tarde <input type="number" id="solver-max-afternoon" min="0" max="5" value="${maxAfternoon ?? ''}"></label>`;
+    html += '</div>';
+
+    html += '<div class="solver-filter-row">';
+    html += '<label>Turno preferente <select id="solver-prefer-turno">';
+    ['indiferente', 'mañana', 'tarde'].forEach(v => {
+      html += `<option value="${v}" ${turno === v ? 'selected' : ''}>${v}</option>`;
+    });
+    html += '</select></label>';
+    html += `<label>No empezar antes de <input type="time" id="solver-earliest-start" value="${earliestStart}"></label>`;
+    html += `<label>No acabar después de <input type="time" id="solver-latest-end" value="${latestEnd}"></label>`;
+    html += '</div>';
+
+    html += '<div class="solver-prof-block">';
+    html += `<button type="button" class="btn btn-sm btn-secondary" id="btn-toggle-solver-profs">Bloquear profesores${blockedCount ? ` (${blockedCount})` : ''}</button>`;
+    html += '<div class="solver-prof-body" style="display:none">';
+    html += '<input type="search" id="solver-prof-search" placeholder="Buscar profesor o asignatura...">';
+    html += '<div class="solver-prof-list" id="solver-prof-list">';
+    if (profOptions.length === 0) {
+      html += '<p class="empty-state">No hay datos de profesores.</p>';
+    } else {
+      profOptions.forEach(o => {
+        const isBlocked = o.keys.every(k => blocked.has(k));
+        const subjects = [...o.subjects].sort().join(', ');
+        const diff = o.dificultad ? getDificultadColor(o.dificultad) : '';
+        html += `<label class="solver-prof-item" data-search="${o.name.toLowerCase()} ${subjects.toLowerCase()}">`;
+        html += `<input type="checkbox" data-prof-name="${o.name}" ${isBlocked ? 'checked' : ''}>`;
+        html += `<span class="solver-prof-diff" style="background:${diff}"></span>`;
+        html += `<span class="solver-prof-name">${o.name}</span>`;
+        html += `<span class="solver-prof-meta">${subjects}</span>`;
+        html += '</label>';
+      });
+    }
+    html += '</div></div></div>';
+
+    panel.innerHTML = html;
+
+    const strategySelect = panel.querySelector('#solver-strategy');
+    if (strategySelect) strategySelect.addEventListener('change', () => {
+      solverStrategy = SOLVER_STRATEGIES[strategySelect.value] ? strategySelect.value : 'balanced';
+      localStorage.setItem('ugr-solver-strategy', solverStrategy);
+    });
+
+    panel.querySelectorAll('[data-solver-day]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const days = new Set(findSolverFilter('freeDays')?.value || []);
+        if (cb.checked) days.add(cb.dataset.solverDay);
+        else days.delete(cb.dataset.solverDay);
+        setSolverFilter('freeDays', days.size ? [...days] : null);
+      });
+    });
+
+    const bindNumber = (id, type) => {
+      const input = panel.querySelector(id);
+      if (!input) return;
+      input.addEventListener('change', () => {
+        setSolverFilter(type, input.value === '' ? null : Number(input.value));
+      });
+    };
+    bindNumber('#solver-max-days', 'maxDays');
+    bindNumber('#solver-max-morning', 'maxMorningDays');
+    bindNumber('#solver-max-afternoon', 'maxAfternoonDays');
+
+    const turnoSelect = panel.querySelector('#solver-prefer-turno');
+    if (turnoSelect) turnoSelect.addEventListener('change', () => {
+      setSolverFilter('preferTurno', turnoSelect.value === 'indiferente' ? null : turnoSelect.value);
+    });
+    const earliestInput = panel.querySelector('#solver-earliest-start');
+    if (earliestInput) earliestInput.addEventListener('change', () => {
+      setSolverFilter('earliestStart', earliestInput.value || null);
+    });
+    const latestInput = panel.querySelector('#solver-latest-end');
+    if (latestInput) latestInput.addEventListener('change', () => {
+      setSolverFilter('latestEnd', latestInput.value || null);
+    });
+
+    const profToggle = panel.querySelector('#btn-toggle-solver-profs');
+    const profBody = panel.querySelector('.solver-prof-body');
+    if (profToggle && profBody) {
+      profToggle.addEventListener('click', () => {
+        profBody.style.display = profBody.style.display === 'none' ? 'block' : 'none';
+      });
+    }
+    const profSearch = panel.querySelector('#solver-prof-search');
+    if (profSearch) {
+      profSearch.addEventListener('input', () => {
+        const q = profSearch.value.trim().toLowerCase();
+        panel.querySelectorAll('.solver-prof-item').forEach(item => {
+          item.style.display = !q || item.dataset.search.includes(q) ? '' : 'none';
+        });
+      });
+    }
+    panel.querySelectorAll('[data-prof-name]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        toggleProfessorBlock(cb.dataset.profName, cb.checked, profOptions);
+        const size = (findSolverFilter('blockGroups')?.value || []).length;
+        if (profToggle) profToggle.textContent = `Bloquear profesores${size ? ` (${profOptions.filter(o => o.keys.every(k => (findSolverFilter('blockGroups')?.value || []).includes(k))).length})` : ''}`;
+      });
+    });
+  }
+
+  function blockedEmptySubjects(problem) {
+    const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
+    return problem.subjects.filter(code => {
+      const s = SUBJECTS.find(x => x.codigo === code);
+      if (!s) return false;
+      return !(s.grupos || []).some(g => !blocked.has(`${code}-${g.letra}`));
+    });
+  }
+
+  function buildSolverDocentScores(codes) {
+    const scores = {};
+    codes.forEach(code => {
+      const subject = SUBJECTS.find(x => x.codigo === code);
+      if (!subject) return;
+      subject.grupos.forEach(g => {
+        const d = getDificultad(code, g.letra);
+        if (d) scores[`${code}-${g.letra}`] = PROF_SCORE_MAP[d] || 3;
+      });
+    });
+    return scores;
+  }
+
+  function buildSolverProblem() {
+    const codes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
+    const inTerm = codes.filter(c => {
+      const s = SUBJECTS.find(x => x.codigo === c);
+      return s && s.cuatrimestre === state.cuatrimestreActivo;
+    });
+    return {
+      subjects: inTerm,
+      filters: solverFilters,
+      catalogVersion: 'legacy',
+      docentScores: buildSolverDocentScores(inTerm),
+    };
+  }
+
+  function setSolverStatus(text) {
+    const el = document.getElementById('solver-status');
+    if (el) el.textContent = text || '';
+  }
+
+  function setSolverBusy(busy) {
+    solverBusy = busy;
+    const gen = document.getElementById('btn-solver-generate');
+    const cancel = document.getElementById('btn-solver-cancel');
+    const prog = document.getElementById('solver-progress');
+    if (gen) gen.disabled = busy;
+    if (cancel) cancel.style.display = busy ? '' : 'none';
+    if (prog) prog.style.display = busy ? '' : 'none';
+  }
+
+  function setSolverProgress(stats) {
+    const fill = document.getElementById('solver-progress-fill');
+    if (!fill || !stats) return;
+    const pct = Math.min(95, ((stats.nodes || 0) / 20000) * 100);
+    fill.style.width = pct + '%';
+    setSolverStatus(`${stats.found || 0} soluciones · ${stats.nodes || 0} nodos`);
+  }
+
+  function toSolverConfig(item, index) {
+    const strategy = SOLVER_STRATEGIES[solverStrategy] ? solverStrategy : 'balanced';
+    return {
+      id: solverIdSeq++,
+      name: `Generado ${index + 1} · ${SOLVER_STRATEGIES[strategy].label}`,
+      selectedSubjects: { ...item.selectedSubjects },
+      groupChoices: JSON.parse(JSON.stringify(item.groupChoices)),
+      apellido: state.apellido,
+      turnoPreferente: state.turnoPreferente,
+      solver: true,
+      strategy,
+      cost: item.cost,
+      deadHours: item.costBreakdown ? item.costBreakdown.deadHours : null,
+    };
+  }
+
+  async function runSolver() {
+    if (solverBusy) return;
+    const bridge = window.__ugrSolver;
+    if (!bridge) { setSolverStatus('El motor no está disponible.'); return; }
+    const problem = buildSolverProblem();
+    if (problem.subjects.length === 0) {
+      setSolverStatus('No hay asignaturas seleccionadas en este cuatrimestre.');
+      return;
+    }
+    const empty = blockedEmptySubjects(problem);
+    if (empty.length) {
+      setSolverStatus(`El bloqueo de profesores deja sin grupos: ${empty.join(', ')}.`);
+      return;
+    }
+    const kInput = document.getElementById('solver-topk');
+    const k = Math.max(1, Math.min(500, parseInt(kInput?.value || '200', 10) || 200));
+    const runId = ++solverRunSeq;
+    solverResults = [];
+    configPage = 1;
+    setSolverBusy(true);
+    setSolverStatus('Generando…');
+    const weights = (SOLVER_STRATEGIES[solverStrategy] || SOLVER_STRATEGIES.balanced).weights;
+    try {
+      const result = await bridge.solveTopK(problem, {
+        k,
+        weights,
+        apellido: state.apellido,
+        onProgress: (stats) => { if (runId === solverRunSeq) setSolverProgress(stats); },
+      });
+      if (runId !== solverRunSeq) return;
+      solverResults = result.items.map(toSolverConfig);
+      renderSavedConfigs();
+      const approx = result.stats.approximate ? ' (aprox.)' : '';
+      setSolverStatus(`${solverResults.length} horarios generados${approx}${result.fromCache ? ' · caché' : ''}`);
+    } catch (err) {
+      if (runId === solverRunSeq) setSolverStatus('Error: ' + (err?.message || err));
+    } finally {
+      if (runId === solverRunSeq) setSolverBusy(false);
+    }
+  }
+
+  function cancelSolver() {
+    solverRunSeq++;
+    if (window.__ugrSolver) window.__ugrSolver.cancel();
+    setSolverBusy(false);
+    setSolverStatus('Generación cancelada.');
+  }
+
+  function saveSolverResult(id) {
+    const cfg = solverResults.find(c => c.id === id);
+    if (!cfg) return;
+    savedConfigs.push({
+      id: Date.now(),
+      name: cfg.name,
+      selectedSubjects: { ...cfg.selectedSubjects },
+      groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
+      apellido: cfg.apellido,
+      turnoPreferente: cfg.turnoPreferente,
+    });
+    saveAllConfigs(savedConfigs);
+    showToast('Horario guardado', 'success');
+    renderSavedConfigs();
+  }
+
+  function setupSolver() {
+    renderSolverFilters();
+    const gen = document.getElementById('btn-solver-generate');
+    const cancel = document.getElementById('btn-solver-cancel');
+    if (gen) gen.addEventListener('click', runSolver);
+    if (cancel) cancel.addEventListener('click', cancelSolver);
   }
 
   function isConfigFavorited(config) {
@@ -1778,6 +2178,11 @@
           const db = calculateConfigDays(b.selectedSubjects, b.groupChoices);
           va = da.tarde; vb = db.tarde; break;
         }
+        case 'deadHours': {
+          va = a.deadHours != null ? a.deadHours : calculateConfigDeadHours(a.selectedSubjects, a.groupChoices);
+          vb = b.deadHours != null ? b.deadHours : calculateConfigDeadHours(b.selectedSubjects, b.groupChoices);
+          break;
+        }
         case 'profScore': {
           const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
           const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
@@ -1842,6 +2247,7 @@
     html += `<th data-sort="turno" class="sortable${configSortField === 'turno' ? ' sort-active' : ''}">Turno${arrow('turno')}</th>`;
     html += `<th data-sort="manana" class="sortable${configSortField === 'manana' ? ' sort-active' : ''}">D\u00EDas M${arrow('manana')}</th>`;
     html += `<th data-sort="tarde" class="sortable${configSortField === 'tarde' ? ' sort-active' : ''}">D\u00EDas T${arrow('tarde')}</th>`;
+    html += `<th data-sort="deadHours" class="sortable${configSortField === 'deadHours' ? ' sort-active' : ''}">Huecos${arrow('deadHours')}</th>`;
     html += `<th data-sort="profScore" class="sortable${configSortField === 'profScore' ? ' sort-active' : ''}">Prof${arrow('profScore')}</th>`;
     html += `<th data-sort="sameGroup" class="sortable${configSortField === 'sameGroup' ? ' sort-active' : ''}">Grupo${arrow('sameGroup')}</th>`;
     html += '<th class="col-actions-head">Acciones</th>';
@@ -1858,13 +2264,17 @@
       html += `<td class="col-turno">${config.turnoPreferente}</td>`;
       html += `<td class="col-manana">${d.manana}</td>`;
       html += `<td class="col-tarde">${d.tarde}</td>`;
+      const dead = config.deadHours != null ? config.deadHours : calculateConfigDeadHours(config.selectedSubjects, config.groupChoices);
+      html += `<td class="col-deadhours">${dead}</td>`;
       html += `<td class="col-prof">${m.profScore}/${m.profCount * 6}</td>`;
       html += `<td class="col-group ${m.sameGroupPerYear ? 'group-ok' : 'group-warn'}">${m.sameGroupPerYear ? '\u2713 Uniforme' : '\u2717 Mixtos'}</td>`;
       html += '<td class="col-actions">';
       html += `<button class="btn btn-sm btn-secondary" data-action="load" data-id="${config.id}">Cargar</button>`;
       html += `<button class="btn btn-sm ${compareIds.includes(config.id) ? 'btn-danger' : 'btn-secondary'}" data-action="compare" data-id="${config.id}">${compareIds.includes(config.id) ? 'Quitar' : 'Comparar'}</button>`;
       html += `<button class="btn btn-sm btn-secondary" data-action="export-config" data-id="${config.id}">Exportar</button>`;
-      if (!config.predefined) {
+      if (config.solver) {
+        html += `<button class="btn btn-sm btn-primary" data-action="save-solver" data-id="${config.id}">Guardar</button>`;
+      } else if (!config.predefined) {
         html += `<button class="btn btn-sm btn-danger" data-action="delete" data-id="${config.id}">Eliminar</button>`;
       }
       html += '</td>';
@@ -1911,6 +2321,7 @@
         const id = parseInt(btn.dataset.id);
         if (btn.dataset.action === 'load') loadConfig(id);
         else if (btn.dataset.action === 'delete') deleteConfig(id);
+        else if (btn.dataset.action === 'save-solver') saveSolverResult(id);
         else if (btn.dataset.action === 'export-config') exportSingleConfig(id);
         else if (btn.dataset.action === 'compare') toggleCompareId(id);
         else if (btn.dataset.action === 'favorite') toggleFavorite(id);

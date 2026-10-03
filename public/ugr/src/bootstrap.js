@@ -1,10 +1,12 @@
 import { open, isAvailable, getStoreMode } from "./store/db.js";
 import { initStore, flush, getState, dispatch, subscribe } from "./store/commands.js";
 import { run as migrateLegacy } from "./migrate/migrateLegacy.js";
-import { registerModule, startAll, stopAll } from "./kernel/registry.js";
+import { registerModule, startAll, stopAll, getModule } from "./kernel/registry.js";
 import { bus } from "./kernel/bus.js";
 import { createDevtools } from "./devtools/index.js";
 import { recordBootTiming } from "./devtools/index.js";
+import { registerCatalog } from "./modules/catalog.js";
+import { registerSolver } from "./modules/solver.js";
 
 async function bootstrap() {
   recordBootTiming("bootstrap_start");
@@ -51,11 +53,26 @@ async function bootstrap() {
     subscribes: [],
   });
 
+  registerCatalog();
+  const solverApi = registerSolver();
+
   await startAll(bus);
   recordBootTiming("kernel_started");
 
   bus.emit("app:booted", { schema: 1, degraded: !storeResult.ok });
   recordBootTiming("app_booted");
+
+  window.__ugrSolver = {
+    solve: solverApi.solve,
+    solveTopK: solverApi.solveTopK,
+    cancel: solverApi.cancel,
+    explain: solverApi.explain,
+    getCatalog: () => {
+      const catalogApi = getModule("catalog");
+      return catalogApi ? catalogApi.getCatalog() : null;
+    },
+    listModules: () => getModule("solver") !== null,
+  };
 
   if (typeof window !== "undefined" && !window.__ugrDegraded) {
     window.__ugr = createDevtools();
