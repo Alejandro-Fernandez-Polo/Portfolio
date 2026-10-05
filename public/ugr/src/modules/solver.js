@@ -7,6 +7,13 @@ function currentCatalog() {
   return api ? api.getCatalog() : null;
 }
 
+function withActiveCatalogVersion(problem) {
+  const api = getModule("catalog");
+  if (!api || typeof api.getVersion !== "function") return problem;
+  const version = api.getVersion();
+  return version ? { ...problem, catalogVersion: version } : problem;
+}
+
 function withEvents(options = {}) {
   const { onProgress, ...rest } = options;
   return {
@@ -21,7 +28,7 @@ function withEvents(options = {}) {
 async function solve(problem, options = {}) {
   const catalog = currentCatalog();
   if (!catalog) throw new Error("catalog no disponible");
-  const result = await clientSolveTopK(problem, catalog, withEvents(options));
+  const result = await clientSolveTopK(withActiveCatalogVersion(problem), catalog, withEvents(options));
   bus.emit(
     "solver:solution",
     { count: result.items.length, fromCache: result.fromCache, stats: result.stats },

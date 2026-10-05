@@ -5,4 +5,18 @@ export const SCHEMA_MIGRATIONS = [
     up: async (tx) => {
     },
   },
+  {
+    version: 2,
+    name: "catalogs-store",
+    up: async (tx) => {
+      const active = await tx.table("meta").get("activeCatalog");
+      if (!active) {
+        await tx.table("meta").put({
+          key: "activeCatalog",
+          value: "UGR/GI/legacy-1",
+          updatedAt: new Date().toISOString(),
+        });
+      }
+    },
+  },
 ];

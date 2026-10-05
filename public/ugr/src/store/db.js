@@ -1,5 +1,5 @@
 import Dexie from "../vendor/dexie.mjs";
-import { DB_NAME, SCHEMA_VERSION, SCHEMA_V1 } from "./schema.js";
+import { DB_NAME, SCHEMA_VERSION, SCHEMA_VERSIONS } from "./schema.js";
 import { SCHEMA_MIGRATIONS } from "./migrations.js";
 
 let db = null;
@@ -32,7 +32,9 @@ export async function open() {
 
   try {
     db = new Dexie(DB_NAME);
-    db.version(SCHEMA_VERSION).stores(SCHEMA_V1);
+    for (const { version, stores } of SCHEMA_VERSIONS) {
+      db.version(version).stores(stores);
+    }
 
     for (const m of SCHEMA_MIGRATIONS) {
       if (m.version <= SCHEMA_VERSION && m.up) {

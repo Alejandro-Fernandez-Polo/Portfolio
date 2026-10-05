@@ -77,6 +77,7 @@ export function fromLegacySubjects(legacySubjects, meta = {}) {
   return {
     meta: { ...DEFAULT_META, ...meta },
     subjects: legacySubjects.map(normalizeSubject),
+    docents: [],
   };
 }
 
@@ -99,6 +100,57 @@ export function getGroup(subject, letra) {
 export function getSubgroups(group) {
   if (!group?.practicas?.subgrupos) return [];
   return group.practicas.subgrupos;
+}
+
+export const DIFFICULTY_SCORES = {
+  cyan: 6,
+  verde: 5,
+  amarillo: 4,
+  naranja: 3,
+  rojo: 2,
+  negro: 1,
+  gris: 3,
+};
+
+export function difficultyScore(dificultad) {
+  return DIFFICULTY_SCORES[dificultad] ?? 3;
+}
+
+function docentKey(docent) {
+  if (docent?.key) return docent.key;
+  if (docent?.subjectCode && docent?.groupLetter) return `${docent.subjectCode}-${docent.groupLetter}`;
+  return "";
+}
+
+export function normalizeDocent(docent) {
+  if (!docent || typeof docent !== "object") return null;
+  const key = docentKey(docent);
+  if (!key) return null;
+  const profile = docent.profile || {};
+  const dash = key.lastIndexOf("-");
+  return {
+    key,
+    name: docent.name || "",
+    subjectCode: docent.subjectCode || (dash > 0 ? key.slice(0, dash) : key),
+    groupLetter: docent.groupLetter || (dash >= 0 ? key.slice(dash + 1) : ""),
+    profile: {
+      dificultad: profile.dificultad || null,
+      razon: profile.razon || "",
+      opinion: profile.opinion || "",
+    },
+  };
+}
+
+export function attachDocents(catalog, docents) {
+  if (!catalog || typeof catalog !== "object") return catalog;
+  const list = Array.isArray(docents) ? docents.map(normalizeDocent).filter(Boolean) : [];
+  catalog.docents = list;
+  return catalog;
+}
+
+export function getDocent(catalog, key) {
+  if (!catalog?.docents || !key) return null;
+  return catalog.docents.find((d) => d.key === key) || null;
 }
 
 function validateSession(session, path, errors) {
