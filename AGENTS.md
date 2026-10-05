@@ -26,7 +26,7 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 - Eager: `Navigation`, `Hero`. Lazy via `Suspense`: Experience, Skills, Projects, Education, Contact, Footer.
 - Theme: `data-theme` on `<html>`, localStorage key `theme`, default `'light'`. Light vars on `:root`, dark on `[data-theme="dark"]` in `src/index.css`.
 - Data lives in `src/constants/{education,experience,projects,skills}.js` plus `social.jsx` (`LINKEDIN_URL`, `GITHUB_URL`, `socialLinks` with JSX icons). There is **no** `src/constants/index.js` and **no** `src/assets/icons/`. Image barrel: `src/assets/images/index.js` — always import images through it, never deep relative paths.
-- `vite.config.js` has a custom `ugrStatic` middleware that serves `public/ugr/` at `/ugr` in dev **and** preview. **Do not edit `vite.config.js` or `public/ugr/` without explicit approval.**
+- `vite.config.js` has a custom `ugrStatic` middleware that serves `public/ugr/` at `/ugr` in dev **and** preview. **Do not edit `vite.config.js` without explicit approval.**
 
 ## `/ugr` sub-app (separate stack)
 
