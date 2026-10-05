@@ -7,6 +7,7 @@ import { createDevtools } from "./devtools/index.js";
 import { recordBootTiming } from "./devtools/index.js";
 import { registerCatalog } from "./modules/catalog.js";
 import { registerSolver } from "./modules/solver.js";
+import { setupImportWizard } from "./ui/import-wizard.js";
 
 async function bootstrap() {
   recordBootTiming("bootstrap_start");
@@ -53,7 +54,7 @@ async function bootstrap() {
     subscribes: [],
   });
 
-  registerCatalog();
+  const catalogModuleApi = registerCatalog();
   const solverApi = registerSolver();
 
   await startAll(bus);
@@ -61,6 +62,14 @@ async function bootstrap() {
 
   bus.emit("app:booted", { schema: 1, degraded: !storeResult.ok });
   recordBootTiming("app_booted");
+
+  window.__ugrCatalog = catalogModuleApi;
+
+  bus.on("catalog:updated", (envelope) => {
+    document.dispatchEvent(
+      new CustomEvent("ugr:catalogUpdated", { detail: envelope.payload, bubbles: false }),
+    );
+  });
 
   window.__ugrSolver = {
     solve: solverApi.solve,
@@ -87,8 +96,10 @@ async function bootstrap() {
     };
   }
 
-  startLegacyApp();
+  await startLegacyApp();
   recordBootTiming("legacy_started");
+
+  setupImportWizard();
 
   window.addEventListener("beforeunload", () => flush());
   window.addEventListener("pagehide", () => flush());
@@ -103,9 +114,9 @@ function showDegradedBanner() {
   window.__ugrDegraded = true;
 }
 
-function startLegacyApp() {
+async function startLegacyApp() {
   if (window.__ugrLegacy && typeof window.__ugrLegacy.init === "function") {
-    window.__ugrLegacy.init();
+    await window.__ugrLegacy.init();
   }
 }
 

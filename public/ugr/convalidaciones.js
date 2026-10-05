@@ -1,4 +1,5 @@
 /* UGR Horario - Convalidaciones UNED -> UGR (tabla real convalidaciones.html) y Grado Superior -> UGR */
+const EQUIVALENCIA_CODIGOS = { '12':'CA','14':'FS','15':'FP','16':'LMD','17':'TOC','18':'MP','19':'IES','1A':'ES','21':'PDOO','1':'ES','A':'ES' };
 const CONVALIDACIONES = [
   {
     id: "011013-FFT",

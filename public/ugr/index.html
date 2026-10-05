@@ -48,12 +48,6 @@
       <section id="subject-selection" class="panel">
         <div class="panel-header">
           <h2>Asignaturas</h2>
-          <div class="summary-bar">
-            <span id="selected-count">0</span> / <span id="total-subjects">0</span> asignaturas
-            &middot;
-            <span id="total-credits">0</span> ECTS
-            <span id="credit-meta" class="credit-meta">(meta: 30)</span>
-          </div>
         </div>
 
         <!-- Cuatrimestre tabs -->
@@ -65,37 +59,92 @@
         <div id="subjects-container"></div>
       </section>
 
+      <!-- Panel de control unificado: ECTS + filtros + generación + conflictos + resumen -->
+      <section id="control-panel" class="panel">
+        <div class="panel-header control-panel-header">
+          <h2>Generar horarios</h2>
+          <div class="summary-bar">
+            <span id="selected-count">0</span> / <span id="total-subjects">0</span> asignaturas
+            &middot;
+            <span id="total-credits">0</span> ECTS
+            <span id="credit-meta" class="credit-meta">(meta: 30)</span>
+          </div>
+        </div>
+
+        <p id="control-hint" class="empty-state control-panel-empty">Selecciona asignaturas para generar horarios.</p>
+
+        <div id="solver-panel" class="control-panel-solver">
+          <div id="solver-filters-panel"></div>
+          <div class="solver-actions">
+            <label for="solver-topk">Nº de horarios</label>
+            <input type="number" id="solver-topk" min="1" max="500" value="200">
+            <button id="btn-solver-generate" class="btn btn-primary">Generar horarios</button>
+            <button id="btn-solver-cancel" class="btn btn-danger" style="display:none;">Cancelar</button>
+          </div>
+          <div id="solver-progress" class="solver-progress" style="display:none;">
+            <div id="solver-progress-fill"></div>
+          </div>
+          <div id="solver-status" class="solver-status"></div>
+        </div>
+
+        <div id="conflicts-panel" class="control-panel-block">
+          <h3>Conflictos</h3>
+          <div id="conflicts-list">
+            <p class="empty-state">Sin conflictos.</p>
+          </div>
+        </div>
+
+        <div id="summary-panel" class="control-panel-block">
+          <h3>Resumen</h3>
+          <div id="summary-content">
+            <p class="empty-state">Selecciona asignaturas para ver el resumen.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Calendario + Configuración de grupos -->
       <section id="calendar-section" class="panel">
         <div class="calendar-header-row">
           <h2>Calendario Semanal</h2>
-          <button id="toggle-group-config" class="btn-toggle" style="display:none;">
-            <span class="toggle-icon">&#9660;</span> Configurar grupos
-          </button>
+          <div class="calendar-header-actions">
+            <div class="cal-view-toggle" role="group" aria-label="Modo de vista del calendario">
+              <button type="button" id="btn-view-week" class="btn-view" aria-pressed="true">Vista semana</button>
+              <button type="button" id="btn-view-list" class="btn-view" aria-pressed="false">Vista lista</button>
+            </div>
+            <button type="button" id="btn-view-compact" class="btn-view" aria-pressed="false">Compactar huecos</button>
+            <button id="toggle-group-config" class="btn-toggle" style="display:none;">
+              <span class="toggle-icon">&#9660;</span> Configurar grupos
+            </button>
+          </div>
         </div>
 
         <!-- Panel de configuración de grupos (colapsable) -->
         <div id="group-config" style="display:none;">
           <div id="group-config-content"></div>
-          <div class="dificultad-legend">
-            <span class="legend-item"><span class="legend-dot" style="background:#00e5ff"></span> Muy fácil</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#28a745"></span> Fácil</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#ffc107"></span> Normal</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#fd7e14"></span> Difícil</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#dc3545"></span> Muy difícil</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#1a1a1a"></span> Extremo</span>
-          </div>
+        </div>
+
+        <!-- Leyenda de la codificación visual del calendario -->
+        <div class="dificultad-legend">
+          <ul class="legend-list" aria-label="Conflictos del calendario">
+            <li class="legend-item">
+              <span class="legend-conflict-swatch" aria-hidden="true"></span>
+              <span>Conflicto: sesión solapada (borde rojo pulsante)</span>
+            </li>
+          </ul>
+          <ul class="legend-list" aria-label="Dificultad del profesor">
+            <li class="legend-item"><span class="legend-dot diff-cyan" aria-hidden="true"></span><span>Muy fácil</span></li>
+            <li class="legend-item"><span class="legend-dot diff-verde" aria-hidden="true"></span><span>Fácil</span></li>
+            <li class="legend-item"><span class="legend-dot diff-amarillo" aria-hidden="true"></span><span>Normal</span></li>
+            <li class="legend-item"><span class="legend-dot diff-naranja" aria-hidden="true"></span><span>Difícil</span></li>
+            <li class="legend-item"><span class="legend-dot diff-rojo" aria-hidden="true"></span><span>Muy difícil</span></li>
+            <li class="legend-item"><span class="legend-dot diff-negro" aria-hidden="true"></span><span>Extremo</span></li>
+          </ul>
         </div>
 
         <div id="calendar-wrapper">
-          <div id="calendar"></div>
+          <div id="calendar" role="region" aria-label="Vista semanal del horario"></div>
+          <div id="calendar-list" hidden></div>
         </div>
-      </section>
-
-      <!-- Panel de conflictos -->
-      <section id="conflicts-panel" class="panel" style="display:none;">
-        <h2>⚠ Conflictos Detectados</h2>
-        <div id="conflicts-list"></div>
       </section>
 
       <!-- Acciones -->
@@ -105,32 +154,7 @@
         <button id="btn-clear-selected" class="btn btn-danger">Eliminar Seleccionadas</button>
       </section>
 
-      <!-- Resumen -->
-      <section id="summary-panel" class="panel">
-        <h2>Resumen</h2>
-        <div id="summary-content">
-          <p class="empty-state">Selecciona asignaturas para ver el resumen.</p>
-        </div>
-      </section>
-
     <!-- Configuraciones guardadas -->
-    <section id="solver-panel" class="panel">
-      <div class="panel-header">
-        <h2>Generar horarios</h2>
-      </div>
-      <div id="solver-filters-panel"></div>
-      <div class="solver-actions">
-        <label for="solver-topk">Nº de horarios</label>
-        <input type="number" id="solver-topk" min="1" max="500" value="200">
-        <button id="btn-solver-generate" class="btn btn-primary">Generar horarios</button>
-        <button id="btn-solver-cancel" class="btn btn-danger" style="display:none;">Cancelar</button>
-      </div>
-      <div id="solver-progress" class="solver-progress" style="display:none;">
-        <div id="solver-progress-fill"></div>
-      </div>
-      <div id="solver-status" class="solver-status"></div>
-    </section>
-
     <section id="saved-configs" class="panel">
       <div class="panel-header">
         <h2>Configuraciones Guardadas</h2>
@@ -162,6 +186,18 @@
       <!-- Datos -->
       <section id="data-section" class="panel">
         <h2>Datos</h2>
+        <div class="catalog-row">
+          <div class="config-field catalog-field">
+            <label for="catalog-select">Catálogo activo</label>
+            <select id="catalog-select" disabled></select>
+            <small>Fuente de asignaturas con la que se resuelven los horarios</small>
+          </div>
+          <div class="catalog-actions">
+            <a class="btn btn-secondary" href="/ugr/datasets/plantilla_horario.csv" download="plantilla_horario.csv">Descargar plantilla CSV</a>
+            <button id="btn-catalog-export" class="btn btn-secondary">Exportar catálogo</button>
+            <button id="btn-open-import-wizard" class="btn btn-secondary" type="button">Importar catálogo</button>
+          </div>
+        </div>
         <div class="data-actions">
           <button id="btn-export-json" class="btn btn-secondary">Exportar Todo (JSON)</button>
           <button id="btn-import-json" class="btn btn-secondary">Importar JSON</button>
@@ -410,10 +446,156 @@
     Comparar (<span id="compare-count">0</span>)
   </button>
 
+  <!-- Modal: Asistente de importación de catálogo (5 pasos) -->
+  <div id="import-wizard-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Importar catálogo de otra titulación</h2>
+        <button type="button" id="import-wizard-close" class="modal-close-btn">&times;</button>
+      </div>
+      <ol class="wizard-steps">
+        <li class="wizard-step-indicator" data-step="1"><span class="wizard-step-num">1</span> Fuente</li>
+        <li class="wizard-step-indicator" data-step="2"><span class="wizard-step-num">2</span> Cargar</li>
+        <li class="wizard-step-indicator" data-step="3"><span class="wizard-step-num">3</span> Mapeo</li>
+        <li class="wizard-step-indicator" data-step="4"><span class="wizard-step-num">4</span> Vista previa</li>
+        <li class="wizard-step-indicator" data-step="5"><span class="wizard-step-num">5</span> Confirmar</li>
+      </ol>
+      <div class="modal-body">
+
+        <!-- Paso 1: Fuente -->
+        <section class="wizard-panel" data-panel="1">
+          <p class="wizard-hint">¿De dónde viene el catálogo que quieres importar?</p>
+          <div class="wizard-source-grid">
+            <label class="wizard-source-option" data-source="csv">
+              <input type="radio" name="wizard-source" value="csv" checked>
+              <span>
+                <span class="wizard-source-title">Archivo CSV</span>
+                <small>Un .csv con las columnas de la plantilla</small>
+              </span>
+            </label>
+            <label class="wizard-source-option" data-source="table">
+              <input type="radio" name="wizard-source" value="table">
+              <span>
+                <span class="wizard-source-title">Pegar tabla (TSV/Excel)</span>
+                <small>Copia y pega desde Excel o Google Sheets</small>
+              </span>
+            </label>
+            <label class="wizard-source-option" data-source="json">
+              <input type="radio" name="wizard-source" value="json">
+              <span>
+                <span class="wizard-source-title">Pegar JSON</span>
+                <small>Un catálogo UgrCatalog ya válido</small>
+              </span>
+            </label>
+            <label class="wizard-source-option" data-source="template">
+              <input type="radio" name="wizard-source" value="template">
+              <span>
+                <span class="wizard-source-title">Usar plantilla de ejemplo</span>
+                <small>Rellena el paso 2 con un CSV de muestra</small>
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Paso 2: Cargar -->
+        <section class="wizard-panel" data-panel="2">
+          <div class="wizard-dropzone" id="wizard-dropzone">
+            <p>Arrastra aquí el archivo o selecciónalo:</p>
+            <input type="file" id="wizard-file" accept=".csv,.tsv,.txt">
+          </div>
+          <div class="form-field">
+            <label for="wizard-text">Contenido</label>
+            <textarea id="wizard-text" rows="9" placeholder="Pega aquí el CSV, la tabla de Excel o el JSON del catálogo..."></textarea>
+          </div>
+          <p class="wizard-hint" id="wizard-load-info"></p>
+        </section>
+
+        <!-- Paso 3: Mapeo -->
+        <section class="wizard-panel" data-panel="3">
+          <p class="wizard-hint">Asigna cada campo del catálogo a una columna detectada. Los campos con <span class="wizard-req">*</span> son obligatorios.</p>
+          <div id="wizard-map-warnings"></div>
+          <div id="wizard-map-sample"></div>
+          <div id="wizard-mapping" class="wizard-mapping-grid"></div>
+        </section>
+
+        <!-- Paso 4: Vista previa y errores -->
+        <section class="wizard-panel" data-panel="4">
+          <div id="wizard-summary" class="wizard-summary"></div>
+          <div id="wizard-errors"></div>
+          <div id="wizard-preview"></div>
+        </section>
+
+        <!-- Paso 5: Confirmar -->
+        <section class="wizard-panel" data-panel="5">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="wizard-university">Universidad</label>
+              <input type="text" id="wizard-university" placeholder="Ej: Universidad de Granada" autocomplete="off">
+            </div>
+            <div class="form-field">
+              <label for="wizard-degree">Titulación</label>
+              <input type="text" id="wizard-degree" placeholder="Ej: Grado en Ingeniería Informática" autocomplete="off">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="wizard-plan">Plan</label>
+              <input type="text" id="wizard-plan" value="custom" autocomplete="off">
+            </div>
+            <div class="form-field">
+              <label for="wizard-version">Versión</label>
+              <input type="text" id="wizard-version" autocomplete="off">
+            </div>
+          </div>
+          <p class="wizard-hint">Se guardará como un catálogo nuevo con id «universidad/titulación/versión» y quedará activo para el generador de horarios.</p>
+          <p class="wizard-success" id="wizard-import-success"></p>
+        </section>
+
+      </div>
+      <div class="modal-footer">
+        <p id="wizard-step-error"></p>
+        <button type="button" id="wizard-back" class="btn btn-secondary">Atrás</button>
+        <button type="button" id="wizard-next" class="btn btn-primary">Siguiente</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Compartir / Restaurar enlace cifrado (#data=) -->
+  <div id="share-modal" class="modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="share-modal-title" aria-describedby="share-modal-desc" hidden>
+    <div class="modal share-modal">
+      <div class="modal-header">
+        <h2 id="share-modal-title">Compartir enlace cifrado</h2>
+        <button type="button" class="modal-close-btn" id="share-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="share-form" class="share-form" novalidate>
+        <div class="modal-body">
+          <p id="share-modal-desc" class="share-desc"></p>
+          <div class="form-field">
+            <label for="share-passphrase">Frase de paso</label>
+            <input type="password" id="share-passphrase" autocomplete="new-password"
+                   aria-describedby="share-modal-desc share-hint share-error" required>
+          </div>
+          <p id="share-hint" class="share-hint">La frase de paso no viaja en el enlace: compártela por un canal aparte. Si la olvidas, el enlace no se puede descifrar.</p>
+          <p id="share-error" class="share-error" role="alert" hidden></p>
+          <div id="share-result" class="form-field share-result" hidden>
+            <label for="share-link">Enlace cifrado</label>
+            <input type="text" id="share-link" readonly>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="share-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="share-submit">Generar enlace</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="/ugr/data.js"></script>
   <script src="/ugr/convalidaciones.js"></script>
   <script src="/ugr/propuestas.js"></script>
   <script src="/ugr/predefined.js"></script>
+  <script src="/ugr/docentes.js"></script>
   <script src="/ugr/app.js"></script>
   <script type="module" src="/ugr/src/bootstrap.js"></script>
 </body>

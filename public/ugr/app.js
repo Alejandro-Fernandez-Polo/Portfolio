@@ -12,55 +12,6 @@
   const END_HOUR = 21;
   let compareIds = [];
 
-  const PROFESORES_MAP = {
-    'SO-A':  { nombre: 'Miguel Lastra Leidinger',      razon: 'Correcto pero menos evidencia pública', dificultad: 'gris', opinion: '' },
-    'SO-B':  { nombre: 'Pablo Antonio Pico Valencia',   razon: 'Menos evidencia de docencia en SO', dificultad: 'gris', opinion: '' },
-    'SO-C':  { nombre: 'Patricia Paderewski Rodríguez', razon: 'Larga trayectoria en SO, experiencia con Linux', dificultad: 'naranja', opinion: 'Explica medianamente bien, si asistes a las clases te llevas cosillas entendidas a casa, que se agradece mucho en esta asignatura, pero no esperes enterarte de todo. Va rapídito pero es soportable. Es simpática y atiende bien las dudas en tutoría. Los exámenes son asefables pero corrige de forma dura.' },
-    'SO-D':  { nombre: 'Alejandro José León Salas',     razon: 'Experiencia directa, vinculación con Linux', dificultad: 'naranja', opinion: 'Le echa ganas a la asignatura pero explica demasiado rápido y la asignatura es infumable. Sus exámenes son a papel y muy largos. Es normal corrigiendo y no tarda mucho. Puede bajar la nota mínima para aprobarste (4 con algo en vez de 5)' },
-    'SO-E':  { nombre: 'José Luis Garrido Bullejos',    razon: 'Catedrático. Máxima categoría. Experiencia consolidada', dificultad: 'naranja', opinion: 'Este hombre es una enciclopedia andante, saber sabe como ninguno por lo que también espera que tu sepas lo mismo que Google, es muy apagado a la bibliografía de la asignatura, sí o si te va a hacer falta rellenar información de ellos ya que las diapositivas son meh, lo que de verdad importa es atender a lo que te dice, porque habla entre líneas y te da el examen hecho, lo que pasa que cualquiera se acuerda tan específicamente de lo que dijo. Importantísimo también que te vea con interés e incluso participando en clase, le gusta mucho que tomes parte en ellas sobre todo si hacéis preguntas interesantes, que vea que entendéis el tema. De igual manera es recomendable ir a tutoría a preguntarle cualquier cosa. Os pide que le hagáis la relación de ejercicios y que la corrijáis juntos porque si no él no hace ejercicios en clase. No es muy frecuente pero a lo mejor le da por hacer un ejercicio que cuenta un 10% de la nota de algo que haya puesto énfasis o que vea interesante de cara al examen o que investiguemos por nuestra cuenta. Los exámenes son otro rollo, preguntas complejas e incluso rebuscadas de verdadero o falso justificando y luego algún ejercicio práctico que normalmente también estará dado con una vuelta de rosca. Tarda MUCHÍSIMO en corregir osea que se sufre mucho teniendo en cuenta que es SO.' },
-    'IG-A':  { nombre: 'Germán Arroyo Moreno',          razon: '+20 años en gráficos, OpenGL/GLSL. Enfoque práctico', dificultad: 'amarillo', opinion: 'Suele explicar las prácticas a su manera y las defensas consiste en hacer modificaciones en los códigos de tus prácticas para ver si lo has hecho tú (a veces las defensas son muy enredadas). Profesor que deja un poco que desees en las explicaciones pero si que trabajas y te esfuerzas puedes sacar muy buena nota con él.' },
-    'IG-B':  { nombre: 'Juan Carlos Torres Cantero',    razon: 'Catedrático, máximo dominio pero enfoque teórico', dificultad: 'naranja', opinion: 'Aunque de primeras parezca que no, es un buen profesor y se preocupa por que entiendas las cosas. Además, súper recommendable ir a revisión para el examen final de teoría. Si tienes más de un 3, puedes llevarte una sorpresa. Sus explicaciones en clase dejan mucho que desear. Es mejor ir a tutorías en donde lo explica todo mejor. Es estricto corrigiendo pero aconsejable ir a revisión ya que es posible subir nota pero tienes que rebatirle mucho dado que hay cosas que pones bien en el examen pero él te dice que está mal y luego no sabe muy bien como argumentarlo. El examen no se parece al modelo que proporciona además de que corrige totalmente aleatorio. En las revisiones dice que él tiene su método y no te explica nada, además de equivocarse intentando defender cómo ha corregido, te dice que solicites tribu nal y resulta que él es el director del departamento.' },
-    'IG-C':  { nombre: 'Antonio López Fernández',       razon: 'Continuidad teoría-prácticas, accesible', dificultad: 'cyan', opinion: 'Es muy buena gente y todo lo que te preguntas se va a implica en ayudarte pero las clases son muy aburridas y probablemente no te enteres de nada ni de las diapositivas ni de sus explicaciones de teoría pero no importa demasiado ya que el examen no es nada difícil y de hecho prácticamente dice como hacer los ejercicios durante el examen. La parte más importante de esta asignatura y donde realmente vas a dedicar el tiempo (al menos con este profesor) es en las prácticas. Como consejo diría que es conveniente tener más o menos buena relación con él (haciendo bien las prácticas, yendo a clase...) y sobre todo atender mucho y copiad con todo detalle cuando hace los ejercicios en clase porque no vais a tener más ejercicios ni explicaciones que las de clase y los ejercicios del examen son prácticamente iguales así que si no los copiáis (y muy prefiblemente entendéis) luego cuando vayáis a estudiar no vais a tener nada más allá de lo que os pasen.' },
-    'IG-D':  { nombre: 'Juan Carlos Torres Cantero',    razon: 'Mismo profesor que B, decidir por horario', dificultad: 'naranja', opinion: 'Aunque de primeras parezca que no, es un buen profesor y se preocupa por que entiendas las cosas. Además, súper recommendable ir a revisión para el examen final de teoría. Si tienes más de un 3, puedes llevarte una sorpresa. Sus explicaciones en clase dejan mucho que desear. Es mejor ir a tutorías en donde lo explica todo mejor. Es estricto corrigiendo pero aconsejable ir a revisión ya que es posible subir nota pero tienes que rebatirle mucho dado que hay cosas que pones bien en el examen pero él te dice que está mal y luego no sabe muy bien como argumentarlo. El examen no se parece al modelo que proporciona además de que corrige totalmente aleatorio. En las revisiones dice que él tiene su método y no te explica nada, además de equivocarse intentando defender cómo ha corregido, te dice que solicites tribu nal y resulta que él es el director del departamento.' },
-    'IG-E':  { nombre: 'Domingo Martín Perandrés',      razon: 'Buen perfil técnico pero menos evidencia pública', dificultad: 'naranja', opinion: 'Explica el temario de prácticas de forma detallada a nivel teórico. Saca a los alumnos a la pizarra a hacer ejercicios que propone y suele hacer preguntas en clase. Es MUY estricto corrigiendo el examen de la ordinaria. Realmente no es tan tan malo, pero es una persona metódica y le gustan las cosas bien hechas. Valora muchísimo que asistas, que le pongas interés, que preguntes, que hagas los ejercicios, que corrijas las cosas que te diga, etc... Si bien es algo estricto a la hora de corregir y de hacer ejercicios, explica bastante bien la asignatura y habiendo asistido a todas las clases puedo afirmar que todo lo que pide en el examen lo da en clase. Además de que el trato al alumnado fue bastante bueno, se le pueden preguntar dudas sin problema y más allá de que pueda asustar un poco el inicio de curso con la tarea que pone de "para quién quiera aprobar" a mí me parece un buen profesor. Nos permitió hacer dos clases de dudas cerca del examen lo cual se agradece bastante porque explica como quiere que hagamos los ejercicios y algunos consejos para ejercicios algo difíciles de suelen. Suela aprobar el 50% de los matriculados.' },
-    'ISE-A': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
-    'ISE-B': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
-    'ISE-C': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
-    'ISE-D': { nombre: 'Pablo García Sánchez',          razon: 'Práctico, cercano al sector, Software Libre', dificultad: 'verde', opinion: 'Es bastante bueno y sabe del tema. Pone empeño y resuelve dudas aunque no da tiempo a copiar las explicaciones en clase. Se lleva genial con los alumnos y como es joven es más comprensible con las cosas, explica bien, fomenta que participes y es muy enrollao. Le gusta mucho charlar de otra cosa que no sea dar clase. Los exámenes, dentro de lo que cabean, son asequibles y corrige bien, además es muy propenso a ayudarte en cuanto a dudas' },
-    'ISE-E': { nombre: 'Héctor Emilio Pomares Cintas',  razon: 'Catedrático, altísimo nivel pero alta exigencia', dificultad: 'naranja', opinion: 'Explica bastante bien y resuelve bastante bien las dudas (no es como otros que las preguntas algo y te hablan de 40 cosas menos lo que le has preguntado), a simple vista parece soso/monótono pero en realidad es gracioso y las clases se hacen relativamente amenas. Recomiendo ir a clase ya que la asignatura, si bien no es muy compleja, tiene bastante contenido tanto de ejercicios como de teoría y ir a clase te da bastante ventaja en la ordinaria ya que te puedes dedicar a hacer los ejercicios/exámenes resueltos en lugar de estar leyendo diapositivas lo cuál es importante ya que en el examen corrigen un poco en binario y tienes que controlar bien el tiempo, así que interesa saber hacer los ejercicios bien aunque no sean muy difíciles.' },
-    'DDSI-A':{ nombre: 'Carlos Jesús Fernández Basso',  razon: 'Enfoque práctico, menos evidencia pública', dificultad: 'gris', opinion: '' },
-    'DDSI-B':{ nombre: 'Ignacio José Blanco Medina',    razon: 'Trayectoria consolidada en bases de datos y SI', dificultad: 'verde', opinion: 'Extrovertido y buena gente, se hace el duro a veces pero no lo es. Te suele aprobar con buena nota y te busca horario de tutoría aunque no aparezca esa hora como disponible en Prado. Explica bien, aunque a veces es difícil de seguir y es fácil aprobar' },
-    'DDSI-C':{ nombre: 'Carlos Alberto Cruz Corona',    razon: 'Titular, enfoque multidisciplinar aplicado', dificultad: 'cyan', opinion: 'De los mejores de la asignatura. Es muy despreocupado y la carga es mínima.' },
-    'DDSI-D':{ nombre: 'David Criado Ramón',            razon: 'Menos información pública verificable', dificultad: 'gris', opinion: '' },
-    'ALEM-A':{ nombre: 'José Carlos Rosales González',  razon: 'Catedrático, +100 artículos, muy teórico y denso', dificultad: 'naranja', opinion: 'En clase solo lee PDF aunque tiene clases grabadas y sus apuntes son buenos. Estricto a la hora de corregir ya que es todo bien o todo mal. Conviene ir a tutorías pero no a las revisiones del examen final (no se lo toma bien). Llevando la asignatura al día se aprueba.' },
-    'ALEM-B':{ nombre: 'Juan Manuel Urbano Blanco',     razon: 'Enseñanza estructurada, pausado y metódico', dificultad: 'negro', opinion: 'La relación con el alumnado es de todo menos buena, su forma de corregir es terrible, en las clases explica demasiado rápido (así todo el curso) y no te enteras de nada, reprocha la poca comprensión de sus clases a los alumnos por "no estudiar". No te da ninguna información de cómo va a evaluarte, no te explica nada sobre los exámenes finales y si le preguntas se enfada. Es un tío muy estricto pero si haces las cosas como a él le gusta puedes aprobar.' },
-    'ALEM-C':{ nombre: 'Juan Manuel Urbano Blanco',     razon: 'Enseñanza estructurada, pausado y metódico', dificultad: 'negro', opinion: 'La relación con el alumnado es de todo menos buena, su forma de corregir es terrible, en las clases explica demasiado rápido (así todo el curso) y no te enteras de nada, reprocha la poca comprensión de sus clases a los alumnos por "no estudiar". No te da ninguna información de cómo va a evaluarte, no te explica nada sobre los exámenes finales y si le preguntas se enfada. Es un tío muy estricto pero si haces las cosas como a él le gusta puedes aprobar.' },
-    'ALEM-D':{ nombre: 'José Carlos Rosales González',  razon: 'Catedrático, +100 artículos, muy teórico y denso', dificultad: 'naranja', opinion: 'En clase solo lee PDF aunque tiene clases grabadas y sus apuntes son buenos. Estricto a la hora de corregir ya que es todo bien o todo mal. Conviene ir a tutorías pero no a las revisiones del examen final (no se lo toma bien). Llevando la asignatura al día se aprueba.' },
-    'ALEM-E':{ nombre: 'Jesús García Miranda',          razon: 'Veterano, opción intermedia', dificultad: 'amarillo', opinion: 'Mejor profesor de la ETSIIT. Pone preguntas con "una vuelta de tornillo" de más, pero sus explicaciones y su implicación están a la altura. Está siempre disponible y te explica lo que haga falta, es cercano y amable. En las clases de teoría no suele apuntar mucho en la pizarra, explica las diapositivas y de vez en cuando hace algún ejemplo. No hay parciales, el examen final no es fácil y es largo (3 horas aproximadamente). Además el examen consta con bastantes ejercicios que cambian cada año, aunque la estructura general del examen es similar (un ejercicio por tema más o menos). A la hora de la corrección es relativamente estricto.' },
-    'ALEM-F':{ nombre: 'José Antonio Jiménez Madrid',   razon: 'Enfoque teórico pero metódico', dificultad: 'amarillo', opinion: 'Es muy buena gente, sus clases no son una maravilla pero es bueno. La relación con el alumnado es excelente, responde a todas las dudas y da muchas más horas de tutoría de las que debería ya que se nota que es profesor por vocación. En prado sube multitud de contenido de ampliación y divulgación para quienes estén interesados. Tiene muy buen carácter y le encanta resolver dudas en tutorías. Es un poco caótico pero le gusta mucho su asignatura.' },
-    'SCD-A': { nombre: 'Carlos Ureña Almagro',          razon: 'Perfil dual gráficas+concurrencia, menos directo', dificultad: 'amarillo', opinion: 'Explica bien la teoría y sus exámenes son asefables. Corrige de manera justa.' },
-    'SCD-B': { nombre: 'Luis Gonzaga Baca Ruiz',        razon: 'Titular, +45 publicaciones, especialista en concurrencia', dificultad: 'cyan', opinion: 'Muy buen profesor y muy buena relacion con el alumnado, sus examenes son super asefables, suele preguntar unos 6 puntos de teoria en tipo test (bastante sencillo) y el resto en uno o dos problemas de la teoria dada en clase (semáforos, monitores...). Regala puntos por participar, tanto en teoria como practicas, por lo que hay gente que aprueba la asignatura sin hacer ni siquiera un examen. Corrige muy rápido y la probabilidad de sacar muy buena nota con él es alta si te lo propones. Con estudiar sus diapositivas vas sobrado tanto en el test como los ejercicios.' },
-    'SCD-C': { nombre: 'José Ángel Segura Muros',       razon: 'Experiencia consolidada en sistemas distribuidos', dificultad: 'gris', opinion: '' },
-    'SCD-D': { nombre: 'Luis Gonzaga Baca Ruiz',        razon: 'Titular, +45 publicaciones, especialista en concurrencia', dificultad: 'cyan', opinion: 'Muy buen profesor y muy buena relacion con el alumnado, sus examenes son super asefables, suele preguntar unos 6 puntos de teoria en tipo test (bastante sencillo) y el resto en uno o dos problemas de la teoria dada en clase (semáforos, monitores...). Regala puntos por participar, tanto en teoria como practicas, por lo que hay gente que aprueba la asignatura sin hacer ni siquiera un examen. Corrige muy rápido y la probabilidad de sacar muy buena nota con él es alta si te lo propones. Con estudiar sus diapositivas vas sobrado tanto en el test como los ejercicios.' },
-    'SCD-E': { nombre: 'Pedro Villar Castro',           razon: 'Titular, experiencia continua en SCD', dificultad: 'amarillo', opinion: 'Explica las diapositivas de memoria aunque los ejercicios los explica bien y hace bastantes. En las tutorías no es malo pero tampoco esperes que te arregle el código. Corrige los exámenes muy a la baja. No hace parciales como otros profesores y su examen de la ordinaria son ejercicios de la relación, así que aunque sea larga conviene hacerla entera porque suelen ser muchos ejercicios de ahí.' },
-    'FFT-A': { nombre: 'Pedro Cartujo Cassinello',  razon: 'Bonachón pero explica fatal, bueno corrigiendo', dificultad: 'amarillo', opinion: 'Bonachón pero explica fatal. Muy recomendable acudir a tutorías para la revisión del examen. Repite preguntas de hace años y es bueno corrigiendo. Si suspendes en la extraordinaria con al menos un 3 ve a la revisión, puedes llevarte una sorpresa y aprobar.' },
-    'FFT-B': { nombre: 'José Luis Padilla De la Torre', razon: 'Explica bien pero muchísimo temario, examen muy duro', dificultad: 'rojo', opinion: 'Explica muy bien pero es muchísimo temario y a diferencia de otros no hace parciales. Examen final muy duro y aprueba poca gente.' },
-    'FFT-C': { nombre: 'Ignacio Melchor Ferrer',     razon: 'Explica muy bien, muchos ejámplos, recomendado', dificultad: 'verde', opinion: 'Explica muy bien, se hacen muchos ejercicios (incluso clases de repaso antes del examen). Sus videos son clave. Muy recomendado.' },
-    'FFT-D': { nombre: 'Ignacio Melchor Ferrer',     razon: 'Explica muy bien, muchos ejámplos, recomendado', dificultad: 'verde', opinion: 'Explica muy bien, se hacen muchos ejercicios (incluso clases de repaso antes del examen). Sus videos son clave. Muy recomendado.' },
-    'FFT-E': { nombre: 'Pedro Cartujo Cassinello',  razon: 'Bonachón pero explica fatal, tutorías recomendadas', dificultad: 'naranja', opinion: 'Bonachón pero explica fatal. Muy recomendable acudir a tutorías para la revisión del examen. Repite preguntas de hace años y es bueno corrigiendo. Si suspendes en la extraordinaria con al menos un 3 ve a la revisión, puedes llevarte una sorpresa y aprobar.' },
-    'FFT-F': { nombre: 'Pedro García Fernández',    razon: 'Perfil desconocido', dificultad: 'gris', opinion: '' },
-    'EC-A':  { nombre: 'Francisco Javier Fernández Baldomero', razon: 'Estadísticas bajas, material incompleto', dificultad: 'naranja', opinion: 'Imposible seguir en clase y se refleja en sus estadísticas (60% aprobado con 5 o 6, solo 3 personas con un 7, 1 persona con un 8). Cambia mucho de tema y se concentra en cosas 0 importantes (por ejemplo sin exageración, el 80% de las clases se te pasaba los primeros 15 min explicando el sistema de evaluación porque un alumno empanado le había mandado un correo y otra vez se pasó unos 5 min escribiendo 1s para explicar lo que era FFFFFFFF en binario). Esto desmotiva al alumno para ir a clases pero el gran problema es que sus apuntes no están NADA completos. No se puede estudiar de ellos. Mucha gente cree aprobar su examen final es solo una cuestion de hacer infinitos tests, y yo no lo recomiendo. Es mucho mejor, hacer menos tests y tratar de conseguir su bibliografía principal en pdf y ir haciendo Ctrl+F en conceptos que no entiendas, o conseguir los libros en biblioteca e ir leyendo. Además de buscar en YouTube explicaciones de otras universidades españolas. Muy recomendable apuntar como hacer los problemas de clase a medida que vas entregando (si es que entregas alguno porque no te motiva para nada el decir que cuentan poco) porque para el examen final ya te habras olvidado el procedimiento para resolverlos. Es casi imposible aprobar la asignatura sin tener un máximo en la nota de clase (problemas + tests de clase), priorizar esto. Por estas razones, por su forma de dar la clase y armar el material para que el alumnno estudie, rojo sangre es el color correcto.' },
-    'EC-B':  { nombre: 'Antonio Cañas Vargas',       razon: 'Creador de SWAD, muy buen recurso', dificultad: 'verde', opinion: 'Un profesor muy bueno y cercano. Te responde las dudas de forma ULTRA completa y muy rápido en cualquier momento. Explica bien, pero entre que la asignatura NO es fácil de seguir y que él tampoco es precisamente el alma de la fiesta, como te pierdas o te distraigas más de la cuenta (que no es raro) la clase se te puede hacer bastante aburrida porque no le enteres de nada. Corrige bien y te da muchos recursos para poder subir nota (los "kahoots" de todas las clases, los ejercicios...) y aunque creas que el examen final te lo haya hechoWTal, la magia de cañas lo mismo te te have llevarte una sorpresa. Recomendable. Es el creador de SWAD btw.' },
-    'EC-C':  { nombre: 'Francisco Javier Fernández Baldomero', razon: 'Estadísticas bajas, material incompleto', dificultad: 'naranja', opinion: 'Imposible seguir en clase y se refleja en sus estadísticas (60% aprobado con 5 o 6, solo 3 personas con un 7, 1 persona con un 8). Cambia mucho de tema y se concentra en cosas 0 importantes (por ejemplo sin exageración, el 80% de las clases se te pasaba los primeros 15 min explicando el sistema de evaluación porque un alumno empanado le había mandado un correo y otra vez se pasó unos 5 min escribiendo 1s para explicar lo que era FFFFFFFF en binario). Esto desmotiva al alumno para ir a clases pero el gran problema es que sus apuntes no están NADA completos. No se puede estudiar de ellos. Mucha gente cree aprobar su examen final es solo una cuestion de hacer infinitos tests, y yo no lo recomiendo. Es mucho mejor, hacer menos tests y tratar de conseguir su bibliografía principal en pdf y ir haciendo Ctrl+F en conceptos que no entiendas, o conseguir los libros en biblioteca e ir leyendo. Además de buscar en YouTube explicaciones de otras universidades españolas. Muy recomendable apuntar como hacer los problemas de clase a medida que vas entregando (si es que entregas alguno porque no te motiva para nada el decir que cuentan poco) porque para el examen final ya te habras olvidado el procedimiento para resolverlos. Es casi imposible aprobar la asignatura sin tener un máximo en la nota de clase (problemas + tests de clase), priorizar esto. Por estas razones, por su forma de dar la clase y armar el material para que el alumnno estudie, rojo sangre es el color correcto.' },
-    'EC-D':  { nombre: 'Francisco Javier Fernández Baldomero', razon: 'Estadísticas bajas, material incompleto', dificultad: 'naranja', opinion: 'Imposible seguir en clase y se refleja en sus estadísticas (60% aprobado con 5 o 6, solo 3 personas con un 7, 1 persona con un 8). Cambia mucho de tema y se concentra en cosas 0 importantes (por ejemplo sin exageración, el 80% de las clases se te pasaba los primeros 15 min explicando el sistema de evaluación porque un alumno empanado le había mandado un correo y otra vez se pasó unos 5 min escribiendo 1s para explicar lo que era FFFFFFFF en binario). Esto desmotiva al alumno para ir a clases pero el gran problema es que sus apuntes no están NADA completos. No se puede estudiar de ellos. Mucha gente cree aprobar su examen final es solo una cuestion de hacer infinitos tests, y yo no lo recomiendo. Es mucho mejor, hacer menos tests y tratar de conseguir su bibliografía principal en pdf y ir haciendo Ctrl+F en conceptos que no entiendas, o conseguir los libros en biblioteca e ir leyendo. Además de buscar en YouTube explicaciones de otras universidades españolas. Muy recomendable apuntar como hacer los problemas de clase a medida que vas entregando (si es que entregas alguno porque no te motiva para nada el decir que cuentan poco) porque para el examen final ya te habras olvidado el procedimiento para resolverlos. Es casi imposible aprobar la asignatura sin tener un máximo en la nota de clase (problemas + tests de clase), priorizar esto. Por estas razones, por su forma de dar la clase y armar el material para que el alumnno estudie, rojo sangre es el color correcto.' },
-    'EC-E':  { nombre: 'Antonio Cañas Vargas',       razon: 'Creador de SWAD, muy buen recurso', dificultad: 'verde', opinion: 'Un profesor muy bueno y cercano. Te responde las dudas de forma ULTRA completa y muy rápido en cualquier momento. Explica bien, pero entre que la asignatura NO es fácil de seguir y que él tampoco es precisamente el alma de la fiesta, como te pierdas o te distraigas más de la cuenta (que no es raro) la clase se te puede hacer bastante aburrida porque no le enteres de nada. Corrige bien y te da muchos recursos para poder subir nota (los "kahoots" de todas las clases, los ejercicios...) y aunque creas que el examen final te lo haya hechoWTal, la magia de cañas lo mismo te te have llevarte una sorpresa. Recomendable. Es el creador de SWAD btw.' },
-    'ED-A':  { nombre: 'Francisco Javier Rodríguez Díaz', razon: 'Estricto corrigiendo, buena persona', dificultad: 'naranja', opinion: 'Sus clases son muy aburridas y se dedica a leer los PDFs (el material subido a Prado no aporta demasiado). A la hora de corregir los exámenes es muy estricto y al mínimo error pone un 0 directamente en el ejercicio. Recomendable tener buena nota en las prácticas y prepararte muy bien al menos tres ejercicios del examen para no llevarse sorpresas. Es muy buena persona. Te resuelve las dudas que tengas con mucha amabilidad. Incluso ofrece aumentar los deadlines de las tareas si el alumnno lo necesita.' },
-    'ED-B':  { nombre: 'Joaquín Fernández Valdivia',   razon: '100% recomendable, el mejor de ED', dificultad: 'verde', opinion: 'Puedes aprobar la asignatura sacando un 2 en el final, ya que da varios puntos entre prácticas y entregas de teoría. Además, explica muy bien, es rápido corrigiendo y siempre está disponible para lo que haga falta. Ayuda en todo lo que pueda. Profesor que vive por y para sus alumnos. Es muy cercano y además facilita todo para poder aprobar la asignatura. Explicaciones claras y muchísimo temario y ejercicios disponibles para poder practicar de cara al examen. Se nota que le gusta su asignatura y dar clase; lo mejor de ED sin duda alguna. Al final del cuatrimestre, da una charla muy interesante acerca del futuro que se nos viene como ingenieros. 100% recomendable.' },
-    'ED-C':  { nombre: 'Miguel García Silvente',       razon: 'Organización deficiente, exámenes duros', dificultad: 'rojo', opinion: 'El profesor se organiza bastante mal en cuanto a tiempos y coordinación entre teoría y prácticas, lo que hace que algunos temas se den tarde, con prisas o incluso no se lleguen a ver (grafos no se da). Además, a veces lo explicado en teoría no es suficiente para resolver los ejercicios (como por ejemplo en árboles binarios). Los exámenes son más difíciles que los del departamento y los enunciados no siempre son claros, ni en exámenes ni en la relación de ejercicios. La comunicación con el profesor no es muy fluida durante el curso, aunque mejora antes de los exámenes. Eso sí, si vas a tutoría, te resuelve las dudas.' },
-    'ED-D':  { nombre: 'Rosa María Rodríguez Sánchez', razon: 'Explicaciones desde 0, muy completa', dificultad: 'verde', opinion: 'Explica todo desde 0. Las explicaciones son buenas y en profundidad. Si vas al día es casi imposible perderse. Las clases son algunas aburridas y lentas pero dado que es una asignatura que se basa en la comprensión lo acabas agradeciendo. Además pone a disposición de los alumnos videos de las clases por lo que si no vas puedes igualmente verlos y enterarte.' },
-    'ED-E':  { nombre: 'Rosa María Rodríguez Sánchez', razon: 'Explicaciones desde 0, muy completa', dificultad: 'verde', opinion: 'Explica todo desde 0. Las explicaciones son buenas y en profundidad. Si vas al día es casi imposible perderse. Las clases son algunas aburridas y lentas pero dado que es una asignatura que se basa en la comprensión lo acabas agradeciendo. Además pone a disposición de los alumnos videos de las clases por lo que si no vas puedes igualmente verlos y enterarte.' },
-  };
-
   let state = {
     selectedSubjects: {},  // { codigo: true }
     groupChoices: {},      // { codigo: { teoria: letra, practica: subgrupo } }
@@ -120,6 +71,10 @@
   const CONFIG_PAGE_SIZE = 50;
 
   // ─── Solver (Fase 1) ────────────────────────────────────────
+  const SOLVER_FILTER_TYPES = [
+    'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
+    'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
+  ];
   const LEGACY_PREDEFINED = new URLSearchParams(location.search).get('legacyPredefined') === '1';
   let solverResults = [];
   let solverFilters = loadSolverFilters();
@@ -147,17 +102,19 @@
   let conflicts = [];
 
   // ─── Init ───────────────────────────────────────────────────
-  function init() {
+  async function init() {
     console.log('UGR Horario v1.0.0');
-    loadSubjectsFromStorage();
+    const catalogCodesChanged = await bootstrapCatalogState();
     loadPropuestas();
     loadState();
+    if (catalogCodesChanged && pruneSelectionsToActiveCatalog()) saveState();
     renderSubjects();
     setupTabs();
     setupConfig();
     setupActions();
     setupNavigation();
     setupPropuestas();
+    setupCatalogUI();
     updateAll();
     checkUrlShare();
     checkUrlPropuesta();
@@ -245,11 +202,11 @@
     localStorage.setItem('ugr-propuestas', JSON.stringify(PROPUESTAS));
   }
 
-  const NUMERIC_TO_CODIGO = { '12':'CA','14':'FS','15':'FP','16':'LMD','17':'TOC','18':'MP','19':'IES','1A':'ES','21':'PDOO','1':'ES','A':'ES' };
   function resolveUgrCodigo(codigo) {
     if (!codigo) return codigo;
     const up = String(codigo).toUpperCase().trim();
-    if (NUMERIC_TO_CODIGO[up]) return NUMERIC_TO_CODIGO[up];
+    const equivalencias = typeof EQUIVALENCIA_CODIGOS !== 'undefined' ? EQUIVALENCIA_CODIGOS : {};
+    if (equivalencias[up]) return equivalencias[up];
     return codigo;
   }
   function getUgrMeta(codigo) {
@@ -358,6 +315,7 @@
         tab.classList.add('active');
         state.cuatrimestreActivo = parseInt(tab.dataset.cuatrimestre);
         renderSubjects();
+        updateControlPanel();
       });
     });
     // Activate correct tab
@@ -627,11 +585,6 @@
   }
 
   // ─── Config Metrics ─────────────────────────────────────────
-  const PROF_SCORE_MAP = {
-    cyan: 6, verde: 5, amarillo: 4, naranja: 3,
-    rojo: 2, negro: 1, gris: 3
-  };
-
   function calculateConfigMetrics(selectedSubjects, groupChoices) {
     let manana = 0, tarde = 0;
     let profScore = 0, profCount = 0;
@@ -660,7 +613,7 @@
 
       const dificultad = getDificultad(codigo, group.letra);
       if (dificultad) {
-        profScore += PROF_SCORE_MAP[dificultad] || 3;
+        profScore += getDifficultyScore(dificultad);
         profCount++;
       }
 
@@ -978,6 +931,9 @@
       const eventDiv = document.createElement('div');
       eventDiv.className = 'cal-event';
       eventDiv.dataset.subject = entry.codigo;
+      eventDiv.tabIndex = 0;
+      eventDiv.setAttribute('role', 'group');
+      eventDiv.setAttribute('aria-label', buildEventLabel(entry, false));
       eventDiv.style.top = topOffset + '%';
       eventDiv.style.height = height + '%';
       eventDiv.innerHTML = `<div class="event-label">${entry.codigo}</div><div class="event-type">${entry.tipo}</div>`;
@@ -985,8 +941,7 @@
         const diff = getDificultad(entry.codigo, entry.letra);
         if (diff) {
           const dot = document.createElement('span');
-          dot.className = 'event-diff-dot mini';
-          dot.style.background = getDificultadColor(diff);
+          dot.className = `event-diff-dot mini diff-${diff}`;
           dot.title = getDificultadLabel(diff);
           eventDiv.appendChild(dot);
         }
@@ -1109,24 +1064,40 @@
     return codigo + '-' + letra;
   }
 
+  const docentesByKey = (typeof DOCENTES !== 'undefined' && Array.isArray(DOCENTES) ? DOCENTES : [])
+    .reduce((acc, d) => {
+      if (d && d.key) acc[d.key] = d;
+      return acc;
+    }, {});
+
+  function getDocentInfo(key) {
+    return docentesByKey[key] || null;
+  }
+
+  function getDifficultyScore(dificultad) {
+    const api = typeof window !== 'undefined' && window.__ugrCatalog ? window.__ugrCatalog : null;
+    if (api && typeof api.difficultyScore === 'function') return api.difficultyScore(dificultad);
+    return 3;
+  }
+
   function getProfName(codigo, letra) {
-    const key = getProfKey(codigo, letra);
-    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].nombre : '';
+    const info = getDocentInfo(getProfKey(codigo, letra));
+    return info ? info.name : '';
   }
 
   function getProfRazon(codigo, letra) {
-    const key = getProfKey(codigo, letra);
-    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].razon : '';
+    const info = getDocentInfo(getProfKey(codigo, letra));
+    return info && info.profile ? info.profile.razon : '';
   }
 
   function getDificultad(codigo, letra) {
-    const key = getProfKey(codigo, letra);
-    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].dificultad : null;
+    const info = getDocentInfo(getProfKey(codigo, letra));
+    return info && info.profile && info.profile.dificultad ? info.profile.dificultad : null;
   }
 
   function getOpinion(codigo, letra) {
-    const key = getProfKey(codigo, letra);
-    return PROFESORES_MAP[key] ? PROFESORES_MAP[key].opinion : '';
+    const info = getDocentInfo(getProfKey(codigo, letra));
+    return info && info.profile && info.profile.opinion ? info.profile.opinion : '';
   }
 
   function getDificultadLabel(d) {
@@ -1267,14 +1238,49 @@
   }
 
   // ─── Render Calendar ────────────────────────────────────────
-  function renderCalendar() {
-    const cal = document.getElementById('calendar');
-    const entries = getActiveSchedule();
+  function buildConflictSet() {
     const conflictSet = new Set();
     conflicts.forEach(c => {
       conflictSet.add(`${c.codigo1}-${c.dia}-${c.inicio}`);
       conflictSet.add(`${c.codigo2}-${c.dia}-${c.inicio}`);
     });
+    return conflictSet;
+  }
+
+  function getEntryDificultadLabel(entry) {
+    if (!entry.letra) return '';
+    const diff = getDificultad(entry.codigo, entry.letra);
+    return diff ? getDificultadLabel(diff) : '';
+  }
+
+  function buildEventLabel(entry, isConflict) {
+    const diffLabel = getEntryDificultadLabel(entry);
+    return `${entry.codigo} — ${entry.tipo}, ${DAY_LABELS[entry.dia].toLowerCase()} ${entry.inicio}–${entry.fin}, ${entry.grupo}` +
+      `${diffLabel ? `, dificultad del profesor: ${diffLabel}` : ''}` +
+      `${isConflict ? ', en conflicto: solape de horario' : ''}`;
+  }
+
+  function getBusyHours(entries) {
+    const busy = new Set();
+    entries.forEach(entry => {
+      if (DAYS.indexOf(entry.dia) === -1) return;
+      const startMin = timeToMinutes(entry.inicio);
+      const endMin = timeToMinutes(entry.fin);
+      const startRow = Math.floor((startMin - START_HOUR * 60) / 60);
+      if (startRow < 0 || startRow > END_HOUR - START_HOUR - 1) return;
+      const lastMin = Math.max(endMin, startMin + 1);
+      for (let h = START_HOUR + startRow; h < END_HOUR && h * 60 < lastMin; h++) {
+        busy.add(h);
+      }
+    });
+    return busy;
+  }
+
+  function renderCalendar() {
+    const cal = document.getElementById('calendar');
+    const entries = getActiveSchedule();
+    const conflictSet = buildConflictSet();
+    const busyHours = getBusyHours(entries);
 
     let html = '';
 
@@ -1286,9 +1292,10 @@
 
     // Time rows
     for (let h = START_HOUR; h < END_HOUR; h++) {
-      html += `<div class="cal-time">${h}:00</div>`;
+      const rowClass = busyHours.has(h) ? '' : ' cal-hour-empty';
+      html += `<div class="cal-time${rowClass}">${h}:00</div>`;
       DAYS.forEach(dia => {
-        html += `<div class="cal-cell" data-dia="${dia}" data-hour="${h}"></div>`;
+        html += `<div class="cal-cell${rowClass}" data-dia="${dia}" data-hour="${h}"></div>`;
       });
     }
 
@@ -1314,6 +1321,9 @@
       const eventDiv = document.createElement('div');
       eventDiv.className = `cal-event ${isConflict ? 'conflict' : ''}`;
       eventDiv.dataset.subject = entry.codigo;
+      eventDiv.tabIndex = 0;
+      eventDiv.setAttribute('role', 'group');
+      eventDiv.setAttribute('aria-label', buildEventLabel(entry, isConflict));
       eventDiv.style.top = topOffset + '%';
       eventDiv.style.height = height + '%';
       eventDiv.innerHTML = `
@@ -1325,8 +1335,7 @@
         const diff = getDificultad(entry.codigo, entry.letra);
         if (diff) {
           const dot = document.createElement('span');
-          dot.className = 'event-diff-dot';
-          dot.style.background = getDificultadColor(diff);
+          dot.className = `event-diff-dot diff-${diff}`;
           dot.title = getDificultadLabel(diff);
           eventDiv.appendChild(dot);
         }
@@ -1335,10 +1344,144 @@
       // Tooltip
       eventDiv.addEventListener('mouseenter', (e) => showTooltip(e, entry));
       eventDiv.addEventListener('mouseleave', hideTooltip);
+      eventDiv.addEventListener('focus', (e) => showTooltip(e, entry));
+      eventDiv.addEventListener('blur', hideTooltip);
 
       cell.style.position = 'relative';
       cell.appendChild(eventDiv);
     });
+
+    applyCalendarView();
+  }
+
+  // ─── Calendar view (week/list) ──────────────────────────────
+  function getCalendarView() {
+    return localStorage.getItem('ugr-calendar-view') === 'list' ? 'list' : 'week';
+  }
+
+  function applyCalendarView() {
+    const cal = document.getElementById('calendar');
+    const list = document.getElementById('calendar-list');
+    const weekBtn = document.getElementById('btn-view-week');
+    const listBtn = document.getElementById('btn-view-list');
+    if (!cal || !list || !weekBtn || !listBtn) return;
+
+    const view = getCalendarView();
+    const isList = view === 'list';
+
+    cal.hidden = isList;
+    list.hidden = !isList;
+    weekBtn.setAttribute('aria-pressed', String(!isList));
+    listBtn.setAttribute('aria-pressed', String(isList));
+
+    if (isList) renderCalendarList();
+    applyCalendarCompact();
+  }
+
+  function setCalendarView(view) {
+    const next = view === 'list' ? 'list' : 'week';
+    localStorage.setItem('ugr-calendar-view', next);
+    applyCalendarView();
+  }
+
+  function setupCalendarViewToggle() {
+    const weekBtn = document.getElementById('btn-view-week');
+    const listBtn = document.getElementById('btn-view-list');
+    if (!weekBtn || !listBtn) return;
+    weekBtn.addEventListener('click', () => setCalendarView('week'));
+    listBtn.addEventListener('click', () => setCalendarView('list'));
+    applyCalendarView();
+  }
+
+  // ─── Calendar compact mode (empty-slot zoom) ────────────────
+  function isCalendarCompact() {
+    return localStorage.getItem('ugr-calendar-compact') === '1';
+  }
+
+  function applyCalendarCompact() {
+    const cal = document.getElementById('calendar');
+    const btn = document.getElementById('btn-view-compact');
+    const compact = isCalendarCompact();
+    if (cal) cal.classList.toggle('is-compact', compact);
+    if (!btn) return;
+    btn.setAttribute('aria-pressed', String(compact));
+    btn.hidden = getCalendarView() === 'list';
+  }
+
+  function setCalendarCompact(compact) {
+    localStorage.setItem('ugr-calendar-compact', compact ? '1' : '0');
+    applyCalendarCompact();
+  }
+
+  function setupCalendarCompactToggle() {
+    const btn = document.getElementById('btn-view-compact');
+    if (!btn) return;
+    btn.addEventListener('click', () => setCalendarCompact(!isCalendarCompact()));
+    applyCalendarCompact();
+  }
+
+  // ─── Calendar list view (accessible fallback) ───────────────
+  function getEntryTurno(entry) {
+    const subject = SUBJECTS.find(s => s.codigo === entry.codigo);
+    const choice = state.groupChoices[entry.codigo];
+    const group = subject && choice ? subject.grupos.find(g => g.letra === choice.teoria) : null;
+    return group ? (group.turno === 'mañana' ? 'Mañana' : 'Tarde') : '—';
+  }
+
+  function renderCalendarList() {
+    const listEl = document.getElementById('calendar-list');
+    if (!listEl) return;
+
+    const entries = getActiveSchedule();
+    const conflictSet = buildConflictSet();
+
+    let html = '<div class="cal-list">';
+
+    DAYS.forEach(dia => {
+      const dayEntries = entries
+        .filter(e => e.dia === dia)
+        .sort((a, b) => timeToMinutes(a.inicio) - timeToMinutes(b.inicio));
+
+      html += `<table class="cal-list-table">
+        <caption>${DAY_LABELS[dia]}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Hora</th>
+            <th scope="col">Asignatura</th>
+            <th scope="col">Grupo</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Turno</th>
+            <th scope="col">Dificultad del profesor</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      if (dayEntries.length === 0) {
+        html += `<tr class="cal-list-empty"><td colspan="6">Sin sesiones este día</td></tr>`;
+      } else {
+        dayEntries.forEach(entry => {
+          const isConflict = conflictSet.has(`${entry.codigo}-${entry.dia}-${entry.inicio}`);
+          const diffLabel = getEntryDificultadLabel(entry);
+          html += `<tr${isConflict ? ' class="is-conflict"' : ''}>
+            <th scope="row" class="cal-list-time">${entry.inicio}–${entry.fin}</th>
+            <td class="cal-list-subject">
+              <span class="cal-list-code">${entry.codigo}</span>
+              <span class="cal-list-name">${entry.nombre}</span>
+              ${isConflict ? '<span class="cal-list-tag">Conflicto</span>' : ''}
+            </td>
+            <td>${entry.grupo}</td>
+            <td>${entry.tipo}</td>
+            <td>${getEntryTurno(entry)}</td>
+            <td>${diffLabel || '—'}</td>
+          </tr>`;
+        });
+      }
+
+      html += `</tbody></table>`;
+    });
+
+    html += '</div>';
+    listEl.innerHTML = html;
   }
 
   // ─── Tooltip ────────────────────────────────────────────────
@@ -1377,13 +1520,15 @@
   function renderConflicts() {
     const panel = document.getElementById('conflicts-panel');
     const list = document.getElementById('conflicts-list');
+    if (!panel || !list) return;
+
+    panel.classList.toggle('has-conflicts', conflicts.length > 0);
 
     if (conflicts.length === 0) {
-      panel.style.display = 'none';
+      list.innerHTML = '<p class="empty-state">Sin conflictos.</p>';
       return;
     }
 
-    panel.style.display = 'block';
     let html = '';
     conflicts.forEach(c => {
       html += `<div class="conflict-item">`;
@@ -1492,9 +1637,27 @@
 
     document.getElementById('btn-export').disabled = !hasSelection;
     document.getElementById('btn-share').disabled = !hasSelection;
+    updateControlPanel();
+  }
+
+  function hasSelectedInTerm() {
+    return Object.keys(state.selectedSubjects).some(c => {
+      if (!state.selectedSubjects[c]) return false;
+      const s = SUBJECTS.find(x => x.codigo === c);
+      return !!s && s.cuatrimestre === state.cuatrimestreActivo;
+    });
+  }
+
+  function updateControlPanel() {
+    const canGenerate = hasSelectedInTerm();
+    const hint = document.getElementById('control-hint');
+    if (hint) hint.hidden = canGenerate;
+    const gen = document.getElementById('btn-solver-generate');
+    if (gen) gen.disabled = solverBusy || !canGenerate;
   }
 
   function setupActions() {
+    setupShareDialog();
     document.getElementById('btn-export').addEventListener('click', exportCalendar);
     document.getElementById('btn-share').addEventListener('click', shareLink);
     document.getElementById('btn-clear-selected').addEventListener('click', clearSelected);
@@ -1554,6 +1717,8 @@
       }
     });
     setupGroupConfigToggle();
+    setupCalendarViewToggle();
+    setupCalendarCompactToggle();
     renderSavedConfigs();
   }
 
@@ -1596,64 +1761,332 @@
     link.click();
   }
 
-  // ─── Share ──────────────────────────────────────────────────
-  function shareLink() {
-    const data = {
-      s: Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]),
-      g: {},
-      a: state.apellido,
-      t: state.turnoPreferente
+  // ─── Share (enlace cifrado en el hash) ──────────────────────
+  const SHARE_HASH_PREFIX = '#data=';
+  let shareMode = null;
+  let shareReturnFocus = null;
+  let shareFragment = null;
+  let shareHashListenerReady = false;
+
+  function shareCrypto() {
+    if (window.__ugrShareCrypto) return Promise.resolve(window.__ugrShareCrypto);
+    return import('/ugr/src/share/shareCrypto.js').then(() => window.__ugrShareCrypto);
+  }
+
+  function shareDialogEls() {
+    return {
+      modal: document.getElementById('share-modal'),
+      title: document.getElementById('share-modal-title'),
+      desc: document.getElementById('share-modal-desc'),
+      form: document.getElementById('share-form'),
+      passphrase: document.getElementById('share-passphrase'),
+      error: document.getElementById('share-error'),
+      result: document.getElementById('share-result'),
+      link: document.getElementById('share-link'),
+      submit: document.getElementById('share-submit'),
+      cancel: document.getElementById('share-cancel'),
     };
-    Object.keys(state.groupChoices).forEach(c => {
-      if (state.selectedSubjects[c]) {
-        data.g[c] = state.groupChoices[c];
+  }
+
+  function showShareError(message) {
+    const els = shareDialogEls();
+    els.error.textContent = message;
+    els.error.hidden = false;
+    els.passphrase.setAttribute('aria-invalid', 'true');
+  }
+
+  function hideShareError() {
+    const els = shareDialogEls();
+    els.error.textContent = '';
+    els.error.hidden = true;
+    els.passphrase.removeAttribute('aria-invalid');
+  }
+
+  function openShareDialog(mode) {
+    const els = shareDialogEls();
+    shareMode = mode;
+    if (!shareReturnFocus) shareReturnFocus = document.activeElement;
+    els.title.textContent = mode === 'share' ? 'Compartir enlace cifrado' : 'Restaurar enlace compartido';
+    els.desc.textContent = mode === 'share'
+      ? 'Tu selección, tus grupos y tus filtros se cifran con AES-GCM y viajan dentro del enlace (#data=...), sin estado en claro y sin servidor.'
+      : 'Este enlace contiene estado cifrado. Escribe la frase de paso con la que se generó para restaurarlo.';
+    els.submit.textContent = mode === 'share' ? 'Generar enlace' : 'Descifrar y restaurar';
+    els.submit.disabled = false;
+    els.passphrase.value = '';
+    els.link.value = '';
+    els.result.hidden = true;
+    hideShareError();
+    els.modal.hidden = false;
+    els.passphrase.focus();
+  }
+
+  function closeShareDialog() {
+    const els = shareDialogEls();
+    if (els.modal.hidden) return;
+    els.modal.hidden = true;
+    if (shareMode === 'restore') clearShareHash();
+    shareMode = null;
+    shareFragment = null;
+    const target = shareReturnFocus;
+    shareReturnFocus = null;
+    if (target && typeof target.focus === 'function' && document.contains(target)) target.focus();
+  }
+
+  function clearShareHash() {
+    if (!location.hash.startsWith(SHARE_HASH_PREFIX)) return;
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+
+  function buildSharedState() {
+    const selectedSubjects = {};
+    Object.keys(state.selectedSubjects).forEach(codigo => {
+      if (state.selectedSubjects[codigo]) selectedSubjects[codigo] = true;
+    });
+    const groupChoices = {};
+    Object.keys(selectedSubjects).forEach(codigo => {
+      const choice = state.groupChoices[codigo];
+      if (choice && typeof choice === 'object') {
+        groupChoices[codigo] = {
+          teoria: typeof choice.teoria === 'string' ? choice.teoria : null,
+          practica: typeof choice.practica === 'string' ? choice.practica : null,
+        };
       }
     });
+    return {
+      v: 1,
+      selectedSubjects,
+      groupChoices,
+      apellido: state.apellido || '',
+      turnoPreferente: state.turnoPreferente || 'indiferente',
+      cuatrimestreActivo: state.cuatrimestreActivo === 2 ? 2 : 1,
+      solverFilters: solverFilters.map(f => ({ type: f.type, value: f.value, weight: f.weight })),
+      solverStrategy,
+    };
+  }
 
-    const encoded = btoa(JSON.stringify(data));
-    const url = window.location.origin + window.location.pathname + '?config=' + encoded;
+  function parseSharedState(raw) {
+    let data;
+    try { data = JSON.parse(raw); } catch (e) { return null; }
+    if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
+    if (data.v !== 1) return null;
 
-    navigator.clipboard.writeText(url).then(() => {
-      showToast('Enlace copiado al portapapeles', 'success');
-    }).catch(() => {
-      // Fallback
-      const input = document.createElement('input');
-      input.value = url;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand('copy');
-      document.body.removeChild(input);
-      showToast('Enlace copiado al portapapeles', 'success');
+    const selectedSubjects = {};
+    if (data.selectedSubjects && typeof data.selectedSubjects === 'object' && !Array.isArray(data.selectedSubjects)) {
+      Object.keys(data.selectedSubjects).forEach(codigo => {
+        if (data.selectedSubjects[codigo]) selectedSubjects[codigo] = true;
+      });
+    }
+    if (Object.keys(selectedSubjects).length === 0) return null;
+
+    const groupChoices = {};
+    if (data.groupChoices && typeof data.groupChoices === 'object' && !Array.isArray(data.groupChoices)) {
+      Object.keys(data.groupChoices).forEach(codigo => {
+        const choice = data.groupChoices[codigo];
+        if (!choice || typeof choice !== 'object' || Array.isArray(choice)) return;
+        if (typeof choice.teoria !== 'string' || !choice.teoria) return;
+        groupChoices[codigo] = {
+          teoria: choice.teoria,
+          practica: typeof choice.practica === 'string' ? choice.practica : null,
+        };
+      });
+    }
+
+    const solverFiltersShared = Array.isArray(data.solverFilters)
+      ? data.solverFilters
+          .filter(f => f && typeof f === 'object' && !Array.isArray(f) && SOLVER_FILTER_TYPES.includes(f.type))
+          .map(f => ({ type: f.type, value: f.value, weight: typeof f.weight === 'number' ? f.weight : 1 }))
+      : [];
+
+    return {
+      selectedSubjects,
+      groupChoices,
+      apellido: typeof data.apellido === 'string' ? data.apellido.trim().slice(0, 60) : '',
+      turnoPreferente: ['indiferente', 'mañana', 'tarde'].includes(data.turnoPreferente)
+        ? data.turnoPreferente
+        : 'indiferente',
+      cuatrimestreActivo: data.cuatrimestreActivo === 2 ? 2 : 1,
+      solverFilters: solverFiltersShared,
+      solverStrategy: SOLVER_STRATEGIES[data.solverStrategy] ? data.solverStrategy : 'balanced',
+    };
+  }
+
+  function applySharedState(shared) {
+    state.selectedSubjects = { ...shared.selectedSubjects };
+    state.groupChoices = JSON.parse(JSON.stringify(shared.groupChoices));
+    state.apellido = shared.apellido;
+    state.turnoPreferente = shared.turnoPreferente;
+    state.cuatrimestreActivo = shared.cuatrimestreActivo;
+    pruneSelectionsToActiveCatalog();
+
+    solverFilters = shared.solverFilters;
+    saveSolverFilters();
+    solverStrategy = shared.solverStrategy;
+    localStorage.setItem('ugr-solver-strategy', solverStrategy);
+
+    const apellidoInput = document.getElementById('apellido');
+    const turnoSelect = document.getElementById('turno-preferente');
+    if (apellidoInput) apellidoInput.value = state.apellido;
+    if (turnoSelect) turnoSelect.value = state.turnoPreferente;
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.toggle('active', parseInt(tab.dataset.cuatrimestre) === state.cuatrimestreActivo);
+    });
+
+    saveState();
+    renderSolverFilters();
+    updateAll();
+  }
+
+  function copyShareLink(url) {
+    const done = () => showToast('Enlace cifrado copiado al portapapeles', 'success');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(() => fallbackCopyShareLink(url));
+    } else {
+      fallbackCopyShareLink(url);
+    }
+  }
+
+  function fallbackCopyShareLink(url) {
+    const input = document.createElement('input');
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    let copied = false;
+    try { copied = document.execCommand('copy'); } catch (e) { copied = false; }
+    document.body.removeChild(input);
+    if (copied) {
+      showToast('Enlace cifrado copiado al portapapeles', 'success');
+    } else {
+      showToast('Copia el enlace manualmente desde el diálogo', 'info');
+    }
+    const linkInput = document.getElementById('share-link');
+    if (linkInput && !document.getElementById('share-modal').hidden) {
+      linkInput.focus();
+      linkInput.select();
+    }
+  }
+
+  function setupShareDialog() {
+    const els = shareDialogEls();
+    els.form.addEventListener('submit', onShareSubmit);
+    els.cancel.addEventListener('click', closeShareDialog);
+    document.getElementById('share-modal-close').addEventListener('click', closeShareDialog);
+    els.modal.addEventListener('click', (e) => {
+      if (e.target === els.modal) closeShareDialog();
+    });
+    els.modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeShareDialog();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const items = Array.from(els.modal.querySelectorAll('button, input, select, textarea, a[href]'))
+        .filter(el => !el.disabled && el.getClientRects().length > 0);
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
   }
 
-  function checkUrlShare() {
-    const params = new URLSearchParams(window.location.search);
-    const config = params.get('config');
-    if (!config) return;
-
-    try {
-      const data = JSON.parse(atob(config));
-      if (data.s) {
-        data.s.forEach(c => { state.selectedSubjects[c] = true; });
-      }
-      if (data.g) {
-        Object.keys(data.g).forEach(c => { state.groupChoices[c] = data.g[c]; });
-      }
-      if (data.a) {
-        state.apellido = data.a;
-        document.getElementById('apellido').value = data.a;
-      }
-      if (data.t) {
-        state.turnoPreferente = data.t;
-        document.getElementById('turno-preferente').value = data.t;
-      }
-      saveState();
-      updateAll();
-      showToast('Configuración cargada desde enlace compartido', 'success');
-    } catch (e) {
-      console.error('Error loading shared config:', e);
+  async function onShareSubmit(e) {
+    e.preventDefault();
+    const els = shareDialogEls();
+    const passphrase = els.passphrase.value;
+    if (!passphrase) {
+      showShareError('Introduce una frase de paso.');
+      return;
     }
+    if (!window.crypto || !window.crypto.subtle) {
+      showShareError('Este navegador no soporta WebCrypto, no se puede cifrar el enlace.');
+      return;
+    }
+    hideShareError();
+    els.submit.disabled = true;
+    try {
+      const api = await shareCrypto();
+      if (!api) throw new Error('NO_CRYPTO');
+      if (shareMode === 'share') {
+        const payload = await api.encryptToFragment(JSON.stringify(buildSharedState()), passphrase);
+        const hashFragment = '#data=' + payload;
+        const url = location.origin + location.pathname + location.search + hashFragment;
+        history.replaceState(null, '', hashFragment);
+        els.link.value = url;
+        els.result.hidden = false;
+        els.link.focus();
+        els.link.select();
+        copyShareLink(url);
+      } else {
+        const plain = await api.decryptFromFragment(shareFragment, passphrase);
+        const shared = parseSharedState(plain);
+        if (!shared) {
+          showShareError('El enlace no contiene un estado válido.');
+          clearShareHash();
+          return;
+        }
+        applySharedState(shared);
+        clearShareHash();
+        closeShareDialog();
+        showToast('Enlace descifrado: estado restaurado', 'success');
+      }
+    } catch (err) {
+      const code = err && err.message;
+      if (code === 'BAD_PASSPHRASE') {
+        showShareError('Frase de paso incorrecta: no se ha podido descifrar el enlace.');
+      } else if (code === 'BAD_FORMAT') {
+        showShareError('El enlace está corrupto o no es compatible.');
+        clearShareHash();
+      } else {
+        showShareError('No se ha podido procesar el enlace. Inténtalo de nuevo.');
+      }
+    } finally {
+      els.submit.disabled = false;
+    }
+  }
+
+  function startRestoreFromHash() {
+    const raw = location.hash;
+    if (!raw.startsWith(SHARE_HASH_PREFIX)) return;
+    shareFragment = raw;
+    shareCrypto().then(api => {
+      if (!api || !api.parseFragment(raw)) {
+        clearShareHash();
+        showToast('El enlace compartido no es válido o está corrupto', 'error');
+        return;
+      }
+      if (shareMode === 'restore') return;
+      openShareDialog('restore');
+    }).catch(() => {
+      clearShareHash();
+      showToast('No se ha podido leer el enlace compartido', 'error');
+    });
+  }
+
+  function shareLink() {
+    openShareDialog('share');
+  }
+
+  function checkUrlShare() {
+    if (!shareHashListenerReady) {
+      shareHashListenerReady = true;
+      window.addEventListener('hashchange', () => {
+        if (!location.hash.startsWith(SHARE_HASH_PREFIX)) return;
+        if (shareMode === 'restore') {
+          shareFragment = location.hash;
+          shareDialogEls().passphrase.value = '';
+          hideShareError();
+          return;
+        }
+        startRestoreFromHash();
+      });
+    }
+    startRestoreFromHash();
   }
 
   // ─── Clear ──────────────────────────────────────────────────
@@ -1724,14 +2157,10 @@
 
   // ─── Solver UI (Fase 1) ─────────────────────────────────────
   function loadSolverFilters() {
-    const KNOWN = [
-      'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
-      'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
-    ];
     try {
       const parsed = JSON.parse(localStorage.getItem('ugr-solver-filters') || '[]');
       if (!Array.isArray(parsed)) return [];
-      return parsed.filter(f => f && KNOWN.includes(f.type));
+      return parsed.filter(f => f && SOLVER_FILTER_TYPES.includes(f.type));
     } catch (e) { return []; }
   }
 
@@ -1756,12 +2185,12 @@
     SUBJECTS.forEach(s => {
       (s.grupos || []).forEach(g => {
         const key = `${s.codigo}-${g.letra}`;
-        const info = PROFESORES_MAP[key];
-        if (!info || !info.nombre) return;
-        if (!byName.has(info.nombre)) {
-          byName.set(info.nombre, { name: info.nombre, dificultad: info.dificultad, keys: [], subjects: new Set() });
+        const info = getDocentInfo(key);
+        if (!info || !info.name) return;
+        if (!byName.has(info.name)) {
+          byName.set(info.name, { name: info.name, dificultad: info.profile ? info.profile.dificultad : null, keys: [], subjects: new Set() });
         }
-        const entry = byName.get(info.nombre);
+        const entry = byName.get(info.name);
         entry.keys.push(key);
         entry.subjects.add(s.codigo);
       });
@@ -1927,7 +2356,7 @@
       if (!subject) return;
       subject.grupos.forEach(g => {
         const d = getDificultad(code, g.letra);
-        if (d) scores[`${code}-${g.letra}`] = PROF_SCORE_MAP[d] || 3;
+        if (d) scores[`${code}-${g.letra}`] = getDifficultyScore(d);
       });
     });
     return scores;
@@ -1957,7 +2386,7 @@
     const gen = document.getElementById('btn-solver-generate');
     const cancel = document.getElementById('btn-solver-cancel');
     const prog = document.getElementById('solver-progress');
-    if (gen) gen.disabled = busy;
+    if (gen) gen.disabled = busy || !hasSelectedInTerm();
     if (cancel) cancel.style.display = busy ? '' : 'none';
     if (prog) prog.style.display = busy ? '' : 'none';
   }
@@ -2223,6 +2652,16 @@
         return true;
       });
     }
+    const toolbarHtml = '<div class="saved-configs-toolbar">' +
+      `<button class="btn btn-sm ${configShowFavoritesOnly ? 'btn-primary' : 'btn-secondary'}" id="btn-toggle-favorites">\u2605 Favoritos${configShowFavoritesOnly ? ' (activado)' : ''}</button>` +
+      '</div>';
+
+    if (filtered.length === 0) {
+      container.innerHTML = toolbarHtml + '<p class="empty-state">No hay resultados con los filtros actuales.</p>';
+      bindSavedConfigsToolbar(container);
+      return;
+    }
+
     const totalEntries = filtered.length;
     const totalPages = Math.max(1, Math.ceil(totalEntries / CONFIG_PAGE_SIZE));
 
@@ -2235,9 +2674,7 @@
 
     const arrow = (field) => configSortField === field ? (configSortDir === 'asc' ? ' \u25B2' : ' \u25BC') : '';
 
-    let html = '<div class="saved-configs-toolbar">';
-    html += `<button class="btn btn-sm ${configShowFavoritesOnly ? 'btn-primary' : 'btn-secondary'}" id="btn-toggle-favorites">\u2605 Favoritos${configShowFavoritesOnly ? ' (activado)' : ''}</button>`;
-    html += '</div>';
+    let html = toolbarHtml;
 
     html += '<table class="saved-configs-table">';
     html += '<thead><tr>';
@@ -2293,14 +2730,7 @@
 
     container.innerHTML = html;
 
-    const toggleFavBtn = container.querySelector('#btn-toggle-favorites');
-    if (toggleFavBtn) {
-      toggleFavBtn.addEventListener('click', () => {
-        configShowFavoritesOnly = !configShowFavoritesOnly;
-        configPage = 1;
-        renderSavedConfigs();
-      });
-    }
+    bindSavedConfigsToolbar(container);
 
     container.querySelectorAll('th.sortable').forEach(th => {
       th.addEventListener('click', () => {
@@ -2332,6 +2762,17 @@
     const nextBtn = container.querySelector('#cfg-page-next');
     if (prevBtn) prevBtn.addEventListener('click', () => { configPage--; renderSavedConfigs(); });
     if (nextBtn) nextBtn.addEventListener('click', () => { configPage++; renderSavedConfigs(); });
+  }
+
+  function bindSavedConfigsToolbar(container) {
+    const toggleFavBtn = container.querySelector('#btn-toggle-favorites');
+    if (toggleFavBtn) {
+      toggleFavBtn.addEventListener('click', () => {
+        configShowFavoritesOnly = !configShowFavoritesOnly;
+        configPage = 1;
+        renderSavedConfigs();
+      });
+    }
   }
 
   // ─── Export/Import JSON ────────────────────────────────────
@@ -2459,6 +2900,7 @@
 
     SUBJECTS.length = 0;
     DEFAULT_SUBJECTS.forEach(s => SUBJECTS.push(JSON.parse(JSON.stringify(s))));
+    saveSubjectsToStorage();
 
     document.getElementById('apellido').value = '';
     document.getElementById('turno-preferente').value = 'indiferente';
@@ -2919,8 +3361,25 @@
   }
 
   // ─── Subjects Storage ───────────────────────────────────────
+  // Fuente de verdad: store `catalogs` (IndexedDB) vía window.__ugrCatalog.
+  // localStorage solo se usa como fallback en modo degradado (sin store).
   function saveSubjectsToStorage() {
-    localStorage.setItem('ugr-horario-subjects', JSON.stringify(SUBJECTS));
+    const api = getCatalogApi();
+    const catalog = api && typeof api.getCatalog === 'function' ? api.getCatalog() : null;
+    if (!api || !catalog || typeof api.saveCatalog !== 'function') {
+      localStorage.setItem('ugr-horario-subjects', JSON.stringify(SUBJECTS));
+      return;
+    }
+    api.saveCatalog({ ...catalog, subjects: cloneCatalogValue(SUBJECTS) }, { id: api.getActiveCatalogKey() })
+      .then(res => {
+        if (res.ok) return api.setActiveCatalogKey(res.id);
+        localStorage.setItem('ugr-horario-subjects', JSON.stringify(SUBJECTS));
+        if (res.error !== 'store_unavailable') showToast('No se pudo guardar en el catálogo', 'error');
+        return null;
+      })
+      .catch(() => {
+        localStorage.setItem('ugr-horario-subjects', JSON.stringify(SUBJECTS));
+      });
   }
 
   function loadSubjectsFromStorage() {
@@ -2934,6 +3393,238 @@
         }
       }
     } catch (e) { /* ignore */ }
+  }
+
+  // ─── Catálogo activo (Fase 2.4b) ────────────────────────────
+  const LEGACY_CATALOG_ID = 'UGR/GI/legacy-1';
+  const LEGACY_SUBJECT_FIELDS = ['aprobada', 'corresponde', 'descripcion'];
+  let catalogBridgeBound = false;
+
+  function getCatalogApi() {
+    return (typeof window !== 'undefined' && window.__ugrCatalog) ? window.__ugrCatalog : null;
+  }
+
+  function cloneCatalogValue(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function rebuildDocentesIndex(docents) {
+    Object.keys(docentesByKey).forEach(key => { delete docentesByKey[key]; });
+    (Array.isArray(docents) ? docents : []).forEach(d => {
+      if (d && d.key) docentesByKey[d.key] = d;
+    });
+  }
+
+  function syncFromActiveCatalog() {
+    const api = getCatalogApi();
+    if (!api || typeof api.getCatalog !== 'function') return null;
+    const catalog = api.getCatalog();
+    if (!catalog || !Array.isArray(catalog.subjects)) return null;
+
+    const prevCodes = new Set(SUBJECTS.map(s => s.codigo));
+    let carriedFields = false;
+    const incoming = catalog.subjects.map(s => {
+      const clone = cloneCatalogValue(s);
+      const prev = SUBJECTS.find(p => p.codigo === clone.codigo);
+      if (prev) {
+        LEGACY_SUBJECT_FIELDS.forEach(field => {
+          if (clone[field] === undefined && prev[field] !== undefined) {
+            clone[field] = cloneCatalogValue(prev[field]);
+            carriedFields = true;
+          }
+        });
+      }
+      return clone;
+    });
+
+    SUBJECTS.length = 0;
+    incoming.forEach(s => SUBJECTS.push(s));
+    rebuildDocentesIndex(typeof api.getDocents === 'function' ? api.getDocents() : []);
+
+    DEFAULT_SUBJECTS.length = 0;
+    incoming.forEach(s => DEFAULT_SUBJECTS.push(cloneCatalogValue(s)));
+
+    const nextCodes = new Set(SUBJECTS.map(s => s.codigo));
+    return {
+      codesChanged: [...prevCodes].some(code => !nextCodes.has(code)),
+      carriedFields,
+    };
+  }
+
+  function pruneSelectionsToActiveCatalog() {
+    const codes = new Set(SUBJECTS.map(s => s.codigo));
+    let changed = false;
+    Object.keys(state.selectedSubjects).forEach(c => {
+      if (!codes.has(c)) {
+        delete state.selectedSubjects[c];
+        changed = true;
+      }
+    });
+    Object.keys(state.groupChoices).forEach(c => {
+      if (!codes.has(c)) {
+        delete state.groupChoices[c];
+        changed = true;
+      }
+    });
+    return changed;
+  }
+
+  // Adopta una única vez el snapshot legacy `ugr-horario-subjects`: se fusiona
+  // con el catálogo del store (nunca lo reemplaza) y después se elimina la clave
+  // para que no vuelva a competir con el store.
+  async function adoptLegacySubjects(api, storeList) {
+    const activeId = api.getActiveCatalogKey();
+    if (activeId !== LEGACY_CATALOG_ID || storeList.length !== 1) return;
+    const catalog = api.getCatalog();
+    if (!catalog) return;
+    let raw = null;
+    try { raw = localStorage.getItem('ugr-horario-subjects'); } catch (e) { return; }
+    if (!raw) return;
+    let snapshot = null;
+    try { snapshot = JSON.parse(raw); } catch (e) { return; }
+    if (!Array.isArray(snapshot) || snapshot.length === 0) return;
+
+    const merged = new Map(catalog.subjects.map(s => [s.codigo, s]));
+    snapshot.forEach(s => { if (s && s.codigo) merged.set(s.codigo, s); });
+    try {
+      const res = await api.saveCatalog(
+        { ...catalog, subjects: Array.from(merged.values()) },
+        { id: activeId },
+      );
+      if (!res.ok) return;
+      // recarga el registro en memoria (saveCatalog solo escribe en IndexedDB)
+      await api.setActiveCatalogKey(activeId);
+      localStorage.removeItem('ugr-horario-subjects');
+    } catch (e) { /* modo degradado */ }
+  }
+
+  // El normalizador del catálogo no guarda `aprobada`/`corresponde`/`descripcion`:
+  // si el bridge los ha tenido que recuperar del subject legacy, se consolidan en
+  // el store para que sobrevivan a cambios de catálogo dentro de la sesión.
+  async function persistLegacySubjectFields(api) {
+    const catalog = api.getCatalog();
+    if (!catalog) return;
+    try {
+      await api.saveCatalog(
+        { ...catalog, subjects: cloneCatalogValue(SUBJECTS) },
+        { id: api.getActiveCatalogKey() },
+      );
+    } catch (e) { /* modo degradado */ }
+  }
+
+  async function bootstrapCatalogState() {
+    const api = getCatalogApi();
+    if (!api || typeof api.getCatalog !== 'function' || !api.getCatalog()) {
+      loadSubjectsFromStorage();
+      return false;
+    }
+    let storeList = [];
+    try { storeList = await api.listCatalogs(); } catch (e) { storeList = []; }
+    if (!storeList.length) {
+      loadSubjectsFromStorage();
+      return false;
+    }
+    await adoptLegacySubjects(api, storeList);
+    const sync = syncFromActiveCatalog();
+    if (sync && sync.carriedFields) await persistLegacySubjectFields(api);
+    return sync ? sync.codesChanged : false;
+  }
+
+  function refreshAfterCatalogChange() {
+    const api = getCatalogApi();
+    const sync = syncFromActiveCatalog();
+    if (sync) {
+      if (sync.carriedFields && api) persistLegacySubjectFields(api);
+      if (sync.codesChanged && pruneSelectionsToActiveCatalog()) saveState();
+    }
+    if (solverBusy) cancelSolver();
+    solverResults = [];
+    setSolverStatus('');
+    updateAll();
+    renderManageSubjects();
+    renderSolverFilters();
+    renderSavedConfigs();
+    renderCatalogSelector();
+  }
+
+  function escapeCatalogText(text) {
+    return String(text).replace(/[&<>"']/g, ch => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+  }
+
+  async function renderCatalogSelector() {
+    const select = document.getElementById('catalog-select');
+    if (!select) return;
+    const api = getCatalogApi();
+    if (!api || typeof api.listCatalogs !== 'function') {
+      select.disabled = true;
+      return;
+    }
+    let list = [];
+    try { list = await api.listCatalogs(); } catch (e) { list = []; }
+    if (!list.length) {
+      select.innerHTML = '<option value="">Catálogo local (sin tienda)</option>';
+      select.disabled = true;
+      return;
+    }
+    select.innerHTML = list.map(c => {
+      const label = [c.university, c.degree, c.version, `${c.subjectCount} asignaturas`]
+        .filter(Boolean)
+        .join(' · ') || c.id;
+      return `<option value="${escapeCatalogText(c.id)}">${escapeCatalogText(label)}</option>`;
+    }).join('');
+    select.disabled = false;
+    select.value = api.getActiveCatalogKey();
+  }
+
+  async function exportActiveCatalog() {
+    const api = getCatalogApi();
+    if (!api || typeof api.exportCatalog !== 'function') {
+      showToast('Exportación de catálogo no disponible', 'error');
+      return;
+    }
+    const id = api.getActiveCatalogKey();
+    try {
+      const data = await api.exportCatalog(id);
+      if (!data) {
+        showToast('Catálogo no disponible', 'error');
+        return;
+      }
+      downloadJSON(data, `catalogo-${String(id).replace(/\//g, '_')}.json`);
+      showToast('Catálogo exportado', 'success');
+    } catch (e) {
+      showToast('Error al exportar el catálogo', 'error');
+    }
+  }
+
+  function setupCatalogUI() {
+    if (!catalogBridgeBound) {
+      document.addEventListener('ugr:catalogUpdated', refreshAfterCatalogChange);
+      catalogBridgeBound = true;
+    }
+    const select = document.getElementById('catalog-select');
+    if (select && !select.dataset.catalogBound) {
+      select.dataset.catalogBound = '1';
+      select.addEventListener('change', async (e) => {
+        const id = e.target.value;
+        const api = getCatalogApi();
+        if (!api || !id || typeof api.setActiveCatalogKey !== 'function') return;
+        const res = await api.setActiveCatalogKey(id);
+        if (!res || !res.ok) {
+          showToast('No se pudo activar ese catálogo', 'error');
+          renderCatalogSelector();
+          return;
+        }
+        refreshAfterCatalogChange();
+      });
+    }
+    const exportBtn = document.getElementById('btn-catalog-export');
+    if (exportBtn && !exportBtn.dataset.catalogBound) {
+      exportBtn.dataset.catalogBound = '1';
+      exportBtn.addEventListener('click', exportActiveCatalog);
+    }
+    renderCatalogSelector();
   }
 
   // ─── Propuestas ─────────────────────────────────────────────
