@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "catalogs": [
+    {
+      "university": "UGR",
+      "degree": "GI",
+      "plan": "2022",
+      "version": "2026-1",
+      "url": "/ugr/datasets/ugr/gi/2026-1.json",
+      "hash": "sha256-cd7fb0b773a4ea041b9f5389d726ae94148b1d9ea13ceca912018965f96038bd",
+      "updatedAt": "2026-10-04T12:28:59.136Z",
+      "sources": [
+        "legacy"
+      ]
+    }
+  ]
+}
