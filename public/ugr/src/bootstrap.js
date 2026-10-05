@@ -7,7 +7,9 @@ import { createDevtools } from "./devtools/index.js";
 import { recordBootTiming } from "./devtools/index.js";
 import { registerCatalog } from "./modules/catalog.js";
 import { registerSolver } from "./modules/solver.js";
+import { registerProgress } from "./modules/progress.js";
 import { setupImportWizard } from "./ui/import-wizard.js";
+import { setupProgressDashboard } from "./ui/progress-dashboard.js";
 
 async function bootstrap() {
   recordBootTiming("bootstrap_start");
@@ -56,6 +58,7 @@ async function bootstrap() {
 
   const catalogModuleApi = registerCatalog();
   const solverApi = registerSolver();
+  const progressApi = registerProgress();
 
   await startAll(bus);
   recordBootTiming("kernel_started");
@@ -83,6 +86,11 @@ async function bootstrap() {
     listModules: () => getModule("solver") !== null,
   };
 
+  // Puente para app.js (IIFE clásico, sin imports): excluye del dominio del
+  // solver las asignaturas ya superadas. Si falta (modo degradado), app.js
+  // simplemente no excluye nada.
+  window.__ugrProgress = progressApi;
+
   if (typeof window !== "undefined" && !window.__ugrDegraded) {
     window.__ugr = createDevtools();
   } else {
@@ -100,6 +108,10 @@ async function bootstrap() {
   recordBootTiming("legacy_started");
 
   setupImportWizard();
+  // Tras startLegacyApp: el catálogo kernel ya está cargado y la vista
+  // #progress-dashboard ya está en el DOM, así el primer render del dashboard
+  // sale con datos reales.
+  setupProgressDashboard();
 
   window.addEventListener("beforeunload", () => flush());
   window.addEventListener("pagehide", () => flush());

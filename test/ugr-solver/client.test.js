@@ -47,6 +47,16 @@ describe("problemHash", () => {
     expect(a).not.toBe(b);
   });
 
+  // El hash solo cubre campos concretos (subjects/filters/domains/weights/
+  // docentScores/catalogVersion): campos adicionales del problem —p. ej.
+  // excludedPassed, que app.js añade solo para el mensaje de estado— no deben
+  // cambiar la clave de caché ni la identidad del problema.
+  it("ignores unknown problem fields (excludedPassed does not change the hash)", async () => {
+    const a = await problemHash(problem, catalog);
+    const b = await problemHash({ ...problem, excludedPassed: ["FFT", "SO"] }, catalog);
+    expect(b).toBe(a);
+  });
+
   it("sha256Hex matches the known digest of empty-ish input", async () => {
     const digest = await sha256Hex("abc");
     expect(digest).toBe("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
@@ -91,6 +101,18 @@ describe("solveTopK", () => {
     await solveTopK(problem, catalog, { k: 3, cache });
     expect(writes).toHaveLength(1);
     expect(writes[0].payload.k).toBe(3);
+  });
+
+  // Regresión del cableado Fase 5: app.js pasa `excludedPassed` dentro del
+  // problem. Si el hash lo contamina, cada ejecución tendría clave propia y
+  // la caché nunca daría acierto.
+  it("problemHash is unchanged when the problem carries extra fields", async () => {
+    const base = await problemHash(problem, catalog);
+    const result = await solveTopK({ ...problem, excludedPassed: ["FFT"] }, catalog, {
+      k: 3,
+      cache: noopCache,
+    });
+    expect(result.problemHash).toBe(base);
   });
 
   it("exposes the solver version", () => {

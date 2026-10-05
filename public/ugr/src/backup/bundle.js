@@ -7,14 +7,21 @@ export const FORMAT_NAME = "ugr-backup";
 
 export async function buildPayload(sections = ["userState", "configs", "progress", "reviews"]) {
   const payload = {};
+  let userState;
   if (sections.includes("userState")) {
-    payload.userState = await get("userState", "current");
+    userState = await get("userState", "current");
+    payload.userState = userState;
   }
   if (sections.includes("configs")) {
     payload.configs = await getAll("configs");
   }
   if (sections.includes("progress")) {
-    payload.progress = await get("progress", "main");
+    // El progreso canónico vive en userState.progress (single-writer). La
+    // tabla `progress` solo se consulta como fallback de backups anteriores
+    // a la Fase 5, cuando el progreso se guardaba en esa tabla suelta.
+    if (!userState) userState = await get("userState", "current");
+    const canonical = userState?.progress;
+    payload.progress = canonical || (await get("progress", "main"));
   }
   if (sections.includes("reviews")) {
     payload.reviews = await getAll("reviews");
@@ -104,7 +111,9 @@ export function buildMergePlan(current, incoming, strategy) {
   if (strategy === "replace") {
     plan.actions.push({ section: "userState", action: "replace", data: incoming.userState });
     plan.actions.push({ section: "configs", action: "replace", data: incoming.configs });
-    plan.actions.push({ section: "progress", action: "replace", data: incoming.progress });
+    if (incoming.progress) {
+      plan.actions.push({ section: "progress", action: "replace", data: incoming.progress });
+    }
     plan.actions.push({ section: "reviews", action: "replace", data: incoming.reviews });
     return plan;
   }
@@ -128,10 +137,29 @@ export function buildMergePlan(current, incoming, strategy) {
   }
 
   if (incoming.progress) {
-    const cur = current.progress || { credits: {} };
+    // El progreso no lleva rev propio: se fusiona por updatedAt (lo escribe
+    // el reducer en cada comando de progreso). Si el incoming es más reciente
+    // gana entero; si no, se hace unión de credits con el incoming ganando
+    // por código, igual que configs/reviews.
+    const cur = current.progress || {};
     const inc = incoming.progress;
-    const merged = { ...cur, ...inc, credits: { ...cur.credits, ...inc.credits } };
-    plan.actions.push({ section: "progress", action: "replace", data: merged });
+    const curTs = Date.parse(cur.updatedAt || "") || 0;
+    const incTs = Date.parse(inc.updatedAt || "") || 0;
+    if (incTs > curTs) {
+      plan.actions.push({ section: "progress", action: "replace", data: inc });
+    } else {
+      const merged = {
+        ...cur,
+        ...inc,
+        credits: { ...(cur.credits || {}), ...(inc.credits || {}) },
+        equivalences: inc.equivalences || cur.equivalences || [],
+        plan: { ...(cur.plan || {}), ...(inc.plan || {}) },
+        updatedAt: new Date().toISOString(),
+      };
+      if (JSON.stringify(merged) !== JSON.stringify(cur)) {
+        plan.actions.push({ section: "progress", action: "replace", data: merged });
+      }
+    }
   }
 
   if (incoming.reviews && Array.isArray(incoming.reviews)) {
@@ -147,15 +175,34 @@ export function buildMergePlan(current, incoming, strategy) {
   return plan;
 }
 
+// Las acciones de progreso no escriben en la tabla `progress`: se vuelcan
+// en userState vía comandos del store (single-writer), igual que hace la UI.
+function progressActionToCommand(action) {
+  if (action.action === "replace") {
+    return { type: "progress/setAll", payload: action.data };
+  }
+  if (action.action === "upsert" && action.data?.code) {
+    return { type: "progress/setStatus", payload: { code: action.data.code, status: action.data.status } };
+  }
+  return null;
+}
+
 export async function applyPlan(plan) {
   const { transact, put } = await import("../store/db.js");
-  await transact(["userState", "configs", "progress", "reviews"], async () => {
-    for (const action of plan.actions) {
-      if (action.action === "replace") {
-        await put(action.section, action.data);
-      } else if (action.action === "upsert") {
+  const { applyCommandsInTransaction } = await import("../store/commands.js");
+  const progressCommands = plan.actions
+    .filter((a) => a.section === "progress")
+    .map(progressActionToCommand)
+    .filter(Boolean);
+  const otherActions = plan.actions.filter((a) => a.section !== "progress");
+  if (otherActions.length > 0) {
+    await transact(["userState", "configs", "reviews"], async () => {
+      for (const action of otherActions) {
         await put(action.section, action.data);
       }
-    }
-  });
+    });
+  }
+  if (progressCommands.length > 0) {
+    await applyCommandsInTransaction(progressCommands);
+  }
 }

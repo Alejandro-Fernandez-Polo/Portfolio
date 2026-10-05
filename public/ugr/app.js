@@ -2368,11 +2368,22 @@
       const s = SUBJECTS.find(x => x.codigo === c);
       return s && s.cuatrimestre === state.cuatrimestreActivo;
     });
+    // Las asignaturas ya superadas (sup/pass) quedan fuera del dominio: el
+    // solver no debe planificar lo aprobado. Sin __ugrProgress (modo
+    // degradado) no se excluye nada. excludedPassed se informa en runSolver.
+    const passed = new Set(window.__ugrProgress?.getPassedCodes?.() || []);
+    const subjects = [];
+    const excludedPassed = [];
+    for (const c of inTerm) {
+      if (passed.has(c)) excludedPassed.push(c);
+      else subjects.push(c);
+    }
     return {
-      subjects: inTerm,
+      subjects,
+      excludedPassed,
       filters: solverFilters,
       catalogVersion: 'legacy',
-      docentScores: buildSolverDocentScores(inTerm),
+      docentScores: buildSolverDocentScores(subjects),
     };
   }
 
@@ -2421,7 +2432,9 @@
     if (!bridge) { setSolverStatus('El motor no está disponible.'); return; }
     const problem = buildSolverProblem();
     if (problem.subjects.length === 0) {
-      setSolverStatus('No hay asignaturas seleccionadas en este cuatrimestre.');
+      setSolverStatus(problem.excludedPassed.length
+        ? 'Todas las asignaturas seleccionadas de este cuatrimestre están superadas.'
+        : 'No hay asignaturas seleccionadas en este cuatrimestre.');
       return;
     }
     const empty = blockedEmptySubjects(problem);
@@ -2448,7 +2461,8 @@
       solverResults = result.items.map(toSolverConfig);
       renderSavedConfigs();
       const approx = result.stats.approximate ? ' (aprox.)' : '';
-      setSolverStatus(`${solverResults.length} horarios generados${approx}${result.fromCache ? ' · caché' : ''}`);
+      const omitted = problem.excludedPassed.length ? ` · ${problem.excludedPassed.length} superadas omitidas` : '';
+      setSolverStatus(`${solverResults.length} horarios generados${approx}${result.fromCache ? ' · caché' : ''}${omitted}`);
     } catch (err) {
       if (runId === solverRunSeq) setSolverStatus('Error: ' + (err?.message || err));
     } finally {

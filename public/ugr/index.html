@@ -19,6 +19,7 @@
     <button class="nav-tab active" data-view="horario">Horario</button>
     <button class="nav-tab" data-view="asignaturas">Asignaturas</button>
     <button class="nav-tab" data-view="convalidaciones">Convalidaciones</button>
+    <button class="nav-tab" data-view="progreso">Progreso</button>
   </nav>
 
   <main>
@@ -263,6 +264,40 @@
             <button id="btn-guardar-propuesta-interna" class="btn btn-primary">Guardar propuesta</button>
           </div>
           <div id="propuestas-guardadas-list"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══ VISTA: PROGRESO (Fase 5) ═══ -->
+    <!-- Los IDs de dentro los consulta src/ui/progress-dashboard.js: si cambian,
+         ese módulo se queda en modo degradado sin renderizar nada. -->
+    <div id="view-progreso" class="view" style="display:none;">
+      <section class="panel" id="progress-dashboard">
+        <div class="panel-header">
+          <h2>Progreso académico</h2>
+        </div>
+        <div id="progress-summary"></div>
+        <p class="empty-state" id="progress-empty" hidden>No hay asignaturas en el catálogo activo. Importa un catálogo (pestaña Asignaturas) o restaura tus datos para empezar a marcar tu progreso.</p>
+        <div id="progress-course-bars"></div>
+        <div id="progress-projection"></div>
+        <div id="progress-subjects"></div>
+        <div id="progress-equivalences"></div>
+
+        <!-- Backup/restore (Fase 5.4): los IDs los consulta
+             src/ui/progress-dashboard.js; si faltan, el bloque queda inerte y
+             el dashboard sigue funcionando. -->
+        <div class="progress-backup" id="progress-backup">
+          <h3>Backup</h3>
+          <p class="progress-hint">
+            Descarga un archivo .ugrbackup con tu progreso, configuración y propuestas
+            para restaurarlo en otro dispositivo (se fusiona con lo que ya tengas).
+          </p>
+          <div class="progress-backup-actions">
+            <button type="button" class="btn btn-secondary" id="btn-progress-export">Exportar backup (.ugrbackup)</button>
+            <button type="button" class="btn btn-secondary" id="btn-progress-import">Importar backup</button>
+            <input type="file" id="progress-import-input" accept=".ugrbackup,.json" hidden>
+          </div>
+          <p class="progress-hint" id="progress-backup-status" role="status" aria-live="polite"></p>
         </div>
       </section>
     </div>

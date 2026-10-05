@@ -33,14 +33,37 @@ function notify() {
   }
 }
 
+/**
+ * Normaliza la porción de progreso a plena forma (credits/equivalences/plan).
+ * Dos motivos: un userState anterior a la Fase 5 no trae `progress` o lo trae
+ * parcial/corrupto, y el estado base no debe compartir referencias con
+ * `initialState.progress` (una mutación in-place lo corrompería para toda la
+ * sesión). `...raw` conserva campos extra ya guardados, p. ej. updatedAt.
+ */
+function normalizeProgress(raw) {
+  const sp = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+  const credits = sp.credits && typeof sp.credits === "object" && !Array.isArray(sp.credits) ? sp.credits : {};
+  const equivalences = Array.isArray(sp.equivalences) ? sp.equivalences : [];
+  const plan = sp.plan && typeof sp.plan === "object" && !Array.isArray(sp.plan) ? sp.plan : {};
+  const totalECTS = Number.isFinite(plan.totalECTS) && plan.totalECTS > 0
+    ? plan.totalECTS
+    : initialState.progress.plan.totalECTS;
+  return {
+    ...sp,
+    credits: { ...credits },
+    equivalences: [...equivalences],
+    plan: { ...plan, totalECTS },
+  };
+}
+
 export async function initStore() {
   await open();
   if (isAvailable()) {
     const stored = await get("userState", "current");
     if (stored) {
-      currentState = { ...initialState, ...stored };
+      currentState = { ...initialState, ...stored, progress: normalizeProgress(stored.progress) };
     } else {
-      currentState = { ...initialState, deviceId: genDeviceId() };
+      currentState = { ...initialState, progress: normalizeProgress(), deviceId: genDeviceId() };
       await put("userState", { key: "current", ...currentState });
     }
     deviceId = currentState.deviceId || genDeviceId();
@@ -49,7 +72,7 @@ export async function initStore() {
       await put("userState", { key: "current", ...currentState });
     }
   } else {
-    currentState = { ...initialState, deviceId: genDeviceId() };
+    currentState = { ...initialState, progress: normalizeProgress(), deviceId: genDeviceId() };
   }
   return currentState;
 }

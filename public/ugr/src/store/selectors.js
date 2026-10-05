@@ -1,4 +1,7 @@
 import { getState } from "./commands.js";
+import { summarize, projectDegree } from "../progress/index.js";
+
+const EMPTY_PROGRESS = { credits: {}, equivalences: [], plan: { totalECTS: 240 } };
 
 export function getSelectedCodes() {
   const state = getState();
@@ -37,7 +40,28 @@ export function getPropuestas() {
 
 export function getProgress() {
   const state = getState();
-  return state ? state.progress : { credits: {}, equivalences: [] };
+  if (!state) return { ...EMPTY_PROGRESS };
+  const p = state.progress;
+  if (!p || typeof p !== "object") return { ...EMPTY_PROGRESS };
+  // Fallback campo a campo: un userState antiguo puede no tener progress
+  // o traerlo parcial (ver merge en commands.initStore).
+  return {
+    credits: p.credits && typeof p.credits === "object" ? p.credits : {},
+    equivalences: Array.isArray(p.equivalences) ? p.equivalences : [],
+    plan: { totalECTS: 240, ...(p.plan || {}) },
+  };
+}
+
+export function getProgressSummary(subjects = []) {
+  const state = getState();
+  if (!state) return summarize([], {});
+  return summarize(subjects, getProgress().credits);
+}
+
+export function getProjection(subjects = [], plan) {
+  const state = getState();
+  if (!state) return projectDegree([], {}, plan);
+  return projectDegree(subjects, getProgress().credits, plan);
 }
 
 export function getRevisionInfo() {

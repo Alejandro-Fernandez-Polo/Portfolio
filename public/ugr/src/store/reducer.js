@@ -1,3 +1,5 @@
+import { isValidStatus } from "../progress/status.js";
+
 export const initialState = {
   rev: 0,
   updatedAt: "",
@@ -22,6 +24,13 @@ export const initialState = {
     items: [],
     activeId: null,
     vista: "oficial",
+  },
+  // Fuente canónica del progreso académico (ver src/progress/). commands.js
+  // persiste userState en IndexedDB, así que este objeto es lo que se guarda.
+  progress: {
+    credits: {},
+    equivalences: [],
+    plan: { totalECTS: 240 },
   },
 };
 
@@ -171,18 +180,47 @@ export function reducePropuestas(state, cmd) {
 }
 
 export function reduceProgress(state, cmd) {
-  const ns = clone(state);
   switch (cmd.type) {
+    case "progress/setStatus":
     case "progress/setCredit": {
-      ns.progress.credits[cmd.payload.code] = cmd.payload.status;
+      // setCredit es el alias histórico de setStatus (mismo contrato
+      // { code, status }). Estado inválido o sin cambios → no tocar: es
+      // idempotente y evita writes en IDB al repetir el mismo comando.
+      const { code, status } = cmd.payload || {};
+      if (!code || !isValidStatus(status)) return state;
+      if (state.progress.credits[code] === status) return state;
+      const ns = clone(state);
+      ns.progress.credits[code] = status;
+      // updatedAt propio del progreso: lo usa buildMergePlan para decidir
+      // qué versión gana al fusionar dos bundles.
+      ns.progress.updatedAt = new Date().toISOString();
       return nextRev(ns);
     }
     case "progress/setMapping": {
-      ns.progress.equivalences = cmd.payload.mappings || [];
+      // Sin `mappings` en el payload se conservan las equivalencias previas:
+      // el comando no debe destruir datos por un campo ausente.
+      const mappings = cmd.payload?.mappings;
+      const ns = clone(state);
+      ns.progress.equivalences = Array.isArray(mappings) ? mappings : ns.progress.equivalences;
+      ns.progress.updatedAt = new Date().toISOString();
       return nextRev(ns);
     }
     case "progress/setAll": {
-      ns.progress = { ...ns.progress, ...cmd.payload };
+      const p = cmd.payload;
+      if (!p || typeof p !== "object") return state;
+      const ns = clone(state);
+      // Filtrar estados inválidos mantiene la invariante del store aunque el
+      // payload venga de un bundle antiguo o de una migración parcial.
+      const credits = {};
+      for (const [code, status] of Object.entries(p.credits || {})) {
+        if (isValidStatus(status)) credits[code] = status;
+      }
+      ns.progress = {
+        credits: { ...ns.progress.credits, ...credits },
+        equivalences: Array.isArray(p.equivalences) ? p.equivalences : ns.progress.equivalences,
+        plan: { ...ns.progress.plan, ...(p.plan || {}) },
+        updatedAt: new Date().toISOString(),
+      };
       return nextRev(ns);
     }
     default:
