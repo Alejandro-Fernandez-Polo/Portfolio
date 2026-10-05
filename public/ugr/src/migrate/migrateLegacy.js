@@ -14,7 +14,10 @@ export async function run() {
   const legacy = await snapshotAllKeys(dbFacade);
 
   try {
-    const plan = buildPlan(legacy);
+    // CONVALIDACIONES es un global de convalidaciones.js (script clásico
+    // cargado antes que el bootstrap): es lo que permite resolver id → código
+    // UGR al migrar ugr-convalidaciones.
+    const plan = buildPlan(legacy, { convalidaciones: globalThis.CONVALIDACIONES });
 
     await transact(DESTINIES, async () => {
       for (const cmd of plan.commands) {

@@ -13,6 +13,15 @@ export const LEGACY_KEYS = [
 
 export const DESTINIES = ["userState", "configs", "progress", "legacy", "meta"];
 
+// La UI legacy guarda ugr-convalidaciones como { [id]: { estado } } donde id es
+// el id de la entrada en CONVALIDACIONES (p. ej. "011013-FFT"), no el código
+// UGR. El código UGR se resuelve contra el array CONVALIDACIONES (global del
+// browser) que se pasa como ctx.convalidaciones.
+const LEGACY_STATUS_MAP = {
+  concedida: "pass",
+  pendiente: "pending",
+};
+
 function dedupeConfigs(configs) {
   const seen = new Map();
   for (const c of configs) {
@@ -24,7 +33,7 @@ function dedupeConfigs(configs) {
   return Array.from(seen.values());
 }
 
-export function buildPlan(legacy) {
+export function buildPlan(legacy, ctx = {}) {
   const commands = [];
   const stats = { configs: 0, propuestas: 0, convalidaciones: 0 };
 
@@ -81,12 +90,26 @@ export function buildPlan(legacy) {
   }
 
   if (legacy["ugr-convalidaciones"]) {
+    // Formato legacy: { [id]: { estado } } con el id de CONVALIDACIONES.
+    // Sin ctx.convalidaciones no hay forma fiable de resolver el código UGR
+    // (ids como "FP-COMBINADA" no derivan del código), así que se omite la
+    // entrada en vez de sembrar credits con la clave equivocada.
+    const byId = new Map(
+      (Array.isArray(ctx.convalidaciones) ? ctx.convalidaciones : [])
+        .map((c) => [c.id, c.ugr?.codigo])
+        .filter(([id, code]) => id && code),
+    );
     const credits = {};
-    for (const [code, status] of Object.entries(legacy["ugr-convalidaciones"])) {
-      credits[code] = status;
+    for (const [id, entry] of Object.entries(legacy["ugr-convalidaciones"])) {
+      const raw = typeof entry === "string" ? entry : entry?.estado;
+      const status = LEGACY_STATUS_MAP[raw];
+      const code = byId.get(id);
+      if (status && code) credits[code] = status;
     }
-    commands.push({ type: "progress/setAll", payload: { credits } });
-    stats.convalidaciones = Object.keys(credits).length;
+    if (Object.keys(credits).length > 0) {
+      commands.push({ type: "progress/setAll", payload: { credits } });
+      stats.convalidaciones = Object.keys(credits).length;
+    }
   }
 
   if (legacy["ugr-predefined-source"]) {
