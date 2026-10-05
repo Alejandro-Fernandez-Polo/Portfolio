@@ -32,7 +32,7 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 
 - Vanilla JS, no build step, no framework. `public/ugr/index.html` loads plain `<script>` tags in fixed order (`data.js` → `convalidaciones.js` → `propuestas.js` → `predefined.js` → `app.js`) that communicate through globals — order matters, and `app.js` is a ~3.3k-line IIFE monolith.
 - `predefined.js` + `predefined/*.js` are generated offline by the scripts now parked in `tools/ugr/predefined-legacy/` (gitignored). Treat them as build output; don't hand-edit.
-- Restructuring is planned but **not started** (no `public/ugr/src/` yet). Read `PLAN_REESTRUCTURACION_UGR.md` (master plan) and `FASE_0_CIMIENTOS.md` (Fase 0 detailed design) before touching anything in here. The plan itself documents the same repo restrictions: no TS, no new deps/scripts without approval, `npm run build` as the only verification gate.
+- Reestructuración: Fases 0–5 completadas (Fase 3 parcial, pendiente de aprobación). Estructura `public/ugr/src/` ya existe. Repo restrictions: no TS, no new deps/scripts sin aprobación, `npm run build` como única verificación gate.
 
 ## i18n (easy to get wrong)
 
@@ -57,9 +57,19 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 
 - Functional components only; `export default function Name()`; destructured props; 2-space indent; no class components.
 - No `console.log` / `debugger` left behind.
-- No comments in code unless asked.
+- All new code must be commented following the `documentation-and-adrs` skill (see "Code comments" below).
 - No state libraries (Redux/Zustand) — local `useState` only.
 - Navigation smooth-scroll uses a fixed **80px** offset for the fixed header; active section tracked via scroll listener in `Navigation.jsx`.
+
+## Code comments
+
+Follow the `documentation-and-adrs` skill for all inline comments:
+
+- Comment the *why* (intent, constraints, trade-offs), never the *what*.
+- Don't comment self-explanatory code.
+- No TODO comments for things that should be done now — just do them.
+- No commented-out code — delete it, git has history.
+- Document known gotchas inline where they matter (see the skill's gotcha example).
 
 ## Known debt (do not "fix" unprompted)
 
