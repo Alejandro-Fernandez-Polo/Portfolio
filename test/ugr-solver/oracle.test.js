@@ -1,20 +1,16 @@
 import { describe, it, expect } from "vitest";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import vm from "node:vm";
 import { fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
 import { solve } from "../../public/ugr/src/solver/engine.js";
 import { EC_SUBJECTS, EC_CODES, EC_EXPECTED_COUNT } from "./fixtures.js";
 
-const ORACLE_PATH = fileURLToPath(
-  new URL("../../public/ugr/predefined/predefined_ec.js", import.meta.url),
-);
+// Fixture extraído de predefined_ec.js (borrado en la limpieza legacy).
+// Contiene las 133 groupChoices del corpus EC para el test diferencial.
+const ORACLE_PATH = fileURLToPath(new URL("./oracle-ec.json", import.meta.url));
 
 function loadOracle() {
-  const source = readFileSync(ORACLE_PATH, "utf8");
-  const sandbox = {};
-  vm.runInNewContext(`${source}\nthis.__EC__ = PREDEFINED_SCHEDULES_EC;`, sandbox);
-  return sandbox.__EC__;
+  return JSON.parse(readFileSync(ORACLE_PATH, "utf8"));
 }
 
 function signature(groupChoices) {
@@ -25,8 +21,7 @@ function signature(groupChoices) {
 }
 
 describe("differential test vs precomputed corpus", () => {
-  it("the oracle file exists and is the 133 corpus", () => {
-    expect(existsSync(ORACLE_PATH)).toBe(true);
+  it("the oracle fixture is the 133 corpus", () => {
     const oracle = loadOracle();
     expect(oracle).toHaveLength(EC_EXPECTED_COUNT);
   });

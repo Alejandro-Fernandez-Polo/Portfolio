@@ -30,8 +30,8 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 
 ## `/ugr` sub-app (separate stack)
 
-- Vanilla JS, no build step, no framework. `public/ugr/index.html` loads plain `<script>` tags in fixed order (`data.js` → `convalidaciones.js` → `propuestas.js` → `predefined.js` → `app.js`) that communicate through globals — order matters, and `app.js` is a ~3.3k-line IIFE monolith.
-- `predefined.js` + `predefined/*.js` are generated offline by the scripts now parked in `tools/ugr/predefined-legacy/` (gitignored). Treat them as build output; don't hand-edit.
+- Vanilla JS, no build step, no framework. `public/ugr/index.html` loads plain `<script>` tags in fixed order (`data.js` → `convalidaciones.js` → `propuestas.js` → `docentes.js` → `app.js`, then `src/bootstrap.js` as a module) that communicate through globals — order matters, and `app.js` is a ~3.3k-line IIFE monolith.
+- The historical EC corpus is kept as a test fixture in `test/ugr-solver/oracle-ec.json`.
 - Reestructuración: Fases 0–5 completadas (Fase 3 parcial, pendiente de aprobación). Estructura `public/ugr/src/` ya existe. Repo restrictions: no TS, no new deps/scripts sin aprobación, `npm run build` como única verificación gate.
 
 ## i18n (easy to get wrong)

@@ -26,10 +26,6 @@ export async function buildPayload(sections = ["userState", "configs", "progress
   if (sections.includes("reviews")) {
     payload.reviews = await getAll("reviews");
   }
-  payload.legacyRefs = {
-    predefinedSource: localStorage.getItem("ugr-predefined-source") || "570",
-    favorites: JSON.parse(localStorage.getItem("ugr-fav-predefined") || "[]"),
-  };
   return payload;
 }
 

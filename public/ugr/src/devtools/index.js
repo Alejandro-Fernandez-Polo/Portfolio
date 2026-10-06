@@ -68,8 +68,6 @@ function selfTest() {
     "ugr-propuestas": [],
     "ugr-propuestas-guardadas": [],
     "ugr-convalidaciones": { FFT: "sup" },
-    "ugr-predefined-source": "570",
-    "ugr-fav-predefined": [-1],
   };
   const plan = buildPlan(legacyFixture);
   assert(plan.commands.some((c) => c.type === "profile/setApellido"), "migrate: builds profile cmd");

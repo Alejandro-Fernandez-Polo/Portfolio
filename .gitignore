@@ -19,9 +19,6 @@ dist-ssr
 # Markdown
 *.md
 
-# Legacy predefined generators (local only)
-tools/ugr/predefined-legacy/
-
 # Pruebas
 pruebas/
 

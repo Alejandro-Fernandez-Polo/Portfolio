@@ -1,0 +1,3726 @@
+[
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E3"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E1"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C1"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C2"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C1"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C2"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  },
+  {
+    "groupChoices": {
+      "ALEM": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "FFT": {
+        "teoria": "E",
+        "practica": "E2"
+      },
+      "ED": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SO": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "SCD": {
+        "teoria": "C",
+        "practica": "C3"
+      },
+      "EC": {
+        "teoria": "C",
+        "practica": "C3"
+      }
+    }
+  }
+]

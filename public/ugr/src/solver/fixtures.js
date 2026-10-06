@@ -1,8 +1,8 @@
 // Fixture reproducible usado por `__ugr.selfTest()` y `__ugr.bench()`.
-// Son las 6 asignaturas del generador histórico
-// tools/ugr/predefined-legacy/generadores/generate_combinations.js
+// Son las 6 asignaturas del generador histórico del corpus EC
 // (un solo grupo cada una: E para ALEM/FFT, C para ED/EC/SCD/SO).
-// El conjunto sin conflictos es exactamente el corpus `predefined_ec.js` (133).
+// El conjunto sin conflictos es exactamente el corpus del oráculo EC (133),
+// preservado como fixture en test/ugr-solver/oracle-ec.json.
 
 export const EC_CODES = ["ALEM", "FFT", "ED", "EC", "SCD", "SO"];
 

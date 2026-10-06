@@ -20,9 +20,6 @@ import { buildPayload, buildMergePlan, applyPlan } from '../../public/ugr/src/ba
 import * as db from '../../public/ugr/src/store/db.js';
 import * as commands from '../../public/ugr/src/store/commands.js';
 
-// buildPayload lee legacyRefs de localStorage (ausente en node).
-globalThis.localStorage = { getItem: () => null };
-
 const USER_STATE_WITH_PROGRESS = {
   key: 'current',
   rev: 3,
