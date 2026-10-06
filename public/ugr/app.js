@@ -29,36 +29,17 @@
     return `ugr-horario-saved-configs-${slot}`;
   }
 
-  function loadSavedConfigs() {
-    let allConfigs = [];
-    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
-      const key = getStorageKey(i);
-      const data = localStorage.getItem(key);
-      if (data) {
-        try {
-          allConfigs = allConfigs.concat(JSON.parse(data));
-        } catch (e) { /* ignore corrupt data */ }
-      }
-    }
-    return allConfigs;
+  function saveAllConfigs(list) {
+    // Delegación B4-e: la implementación vive en el adaptador ESM.
+    getPersistence().saveAllConfigs(list);
   }
 
-  function saveAllConfigs(savedConfigs) {
-    // Clear all slots first
-    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
-      localStorage.removeItem(getStorageKey(i));
-    }
-    // Distribute configs across slots
-    for (let i = 0; i < savedConfigs.length; i++) {
-      const slot = i % CONFIG_STORAGE_SLOTS;
-      const key = getStorageKey(slot);
-      const existing = JSON.parse(localStorage.getItem(key) || '[]');
-      existing.push(savedConfigs[i]);
-      localStorage.setItem(key, JSON.stringify(existing));
-    }
-  }
-
-  let savedConfigs = loadSavedConfigs();
+  // B4-e: la carga real se hace en `init()` (vía `getPersistence().loadSavedConfigs()`),
+  // cuando la composición ESM ya está montada. Este IIFE es un script clásico:
+  // no puede resolver el `import()` del adaptador durante la evaluación del
+  // cierre, así que aquí solo se siembra el binding vacío. Mientras `init()`
+  // no haya terminado, cualquier lector ve `[]` en lugar de una copia legacy.
+  let savedConfigs = [];
   let savedPropuestasInternas = JSON.parse(localStorage.getItem('ugr-propuestas-guardadas') || '[]');
   let configSortField = 'name';
   let configSortDir = 'asc';
@@ -322,6 +303,24 @@
   // ─── Init ───────────────────────────────────────────────────
   async function init() {
     console.log('UGR Horario v1.0.0');
+    // Composición ESM (Bloque 1) al PRINCIPIO: cualquier render/persistencia
+    // posterior (y las funciones de dominio delegadas) necesitan `ugrAppInstance`
+    // ya montado. No fatal si el import falla — el monolito sigue siendo la
+    // fachada operativa y `getDomain()` avisará solo si alguien lo consulta.
+    await ensureUgrApp();
+    // B4-e: las configuraciones guardadas se cargan aquí, cuando la composición
+    // ESM (y su adaptador de persistencia) ya está montada. Si el import o el
+    // adaptador fallan, arranca sin configs en vez de romper.
+    try { savedConfigs = getPersistence().loadSavedConfigs(); } catch (e) { savedConfigs = []; }
+    // B3-b: la vista de materias vive en ESM (features/subjects.js). Se monta
+    // antes del primer `renderSubjects()` para que ese render ya delegue; no
+    // fatal si el import falla — la delegación queda en no-op.
+    await ensureSubjectsView();
+    // B3-c: los controles de vista del calendario (semana/lista + compacto)
+    // viven en ESM. Se cargan antes de `setupActions()` para que ese montaje
+    // ya encuentre el feature; no fatal si el import falla — la delegación y
+    // el montaje quedan en no-op.
+    await ensureCalendarViewFeature();
     const catalogCodesChanged = await bootstrapCatalogState();
     loadPropuestas();
     // Orden de arranque (C3): HIDRATAR → SUSCRIBIR → PUSH.
@@ -384,8 +383,8 @@
   }
 
   function calcPropuestaCreditos(p) {
-    if (!p || !p.mappings) return 0;
-    return p.mappings.reduce((s,m)=> s + (m.creditos || (m.tipo==='bloque'?24:6)), 0);
+    // Delegación T02.5: la única implementación vive en ESM (src/app/domain).
+    return getDomain().calcPropuestaCreditos(p);
   }
 
   function loadState() {
@@ -600,186 +599,34 @@
 
   // ─── Apellido Rule ──────────────────────────────────────────
   function getSubgrupoForApellido(apellido) {
-    if (!apellido) return null;
-    const first = apellido.toUpperCase().charAt(0);
-    if (first >= 'A' && first <= 'F') return 1;
-    if (first >= 'G' && first <= 'M') return 2;
-    if (first >= 'N' && first <= 'S') return 3;
-    if (first >= 'T' && first <= 'Z') return 4;
-    return null;
+    // Delegación B3-a: la única implementación vive en ESM
+    // (src/app/domain/selection.js).
+    return getDomain().getSubgrupoForApellido(apellido);
   }
 
   function applyApellidoRule() {
+    // Guard legacy: sin tramo aplicable no se toca nada (ni se persiste).
     const subgrupoNum = getSubgrupoForApellido(state.apellido);
     if (!subgrupoNum) return;
 
-    Object.keys(state.selectedSubjects).forEach(codigo => {
-      if (!state.selectedSubjects[codigo]) return;
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      const choice = state.groupChoices[codigo];
-      if (!choice) return;
-      const group = subject.grupos.find(g => g.letra === choice.teoria);
-      if (!group || !group.practicas || !group.practicas.subgrupos.length) return;
-
-      const targetSub = group.letra + subgrupoNum;
-      if (group.practicas.subgrupos.includes(targetSub)) {
-        state.groupChoices[codigo].practica = targetSub;
-      }
-    });
+    // Delegación B3-a: solo la mutación de `groupChoices` vive en ESM; la
+    // persistencia sigue siendo responsabilidad de este monolito.
+    getDomain().applyApellidoSubgroups(
+      state.selectedSubjects,
+      state.groupChoices,
+      SUBJECTS,
+      state.apellido
+    );
     saveState();
   }
 
   // ─── Render Subjects ────────────────────────────────────────
   function renderSubjects() {
-    const container = document.getElementById('subjects-container');
-    const cuat = state.cuatrimestreActivo;
-    const subjects = SUBJECTS.filter(s => s.cuatrimestre === cuat);
-
-    // Group by course
-    const byCourse = {};
-    subjects.forEach(s => {
-      if (!byCourse[s.curso]) byCourse[s.curso] = [];
-      byCourse[s.curso].push(s);
-    });
-
-    const totalSubjects = SUBJECTS.length;
-    document.getElementById('total-subjects').textContent = totalSubjects;
-
-    let html = '';
-    [1, 2, 3, 4].forEach(curso => {
-      const courseSubjects = byCourse[curso];
-      if (!courseSubjects || !courseSubjects.length) return;
-
-      html += `<div class="course-group">`;
-      html += `<div class="course-group-header">`;
-      html += `<h3>${curso}º Curso</h3>`;
-      html += `<button class="btn-select-all" data-curso="${curso}" data-cuatrimestre="${cuat}">Seleccionar todo</button>`;
-      html += `</div>`;
-      html += `<div class="subjects-grid">`;
-
-      courseSubjects.forEach(s => {
-        const isSelected = state.selectedSubjects[s.codigo];
-        const hasConflict = conflicts.some(c => c.codigo1 === s.codigo || c.codigo2 === s.codigo);
-        const isAprobada = !!s.aprobada;
-        const cls = [
-          'subject-card',
-          isSelected ? 'selected' : '',
-          hasConflict ? 'has-conflict' : '',
-          isAprobada ? 'aprobada' : ''
-        ].filter(Boolean).join(' ');
-
-        html += `<div class="${cls}" data-codigo="${s.codigo}">`;
-        if (isAprobada) {
-          html += `<span class="badge-aprobada">Aprobada</span>`;
-        }
-        html += `<div class="check-indicator ${isSelected ? 'checked' : 'unchecked'}">${isSelected ? '✓' : ''}</div>`;
-        html += `<div class="subject-code">${s.codigo}</div>`;
-        html += `<div class="subject-name">${s.nombre}</div>`;
-        if (isAprobada && s.corresponde) {
-          html += `<div class="subject-corresponde">Convalida ${s.corresponde}</div>`;
-        }
-        html += `<div class="subject-credits">${s.creditos} ECTS</div>`;
-        html += `</div>`;
-      });
-
-      html += `</div></div>`;
-    });
-
-    container.innerHTML = html;
-
-    // Bind click events
-    container.querySelectorAll('.subject-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const codigo = card.dataset.codigo;
-        toggleSubject(codigo);
-      });
-    });
-
-    // Bind select all buttons
-    container.querySelectorAll('.btn-select-all').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const curso = parseInt(btn.dataset.curso);
-        const cuatrimestre = parseInt(btn.dataset.cuatrimestre);
-        const courseSubjects = SUBJECTS.filter(s => s.curso === curso && s.cuatrimestre === cuatrimestre);
-        const allSelected = courseSubjects.every(s => state.selectedSubjects[s.codigo]);
-        courseSubjects.forEach(s => {
-          state.selectedSubjects[s.codigo] = !allSelected;
-          if (!allSelected && !state.groupChoices[s.codigo]) {
-            initGroupChoice(s);
-          }
-        });
-        if (!allSelected) {
-          courseSubjects.forEach(s => applyGroupPreference(s));
-        }
-        saveState();
-        updateAll();
-      });
-    });
-  }
-
-  // ─── Toggle Subject ─────────────────────────────────────────
-  function toggleSubject(codigo) {
-    const subject = SUBJECTS.find(s => s.codigo === codigo);
-    const wasSelected = state.selectedSubjects[codigo];
-    state.selectedSubjects[codigo] = !wasSelected;
-
-    if (!wasSelected) {
-      // Selecting: init group choice
-      if (subject) {
-        initGroupChoice(subject);
-        applyGroupPreference(subject);
-      }
-    }
-
-    saveState();
-    updateAll();
-  }
-
-  function initGroupChoice(subject) {
-    if (state.groupChoices[subject.codigo]) return;
-    // Default to first group
-    const defaultGroup = subject.grupos[0];
-    if (!defaultGroup) return;
-    state.groupChoices[subject.codigo] = {
-      teoria: defaultGroup.letra,
-      practica: defaultGroup.practicas && defaultGroup.practicas.subgrupos.length > 0
-        ? defaultGroup.practicas.subgrupos[0]
-        : null
-    };
-  }
-
-  function applyGroupPreference(subject) {
-    const turno = state.turnoPreferente;
-    if (turno === 'indiferente') return;
-
-    const choice = state.groupChoices[subject.codigo];
-    if (!choice) return;
-
-    // Find best group matching turn preference
-    const matchingGroups = subject.grupos.filter(g => g.turno === turno);
-    if (matchingGroups.length > 0) {
-      const bestGroup = matchingGroups[0];
-      choice.teoria = bestGroup.letra;
-      if (bestGroup.practicas && bestGroup.practicas.subgrupos.length > 0) {
-        // Try to keep current practice subgroup if available
-        const currentSub = choice.practica;
-        const subgrupoNum = currentSub ? currentSub.replace(/[A-Z]/g, '') : null;
-        if (subgrupoNum) {
-          const targetSub = bestGroup.letra + subgrupoNum;
-          if (bestGroup.practicas.subgrupos.includes(targetSub)) {
-            choice.practica = targetSub;
-          } else {
-            choice.practica = bestGroup.practicas.subgrupos[0];
-          }
-        } else {
-          choice.practica = bestGroup.practicas.subgrupos[0];
-        }
-      } else {
-        choice.practica = null;
-      }
-    }
+    // Delegación B3-b: el render y sus handlers viven en ESM
+    // (src/app/features/subjects.js). Antes de que la vista esté montada
+    // (o si su import falló) es un no-op: nunca se cae a una copia legacy.
+    const view = getSubjectsView();
+    if (view) view.render();
   }
 
   // ─── Update All ─────────────────────────────────────────────
@@ -796,206 +643,51 @@
 
   // ─── Get Active Schedule ────────────────────────────────────
   function getActiveSchedule() {
-    const entries = [];
-    Object.keys(state.selectedSubjects).forEach(codigo => {
-      if (!state.selectedSubjects[codigo]) return;
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      const choice = state.groupChoices[codigo];
-      if (!choice) return;
-
-      const group = subject.grupos.find(g => g.letra === choice.teoria);
-      if (!group) return;
-
-      // Theory sessions
-      group.teoria.forEach(session => {
-        entries.push({
-          codigo: subject.codigo,
-          nombre: subject.nombre,
-          tipo: 'Teoría',
-          grupo: `Grupo ${group.letra}`,
-          letra: group.letra,
-          dia: session.dia,
-          inicio: session.inicio,
-          fin: session.fin,
-          color: subject.codigo
-        });
-      });
-
-      // Practice sessions
-      if (choice.practica && group.practicas[choice.practica]) {
-        group.practicas[choice.practica].forEach(session => {
-          entries.push({
-            codigo: subject.codigo,
-            nombre: subject.nombre,
-            tipo: 'Práctica',
-            grupo: `Subgrupo ${choice.practica}`,
-            letra: null,
-            dia: session.dia,
-            inicio: session.inicio,
-            fin: session.fin,
-            color: subject.codigo
-          });
-        });
-      }
-    });
-    return entries;
+    // Delegación B3-a: la única construcción de entradas vive en ESM
+    // (src/app/domain/calendar.js); este monolito solo inyecta el estado.
+    return getDomain().buildActiveSchedule(state.selectedSubjects, state.groupChoices, SUBJECTS);
   }
 
   // ─── Config Metrics ─────────────────────────────────────────
   function calculateConfigMetrics(selectedSubjects, groupChoices) {
-    let manana = 0, tarde = 0;
-    let profScore = 0, profCount = 0;
-    const cursoGrupos = {};
-
-    Object.keys(selectedSubjects).forEach(codigo => {
-      if (!selectedSubjects[codigo]) return;
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      const choice = groupChoices[codigo];
-      if (!choice) return;
-      const group = subject.grupos.find(g => g.letra === choice.teoria);
-      if (!group) return;
-
-      const sumHours = (sessions) => {
-        sessions.forEach(s => {
-          const hrs = (timeToMinutes(s.fin) - timeToMinutes(s.inicio)) / 60;
-          if (group.turno === 'ma\u00F1ana') manana += hrs;
-          else tarde += hrs;
-        });
-      };
-      sumHours(group.teoria);
-      if (choice.practica && group.practicas[choice.practica]) {
-        sumHours(group.practicas[choice.practica]);
-      }
-
-      const dificultad = getDificultad(codigo, group.letra);
-      if (dificultad) {
-        profScore += getDifficultyScore(dificultad);
-        profCount++;
-      }
-
-      if (!cursoGrupos[subject.curso]) cursoGrupos[subject.curso] = new Set();
-      cursoGrupos[subject.curso].add(group.letra);
+    // Delegación T02.4: la única implementación vive en ESM
+    // (src/app/domain/metrics.js); aquí solo se inyectan los datos legacy.
+    return getDomain().calculateConfigMetrics(selectedSubjects, groupChoices, {
+      subjects: SUBJECTS,
+      dificultad: getDificultad,
+      difficultyScore: getDifficultyScore,
     });
-
-    const sameGroupPerYear = Object.values(cursoGrupos).every(s => s.size === 1);
-
-    return {
-      manana: Math.round(manana * 10) / 10,
-      tarde: Math.round(tarde * 10) / 10,
-      profScore,
-      profCount,
-      sameGroupPerYear
-    };
   }
 
   function calculateConfigDeadHours(selectedSubjects, groupChoices) {
-    const byDay = {};
-    Object.keys(selectedSubjects).forEach(codigo => {
-      if (!selectedSubjects[codigo]) return;
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      const choice = groupChoices[codigo];
-      if (!choice) return;
-      const group = subject.grupos.find(g => g.letra === choice.teoria);
-      if (!group) return;
-      const collect = (sessions) => {
-        sessions.forEach(s => {
-          if (!byDay[s.dia]) byDay[s.dia] = [];
-          byDay[s.dia].push({ inicio: timeToMinutes(s.inicio), fin: timeToMinutes(s.fin) });
-        });
-      };
-      collect(group.teoria);
-      if (choice.practica && group.practicas[choice.practica]) {
-        collect(group.practicas[choice.practica]);
-      }
+    // Delegación T02.4: la única implementación vive en ESM (metrics.js).
+    return getDomain().calculateConfigDeadHours(selectedSubjects, groupChoices, {
+      subjects: SUBJECTS,
     });
-
-    let total = 0;
-    const shiftDead = (sessions) => {
-      if (sessions.length < 2) return 0;
-      let first = Infinity, last = -Infinity, sum = 0;
-      sessions.forEach(s => {
-        if (s.inicio < first) first = s.inicio;
-        if (s.fin > last) last = s.fin;
-        sum += s.fin - s.inicio;
-      });
-      return (last - first - sum) / 60;
-    };
-    Object.values(byDay).forEach(sessions => {
-      const manana = sessions.filter(s => s.inicio < 14 * 60);
-      const tarde = sessions.filter(s => s.inicio >= 14 * 60);
-      total += shiftDead(manana) + shiftDead(tarde);
-    });
-    return Math.round(total * 10) / 10;
   }
 
   function calculateConfigDays(selectedSubjects, groupChoices) {
-    const morningDays = new Set();
-    const afternoonDays = new Set();
-    Object.keys(selectedSubjects).forEach(codigo => {
-      if (!selectedSubjects[codigo]) return;
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      const choice = groupChoices[codigo];
-      if (!choice) return;
-      const group = subject.grupos.find(g => g.letra === choice.teoria);
-      if (!group) return;
-
-      const addDays = (sessions) => {
-        sessions.forEach(s => {
-          const hour = parseInt(s.inicio.split(':')[0]);
-          if (hour < 14) morningDays.add(s.dia);
-          else afternoonDays.add(s.dia);
-        });
-      };
-      addDays(group.teoria);
-      if (choice.practica && group.practicas[choice.practica]) {
-        addDays(group.practicas[choice.practica]);
-      }
-    });
-    return { manana: morningDays.size, tarde: afternoonDays.size };
-  }
-
-  function isConfigBlocked(config) {
-    return getBlocks().some(filter => {
-      if (filter.type === 'subject') {
-        return config.selectedSubjects[filter.codigo] &&
-               config.groupChoices[filter.codigo] &&
-               config.groupChoices[filter.codigo].teoria === filter.letra;
-      }
-      if (filter.type === 'subject-only') {
-        return config.selectedSubjects[filter.codigo];
-      }
-      if (filter.type === 'curso') {
-        return Object.keys(config.selectedSubjects).some(codigo => {
-          if (!config.selectedSubjects[codigo]) return false;
-          const subject = SUBJECTS.find(s => s.codigo === codigo);
-          if (!subject || subject.curso !== filter.curso) return false;
-          const choice = config.groupChoices[codigo];
-          return choice && choice.teoria === filter.letra;
-        });
-      }
-      return false;
+    // Delegación T02.4: la única implementación vive en ESM (metrics.js).
+    return getDomain().calculateConfigDays(selectedSubjects, groupChoices, {
+      subjects: SUBJECTS,
     });
   }
 
   function addBlockFilter(type) {
-    if (type === 'subject') {
-      const sel = document.getElementById('block-subject-select');
-      const grp = document.getElementById('block-subject-group');
-      if (!sel || !grp || !sel.value || !grp.value) return;
-      dispatchBlock({ type: 'blocks/add', payload: { type: 'subject', codigo: sel.value, letra: grp.value } });
-    } else if (type === 'subject-only') {
-      const sel = document.getElementById('block-subject-select');
-      if (!sel || !sel.value) return;
-      dispatchBlock({ type: 'blocks/add', payload: { type: 'subject-only', codigo: sel.value } });
-    } else if (type === 'curso') {
-      const sel = document.getElementById('block-curso-select');
-      const grp = document.getElementById('block-curso-group');
-      if (!sel || !grp || !sel.value || !grp.value) return;
-      dispatchBlock({ type: 'blocks/add', payload: { type: 'curso', curso: parseInt(sel.value), letra: grp.value } });
+    // Delegación B4-c: validar y construir el payload es regla pura
+    // (src/app/domain/configs.js `buildBlockPayload`); aquí solo se leen los
+    // selects del panel. El `return` temprano con payload nulo es legacy: NO
+    // se re-renderiza cuando la validación falla (ni con `type` desconocida,
+    // que en ese caso solo re-renderiza, como siempre).
+    if (type === 'subject' || type === 'subject-only' || type === 'curso') {
+      const payload = getDomain().buildBlockPayload(type, {
+        subject: (document.getElementById('block-subject-select') || {}).value,
+        group: (document.getElementById('block-subject-group') || {}).value,
+        curso: (document.getElementById('block-curso-select') || {}).value,
+        cursoGroup: (document.getElementById('block-curso-group') || {}).value,
+      });
+      if (!payload) return;
+      dispatchBlock({ type: 'blocks/add', payload });
     }
     configPage = 1;
     renderBlockFilters();
@@ -1192,7 +884,10 @@
       eventDiv.dataset.subject = entry.codigo;
       eventDiv.tabIndex = 0;
       eventDiv.setAttribute('role', 'group');
-      eventDiv.setAttribute('aria-label', buildEventLabel(entry, false));
+      // B3-d: la etiqueta accesible vive en el feature ESM; sin feature el
+      // aria-label queda vacío (mismo no-op que el resto de delegaciones).
+      const calView = getCalendarViewFeature();
+      eventDiv.setAttribute('aria-label', calView ? calView.buildEventLabel(entry, false) : '');
       eventDiv.style.top = topOffset + '%';
       eventDiv.style.height = height + '%';
       eventDiv.innerHTML = `<div class="event-label">${entry.codigo}</div><div class="event-type">${entry.tipo}</div>`;
@@ -1272,40 +967,19 @@
 
   // ─── Conflict Detection ─────────────────────────────────────
   function detectConflicts() {
-    conflicts = [];
-    const entries = getActiveSchedule();
-
-    for (let i = 0; i < entries.length; i++) {
-      for (let j = i + 1; j < entries.length; j++) {
-        const a = entries[i];
-        const b = entries[j];
-        if (a.codigo === b.codigo) continue; // Same subject
-        if (a.dia !== b.dia) continue;
-
-        if (timesOverlap(a.inicio, a.fin, b.inicio, b.fin)) {
-          conflicts.push({
-            codigo1: a.codigo,
-            nombre1: a.nombre,
-            tipo1: `${a.tipo} ${a.grupo}`,
-            dia: a.dia,
-            inicio: a.inicio,
-            fin: a.fin,
-            codigo2: b.codigo,
-            nombre2: b.nombre,
-            tipo2: `${b.tipo} ${b.grupo}`,
-          });
-        }
-      }
-    }
+    // Delegación T02.4: la detección pura vive en ESM (metrics.js);
+    // este IIFE solo conserva la asignación a su array de estado.
+    conflicts = getDomain().findConflicts(getActiveSchedule());
   }
 
   function timesOverlap(s1, e1, s2, e2) {
-    return timeToMinutes(s1) < timeToMinutes(e2) && timeToMinutes(s2) < timeToMinutes(e1);
+    // Delegación T02.x: la única implementación vive en ESM (src/app/domain).
+    return getDomain().timesOverlap(s1, e1, s2, e2);
   }
 
   function timeToMinutes(t) {
-    const [h, m] = t.split(':').map(Number);
-    return h * 60 + m;
+    // Delegación T02.x: la única implementación vive en ESM (src/app/domain).
+    return getDomain().timeToMinutes(t);
   }
 
   // ─── Professor Preferences Helpers ──────────────────────────
@@ -1486,283 +1160,15 @@
     });
   }
 
-  // ─── Render Calendar ────────────────────────────────────────
-  function buildConflictSet() {
-    const conflictSet = new Set();
-    conflicts.forEach(c => {
-      conflictSet.add(`${c.codigo1}-${c.dia}-${c.inicio}`);
-      conflictSet.add(`${c.codigo2}-${c.dia}-${c.inicio}`);
-    });
-    return conflictSet;
-  }
-
-  function getEntryDificultadLabel(entry) {
-    if (!entry.letra) return '';
-    const diff = getDificultad(entry.codigo, entry.letra);
-    return diff ? getDificultadLabel(diff) : '';
-  }
-
-  function buildEventLabel(entry, isConflict) {
-    const diffLabel = getEntryDificultadLabel(entry);
-    return `${entry.codigo} — ${entry.tipo}, ${DAY_LABELS[entry.dia].toLowerCase()} ${entry.inicio}–${entry.fin}, ${entry.grupo}` +
-      `${diffLabel ? `, dificultad del profesor: ${diffLabel}` : ''}` +
-      `${isConflict ? ', en conflicto: solape de horario' : ''}`;
-  }
-
-  function getBusyHours(entries) {
-    const busy = new Set();
-    entries.forEach(entry => {
-      if (DAYS.indexOf(entry.dia) === -1) return;
-      const startMin = timeToMinutes(entry.inicio);
-      const endMin = timeToMinutes(entry.fin);
-      const startRow = Math.floor((startMin - START_HOUR * 60) / 60);
-      if (startRow < 0 || startRow > END_HOUR - START_HOUR - 1) return;
-      const lastMin = Math.max(endMin, startMin + 1);
-      for (let h = START_HOUR + startRow; h < END_HOUR && h * 60 < lastMin; h++) {
-        busy.add(h);
-      }
-    });
-    return busy;
-  }
-
+  // ─── Render Calendar (B3-d) ─────────────────────────────────
+  // El render de semana (`renderCalendar`), la vista lista, el tooltip y sus
+  // helpers (etiqueta accesible, horas ocupadas, turno) viven en ESM
+  // (src/app/features/calendar.js), montados por `ensureCalendarViewFeature`.
+  // Aquí queda SOLO la delegación: si el import falló la llamada es un no-op
+  // y el monolito arranca sin calendario en vez de romper.
   function renderCalendar() {
-    const cal = document.getElementById('calendar');
-    const entries = getActiveSchedule();
-    const conflictSet = buildConflictSet();
-    const busyHours = getBusyHours(entries);
-
-    let html = '';
-
-    // Header row
-    html += `<div class="cal-header"></div>`;
-    DAYS.forEach(d => {
-      html += `<div class="cal-header">${DAY_LABELS[d]}</div>`;
-    });
-
-    // Time rows
-    for (let h = START_HOUR; h < END_HOUR; h++) {
-      const rowClass = busyHours.has(h) ? '' : ' cal-hour-empty';
-      html += `<div class="cal-time${rowClass}">${h}:00</div>`;
-      DAYS.forEach(dia => {
-        html += `<div class="cal-cell${rowClass}" data-dia="${dia}" data-hour="${h}"></div>`;
-      });
-    }
-
-    cal.innerHTML = html;
-
-    // Place events
-    entries.forEach(entry => {
-      const startMin = timeToMinutes(entry.inicio);
-      const endMin = timeToMinutes(entry.fin);
-      const dayIndex = DAYS.indexOf(entry.dia);
-      if (dayIndex === -1) return;
-
-      const startRow = Math.floor((startMin - START_HOUR * 60) / 60);
-      const topOffset = ((startMin - START_HOUR * 60) % 60) / 60 * 100;
-      const height = ((endMin - startMin) / 60) * 100;
-
-      const cellSelector = `.cal-cell[data-dia="${entry.dia}"][data-hour="${START_HOUR + startRow}"]`;
-      const cell = cal.querySelector(cellSelector);
-      if (!cell) return;
-
-      const isConflict = conflictSet.has(`${entry.codigo}-${entry.dia}-${entry.inicio}`);
-
-      const eventDiv = document.createElement('div');
-      eventDiv.className = `cal-event ${isConflict ? 'conflict' : ''}`;
-      eventDiv.dataset.subject = entry.codigo;
-      eventDiv.tabIndex = 0;
-      eventDiv.setAttribute('role', 'group');
-      eventDiv.setAttribute('aria-label', buildEventLabel(entry, isConflict));
-      eventDiv.style.top = topOffset + '%';
-      eventDiv.style.height = height + '%';
-      eventDiv.innerHTML = `
-        <div class="event-label">${entry.codigo}</div>
-        <div class="event-type">${entry.tipo} ${entry.grupo}</div>
-      `;
-
-      if (entry.letra) {
-        const diff = getDificultad(entry.codigo, entry.letra);
-        if (diff) {
-          const dot = document.createElement('span');
-          dot.className = `event-diff-dot diff-${diff}`;
-          dot.title = getDificultadLabel(diff);
-          eventDiv.appendChild(dot);
-        }
-      }
-
-      // Tooltip
-      eventDiv.addEventListener('mouseenter', (e) => showTooltip(e, entry));
-      eventDiv.addEventListener('mouseleave', hideTooltip);
-      eventDiv.addEventListener('focus', (e) => showTooltip(e, entry));
-      eventDiv.addEventListener('blur', hideTooltip);
-
-      cell.style.position = 'relative';
-      cell.appendChild(eventDiv);
-    });
-
-    applyCalendarView();
-  }
-
-  // ─── Calendar view (week/list) ──────────────────────────────
-  function getCalendarView() {
-    return localStorage.getItem('ugr-calendar-view') === 'list' ? 'list' : 'week';
-  }
-
-  function applyCalendarView() {
-    const cal = document.getElementById('calendar');
-    const list = document.getElementById('calendar-list');
-    const weekBtn = document.getElementById('btn-view-week');
-    const listBtn = document.getElementById('btn-view-list');
-    if (!cal || !list || !weekBtn || !listBtn) return;
-
-    const view = getCalendarView();
-    const isList = view === 'list';
-
-    cal.hidden = isList;
-    list.hidden = !isList;
-    weekBtn.setAttribute('aria-pressed', String(!isList));
-    listBtn.setAttribute('aria-pressed', String(isList));
-
-    if (isList) renderCalendarList();
-    applyCalendarCompact();
-  }
-
-  function setCalendarView(view) {
-    const next = view === 'list' ? 'list' : 'week';
-    localStorage.setItem('ugr-calendar-view', next);
-    applyCalendarView();
-  }
-
-  function setupCalendarViewToggle() {
-    const weekBtn = document.getElementById('btn-view-week');
-    const listBtn = document.getElementById('btn-view-list');
-    if (!weekBtn || !listBtn) return;
-    weekBtn.addEventListener('click', () => setCalendarView('week'));
-    listBtn.addEventListener('click', () => setCalendarView('list'));
-    applyCalendarView();
-  }
-
-  // ─── Calendar compact mode (empty-slot zoom) ────────────────
-  function isCalendarCompact() {
-    return localStorage.getItem('ugr-calendar-compact') === '1';
-  }
-
-  function applyCalendarCompact() {
-    const cal = document.getElementById('calendar');
-    const btn = document.getElementById('btn-view-compact');
-    const compact = isCalendarCompact();
-    if (cal) cal.classList.toggle('is-compact', compact);
-    if (!btn) return;
-    btn.setAttribute('aria-pressed', String(compact));
-    btn.hidden = getCalendarView() === 'list';
-  }
-
-  function setCalendarCompact(compact) {
-    localStorage.setItem('ugr-calendar-compact', compact ? '1' : '0');
-    applyCalendarCompact();
-  }
-
-  function setupCalendarCompactToggle() {
-    const btn = document.getElementById('btn-view-compact');
-    if (!btn) return;
-    btn.addEventListener('click', () => setCalendarCompact(!isCalendarCompact()));
-    applyCalendarCompact();
-  }
-
-  // ─── Calendar list view (accessible fallback) ───────────────
-  function getEntryTurno(entry) {
-    const subject = SUBJECTS.find(s => s.codigo === entry.codigo);
-    const choice = state.groupChoices[entry.codigo];
-    const group = subject && choice ? subject.grupos.find(g => g.letra === choice.teoria) : null;
-    return group ? (group.turno === 'mañana' ? 'Mañana' : 'Tarde') : '—';
-  }
-
-  function renderCalendarList() {
-    const listEl = document.getElementById('calendar-list');
-    if (!listEl) return;
-
-    const entries = getActiveSchedule();
-    const conflictSet = buildConflictSet();
-
-    let html = '<div class="cal-list">';
-
-    DAYS.forEach(dia => {
-      const dayEntries = entries
-        .filter(e => e.dia === dia)
-        .sort((a, b) => timeToMinutes(a.inicio) - timeToMinutes(b.inicio));
-
-      html += `<table class="cal-list-table">
-        <caption>${DAY_LABELS[dia]}</caption>
-        <thead>
-          <tr>
-            <th scope="col">Hora</th>
-            <th scope="col">Asignatura</th>
-            <th scope="col">Grupo</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Turno</th>
-            <th scope="col">Dificultad del profesor</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-      if (dayEntries.length === 0) {
-        html += `<tr class="cal-list-empty"><td colspan="6">Sin sesiones este día</td></tr>`;
-      } else {
-        dayEntries.forEach(entry => {
-          const isConflict = conflictSet.has(`${entry.codigo}-${entry.dia}-${entry.inicio}`);
-          const diffLabel = getEntryDificultadLabel(entry);
-          html += `<tr${isConflict ? ' class="is-conflict"' : ''}>
-            <th scope="row" class="cal-list-time">${entry.inicio}–${entry.fin}</th>
-            <td class="cal-list-subject">
-              <span class="cal-list-code">${entry.codigo}</span>
-              <span class="cal-list-name">${entry.nombre}</span>
-              ${isConflict ? '<span class="cal-list-tag">Conflicto</span>' : ''}
-            </td>
-            <td>${entry.grupo}</td>
-            <td>${entry.tipo}</td>
-            <td>${getEntryTurno(entry)}</td>
-            <td>${diffLabel || '—'}</td>
-          </tr>`;
-        });
-      }
-
-      html += `</tbody></table>`;
-    });
-
-    html += '</div>';
-    listEl.innerHTML = html;
-  }
-
-  // ─── Tooltip ────────────────────────────────────────────────
-  function showTooltip(e, entry) {
-    const tt = document.getElementById('tooltip');
-    const prof = entry.letra ? getProfName(entry.codigo, entry.letra) : '';
-    const diff = entry.letra ? getDificultad(entry.codigo, entry.letra) : null;
-    const diffLabel = diff ? getDificultadLabel(diff) : '';
-    const diffColor = diff ? getDificultadColor(diff) : '';
-    tt.innerHTML = `
-      <div class="tt-title">${entry.nombre}</div>
-      <div>${entry.tipo} - ${entry.grupo}</div>
-      <div>${DAY_LABELS[entry.dia]} ${entry.inicio} - ${entry.fin}</div>
-      ${prof ? `<div class="tt-prof">${prof}${diffLabel ? ` — <span style="color:${diffColor}">${diffLabel}</span>` : ''}</div>` : ''}
-    `;
-    tt.style.display = 'block';
-    const rect = e.target.getBoundingClientRect();
-    tt.style.left = (rect.right + 8) + 'px';
-    tt.style.top = rect.top + 'px';
-
-    // Keep within viewport
-    const ttRect = tt.getBoundingClientRect();
-    if (ttRect.right > window.innerWidth) {
-      tt.style.left = (rect.left - ttRect.width - 8) + 'px';
-    }
-    if (ttRect.bottom > window.innerHeight) {
-      tt.style.top = (window.innerHeight - ttRect.height - 8) + 'px';
-    }
-  }
-
-  function hideTooltip() {
-    document.getElementById('tooltip').style.display = 'none';
+    const feature = getCalendarViewFeature();
+    if (feature) feature.render();
   }
 
   // ─── Render Conflicts ──────────────────────────────────────
@@ -1960,8 +1366,10 @@
       }
     });
     setupGroupConfigToggle();
-    setupCalendarViewToggle();
-    setupCalendarCompactToggle();
+    // B3-c: los toggles semana/lista y compacto los gestiona el feature ESM
+    // (listeners idempotentes: un `init()` repetido no los duplica).
+    const calView = getCalendarViewFeature();
+    if (calView) calView.mount();
     renderSavedConfigs();
   }
 
@@ -2702,20 +2110,15 @@
   }
 
   function isConfigFavorited(config) {
-    return !!config.favorite;
+    // Delegación B4-a: la única implementación vive en ESM
+    // (src/app/domain/configs.js).
+    return getDomain().isConfigFavorited(config);
   }
 
   function findDuplicateConfig(newGroupChoices, newSelectedSubjects) {
-    return savedConfigs.find(cfg => {
-      const sameSubjects = Object.keys(newSelectedSubjects).every(
-        k => !!newSelectedSubjects[k] === !!cfg.selectedSubjects[k]
-      );
-      if (!sameSubjects) return false;
-      return Object.keys(newGroupChoices).every(k =>
-        cfg.groupChoices[k] &&
-        cfg.groupChoices[k].teoria === newGroupChoices[k].teoria
-      );
-    });
+    // Delegación B4-a (configs.js): la lista de candidatas se inyecta aquí
+    // porque el IIFE es quien posee `savedConfigs`.
+    return getDomain().findDuplicateConfig(savedConfigs, newGroupChoices, newSelectedSubjects);
   }
 
   function saveConfig() {
@@ -2732,14 +2135,7 @@
       return;
     }
 
-    const config = {
-      id: Date.now(),
-      name: name,
-      selectedSubjects: { ...state.selectedSubjects },
-      groupChoices: JSON.parse(JSON.stringify(state.groupChoices)),
-      apellido: state.apellido,
-      turnoPreferente: state.turnoPreferente,
-    };
+    const config = getDomain().buildConfigFromState(state, Date.now(), name);
 
     const duplicate = findDuplicateConfig(state.groupChoices, state.selectedSubjects);
     savedConfigs.push(config);
@@ -2757,10 +2153,9 @@
     const config = getDisplayConfigs().find(c => c.id === id);
     if (!config) return;
 
-    state.selectedSubjects = { ...config.selectedSubjects };
-    state.groupChoices = JSON.parse(JSON.stringify(config.groupChoices));
-    state.apellido = config.apellido;
-    state.turnoPreferente = config.turnoPreferente;
+    // Delegación B4-b: las 4 asignaciones viven en `applyConfigToState` (copia
+    // de materias + clon profundo de grupos); DOM, store y toast siguen aquí.
+    getDomain().applyConfigToState(state, config);
     pushProfileToStore();
 
     document.getElementById('apellido').value = state.apellido;
@@ -2776,67 +2171,13 @@
     if (!config) return;
     if (!confirm(`¿Eliminar "${config.name}"?`)) return;
 
-    savedConfigs = savedConfigs.filter(c => c.id !== id);
+    // Delegación B4-b: el filtrado puro devuelve la nueva lista; el binding
+    // local se reasigna aquí (confirm/persistencia/render no cambian).
+    savedConfigs = getDomain().removeConfigById(savedConfigs, id);
     saveAllConfigs(savedConfigs);
     configPage = 1;
     renderSavedConfigs();
     showToast(`"${config.name}" eliminada`, 'info');
-  }
-
-  function sortSavedConfigs(configs) {
-    const sorted = [...configs];
-    sorted.sort((a, b) => {
-      const favA = a.favorite ? 1 : 0;
-      const favB = b.favorite ? 1 : 0;
-      if (favA !== favB) return favB - favA;
-
-      let va, vb;
-      switch (configSortField) {
-        case 'name': {
-          const na = parseInt(a.name.match(/#(\d+)/)?.[1] || '0');
-          const nb = parseInt(b.name.match(/#(\d+)/)?.[1] || '0');
-          return configSortDir === 'asc' ? na - nb : nb - na;
-        }
-        case 'count':
-          va = Object.keys(a.selectedSubjects).filter(c => a.selectedSubjects[c]).length;
-          vb = Object.keys(b.selectedSubjects).filter(c => b.selectedSubjects[c]).length;
-          break;
-        case 'turno':
-          va = a.turnoPreferente; vb = b.turnoPreferente;
-          return configSortDir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
-        case 'manana': {
-          const da = calculateConfigDays(a.selectedSubjects, a.groupChoices);
-          const db = calculateConfigDays(b.selectedSubjects, b.groupChoices);
-          va = da.manana; vb = db.manana; break;
-        }
-        case 'tarde': {
-          const da = calculateConfigDays(a.selectedSubjects, a.groupChoices);
-          const db = calculateConfigDays(b.selectedSubjects, b.groupChoices);
-          va = da.tarde; vb = db.tarde; break;
-        }
-        case 'deadHours': {
-          va = a.deadHours != null ? a.deadHours : calculateConfigDeadHours(a.selectedSubjects, a.groupChoices);
-          vb = b.deadHours != null ? b.deadHours : calculateConfigDeadHours(b.selectedSubjects, b.groupChoices);
-          break;
-        }
-        case 'profScore': {
-          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
-          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
-          va = ma.profScore; vb = mb.profScore; break;
-        }
-        case 'sameGroup': {
-          const ma = calculateConfigMetrics(a.selectedSubjects, a.groupChoices);
-          const mb = calculateConfigMetrics(b.selectedSubjects, b.groupChoices);
-          va = ma.sameGroupPerYear ? 1 : 0; vb = mb.sameGroupPerYear ? 1 : 0; break;
-        }
-        default: return 0;
-      }
-      if (configSortField !== 'name' && configSortField !== 'turno') {
-        return configSortDir === 'asc' ? va - vb : vb - va;
-      }
-      return 0;
-    });
-    return sorted;
   }
 
   function renderSavedConfigs() {
@@ -2847,18 +2188,21 @@
       return;
     }
 
-    let filtered = sortSavedConfigs(displayConfigs).filter(c => !isConfigBlocked(c));
-    if (configShowFavoritesOnly) {
-      filtered = filtered.filter(c => isConfigFavorited(c));
-    }
-    if (configMaxManana > 0 || configMaxTarde > 0) {
-      filtered = filtered.filter(c => {
-        const d = calculateConfigDays(c.selectedSubjects, c.groupChoices);
-        if (configMaxManana > 0 && d.manana > configMaxManana) return false;
-        if (configMaxTarde > 0 && d.tarde > configMaxTarde) return false;
-        return true;
-      });
-    }
+    // Delegación B4-d: orden + filtros (bloqueos, favoritos, techos de días)
+    // viven en ESM (src/app/domain/configs.js `selectVisibleConfigs`); aquí
+    // solo se inyecta el criterio del cierre y los datos legacy (store,
+    // catálogo y lookups de dificultad).
+    const filtered = getDomain().selectVisibleConfigs(displayConfigs, {
+      sortField: configSortField,
+      sortDir: configSortDir,
+      showFavoritesOnly: configShowFavoritesOnly,
+      maxManana: configMaxManana,
+      maxTarde: configMaxTarde,
+      blocks: getBlocks(),
+      subjects: SUBJECTS,
+      dificultad: getDificultad,
+      difficultyScore: getDifficultyScore,
+    });
     const toolbarHtml = '<div class="saved-configs-toolbar">' +
       `<button class="btn btn-sm ${configShowFavoritesOnly ? 'btn-primary' : 'btn-secondary'}" id="btn-toggle-favorites">\u2605 Favoritos${configShowFavoritesOnly ? ' (activado)' : ''}</button>` +
       '</div>';
@@ -2869,15 +2213,11 @@
       return;
     }
 
-    const totalEntries = filtered.length;
-    const totalPages = Math.max(1, Math.ceil(totalEntries / CONFIG_PAGE_SIZE));
-
-    if (configPage > totalPages) configPage = totalPages;
-    if (configPage < 1) configPage = 1;
-
-    const start = (configPage - 1) * CONFIG_PAGE_SIZE;
-    const end = start + CONFIG_PAGE_SIZE;
-    const pageEntries = filtered.slice(start, end);
+    // Delegación B4-d: totales, recorte de página y slice viven en ESM
+    // (`paginateConfigs`); el cierre solo reasigna su `configPage` con el
+    // valor ya recortado al rango [1, totalPages].
+    const { totalEntries, totalPages, page, entries: pageEntries } = getDomain().paginateConfigs(filtered, configPage, CONFIG_PAGE_SIZE);
+    configPage = page;
 
     const arrow = (field) => configSortField === field ? (configSortDir === 'asc' ? ' \u25B2' : ' \u25BC') : '';
 
@@ -3140,13 +2480,11 @@
     const config = allConfigs.find(c => c.id === id);
     if (!config) return;
 
-    const data = {
-      version: 1,
-      type: 'ugr-horario-config',
-      exportedAt: new Date().toISOString(),
-      config: JSON.parse(JSON.stringify(config)),
-    };
-    downloadJSON(data, `config-${config.name.replace(/\s+/g, '-').toLowerCase()}.json`);
+    // Delegación B4-b: envoltorio exacto `{version, type, exportedAt, config}`
+    // (clon profundo) y nombre de fichero, ambos en el dominio puro; la fecha
+    // ISO se pasa aquí para que el dominio no lea el reloj.
+    const data = getDomain().buildSingleConfigExport(config, new Date().toISOString());
+    downloadJSON(data, getDomain().configFilename(config.name));
     showToast(`"${config.name}" exportada`, 'success');
   }
 
@@ -3156,12 +2494,9 @@
       return;
     }
 
-    const data = {
-      version: 1,
-      type: 'ugr-horario-configs-batch',
-      exportedAt: new Date().toISOString(),
-      configs: JSON.parse(JSON.stringify(savedConfigs)),
-    };
+    // Delegación B4-b: mismo envoltorio batch (type '…-configs-batch') con la
+    // lista clonada; el nombre de fichero legacy vive en `app.js`.
+    const data = getDomain().buildBatchConfigExport(savedConfigs, new Date().toISOString());
     downloadJSON(data, 'ugr-horario-configs.json');
     showToast(`${savedConfigs.length} configuración(es) exportada(s)`, 'success');
   }
@@ -3176,13 +2511,11 @@
       try {
         const data = JSON.parse(evt.target.result);
 
-        let configsToAdd = [];
-
-        if (data.type === 'ugr-horario-config' && data.config) {
-          configsToAdd = [data.config];
-        } else if (data.type === 'ugr-horario-configs-batch' && Array.isArray(data.configs)) {
-          configsToAdd = data.configs;
-        } else {
+        // Delegación B4-b: la validación de formato (single/batch → lista) es
+        // pura; `null` significa envoltorio no reconocido. Los `id` siguen
+        // generándose aquí: son efecto secundario, no regla de dominio.
+        const configsToAdd = getDomain().parseConfigImport(data);
+        if (!configsToAdd) {
           showToast('Formato de archivo no válido', 'error');
           return;
         }
@@ -4655,6 +3988,179 @@
         btn.classList.toggle('open', !isOpen);
       });
     });
+  }
+
+  // ─── Composición ESM (Bloque 1) ─────────────────────────────
+  // Único puente hacia `src/app/createUgrApp.js`. `import()` dinámico porque
+  // este fichero sigue siendo un script clásico sin imports. Dos guardas de
+  // idempotencia: la instancia se crea una sola vez y la promesa se cachea,
+  // así `init()` repetido (devtools/consola) reutiliza la misma composición en
+  // lugar de duplicarla; si el import falla se limpia la promesa para poder
+  // reintentar. Los datos clásicos viajan SIEMPRE como thunks: `PROPUESTAS` es
+  // `let` que `loadPropuestas` reasigna, y `SUBJECTS`/`CONVALIDACIONES`/
+  // `DOCENTES` son `const` del global lexical (no propiedades de `window`), al
+  // alcance de este cierre.
+  let ugrAppInstance = null;
+  let ugrAppInitPromise = null;
+
+  /**
+   * Acceso a las reglas puras de dominio servidas por la composición ESM.
+   * Este IIFE es un script clásico: no puede `import()` síncrono, así que
+   * delega en `deps.domain` en lugar de duplicar la implementación.
+   * Falla ruidosamente si la composición aún no está lista (arranque
+   * interrumpido o `import()` fallido) en vez de caer a una copia legacy.
+   */
+  function getDomain() {
+    // Fuente normal: la composición ESM montada por `init` → `ensureUgrApp`.
+    // Escape hatch `window.__ugrAppDomain`: los harnesses (tests/consola) que
+    // evalúan este IIFE sin la composición inyectan aquí el MISMO módulo ESM
+    // de `src/app/domain/`, nunca una copia propia. Sin ninguna fuente se falla
+    // ruidosamente en vez de volver a una implementación legacy.
+    const d = (ugrAppInstance && ugrAppInstance.deps && ugrAppInstance.deps.domain)
+      || window.__ugrAppDomain;
+    if (!d) throw new Error('[ugr] dominio no disponible');
+    return d;
+  }
+
+  /**
+   * Acceso al adaptador de persistencia de configuraciones servido por la
+   * composición ESM (`deps.persistence`, instancia creada por `createUgrApp`
+   * con `{ storage: window.localStorage }`). Mismo patrón y misma red de
+   * seguridad que `getDomain()`: este IIFE no puede importar ESM de forma
+   * síncrona, así que delega en el adaptador en vez de duplicar las ranuras
+   * `ugr-horario-saved-configs-*`. `window.__ugrAppPersistence` es el escape
+   * hatch para harnesses que evalúan el IIFE sin la composición y necesitan
+   * inyectar el MISMO módulo `src/app/adapters/persistence.js`.
+   */
+  function getPersistence() {
+    // Fuente normal: la composición ESM montada por `init` → `ensureUgrApp`.
+    const p = (ugrAppInstance && ugrAppInstance.deps && ugrAppInstance.deps.persistence)
+      || window.__ugrAppPersistence;
+    if (!p) throw new Error('[ugr] persistencia no disponible');
+    return p;
+  }
+
+  function ensureUgrApp() {
+    if (ugrAppInstance) return Promise.resolve(ugrAppInstance);
+    if (!ugrAppInitPromise) {
+      ugrAppInitPromise = import('./src/app/createUgrApp.js')
+        .then(({ createUgrApp }) => {
+          ugrAppInstance = createUgrApp({
+            store: window.__ugrStore,
+            catalog: window.__ugrCatalog,
+            solver: window.__ugrSolver,
+            progress: window.__ugrProgress,
+            legacyData: {
+              subjects: () => SUBJECTS,
+              defaultSubjects: () => (typeof DEFAULT_SUBJECTS !== 'undefined' ? DEFAULT_SUBJECTS : null),
+              convalidaciones: () => CONVALIDACIONES,
+              propuestas: () => PROPUESTAS,
+              docentes: () => DOCENTES,
+            },
+            persistence: { storage: window.localStorage },
+            root: document,
+            degraded: !!window.__ugrDegraded,
+          });
+          ugrAppInstance.mount();
+          return ugrAppInstance;
+        })
+        .catch((err) => {
+          console.error('[ugr] createUgrApp no pudo iniciarse', err);
+          ugrAppInitPromise = null;
+          return null;
+        });
+    }
+    return ugrAppInitPromise;
+  }
+
+  // ─── Features ESM (Bloque 3, rebanada B3-b) ─────────────────
+  // Mismo patrón (y misma red de seguridad) que `ensureUgrApp`: import
+  // dinámico del feature de materias, instancia cacheada y promesa cacheada
+  // para que `init()` repetido no duplique la vista. Si el import falla se
+  // limpia la promesa para poder reintentar y la vista se queda en `null`:
+  // `renderSubjects()` degrada a no-op en vez de romper el arranque.
+  // Los thunks leen el estado SIEMPRE corriente (`state`/`conflicts` se
+  // reasignan en el IIFE y `SUBJECTS` se muta en sitio).
+  let ugrSubjectsView = null;
+  let ugrSubjectsInitPromise = null;
+
+  function getSubjectsView() {
+    return ugrSubjectsView;
+  }
+
+  function ensureSubjectsView() {
+    if (ugrSubjectsView) return Promise.resolve(ugrSubjectsView);
+    if (!ugrSubjectsInitPromise) {
+      ugrSubjectsInitPromise = import('./src/app/features/subjects.js')
+        .then(({ createSubjectsView }) => {
+          ugrSubjectsView = createSubjectsView({
+            document,
+            getState: () => state,
+            getSubjects: () => SUBJECTS,
+            getConflicts: () => conflicts,
+            saveState,
+            updateAll,
+          });
+          return ugrSubjectsView;
+        })
+        .catch((err) => {
+          console.error('[ugr] subjects view no pudo iniciarse', err);
+          ugrSubjectsInitPromise = null;
+          return null;
+        });
+    }
+    return ugrSubjectsInitPromise;
+  }
+
+  // ─── Features ESM (Bloque 3, rebanadas B3-c/B3-d) ───────────
+  // Mismo patrón (y misma red de seguridad) que `ensureSubjectsView`: import
+  // dinámico del feature del calendario (controles de vista + renders de
+  // semana/lista + tooltip), instancia cacheada y promesa cacheada. La
+  // instancia es única para que `mount()` sea idempotente: `init()` repetido
+  // re-monta SIN duplicar los listeners de los botones estáticos `#btn-view-*`.
+  // Si el import falla se limpia la promesa para poder reintentar y el feature
+  // se queda en `null` (delegaciones no-op). Los thunks leen el estado SIEMPRE
+  // corriente (`state`/`conflicts` se reasignan en el IIFE, `SUBJECTS` se muta
+  // en sitio) y las constantes de rejilla se inyectan tal cual porque otras
+  // vistas del monolito siguen usando `DAYS`/`DAY_LABELS`/horas.
+  let ugrCalendarView = null;
+  let ugrCalendarInitPromise = null;
+
+  function getCalendarViewFeature() {
+    return ugrCalendarView;
+  }
+
+  function ensureCalendarViewFeature() {
+    if (ugrCalendarView) return Promise.resolve(ugrCalendarView);
+    if (!ugrCalendarInitPromise) {
+      ugrCalendarInitPromise = import('./src/app/features/calendar.js')
+        .then(({ createCalendarView }) => {
+          ugrCalendarView = createCalendarView({
+            document,
+            window,
+            storage: window.localStorage,
+            getState: () => state,
+            getSubjects: () => SUBJECTS,
+            getConflicts: () => conflicts,
+            getActiveSchedule: () => getActiveSchedule(),
+            days: DAYS,
+            dayLabels: DAY_LABELS,
+            startHour: START_HOUR,
+            endHour: END_HOUR,
+            getDificultad,
+            getDificultadLabel,
+            getDificultadColor,
+            getProfName,
+          });
+          return ugrCalendarView;
+        })
+        .catch((err) => {
+          console.error('[ugr] calendar view no pudo iniciarse', err);
+          ugrCalendarInitPromise = null;
+          return null;
+        });
+    }
+    return ugrCalendarInitPromise;
   }
 
   // ─── Start ──────────────────────────────────────────────────

@@ -2,6 +2,37 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { reducer, initialState } from "../../public/ugr/src/store/reducer.js";
+import { timeToMinutes, timesOverlap } from "../../public/ugr/src/app/domain/schedule.js";
+import { calcPropuestaCreditos } from "../../public/ugr/src/app/domain/proposals.js";
+import {
+  calculateConfigMetrics,
+  calculateConfigDeadHours,
+  calculateConfigDays,
+  findConflicts,
+} from "../../public/ugr/src/app/domain/metrics.js";
+import {
+  getSubgrupoForApellido,
+  buildGroupChoice,
+  applyTurnoPreference,
+  applyApellidoSubgroups,
+} from "../../public/ugr/src/app/domain/selection.js";
+import { buildActiveSchedule, buildConflictSet } from "../../public/ugr/src/app/domain/calendar.js";
+import {
+  isConfigFavorited,
+  findDuplicateConfig,
+  buildConfigFromState,
+  sortSavedConfigs,
+  applyConfigToState,
+  removeConfigById,
+  buildSingleConfigExport,
+  buildBatchConfigExport,
+  parseConfigImport,
+  configFilename,
+  isConfigBlocked,
+  buildBlockPayload,
+  selectVisibleConfigs,
+  paginateConfigs,
+} from "../../public/ugr/src/app/domain/configs.js";
 
 // Contrato de persistencia C3 de public/ugr/app.js: el store (IDB) es la capa
 // de persistencia, `localStorage['ugr-horario-state']` queda como fallback
@@ -104,6 +135,41 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
   };
   if (store) windowObj.__ugrStore = store;
   if (degraded) windowObj.__ugrDegraded = true;
+  // Reglas de dominio (T02.x + B3-a + B4-a/B4-b): `loadState()`/`updateAll()`
+  // y las funciones de selección/calendario/configuraciones delegan en
+  // `getDomain()`, que en producción las recibe de la composición ESM
+  // (`deps.domain`). Aquí no se monta la composición, así que se inyecta el
+  // MISMO módulo ESM real por el escape hatch, con el dominio completo
+  // (27 funciones), sin duplicar nada.
+  windowObj.__ugrAppDomain = {
+    timeToMinutes,
+    timesOverlap,
+    calcPropuestaCreditos,
+    calculateConfigMetrics,
+    calculateConfigDeadHours,
+    calculateConfigDays,
+    findConflicts,
+    getSubgrupoForApellido,
+    buildGroupChoice,
+    applyTurnoPreference,
+    applyApellidoSubgroups,
+    buildActiveSchedule,
+    buildConflictSet,
+    isConfigFavorited,
+    findDuplicateConfig,
+    buildConfigFromState,
+    sortSavedConfigs,
+    applyConfigToState,
+    removeConfigById,
+    buildSingleConfigExport,
+    buildBatchConfigExport,
+    parseConfigImport,
+    configFilename,
+    isConfigBlocked,
+    buildBlockPayload,
+    selectVisibleConfigs,
+    paginateConfigs,
+  };
   defineGlobal("window", windowObj);
   defineGlobal("document", {
     getElementById: () => null,
