@@ -1,5 +1,6 @@
 import { getState } from "./commands.js";
 import { summarize, projectDegree } from "../progress/index.js";
+import { isValidEstado } from "../progress/status.js";
 
 const EMPTY_PROGRESS = { credits: {}, equivalences: [], plan: { totalECTS: 240 } };
 
@@ -28,9 +29,14 @@ export function getFilters() {
   return state ? state.filters : [];
 }
 
+export function getBlocks() {
+  const state = getState();
+  return state && Array.isArray(state.blocks) ? state.blocks : [];
+}
+
 export function getUI() {
   const state = getState();
-  return state ? state.ui : { view: "horario", compareIds: [], favorites: [], predefinedSource: "570" };
+  return state ? state.ui : { view: "horario", compareIds: [], favorites: [] };
 }
 
 export function getPropuestas() {
@@ -50,6 +56,20 @@ export function getProgress() {
     equivalences: Array.isArray(p.equivalences) ? p.equivalences : [],
     plan: { totalECTS: 240, ...(p.plan || {}) },
   };
+}
+
+// Mapa { [id]: estado } de las equivalencias del store: es la lectura que
+// sustituye a localStorage['ugr-convalidaciones'] (el dashboard ya no toca
+// esa clave). Solo entran entradas con estado válido; el resto se ignora.
+export function getEquivalenceEstados() {
+  const equivalences = getProgress().equivalences;
+  const map = {};
+  for (const entry of equivalences) {
+    if (entry && entry.id && isValidEstado(entry.estado)) {
+      map[String(entry.id)] = entry.estado;
+    }
+  }
+  return map;
 }
 
 export function getProgressSummary(subjects = []) {

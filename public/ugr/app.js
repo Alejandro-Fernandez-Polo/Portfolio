@@ -62,12 +62,231 @@
   let savedPropuestasInternas = JSON.parse(localStorage.getItem('ugr-propuestas-guardadas') || '[]');
   let configSortField = 'name';
   let configSortDir = 'asc';
-  let configBlockFilters = [];
+  // Bloqueos de configuraciones: viven en el store (persistidos en IDB).
+  // Fallback local si el store no está disponible (modo degradado).
+  let localBlockFilters = [];
+  let blockStoreSubscribed = false;
+
+  function getBlocks() {
+    if (window.__ugrStore && typeof window.__ugrStore.getState === 'function') {
+      const state = window.__ugrStore.getState();
+      return state && Array.isArray(state.blocks) ? state.blocks : [];
+    }
+    return localBlockFilters;
+  }
+
+  function dispatchBlock(cmd) {
+    if (window.__ugrStore && typeof window.__ugrStore.dispatch === 'function') {
+      window.__ugrStore.dispatch(cmd);
+    } else {
+      // Fallback: aplicar localmente y re-renderizar
+      if (cmd.type === 'blocks/add') {
+        localBlockFilters.push(cmd.payload);
+      } else if (cmd.type === 'blocks/remove') {
+        localBlockFilters.splice(cmd.payload.index, 1);
+      } else if (cmd.type === 'blocks/setAll') {
+        localBlockFilters = cmd.payload.blocks || [];
+      }
+      renderBlockFilters();
+      renderSavedConfigs();
+    }
+  }
+
+  function ensureBlockStoreSubscription() {
+    if (blockStoreSubscribed) return;
+    if (window.__ugrStore && typeof window.__ugrStore.subscribe === 'function') {
+      window.__ugrStore.subscribe(() => {
+        renderBlockFilters();
+        renderSavedConfigs();
+      });
+      blockStoreSubscribed = true;
+    }
+  }
+
+  // ─── Perfil en el store (Fase B) ────────────────────────────
+  // `state.apellido`/`state.turnoPreferente` siguen siendo la caché que lee el
+  // render: el store es la capa de persistencia (C3) y la verdad que viaja a
+  // IndexedDB, mientras que `saveState()` solo toca localStorage en modo
+  // degradado.
+  function __getStore() {
+    return (window.__ugrStore && typeof window.__ugrStore.getState === 'function') ? window.__ugrStore : null;
+  }
+
+  // El store solo manda como persistencia si bootstrap lo abrió y el IndexedDB
+  // está disponible. En modo degradado `initStore()` deja igualmente un estado
+  // en memoria (no persistible), así que sin este corte app.js dejaría de
+  // escribir localStorage y los cambios del usuario se perderían al recargar.
+  function isStoreAuthoritative() {
+    return !!(__getStore() && !window.__ugrDegraded);
+  }
+
+  function dispatchStore(cmd) {
+    const store = __getStore();
+    if (store && typeof store.dispatch === 'function') store.dispatch(cmd);
+  }
+
+  // Ningún `push...ToStore()` puede correr antes de que `loadState()` hidrate la
+  // caché: un `state` por defecto (vacío) llegaría al store como un
+  // `selection/setAll` destructivo y borraría datos ya migrados. `saveState()`
+  // es alcanzable antes de terminar el arranque (p. ej. desde catálogos), de
+  // ahí la guarda en el origen y no solo en `init()`.
+  let stateHydrated = false;
+
+  function pushProfileToStore() {
+    if (!stateHydrated || !__getStore()) return;
+    dispatchStore({ type: 'profile/setApellido', payload: { apellido: state.apellido || '' } });
+    dispatchStore({ type: 'profile/setTurno', payload: { turno: state.turnoPreferente || 'indiferente' } });
+  }
+
+  function hydrateProfileFromStore() {
+    const store = __getStore();
+    if (!store) return;
+    const p = store.getState() && store.getState().profile;
+    if (!p) return;
+    if (typeof p.apellido === 'string') state.apellido = p.apellido;
+    if (typeof p.turnoPreferente === 'string') state.turnoPreferente = p.turnoPreferente;
+  }
+
+  function ensureProfileStoreSubscription() {
+    const store = __getStore();
+    if (!store || typeof store.subscribe !== 'function') return;
+    store.subscribe(() => hydrateProfileFromStore());
+  }
+
+  // ─── Selección en el store ─────────────────────────────────
+  // `state.selectedSubjects`/`state.groupChoices`/`state.cuatrimestreActivo`
+  // siguen siendo la caché que lee el render: el store es la persistencia y el
+  // destino de la verdad de la migración legacy (selection/setAll).
+  function pushSelectionToStore() {
+    if (!stateHydrated) return;
+    const store = __getStore();
+    if (!store) return;
+    // Copias profundas: el reducer clona igualmente, pero el payload no debe
+    // compartir referencias con la caché local (mutaciones posteriores del
+    // usuario no deben reescribir un dispatch ya emitido).
+    dispatchStore({ type: 'selection/setAll', payload: {
+      selectedSubjects: { ...state.selectedSubjects },
+      groupChoices: JSON.parse(JSON.stringify(state.groupChoices)),
+      cuatrimestreActivo: state.cuatrimestreActivo,
+    }});
+  }
+
+  function hydrateSelectionFromStore() {
+    const store = __getStore();
+    if (!store) return;
+    const s = store.getState();
+    if (!s || !s.selection) return;
+    // No pisar el estado local con un store vacío (arranque pre-migración:
+    // userState inicial sin datos de selección). Si el store sí tiene datos,
+    // la caché local pasa a ser un espejo del store.
+    if (Object.keys(s.selection.selectedSubjects || {}).length || Object.keys(s.selection.groupChoices || {}).length) {
+      state.selectedSubjects = { ...s.selection.selectedSubjects };
+      state.groupChoices = JSON.parse(JSON.stringify(s.selection.groupChoices || {}));
+    }
+    if (s.selection.cuatrimestreActivo === 1 || s.selection.cuatrimestreActivo === 2) {
+      state.cuatrimestreActivo = s.selection.cuatrimestreActivo;
+    }
+  }
+
+  function ensureSelectionStoreSubscription() {
+    const store = __getStore();
+    if (!store || typeof store.subscribe !== 'function') return;
+    store.subscribe(() => hydrateSelectionFromStore());
+  }
+
+  // ─── Propuestas en el store ─────────────────────────────────
+  // `state.propuestas`/`state.propuestaActivaId`/`state.vistaConvalidaciones`
+  // siguen siendo la caché que lee el render: el store es la persistencia.
+  // El orden importa: `propuestas/setAll` resetea `activeId` al primer item,
+  // así que `setActive` tiene que emitirse después.
+  function pushPropuestasToStore() {
+    if (!stateHydrated) return;
+    const store = __getStore ? __getStore() : null;
+    if (!store) return;
+    dispatchStore({ type: 'propuestas/setAll', payload: { items: state.propuestas || [] } });
+    dispatchStore({ type: 'propuestas/setActive', payload: { id: state.propuestaActivaId || null } });
+    dispatchStore({ type: 'propuestas/setVista', payload: { vista: state.vistaConvalidaciones || 'oficial' } });
+  }
+
+  function hydratePropuestasFromStore() {
+    const store = __getStore ? __getStore() : null;
+    if (!store) return;
+    const s = store.getState();
+    if (!s || !s.propuestas) return;
+    // Store vacío (arranque pre-migración): no pisar la caché local, que es
+    // la que acaba de cargar localStorage. Con datos, el store manda.
+    if (Array.isArray(s.propuestas.items) && s.propuestas.items.length) {
+      state.propuestas = JSON.parse(JSON.stringify(s.propuestas.items));
+      state.propuestaActivaId = s.propuestas.activeId || (state.propuestas[0] ? state.propuestas[0].id : null);
+    }
+    if (s.propuestas.vista) state.vistaConvalidaciones = s.propuestas.vista;
+  }
+
+  // `compareIds` no se guarda en localStorage (es efímero), pero sí vive en el
+  // store para sobrevivir a un reload: `loadState()` lo hidrata al arrancar y
+  // los toggle lo reenvían.
+  function pushCompareIdsToStore() {
+    if (!stateHydrated) return;
+    const store = __getStore ? __getStore() : null;
+    if (!store) return;
+    dispatchStore({ type: 'ui/setCompareIds', payload: { ids: Array.isArray(compareIds) ? [...compareIds] : [] } });
+  }
+
+  function hydrateCompareIdsFromStore() {
+    const store = __getStore();
+    if (!store) return;
+    const ui = store.getState() && store.getState().ui;
+    if (ui && Array.isArray(ui.compareIds)) compareIds = [...ui.compareIds];
+  }
+
+  // Corte único entre "el store existe" y "el store tiene datos de usuario".
+  // Un userState recién creado (o solo con defaults de Fase 5) no debe ganarle
+  // a un `ugr-horario-state` legacy que aún no se ha migrado: en ese caso la
+  // caché sigue el fallback y el push posterior siembra el store.
+  function storeHasUserData(s) {
+    if (!s) return false;
+    const p = s.profile || {};
+    if ((p.apellido && p.apellido.trim()) || (p.turnoPreferente && p.turnoPreferente !== 'indiferente')) return true;
+    const sel = s.selection || {};
+    if (Object.keys(sel.selectedSubjects || {}).length) return true;
+    if (Object.keys(sel.groupChoices || {}).length) return true;
+    if (s.propuestas && Array.isArray(s.propuestas.items) && s.propuestas.items.length) return true;
+    if (s.ui && Array.isArray(s.ui.compareIds) && s.ui.compareIds.length) return true;
+    if (s.blocks && s.blocks.length) return true;
+    const progress = s.progress || {};
+    if (progress.credits && Object.keys(progress.credits).length) return true;
+    if (Array.isArray(progress.equivalences) && progress.equivalences.length) return true;
+    return false;
+  }
+
+  // Hidratación única de las cuatro rebanadas que app.js cachea. Devuelve true
+  // si el store aportó datos; false = store virgen → el llamante cae al
+  // fallback legacy. Se llama solo desde `loadState()`; la reactividad en vivo
+  // la hacen las suscripciones de cada rebanada.
+  function hydrateAllFromStore() {
+    const store = isStoreAuthoritative() ? __getStore() : null;
+    if (!store) return false;
+    const s = store.getState();
+    if (!storeHasUserData(s)) return false;
+    hydrateProfileFromStore();
+    hydrateSelectionFromStore();
+    hydratePropuestasFromStore();
+    hydrateCompareIdsFromStore();
+    return true;
+  }
+
+  function ensurePropuestasStoreSubscription() {
+    const store = __getStore ? __getStore() : null;
+    if (!store || typeof store.subscribe !== 'function') return;
+    // Solo hidratación: nunca dispatch desde aquí, o el store re-notificaría
+    // en bucle infinito.
+    store.subscribe(() => hydratePropuestasFromStore());
+  }
+
   let configMaxManana = 0;
   let configMaxTarde = 0;
   let configPage = 1;
   let configShowFavoritesOnly = false;
-  let configPredefinedSource = localStorage.getItem('ugr-predefined-source') || '570';
   const CONFIG_PAGE_SIZE = 50;
 
   // ─── Solver (Fase 1) ────────────────────────────────────────
@@ -75,7 +294,6 @@
     'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
     'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
   ];
-  const LEGACY_PREDEFINED = new URLSearchParams(location.search).get('legacyPredefined') === '1';
   let solverResults = [];
   let solverFilters = loadSolverFilters();
   let solverBusy = false;
@@ -106,7 +324,22 @@
     console.log('UGR Horario v1.0.0');
     const catalogCodesChanged = await bootstrapCatalogState();
     loadPropuestas();
+    // Orden de arranque (C3): HIDRATAR → SUSCRIBIR → PUSH.
+    // 1) `loadState()` trae lo ya persistido (store si tiene datos de usuario,
+    //    si no el espejo legacy) y solo entonces levanta `stateHydrated`, la
+    //    guarda que bloquea cualquier push hecho con la caché por defecto.
+    // 2) Las suscripciones van después: la hidratación inicial es un paso
+    //    único y controlado; en vivo, cada dispatch del store re-sincroniza.
+    // 3) Con la caché ya igualada al store, los pushes vuelcan lo cargado de
+    //    localStorage si el store estaba virgen (siembra) y son no-op si no.
     loadState();
+    ensureProfileStoreSubscription();
+    ensureSelectionStoreSubscription();
+    ensurePropuestasStoreSubscription();
+    pushProfileToStore();
+    pushSelectionToStore();
+    pushPropuestasToStore();
+    pushCompareIdsToStore();
     if (catalogCodesChanged && pruneSelectionsToActiveCatalog()) saveState();
     renderSubjects();
     setupTabs();
@@ -119,14 +352,34 @@
     checkUrlShare();
     checkUrlPropuesta();
     renderBlockFilters();
+    ensureBlockStoreSubscription();
     setupSolver();
   }
 
-  // ─── LocalStorage ───────────────────────────────────────────
+  // ─── Persistencia ───────────────────────────────────────────
   function saveState() {
+    // Antes de hidratar, la caché sigue en sus defaults: escribir ahora (al
+    // espejo o al store) borraría datos ya persistidos por el usuario.
+    if (!stateHydrated) return;
     if (window.__ugr && window.__ugr.legacy && window.__ugr.legacy.start) {
       window.dispatchEvent(new CustomEvent("ugr:stateChanged", { detail: state }));
     }
+    if (isStoreAuthoritative()) {
+      // Modo normal: el store (IDB) es la única persistencia y el espejo
+      // `ugr-horario-state` queda retirado (no se mantiene una segunda verdad
+      // que además quedaría congelada desde C3). `vistaConvalidaciones` solo
+      // cambia por aquí, de ahí que lo cubra pushPropuestas; compareIds por si
+      // algún camino mutó la caché sin pasar por toggleCompareId. El perfil se
+      // envía también porque hay rutas (p. ej. importar configuración) que
+      // cambian `state.apellido` sin pasar por su input handler.
+      pushProfileToStore();
+      pushSelectionToStore();
+      pushPropuestasToStore();
+      pushCompareIdsToStore();
+      return;
+    }
+    // Modo degradado (sin IndexedDB): el store en memoria no sobrevive al
+    // reload, así que localStorage vuelve a ser la única garantía.
     localStorage.setItem('ugr-horario-state', JSON.stringify(state));
   }
 
@@ -136,19 +389,23 @@
   }
 
   function loadState() {
-    if (window.__ugr && window.__ugr.legacy && window.__ugr.legacy.start) {
-      const newState = window.__ugr.legacy.getState?.();
-      if (newState) {
-        state = { ...state, ...newState };
-      }
+    // 1) Fuente de verdad: el store. Solo manda si bootstrap lo abrió, el IDB
+    //    está disponible y trae datos de usuario; un store virgen (arranque
+    //    limpio o migración pendiente) cae al fallback de abajo para no tapar
+    //    con defaults lo que haya en el espejo legacy.
+    if (!hydrateAllFromStore()) {
+      // 2) Fallback legacy / pre-migración / degradado: espejo C3 previo.
+      try {
+        const saved = localStorage.getItem('ugr-horario-state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed };
+        }
+      } catch (e) { /* ignore corrupt mirror */ }
     }
-    try {
-      const saved = localStorage.getItem('ugr-horario-state');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        state = { ...state, ...parsed };
-      }
-    } catch (e) { /* ignore */ }
+    // La caché ya refleja lo persistido: a partir de aquí se permiten los
+    // pushes (fin de la ventana en la que un estado vacío podría pisar datos).
+    stateHydrated = true;
     // Migración propuestas
     if (!state.propuestas || !Array.isArray(state.propuestas) || state.propuestas.length === 0) {
       if (PROPUESTAS && PROPUESTAS.length > 0) {
@@ -178,10 +435,6 @@
     const turnoSelect = document.getElementById('turno-preferente');
     if (apellidoInput) apellidoInput.value = state.apellido || '';
     if (turnoSelect) turnoSelect.value = state.turnoPreferente || 'indiferente';
-    const predefinedSelect = document.getElementById('predefined-source-select');
-    if (predefinedSelect) predefinedSelect.value = configPredefinedSource;
-    if (predefinedSelect) predefinedSelect.style.display = LEGACY_PREDEFINED ? '' : 'none';
-    if (LEGACY_PREDEFINED && configPredefinedSource !== '570') loadPredefinedScript(configPredefinedSource);
   }
 
   function loadPropuestas() {
@@ -200,6 +453,7 @@
   function savePropuestas() {
     PROPUESTAS = state.propuestas;
     localStorage.setItem('ugr-propuestas', JSON.stringify(PROPUESTAS));
+    pushPropuestasToStore();
   }
 
   function resolveUgrCodigo(codigo) {
@@ -328,6 +582,8 @@
   function setupConfig() {
     document.getElementById('apellido').addEventListener('input', (e) => {
       state.apellido = e.target.value.trim();
+      // Escritura optimista local + espejo en el store (persiste en IDB).
+      dispatchStore({ type: 'profile/setApellido', payload: { apellido: state.apellido } });
       applyApellidoRule();
       saveState();
       updateAll();
@@ -335,6 +591,8 @@
 
     document.getElementById('turno-preferente').addEventListener('change', (e) => {
       state.turnoPreferente = e.target.value;
+      // Escritura optimista local + espejo en el store (persiste en IDB).
+      dispatchStore({ type: 'profile/setTurno', payload: { turno: state.turnoPreferente } });
       saveState();
       updateAll();
     });
@@ -701,7 +959,7 @@
   }
 
   function isConfigBlocked(config) {
-    return configBlockFilters.some(filter => {
+    return getBlocks().some(filter => {
       if (filter.type === 'subject') {
         return config.selectedSubjects[filter.codigo] &&
                config.groupChoices[filter.codigo] &&
@@ -728,16 +986,16 @@
       const sel = document.getElementById('block-subject-select');
       const grp = document.getElementById('block-subject-group');
       if (!sel || !grp || !sel.value || !grp.value) return;
-      configBlockFilters.push({ type: 'subject', codigo: sel.value, letra: grp.value });
+      dispatchBlock({ type: 'blocks/add', payload: { type: 'subject', codigo: sel.value, letra: grp.value } });
     } else if (type === 'subject-only') {
       const sel = document.getElementById('block-subject-select');
       if (!sel || !sel.value) return;
-      configBlockFilters.push({ type: 'subject-only', codigo: sel.value });
+      dispatchBlock({ type: 'blocks/add', payload: { type: 'subject-only', codigo: sel.value } });
     } else if (type === 'curso') {
       const sel = document.getElementById('block-curso-select');
       const grp = document.getElementById('block-curso-group');
       if (!sel || !grp || !sel.value || !grp.value) return;
-      configBlockFilters.push({ type: 'curso', curso: parseInt(sel.value), letra: grp.value });
+      dispatchBlock({ type: 'blocks/add', payload: { type: 'curso', curso: parseInt(sel.value), letra: grp.value } });
     }
     configPage = 1;
     renderBlockFilters();
@@ -745,7 +1003,7 @@
   }
 
   function removeBlockFilter(index) {
-    configBlockFilters.splice(index, 1);
+    dispatchBlock({ type: 'blocks/remove', payload: { index } });
     configPage = 1;
     renderBlockFilters();
     renderSavedConfigs();
@@ -768,13 +1026,14 @@
 
     let html = '<div class="block-filters-container">';
     html += '<button class="btn btn-sm btn-secondary block-filters-toggle" id="btn-toggle-block-filters">';
-    html += `Bloqueos${configBlockFilters.length > 0 ? ` (${configBlockFilters.length})` : ''}`;
+    const blocks = getBlocks();
+    html += `Bloqueos${blocks.length > 0 ? ` (${blocks.length})` : ''}`;
     html += '</button>';
     html += '<div class="block-filters-body" style="display:none">';
 
-    if (configBlockFilters.length > 0) {
+    if (blocks.length > 0) {
       html += '<div class="block-filters-active">';
-      configBlockFilters.forEach((f, i) => {
+      blocks.forEach((f, i) => {
         let label;
         if (f.type === 'subject') {
           label = `${f.codigo} \u00D7 Grupo ${f.letra}`;
@@ -958,24 +1217,14 @@
     } else if (compareIds.length < 4) {
       compareIds.push(id);
     }
+    // Mutación in-place sobre la caché: sin este push la selección a comparar
+    // solo viviría en memoria.
+    pushCompareIdsToStore();
     updateCompareButton();
     renderSavedConfigs();
   }
 
-  function isPredefinedConfig(id) {
-    return getPredefinedArray().some(c => c.id === id);
-  }
-
   function toggleFavorite(id) {
-    if (isPredefinedConfig(id)) {
-      let favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
-      const idx = favPredefined.indexOf(id);
-      if (idx >= 0) favPredefined.splice(idx, 1);
-      else favPredefined.push(id);
-      localStorage.setItem('ugr-fav-predefined', JSON.stringify(favPredefined));
-      renderSavedConfigs();
-      return;
-    }
     const config = savedConfigs.find(c => c.id === id);
     if (config) {
       config.favorite = !config.favorite;
@@ -1695,13 +1944,6 @@
       document.getElementById('import-config-input').click();
     });
     document.getElementById('import-config-input').addEventListener('change', importSavedConfig);
-    document.getElementById('predefined-source-select').addEventListener('change', async (e) => {
-      configPredefinedSource = e.target.value;
-      localStorage.setItem('ugr-predefined-source', configPredefinedSource);
-      configPage = 1;
-      await loadPredefinedScript(configPredefinedSource);
-      renderSavedConfigs();
-    });
     document.getElementById('compare-modal-close').addEventListener('click', () => {
       document.getElementById('compare-modal').style.display = 'none';
     });
@@ -1712,6 +1954,7 @@
       if (compareIds.length >= 2) {
         openCompare(compareIds);
         compareIds = [];
+        pushCompareIdsToStore();
         updateCompareButton();
         renderSavedConfigs();
       }
@@ -1915,6 +2158,7 @@
     state.groupChoices = JSON.parse(JSON.stringify(shared.groupChoices));
     state.apellido = shared.apellido;
     state.turnoPreferente = shared.turnoPreferente;
+    pushProfileToStore();
     state.cuatrimestreActivo = shared.cuatrimestreActivo;
     pruneSelectionsToActiveCatalog();
 
@@ -2107,52 +2351,8 @@
   }
 
   // ─── Saved Configs ─────────────────────────────────────────
-  // ─── Predefined Schedules (lazy loading) ──────────────────
-  const PREDEFINED_SCRIPTS = {
-    grande:   '/ugr/predefined/predefined_grande.js',
-    final:    '/ugr/predefined/predefined_final.js',
-    alembueno: '/ugr/predefined/predefined_alembueno.js',
-    ec:       '/ugr/predefined/predefined_ec.js',
-  };
-
-  function loadPredefinedScript(source) {
-    return new Promise((resolve) => {
-      if (!LEGACY_PREDEFINED) { resolve(); return; }
-      if (source === '570') { resolve(); return; }
-      const varMap = {
-        grande: 'PREDEFINED_SCHEDULES_GRANDE',
-        final: 'PREDEFINED_SCHEDULES_FINAL',
-        alembueno: 'PREDEFINED_SCHEDULES_ALEM_BUENO',
-        ec: 'PREDEFINED_SCHEDULES_EC',
-      };
-      if (typeof window[varMap[source]] !== 'undefined') { resolve(); return; }
-      const script = document.createElement('script');
-      script.src = PREDEFINED_SCRIPTS[source];
-      script.onload = () => resolve();
-      script.onerror = () => {
-        console.error('Error cargando predefined:', source);
-        resolve();
-      };
-      document.body.appendChild(script);
-    });
-  }
-
-  function getPredefinedArray() {
-    if (!LEGACY_PREDEFINED) return [];
-    switch (configPredefinedSource) {
-      case 'grande':   return typeof PREDEFINED_SCHEDULES_GRANDE !== 'undefined' ? PREDEFINED_SCHEDULES_GRANDE : [];
-      case 'final':    return typeof PREDEFINED_SCHEDULES_FINAL !== 'undefined' ? PREDEFINED_SCHEDULES_FINAL : [];
-      case 'alembueno': return typeof PREDEFINED_SCHEDULES_ALEM_BUENO !== 'undefined' ? PREDEFINED_SCHEDULES_ALEM_BUENO : [];
-      case 'ec':       return typeof PREDEFINED_SCHEDULES_EC !== 'undefined' ? PREDEFINED_SCHEDULES_EC : [];
-      default:         return typeof PREDEFINED_SCHEDULES_570 !== 'undefined' ? PREDEFINED_SCHEDULES_570 : [];
-    }
-  }
-
   function getDisplayConfigs() {
-    const predefined = getPredefinedArray().map(c => ({ ...c, predefined: true }));
-    const favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
-    predefined.forEach(c => { if (favPredefined.includes(c.id)) c.favorite = true; });
-    return savedConfigs.concat(solverResults).concat(predefined);
+    return savedConfigs.concat(solverResults);
   }
 
   // ─── Solver UI (Fase 1) ─────────────────────────────────────
@@ -2502,10 +2702,6 @@
   }
 
   function isConfigFavorited(config) {
-    if (config.predefined) {
-      const favPredefined = JSON.parse(localStorage.getItem('ugr-fav-predefined') || '[]');
-      return favPredefined.includes(config.id);
-    }
     return !!config.favorite;
   }
 
@@ -2565,6 +2761,7 @@
     state.groupChoices = JSON.parse(JSON.stringify(config.groupChoices));
     state.apellido = config.apellido;
     state.turnoPreferente = config.turnoPreferente;
+    pushProfileToStore();
 
     document.getElementById('apellido').value = state.apellido;
     document.getElementById('turno-preferente').value = state.turnoPreferente;
@@ -2575,10 +2772,6 @@
   }
 
   function deleteConfig(id) {
-    if (isPredefinedConfig(id)) {
-      showToast('No se pueden eliminar horarios predefinidos', 'info');
-      return;
-    }
     const config = savedConfigs.find(c => c.id === id);
     if (!config) return;
     if (!confirm(`¿Eliminar "${config.name}"?`)) return;
@@ -2725,7 +2918,7 @@
       html += `<button class="btn btn-sm btn-secondary" data-action="export-config" data-id="${config.id}">Exportar</button>`;
       if (config.solver) {
         html += `<button class="btn btn-sm btn-primary" data-action="save-solver" data-id="${config.id}">Guardar</button>`;
-      } else if (!config.predefined) {
+      } else {
         html += `<button class="btn btn-sm btn-danger" data-action="delete" data-id="${config.id}">Eliminar</button>`;
       }
       html += '</td>';
@@ -2887,7 +3080,6 @@
 
     localStorage.removeItem('ugr-horario-state');
     localStorage.removeItem('ugr-horario-subjects');
-    localStorage.removeItem('ugr-fav-predefined');
     for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
       localStorage.removeItem(getStorageKey(i));
     }
@@ -2922,6 +3114,16 @@
       tab.classList.toggle('active', parseInt(tab.dataset.cuatrimestre) === 1);
     });
     state.cuatrimestreActivo = 1;
+
+    // El store es la persistencia (C3): si el reset solo borra localStorage,
+    // el próximo arranque hidrataría del store los datos que aquí se acaban de
+    // restaurar y el reset quedaría anulado. `stateHydrated` ya está en true
+    // (hubo un init previo), así que estos pushes sí se emiten.
+    pushProfileToStore();
+    pushSelectionToStore();
+    pushPropuestasToStore();
+    pushCompareIdsToStore();
+    saveState();
 
     configPage = 1;
     renderSavedConfigs();
@@ -4456,9 +4658,13 @@
   }
 
   // ─── Start ──────────────────────────────────────────────────
+  // Puente hacia bootstrap (init) y hacia la consola/tests: `loadState` y
+  // `saveState` exponen el contrato de persistencia (store ↔ espejo legacy).
   window.__ugrLegacy = {
     init,
     getState: () => ({ ...state }),
+    loadState,
+    saveState,
   };
 
 })();

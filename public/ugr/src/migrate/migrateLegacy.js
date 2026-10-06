@@ -1,5 +1,5 @@
 import { open, get, put, transact, isAvailable } from "../store/db.js";
-import { buildPlan, snapshotAllKeys, alreadyMigrated, markMigration, verify, restoreFromSnapshot, scheduleDoubleWrite, cleanupLegacy, DESTINIES } from "./legacyKeys.js";
+import { buildPlan, snapshotAllKeys, alreadyMigrated, markMigration, verify, restoreFromSnapshot, cleanupLegacy, DESTINIES } from "./legacyKeys.js";
 import { dispatch, initStore, getState } from "../store/commands.js";
 
 const dbFacade = { get, getAll: (store) => import("../store/db.js").then(({ getAll: g }) => g(store)), put, transact, isAvailable };
@@ -30,8 +30,10 @@ export async function run() {
 
     await markMigration(dbFacade);
 
-    scheduleDoubleWrite();
-
+    // Sin doble escritura: desde C3 el store es la única persistencia en modo
+    // normal y app.js ya no escribe `ugr-horario-state` (el espejo se retira
+    // tras esta migración one-time, que sigue siendo la vía de entrada de los
+    // usuarios existentes).
     return { ok: true, migrated: plan.stats };
   } catch (err) {
     await restoreFromSnapshot(dbFacade);
@@ -55,7 +57,6 @@ async function applyCommand(cmd) {
     case "ui/setView":
     case "ui/setCompareIds":
     case "ui/toggleFavorite":
-    case "ui/setPredefinedSource":
     case "propuestas/save":
     case "propuestas/delete":
     case "propuestas/setActive":
@@ -76,15 +77,10 @@ export function degradeToLegacy() {
   window.__ugrDegraded = true;
 }
 
+// Un único punto de entrada: `cleanupLegacy` ya recorre todas las LEGACY_KEYS
+// (incluido `ugr-horario-state`), así que mantener aquí una lista duplicada
+// solo abría la puerta a que se desincronizara. En modo normal esto retira el
+// fallback legacy; la verdad vive en el store.
 export function resetLegacy() {
   cleanupLegacy();
-  localStorage.removeItem("ugr-horario-state");
-  for (let i = 0; i < 3; i++) {
-    localStorage.removeItem(`ugr-horario-saved-configs-${i}`);
-  }
-  localStorage.removeItem("ugr-propuestas");
-  localStorage.removeItem("ugr-propuestas-guardadas");
-  localStorage.removeItem("ugr-convalidaciones");
-  localStorage.removeItem("ugr-predefined-source");
-  localStorage.removeItem("ugr-fav-predefined");
 }

@@ -1,4 +1,4 @@
-import { STATUS, PASSED_STATUSES, isValidStatus } from "./status.js";
+import { STATUS, PASSED_STATUSES, isValidStatus, normalizeEstado } from "./status.js";
 import { isPassed } from "./filter.js";
 import {
   summarize,
@@ -153,18 +153,6 @@ export function buildProjection(subjects, credits, plan) {
     termsRemaining: projection.termsRemaining,
     pct: pct(projection.passedECTS, projection.totalECTS),
   };
-}
-
-// Estados legacy de la clave localStorage `ugr-convalidaciones`. Cualquier otro
-// valor (basura de un JSON a mano o de otra versión) se devuelve como null y
-// la UI lo pinta como "sin estado" en vez de romper el badge.
-const LEGACY_ESTADOS = ["pendiente", "solicitada", "concedida", "denegada"];
-
-function normalizeEstado(raw) {
-  const value = typeof raw === "string" ? raw : raw && typeof raw === "object" ? raw.estado : "";
-  if (typeof value !== "string") return null;
-  const normalized = value.trim().toLowerCase();
-  return LEGACY_ESTADOS.includes(normalized) ? normalized : null;
 }
 
 function entryEstado(entry) {

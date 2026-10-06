@@ -67,36 +67,20 @@ function getSubjects() {
   return typeof SUBJECTS !== "undefined" && Array.isArray(SUBJECTS) ? SUBJECTS : [];
 }
 
-function readLegacyEstados() {
-  try {
-    const raw = localStorage.getItem("ugr-convalidaciones");
-    const parsed = raw ? JSON.parse(raw) : null;
-    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
-  } catch (error) {
-    // localStorage puede lanzar (modo privado) o traer un JSON roto: los
-    // estados legacy son optativos, no deben tumbar el dashboard.
-    return {};
-  }
-}
-
 /**
- * Entradas legacy de CONVALIDACIONES con su estado de `ugr-convalidaciones`
- * ya colgado: así buildEquivalenceRows no necesita dos accesos a datos
- * distintos. El array global es un `const` de script clásico, igual que
- * SUBJECTS, así que se comprueba globalThis y después el identificador.
+ * Catálogo de equivalencias (global de convalidaciones.js): es la fuente de
+ * las ENTRADAS, no de los estados — esos viven en el store
+ * (progress.equivalences) y los lee buildEquivalenceRows de ahí. Se devuelve
+ * el array crudo, sin attachar estados de localStorage. El array global es
+ * un `const` de script clásico, igual que SUBJECTS, así que se comprueba
+ * globalThis y después el identificador.
  */
-function getLegacyConvalidaciones() {
-  let entries = [];
-  if (Array.isArray(globalThis.CONVALIDACIONES)) entries = globalThis.CONVALIDACIONES;
-  else if (typeof CONVALIDACIONES !== "undefined" && Array.isArray(CONVALIDACIONES)) {
-    entries = CONVALIDACIONES;
+function getRawConvalidaciones() {
+  if (Array.isArray(globalThis.CONVALIDACIONES)) return globalThis.CONVALIDACIONES;
+  if (typeof CONVALIDACIONES !== "undefined" && Array.isArray(CONVALIDACIONES)) {
+    return CONVALIDACIONES;
   }
-  if (!entries.length) return [];
-  const estados = readLegacyEstados();
-  return entries.map((entry) => {
-    const estado = entry?.id ? estados[entry.id] : null;
-    return estado ? { ...entry, estado } : entry;
-  });
+  return [];
 }
 
 function getProgressApi() {
@@ -431,7 +415,7 @@ export function setupProgressDashboard() {
     }
     renderProjection(buildProjection(subjects, credits, progress.plan), summary);
     renderEquivalences(
-      buildEquivalenceRows(progress.equivalences, getLegacyConvalidaciones(), subjects, credits),
+      buildEquivalenceRows(progress.equivalences, getRawConvalidaciones(), subjects, credits),
     );
     restoreFocus(focusId);
   }
@@ -449,12 +433,8 @@ export function setupProgressDashboard() {
     if (!api.setStatus(code, select.value)) render(true);
   });
 
-  // El conmutador de app.js ya muestra la vista; aquí solo hacemos refresh:
-  // los estados legacy viven en localStorage (fuera del store) y solo cambian
-  // al volver de la pestaña Convalidaciones.
-  const tab = document.querySelector('#main-nav .nav-tab[data-view="progreso"]');
-  if (tab) tab.addEventListener("click", () => render(true));
-
+  // Sin refresh por pestaña: los estados viven en el store y subscribe()
+  // repinta cuando cambian. El conmutador de app.js ya muestra la vista.
   document.addEventListener("ugr:catalogUpdated", () => render(true));
   subscribe(() => render(false));
 

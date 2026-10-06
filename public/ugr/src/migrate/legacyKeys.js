@@ -7,8 +7,6 @@ export const LEGACY_KEYS = [
   { key: "ugr-propuestas-guardadas", type: "json", dest: "configs", transform: "propuestasInternas" },
   { key: "ugr-convalidaciones", type: "json", dest: "progress", transform: "convalidaciones" },
   { key: "ugr-horario-subjects", type: "json", dest: "legacy", transform: "subjectSnapshot" },
-  { key: "ugr-predefined-source", type: "string", dest: "userState", transform: "predefinedSource" },
-  { key: "ugr-fav-predefined", type: "json", dest: "userState", transform: "favPredefined" },
 ];
 
 export const DESTINIES = ["userState", "configs", "progress", "legacy", "meta"];
@@ -112,24 +110,31 @@ export function buildPlan(legacy, ctx = {}) {
     }
   }
 
-  if (legacy["ugr-predefined-source"]) {
-    commands.push({ type: "ui/setPredefinedSource", payload: { source: legacy["ugr-predefined-source"] } });
-  }
-
-  if (legacy["ugr-fav-predefined"] && Array.isArray(legacy["ugr-fav-predefined"])) {
-    const favs = legacy["ugr-fav-predefined"].map((id) => `predefined:${id}`);
-    commands.push({ type: "ui/setCompareIds", payload: { ids: favs } });
-  }
-
   return { commands, stats };
+}
+
+function tryParseJson(raw) {
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    // JSON corrupto: se devuelve el crudo y buildPlan lo ignora (sus guards
+    // comprueban formas de objeto/array), igual que una clave ausente.
+    return raw;
+  }
 }
 
 export async function snapshotAllKeys(db) {
   const snapshot = {};
-  for (const { key } of LEGACY_KEYS) {
+  for (const { key, type } of LEGACY_KEYS) {
     const val = localStorage.getItem(key);
     if (val !== null) {
-      snapshot[key] = val;
+      // buildPlan trabaja sobre objetos para las claves JSON: sin este parseo
+      // la migración one-time no generaba ni un comando (todas las lecturas
+      // `legacy[key].campo` devolvían undefined sobre un string) y verify()
+      // fallaba en cuanto el espejo traía selección. En la tabla `legacy` se
+      // guarda el valor CRUDO porque restoreFromSnapshot lo reescribe tal cual
+      // en localStorage si la migración falla.
+      snapshot[key] = type === "json" ? tryParseJson(val) : val;
       try {
         await db.put("legacy", { key, value: val, snappedAt: new Date().toISOString() });
       } catch (e) {
@@ -174,27 +179,6 @@ export async function restoreFromSnapshot(db) {
   const items = await db.getAll("legacy");
   for (const item of items) {
     localStorage.setItem(item.key, item.value);
-  }
-}
-
-export function scheduleDoubleWrite() {
-  let doubleWriteCount = 0;
-  const originalDispatch = window.__ugrLegacy?.dispatch;
-  if (originalDispatch) {
-    window.__ugrLegacy.dispatch = function (cmd) {
-      const result = originalDispatch.apply(this, arguments);
-      if (doubleWriteCount < 2) {
-        saveToLegacy(cmd);
-      }
-      return result;
-    };
-  }
-}
-
-function saveToLegacy(cmd) {
-  const state = window.__ugrLegacy?.getState?.();
-  if (state) {
-    localStorage.setItem("ugr-horario-state", JSON.stringify(state));
   }
 }
 

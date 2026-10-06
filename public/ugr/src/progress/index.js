@@ -1,4 +1,4 @@
-export { STATUS, PASSED_STATUSES, isValidStatus } from "./status.js";
+export { STATUS, PASSED_STATUSES, isValidStatus, ESTADO, isValidEstado, normalizeEstado } from "./status.js";
 export { isPassed, solvableCodes } from "./filter.js";
 export {
   summarize,

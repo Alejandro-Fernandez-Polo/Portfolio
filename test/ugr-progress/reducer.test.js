@@ -110,3 +110,62 @@ describe('reducer: comandos ajenos', () => {
     expect(reducer(s0, { type: 'progress/unknown', payload: {} })).toBe(s0);
   });
 });
+
+describe('reducer: progress/setEquivalenceEstados', () => {
+  const setEstados = (entries) => ({ type: 'progress/setEquivalenceEstados', payload: { entries } });
+
+  it('aplica estados a entradas nuevas (append) y sube rev', () => {
+    const s = reducer(null, setEstados([
+      { id: '011013-FFT', estado: 'concedida' },
+      { id: 'FP-COMBINADA', estado: 'pendiente' },
+    ]));
+    expect(s.rev).toBe(1);
+    expect(s.progress.equivalences).toHaveLength(2);
+    expect(s.progress.equivalences[0]).toMatchObject({ id: '011013-FFT', estado: 'concedida' });
+    expect(s.progress.equivalences[1]).toMatchObject({ id: 'FP-COMBINADA', estado: 'pendiente' });
+    expect(s.progress.updatedAt).toBeTruthy();
+  });
+
+  it('actualiza el estado de una entrada existente por id', () => {
+    const s0 = reducer(null, setEstados([{ id: '011013-FFT', estado: 'pendiente' }]));
+    const s1 = reducer(s0, setEstados([{ id: '011013-FFT', estado: 'concedida' }]));
+    expect(s1.progress.equivalences).toHaveLength(1);
+    expect(s1.progress.equivalences[0].estado).toBe('concedida');
+    expect(s1.rev).toBe(s0.rev + 1);
+  });
+
+  it('descarta estados inválidos sin escribirlos', () => {
+    const s = reducer(null, setEstados([
+      { id: '011013-FFT', estado: 'concedida' },
+      { id: 'X-ROTA', estado: 'aprobada' },
+      { id: 'Y-SIN-ESTADO' },
+    ]));
+    expect(s.progress.equivalences).toHaveLength(1);
+    expect(s.progress.equivalences[0]).toMatchObject({ id: '011013-FFT', estado: 'concedida' });
+  });
+
+  it('es idempotente: repetir los mismos estados no toca el estado', () => {
+    const s0 = reducer(null, setEstados([{ id: '011013-FFT', estado: 'concedida' }]));
+    const s1 = reducer(s0, setEstados([{ id: '011013-FFT', estado: 'concedida' }]));
+    expect(s1).toBe(s0);
+  });
+
+  it('conserva las equivalencias sin id y el resto de campos', () => {
+    const s0 = reducer(null, {
+      type: 'progress/setMapping',
+      payload: { mappings: [{ from: { code: 'A' }, to: { code: 'FFT' }, ects: 6 }] },
+    });
+    const s1 = reducer(s0, setEstados([{ id: '011013-FFT', estado: 'solicitada' }]));
+    expect(s1.progress.equivalences).toHaveLength(2);
+    expect(s1.progress.equivalences[0]).toMatchObject({ from: { code: 'A' }, to: { code: 'FFT' } });
+    expect(s1.progress.equivalences[1]).toMatchObject({ id: '011013-FFT', estado: 'solicitada' });
+  });
+
+  it('no rompe con payload ausente, entries no-array o entradas rotas', () => {
+    const s0 = reducer(null, setStatus('FFT', 'pass'));
+    expect(reducer(s0, { type: 'progress/setEquivalenceEstados' })).toBe(s0);
+    expect(reducer(s0, setEstados(null))).toBe(s0);
+    expect(reducer(s0, setEstados([]))).toBe(s0);
+    expect(reducer(s0, setEstados([null, 'texto', {}]))).toBe(s0);
+  });
+});
