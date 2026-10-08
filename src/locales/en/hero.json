@@ -1,4 +1,15 @@
 {
-  "title": "FULL STACK DEVELOPER",
-  "intro": "Web Dev Technician & Engineering Student. Specialized in JS, PHP, and Java. Highly autonomous & proactive problem solver, trained through UNED's independent learning model."
+  "kicker": "Granada, Spain — Portfolio ’26",
+  "clock": "Granada local time",
+  "line1": "Full Stack",
+  "line2": "Developer",
+  "intro": "Web Dev Technician & Engineering Student. Specialized in JS, PHP, and Java. Highly autonomous & proactive problem solver, trained through UNED's independent learning model.",
+  "photoAlt": "Alejandro Fernández Polo",
+  "photoCaption": "Fig. 01 — A. Fernández Polo",
+  "scroll": "Scroll to explore ↓",
+  "social": {
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  }
 }

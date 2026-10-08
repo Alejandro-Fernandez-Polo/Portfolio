@@ -8,20 +8,22 @@ export default function Education() {
   const lang = useLang()
 
   return (
-    <section id="education">
-      <div className="section-header">
-        <h2>{t("title")}</h2>
-      </div>
-      <div className="education-grid">
-        {education.map((item) => {
-          const trans = t(`${item.id}`, { returnObjects: true })
-          return (
-            <div key={item.id} className="education-card">
-              <h3>{trans.title}</h3>
-              <p>{item.date[lang] || item.date.en}</p>
-            </div>
-          )
-        })}
+    <section id="education" data-legacy>
+      <div className="container">
+        <div className="section-header">
+          <h2>{t("title")}</h2>
+        </div>
+        <div className="education-grid">
+          {education.map((item) => {
+            const trans = t(`${item.id}`, { returnObjects: true })
+            return (
+              <div key={item.id} className="education-card">
+                <h3>{trans.title}</h3>
+                <p>{item.date[lang] || item.date.en}</p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

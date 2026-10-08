@@ -1,14 +1,14 @@
 .contact-section {
-  background: var(--card-bg);
+  background: var(--card-bg-old);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-border-old);
   border-radius: 30px;
   padding: 60px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  box-shadow: 0 8px 32px var(--glass-shadow),
+  box-shadow: 0 8px 32px var(--glass-shadow-old),
               inset 0 1px 1px rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
@@ -30,25 +30,25 @@
 .contact-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background: linear-gradient(135deg, var(--accent-violet-old), var(--accent-light-old));
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 20px;
-  box-shadow: 0 4px 15px var(--glass-shadow),
+  box-shadow: 0 4px 15px var(--glass-shadow-old),
               inset 0 1px 1px rgba(255, 255, 255, 0.3);
   padding: 10px;
-  fill: var(--bg-primary);
+  fill: var(--bg-primary-old);
 }
 .contact-icon .mail-link {
-  stroke: var(--bg-primary)!important;
+  stroke: var(--bg-primary-old)!important;
 }
 
 .contact-item div h4 {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-secondary-old);
   font-weight: 600;
   margin-bottom: 4px;
 }
@@ -74,11 +74,11 @@
 .form-group textarea {
   padding: 16px;
   border-radius: 12px;
-  border: 1px solid var(--glass-border);
-  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border-old);
+  background: var(--bg-secondary-old);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: var(--text-primary);
+  color: var(--text-primary-old);
   font-family: 'Outfit', sans-serif;
   font-size: 15px;
   transition: all 0.3s ease;
@@ -88,10 +88,10 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: var(--accent-violet-old);
   box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1),
               inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  background: var(--card-bg);
+  background: var(--card-bg-old);
 }
 
 .form-group textarea {

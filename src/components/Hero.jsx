@@ -1,149 +1,134 @@
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import recImage from "../assets/images/perfil.png"
+import { profile } from "../assets/images"
+import { skills } from "../constants/skills.js"
 import { socialLinks } from "../constants/social.jsx"
 import "./css/Hero.css"
 
+const madridClock = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Madrid",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+})
+
+function skillsForGroups(groupTitles) {
+  return skills
+    .filter((group) => groupTitles.includes(group.title))
+    .flatMap((group) => group.content.map((skill) => skill.name))
+}
+
+// The ticker uses the skills catalog as its source so the same technology list
+// cannot drift between this introduction and the Skills section.
+const tickerRows = [
+  {
+    className: "ticker-row",
+    items: skillsForGroups(["Frontend", "Tools & Platforms"]),
+  },
+  {
+    className: "ticker-row ticker-row-alt",
+    items: skillsForGroups(["Backend", "Database and CMS"]),
+  },
+]
+
 export default function Hero() {
-  const { t, i18n } = useTranslation("hero")
+  const { t } = useTranslation("hero")
+  const [clock, setClock] = useState(() => madridClock.format(new Date()))
+
+  useEffect(() => {
+    const intervalId = window.setInterval(
+      () => setClock(madridClock.format(new Date())),
+      15000,
+    )
+
+    return () => window.clearInterval(intervalId)
+  }, [])
 
   return (
-    <section className="hero" id="home">
-      <div className="hero-content">
-        <h1>
-          ALEJANDRO
-          <br />
-          FERNÁNDEZ
-        </h1>
-        <h2>{t("title")}</h2>
-        <p>{t("intro")}</p>
+    <>
+      <section className="hero" id="home">
+        <svg className="shape shape-star" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 4 60 40 96 50 60 60 50 96 40 60 4 50 40 40Z" />
+        </svg>
+        <svg className="shape shape-ast" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 8v84M14 29l72 42M86 29 14 71" />
+        </svg>
 
-        <div className="social-links ">
-          <a
-            href="mailto:afernanpolo@gmail.com"
-            className="social-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg className="mail-link" viewBox="0 0 24 24">
-              <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-            </svg>
-          </a>
-          {socialLinks.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              className="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {link.icon}
-            </a>
-          ))}
+        <div className="hero-kickers hero-anim" style={{ "--d": "0s" }}>
+          <p className="kicker">
+            <span className="dot" aria-hidden="true" />
+            <span>{t("kicker")}</span>
+          </p>
+          <p className="clock mono" aria-label={t("clock")}>
+            <time className="clock-time">{clock}</time>
+            <span className="clock-dot" aria-hidden="true" />
+          </p>
         </div>
-      </div>
-      <div className="hero-image">
-        <div className="hero-illustration">
-          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="350" cy="100" r="30" fill="var(--accent)" opacity="0.2">
-              <animate
-                attributeName="cy"
-                values="100;80;100"
-                dur="4s"
-                repeatCount="indefinite"
-              />
-            </circle>
-            <circle
-              cx="320"
-              cy="170"
-              r="20"
-              fill="var(--accent-light)"
-              opacity="0.3"
-            >
-              <animate
-                attributeName="cx"
-                values="320;340;320"
-                dur="5s"
-                repeatCount="indefinite"
-              />
-            </circle>
-            <circle
-              cx="370"
-              cy="220"
-              r="15"
-              fill="var(--accent)"
-              opacity="0.25"
-            >
-              <animate
-                attributeName="r"
-                values="15;20;15"
-                dur="3s"
-                repeatCount="indefinite"
-              />
-            </circle>
-            <circle
-              cx="80"
-              cy="240"
-              r="35"
-              fill="none"
-              stroke="var(--accent)"
-              strokeWidth="2"
-              opacity="0.4"
-            >
-              <animate
-                attributeName="r"
-                values="35;40;35"
-                dur="4s"
-                repeatCount="indefinite"
-              />
-            </circle>
-            <circle
-              cx="50"
-              cy="120"
-              r="25"
-              fill="none"
-              stroke="var(--accent-light)"
-              strokeWidth="2"
-              opacity="0.3"
-            >
-              <animate
-                attributeName="r"
-                values="25;30;25"
-                dur="5s"
-                repeatCount="indefinite"
-              />
-            </circle>
 
-            {/* Imagen central redonda */}
-            <defs>
-              <clipPath id="circleClip">
-                <circle cx="195" cy="175" r="125" />
-              </clipPath>
-              <radialGradient id="screenGlow">
-                <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.8" />
-                <stop
-                  offset="100%"
-                  stopColor="var(--accent-light)"
-                  stopOpacity="0.2"
-                />
-              </radialGradient>
-            </defs>
-            <image
-              href={recImage}
-              alt="Profile"
-              loading="eager" // Añadir eager para contenido above the fold
-              fetchpriority="high" // Priorizar esta imagen
-              x="70"
-              y="50"
-              width="250"
-              height="250"
-              clipPath="url(#circleClip)"
-              preserveAspectRatio="xMidYMid slice"
+        <div className="hero-main">
+          <h1 className="hero-title">
+            <span className="line hero-anim" style={{ "--d": ".08s" }}>
+              {t("line1")}
+            </span>
+            <span className="line hero-anim" style={{ "--d": ".18s" }}>
+              <span className="sticker">{t("line2")}</span>
+            </span>
+          </h1>
+          <figure className="hero-photo hero-anim" style={{ "--d": ".26s" }}>
+            <img
+              src={profile}
+              alt={t("photoAlt")}
+              loading="eager"
+              fetchpriority="high"
             />
-            <circle cx="195" cy="175" r="127" fill="none" opacity="0.6" />
-          </svg>
+            <figcaption className="mono">{t("photoCaption")}</figcaption>
+          </figure>
         </div>
+
+        <div className="hero-card hero-anim" style={{ "--d": ".36s" }}>
+          <p className="hero-intro">{t("intro")}</p>
+        </div>
+
+        <div className="hero-foot hero-anim" style={{ "--d": ".5s" }}>
+          <ul className="socials mono">
+            <li>
+              <a href="mailto:afernanpolo@gmail.com" aria-label={t("social.email")}>
+                {t("social.email")} ↗
+              </a>
+            </li>
+            {socialLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t(`social.${link.id}`)}
+                >
+                  {t(`social.${link.id}`)} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a className="scroll-cue mono" href="#skills">
+            {t("scroll")}
+          </a>
+        </div>
+      </section>
+
+      <div className="ticker" aria-hidden="true">
+        {tickerRows.map((row) => {
+          const text = `${row.items.join(" // ")} // `
+
+          return (
+            <div className={row.className} key={row.className}>
+              <div className="ticker-track">
+                <span>{text}</span>
+                <span>{text}</span>
+              </div>
+            </div>
+          )
+        })}
       </div>
-    </section>
+    </>
   )
 }

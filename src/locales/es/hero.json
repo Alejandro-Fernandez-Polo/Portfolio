@@ -1,4 +1,15 @@
 {
-  "title": "DESARROLLADOR FULL STACK",
-  "intro": "Técnico en Desarrollo Web y estudiante de Ingeniería. Especializado en JS, PHP y Java. Acostumbrado a entornos de alta autonomía y resolución de retos técnicos con el sello de la UNED."
+  "kicker": "Granada, España — Portfolio ’26",
+  "clock": "Hora local de Granada",
+  "line1": "Desarrollador",
+  "line2": "Full Stack",
+  "intro": "Técnico en Desarrollo Web y estudiante de Ingeniería. Especializado en JS, PHP y Java. Acostumbrado a entornos de alta autonomía y resolución de retos técnicos con el sello de la UNED.",
+  "photoAlt": "Alejandro Fernández Polo",
+  "photoCaption": "Fig. 01 — A. Fernández Polo",
+  "scroll": "Desliza para explorar ↓",
+  "social": {
+    "email": "Correo electrónico",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  }
 }

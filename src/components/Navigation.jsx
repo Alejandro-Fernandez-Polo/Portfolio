@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useLang } from "../hooks/useLang.js"
 import "./css/Navigation.css"
 
-export default function Navigation({ theme, toggleTheme }) {
+export default function Navigation({ toggleTheme }) {
   const [activeSection, setActiveSection] = useState("home")
   const { t, i18n } = useTranslation("navbar")
   const lang = useLang()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  // La barra de progreso se actualiza por frame con CSS custom property:
+  // meter el porcentaje en estado re-renderizaría el nav en cada scroll.
+  const progressRef = useRef(null)
 
   const handleClick = (e, targetId) => {
     e.preventDefault()
     setIsMenuOpen(false) // Cerrar menú al hacer click
 
-    if (targetId === "#" || targetId === "#home") {
+    if (targetId === "#" || targetId === "#home" || targetId === "#top") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -37,173 +40,160 @@ export default function Navigation({ theme, toggleTheme }) {
     setIsMenuOpen(!isMenuOpen)
   }
 
-useEffect(() => {
-  const handleScroll = () => {
-    // Usar requestAnimationFrame para throttling
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const scrollY = window.scrollY // Una sola lectura
+  useEffect(() => {
+    // El spy de scroll es el mismo de siempre (offset de 100px por sección);
+    // lo único nuevo respecto al nav anterior es la barra de progreso.
+    let ticking = false
 
-        // Batch todas las lecturas de geometría
-        const sections = document.querySelectorAll("section")
-        const offsets = Array.from(sections).map((section) => ({
-          id: section.id,
-          offsetTop: section.offsetTop,
-          offsetHeight: section.offsetHeight,
-        }))
+    const update = () => {
+      const scrollY = window.scrollY // Una sola lectura
 
-        // Ahora hacer los cálculos
-        offsets.forEach(({ id, offsetTop, offsetHeight }) => {
-          if (
-            scrollY >= offsetTop - 100 &&
-            scrollY < offsetTop + offsetHeight - 100
-          ) {
-            setActiveSection(id)
-          }
-        })
+      // Batch todas las lecturas de geometría
+      const sections = document.querySelectorAll("section")
+      const offsets = Array.from(sections).map((section) => ({
+        id: section.id,
+        offsetTop: section.offsetTop,
+        offsetHeight: section.offsetHeight,
+      }))
 
-        ticking = false
+      offsets.forEach(({ id, offsetTop, offsetHeight }) => {
+        if (
+          scrollY >= offsetTop - 100 &&
+          scrollY < offsetTop + offsetHeight - 100
+        ) {
+          setActiveSection(id)
+        }
       })
-      ticking = true
-    }
-  }
 
-  let ticking = false
-  window.addEventListener("scroll", handleScroll)
-  return () => window.removeEventListener("scroll", handleScroll)
-}, [])
+      if (progressRef.current) {
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        const progress = max > 0 ? Math.min(scrollY / max, 1) : 0
+        progressRef.current.style.setProperty("--p", String(progress))
+      }
+
+      ticking = false
+    }
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true
+        window.requestAnimationFrame(update)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    update() // Estado inicial: la página puede cargar con scroll restaurado
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const navItems = [
-    { href: "#home", label: t("home") },
-    { href: "#experience", label: t("experience") },
-    { href: "#skills", label: t("skills") },
-    { href: "#projects", label: t("projects") },
-    { href: "#education", label: t("education") },
-    { href: "#contact", label: t("contact") },
+    { num: "01", href: "#skills", label: t("skills") },
+    { num: "02", href: "#projects", label: t("projects") },
+    { num: "03", href: "#experience", label: t("experience") },
+    { num: "04", href: "#education", label: t("education") },
+    { num: "05", href: "#contact", label: t("contact") },
   ]
 
-  return (
-    <nav>
-      {/* Backdrop para cerrar el menú */}
-      {isMenuOpen && (
-        <div className="nav-backdrop" onClick={() => setIsMenuOpen(false)}></div>
-      )}
-      
-      <div className="nav-background">
-        {/* Botón hamburguesa para móvil */}
-        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
-          <span className={isMenuOpen ? "open" : ""}></span>
-          <span className={isMenuOpen ? "open" : ""}></span>
-          <span className={isMenuOpen ? "open" : ""}></span>
-        </button>
+  const menuItems = [{ num: "00", href: "#top", label: t("home") }, ...navItems]
 
-        <div className={`nav-pill ${isMenuOpen ? "mobile-open" : ""}`}>
+  const changeLang = (next) => {
+    i18n.changeLanguage(next)
+    setIsMenuOpen(false)
+  }
+
+  return (
+    <>
+      <div className="scroll-progress" aria-hidden="true">
+        <span className="scroll-progress-fill" ref={progressRef}></span>
+      </div>
+
+      <header className="site-head">
+        <a className="wordmark" href="#top" onClick={(e) => handleClick(e, "#top")}>
+          Alejandro&nbsp;Fernández
+        </a>
+
+        <nav className="nav-desk" aria-label="Principal">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={(e) => handleClick(e, item.href)}
-              style={{
-                color:
-                  activeSection === item.href.substring(1)
-                    ? "var(--accent)"
-                    : "var(--text-primary)",
-              }}
+              className={activeSection === item.href.substring(1) ? "active" : ""}
             >
-              {item.label}
+              <sup>{item.num}</sup>
+              <span>{item.label}</span>
             </a>
           ))}
-          <div className="language-switcher">
-            <a
-              onClick={() => {
-                i18n.changeLanguage("en")
-                setIsMenuOpen(false)
-              }}
-              style={{
-                color:
-                  lang === "en"
-                    ? "var(--accent)"
-                    : "var(--text-primary)",
-              }}
+        </nav>
+
+        <div className="head-tools">
+          <div className="lang" role="group" aria-label={t("language")}>
+            <button
+              className={`lang-btn${lang === "es" ? " on" : ""}`}
+              data-lang="es"
+              type="button"
+              onClick={() => changeLang("es")}
             >
-              ENG
-            </a>
-            <a
-              onClick={() => {
-                i18n.changeLanguage("es")
-                setIsMenuOpen(false)
-              }}
-              style={{
-                color:
-                  lang === "es"
-                    ? "var(--accent)"
-                    : "var(--text-primary)",
-              }}
+              ES
+            </button>
+            <span className="lang-sep" aria-hidden="true">
+              /
+            </span>
+            <button
+              className={`lang-btn${lang === "en" ? " on" : ""}`}
+              data-lang="en"
+              type="button"
+              onClick={() => changeLang("en")}
             >
-              ESP
-            </a>
+              EN
+            </button>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            style={{ display: "none" }}
+
+          <button
+            className="theme-btn"
+            type="button"
+            aria-label={t("toggleTheme")}
+            onClick={toggleTheme}
           >
-            <defs>
-              <filter id="goo">
-                <feGaussianBlur
-                  in="SourceGraphic"
-                  stdDeviation="10"
-                  result="blur"
-                />
-                <feColorMatrix
-                  in="blur"
-                  mode="matrix"
-                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-                  result="goo"
-                />
-                <feBlend in="SourceGraphic" in2="goo" />
-              </filter>
-            </defs>
-          </svg>
-          <div>
-            <label htmlFor="switch" className="toggle">
-              <input
-                type="checkbox"
-                className="input"
-                id="switch"
-                checked={theme === "dark"}
-                onChange={toggleTheme}
-              />
-              <div className="icon icon--moon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  width="20"
-                  height="20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </div>
-              <div className="icon icon--sun">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  width="20"
-                  height="20"
-                >
-                  <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"></path>
-                </svg>
-              </div>
-            </label>
-          </div>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 3a9 9 0 0 0 0 18Z" className="theme-fill" />
+            </svg>
+          </button>
+
+          <button
+            className={`burger${isMenuOpen ? " open" : ""}`}
+            type="button"
+            aria-label={t("menu")}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            onClick={toggleMenu}
+          >
+            <span></span>
+            <span></span>
+          </button>
         </div>
+      </header>
+
+      <div
+        className={`menu${isMenuOpen ? " open" : ""}`}
+        id="mobile-menu"
+        aria-hidden={!isMenuOpen}
+      >
+        <nav className="menu-links" aria-label={t("menu")}>
+          {menuItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleClick(e, item.href)}
+            >
+              <sup>{item.num}</sup>
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </nav>
+        <p className="menu-foot mono">{t("menuFoot")}</p>
       </div>
-    </nav>
+    </>
   )
 }

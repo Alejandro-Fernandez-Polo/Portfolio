@@ -8,32 +8,34 @@ export default function Experience() {
   const lang = useLang()
 
   return (
-    <section id="experience">
-      <div className="section-header">
-        <h2>{t("title")}</h2>
-      </div>
-      <div className="timeline">
-        {experiences.map((exp) => {
-          const trans = t(exp.id, { returnObjects: true })
-          return (
-            <div key={exp.id} className="timeline-item">
-              <h3>{trans.title}</h3>
-              <div className="company">
-                {exp.company_name} ({exp.date[lang] || exp.date.en})
+    <section id="experience" data-legacy>
+      <div className="container">
+        <div className="section-header">
+          <h2>{t("title")}</h2>
+        </div>
+        <div className="timeline">
+          {experiences.map((exp) => {
+            const trans = t(exp.id, { returnObjects: true })
+            return (
+              <div key={exp.id} className="timeline-item">
+                <h3>{trans.title}</h3>
+                <div className="company">
+                  {exp.company_name} ({exp.date[lang] || exp.date.en})
+                </div>
+                <div className="date">
+                  {trans.points.map((point) => (
+                    <li
+                      key={point}
+                      className="text-black-500/50 font-normal pl-1 text-sm"
+                    >
+                      {point}
+                    </li>
+                  ))}
+                </div>
               </div>
-              <div className="date">
-                {trans.points.map((point) => (
-                  <li
-                    key={point}
-                    className="text-black-500/50 font-normal pl-1 text-sm"
-                  >
-                    {point}
-                  </li>
-                ))}
-              </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </section>
   )

@@ -13,11 +13,30 @@
     <meta property="og:type" content="website" />
 
     <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.ico" />
+    <!-- Solo lo que pinta el primer pantallazo: display (títulos), body y la
+         monoespaciada de los kickers. Los pesos 700 y la itálica de Space Mono
+         los piden las reglas que los usan, sin bloquear el render inicial.
+         Se retiró el preload de Outfit: sin @font-face nunca se llegó a aplicar
+         y sólo costaba una petición de 110 KB. -->
     <link
       rel="preload"
-      href="/src/assets/fonts/Outfit-VariableFont_wght.ttf"
+      href="/src/assets/fonts/anton-normal-400.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/src/assets/fonts/archivo-normal-400-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/src/assets/fonts/space-mono-normal-400.woff2"
+      as="font"
+      type="font/woff2"
       crossorigin
     />
   </head>
