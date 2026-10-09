@@ -109,7 +109,9 @@ export default function Hero() {
               </li>
             ))}
           </ul>
-          <a className="scroll-cue mono" href="#skills">
+          {/* Apunta a la primera sección del flujo (Projects), que tras el
+              reorden ya no es Skills. */}
+          <a className="scroll-cue mono" href="#projects">
             {t("scroll")}
           </a>
         </div>

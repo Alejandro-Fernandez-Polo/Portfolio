@@ -11,10 +11,23 @@ export default function Navigation({ toggleTheme }) {
   // La barra de progreso se actualiza por frame con CSS custom property:
   // meter el porcentaje en estado re-renderizaría el nav en cada scroll.
   const progressRef = useRef(null)
+  // Regla del bloque Experience + Education: las dos columnas son laterales,
+  // así que el scroll no puede decir cuál lee el usuario. Educación se enciende
+  // por intención del último click y se apaga al salir del bloque. Van en refs
+  // porque el efecto del scroll se registra una sola vez (deps []).
+  // El viaje del scroll suave pasa por fuera antes de llegar: la intención solo
+  // se descarta cuando el scroll lleva 250ms detenido fuera del bloque.
+  const educationIntentRef = useRef(false)
+  const educationTimerRef = useRef(null)
 
   const handleClick = (e, targetId) => {
     e.preventDefault()
     setIsMenuOpen(false) // Cerrar menú al hacer click
+    educationIntentRef.current = targetId === "#education"
+    if (educationTimerRef.current) {
+      clearTimeout(educationTimerRef.current)
+      educationTimerRef.current = null
+    }
 
     if (targetId === "#" || targetId === "#home" || targetId === "#top") {
       window.scrollTo({
@@ -65,6 +78,29 @@ export default function Navigation({ toggleTheme }) {
         }
       })
 
+      // La intención solo manda dentro de su bloque; fuera, se descarta cuando
+      // el scroll deja de moverse (los frames del viaje suave la renuevan).
+      if (educationIntentRef.current) {
+        const block = document.getElementById("experience")
+        const inside =
+          block &&
+          scrollY >= block.offsetTop - 100 &&
+          scrollY < block.offsetTop + block.offsetHeight - 100
+        if (inside) {
+          setActiveSection("education")
+          if (educationTimerRef.current) {
+            clearTimeout(educationTimerRef.current)
+            educationTimerRef.current = null
+          }
+        } else {
+          if (educationTimerRef.current) clearTimeout(educationTimerRef.current)
+          educationTimerRef.current = setTimeout(() => {
+            educationIntentRef.current = false
+            educationTimerRef.current = null
+          }, 250)
+        }
+      }
+
       if (progressRef.current) {
         const max = document.documentElement.scrollHeight - window.innerHeight
         const progress = max > 0 ? Math.min(scrollY / max, 1) : 0
@@ -83,12 +119,15 @@ export default function Navigation({ toggleTheme }) {
 
     window.addEventListener("scroll", handleScroll)
     update() // Estado inicial: la página puede cargar con scroll restaurado
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (educationTimerRef.current) clearTimeout(educationTimerRef.current)
+    }
   }, [])
 
   const navItems = [
-    { num: "01", href: "#skills", label: t("skills") },
-    { num: "02", href: "#projects", label: t("projects") },
+    { num: "01", href: "#projects", label: t("projects") },
+    { num: "02", href: "#skills", label: t("skills") },
     { num: "03", href: "#experience", label: t("experience") },
     { num: "04", href: "#education", label: t("education") },
     { num: "05", href: "#contact", label: t("contact") },

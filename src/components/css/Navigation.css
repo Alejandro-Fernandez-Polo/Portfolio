@@ -1,9 +1,7 @@
 /* Rebanada Navigation — selectores portados de pruebas/preview-2-v2/styles.css
    (bloques de cabecera y menú). Los tokens que usan (--bg, --ink, --head-h,
-   --ease, --font-*) están declarados en src/index.css. Las reglas de
-   keyframes/:active de esta hoja son compartidas en el prototipo; hoy sólo
-   las consume el nav, así que viven aquí hasta que otra rebanada las necesite
-   y entonces pasan a index.css. */
+   --ease, --font-*) están declarados en src/index.css. El sello de pulsación
+   (`stamp`) pasó a index.css al compartirlo la sección Skills. */
 
 /* ——— Barra de progreso de scroll ——— */
 .scroll-progress {
@@ -257,31 +255,6 @@
   letter-spacing: 0.1em;
 }
 
-/* ——— Sello: golpe de escala + destello al pulsar ——— */
-.nav-desk a:active,
-.wordmark:active,
-.theme-btn:active,
-.lang-btn:active,
-.menu-links a:active {
-  animation: stamp 0.24s var(--ease);
-}
-
-@keyframes stamp {
-  0% {
-    scale: 1;
-    outline: 0 solid transparent;
-  }
-  45% {
-    scale: 0.94;
-    outline: 4px solid var(--accent);
-    outline-offset: 3px;
-  }
-  100% {
-    scale: 1;
-    outline: 0 solid transparent;
-  }
-}
-
 /* ——— Responsive ——— */
 @media (max-width: 900px) {
   .nav-desk {
@@ -316,15 +289,5 @@
   .burger {
     width: 1.9rem;
     height: 1.9rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-desk a:active,
-  .wordmark:active,
-  .theme-btn:active,
-  .lang-btn:active,
-  .menu-links a:active {
-    animation: none;
   }
 }
