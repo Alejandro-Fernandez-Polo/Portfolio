@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from "react"
+import { Toaster } from "sonner"
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import { useLang } from "./hooks/useLang.js"
@@ -14,7 +15,6 @@ function App() {
   const Experience = lazy(() => import("./components/Experience"))
   const Skills = lazy(() => import("./components/Skills"))
   const Projects = lazy(() => import("./components/Projects"))
-  const Education = lazy(() => import("./components/Education"))
   const Contact = lazy(() => import("./components/Contact"))
   const Footer = lazy(() => import("./components/Footer"))
 
@@ -38,19 +38,26 @@ function App() {
     <>
       <Navigation theme={theme} toggleTheme={toggleTheme} />
       {/* El contenedor lo pone cada sección (patrón del prototipo); el id es el
-          destino de los enlaces #top del wordmark y del menú móvil. */}
+          destino de los enlaces #top del wordmark y del menú móvil.
+          Education no aparece aquí: lo monta Experience dentro de su grid. */}
       <main id="top">
         <Hero />
         <Suspense fallback={<div>Loading...</div>}>
-          <Experience />
-          <Skills />
           <Projects />
-          <Education />
+          <Skills />
+          <Experience />
           <Contact />
           <Footer />
         </Suspense>
       </main>
       <div className="cursor" ref={cursorRef} aria-hidden="true" />
+      {/* El toaster sigue el tema de la app (data-theme) desde el estado. */}
+      <Toaster
+        position="bottom-right"
+        richColors
+        closeButton
+        theme={theme}
+      />
     </>
   )
 }

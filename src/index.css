@@ -155,6 +155,43 @@ body {
   font-family: var(--font-mono);
 }
 
+/* Chips de socials: los usan Hero y Contact, así que viven aquí (venían de
+   Hero.css). El `.scroll-cue` del Hero, que estaba agrupado con ellos, se
+   queda en su hoja porque solo lo usa ese componente. */
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  list-style: none;
+}
+
+.socials a {
+  display: inline-block;
+  padding: 0.55em 0.8em;
+  background: var(--surface);
+  /* Color explícito: dentro de la banda de Contact se heredaba `--bg` y el
+     texto quedaba casi invisible sobre el chip. */
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.socials a:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--shadow);
+  background: var(--blue);
+  color: #111;
+}
+
 /* Reveal stays global because later section slices share the same observer hook. */
 .reveal {
   opacity: 0;
@@ -222,17 +259,221 @@ a {
   text-decoration: none;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-  position: relative;
-  z-index: 1;
+ul {
+  list-style: none;
 }
 
-section {
-  margin-bottom: 100px;
-  animation: fadeInUp 0.8s ease;
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--yellow);
+  color: #111;
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ——— Secciones ——— */
+/* Armazón compartido por todas las secciones del diseño nuevo. */
+.section {
+  padding-block: clamp(4rem, 10vh, 6.5rem);
+}
+
+.sec-head {
+  margin-bottom: clamp(2.2rem, 6vh, 3.4rem);
+}
+
+.sec-num {
+  display: inline-block;
+  margin-bottom: 1.1rem;
+  padding: 0.35em 0.7em;
+  background: var(--accent);
+  color: #fff;
+  border: 2.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transform: rotate(-1.5deg);
+}
+
+.sec-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.sec-intro {
+  max-width: 70ch;
+  margin-top: 1.4rem;
+  padding: clamp(1rem, 2.5vw, 1.4rem);
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--shadow);
+  color: var(--ink-soft);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+}
+
+/* ——— Bloque Experience + Education ——— */
+/* Esqueleto compartido: en el prototipo las dos conviven en el mismo
+   .track-grid (filas a la izquierda, aside sticky a la derecha). */
+.track-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.track-exp {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.track-exp .exp-row {
+  margin-bottom: 0;
+}
+
+.track-edu {
+  position: sticky;
+  top: calc(var(--head-h) + 1rem);
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  box-shadow: 7px 7px 0 var(--shadow);
+  padding: clamp(1.2rem, 3vw, 1.7rem);
+}
+
+.track-edu .sec-num {
+  margin-bottom: 0.8rem;
+}
+
+.track-edu-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1;
+  margin-bottom: 1.2rem;
+}
+
+/* ——— Formas decorativas ——— */
+.shape {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.shape-star {
+  top: 15%;
+  right: 3.5%;
+  width: clamp(34px, 4vw, 56px);
+  fill: var(--blue);
+  stroke: #111;
+  stroke-width: 6;
+  stroke-linejoin: round;
+  animation: spin 18s linear infinite;
+}
+
+.shape-ast {
+  right: 5%;
+  bottom: 16%;
+  width: clamp(44px, 5vw, 76px);
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 13;
+  stroke-linecap: round;
+  animation: bob 4.6s ease-in-out infinite;
+}
+
+.shape-squig {
+  top: 6%;
+  right: 3%;
+  width: clamp(72px, 9vw, 128px);
+  fill: none;
+  stroke-linecap: round;
+  animation: drift 7s ease-in-out infinite;
+}
+
+.shape-squig path:first-child {
+  stroke: #111;
+  stroke-width: 16;
+}
+
+.shape-squig path:last-child {
+  stroke: var(--yellow);
+  stroke-width: 8;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes drift {
+  50% {
+    transform: translateX(16px) rotate(-4deg);
+  }
+}
+
+/* ——— Sello: golpe de escala + destello al pulsar ——— */
+.btn:active,
+.proj:active,
+.proj-link:active,
+.exp-row:active,
+.edu-row:active,
+.nav-desk a:active,
+.chips li:active,
+.socials a:active,
+.scroll-cue:active,
+.to-top:active,
+.wordmark:active,
+.theme-btn:active,
+.lang-btn:active,
+.menu-links a:active {
+  animation: stamp 0.24s var(--ease);
+}
+
+@keyframes stamp {
+  0% {
+    scale: 1;
+    outline: 0 solid transparent;
+  }
+  45% {
+    scale: 0.94;
+    outline: 4px solid var(--accent);
+    outline-offset: 3px;
+  }
+  100% {
+    scale: 1;
+    outline: 0 solid transparent;
+  }
 }
 
 .section-header {
@@ -255,35 +496,75 @@ section {
   font-weight: 700;
 }
 
-/* Global animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ——— Toasts (Sonner) con el estilo del sistema ———
+   Sonner define sus variables en [data-sonner-toaster][data-sonner-theme=…] e
+   inyecta su CSS en runtime: el prefijo `html` da la especificidad necesaria
+   para ganar sin depender del orden de inserción. */
+html [data-sonner-toaster][data-sonner-theme="light"],
+html [data-sonner-toaster][data-sonner-theme="dark"] {
+  --normal-bg: var(--surface);
+  --normal-text: var(--ink);
+  --normal-border: var(--ink);
+  --success-bg: var(--green);
+  --success-text: #111;
+  --success-border: #111;
+  --error-bg: var(--red);
+  --error-text: #111;
+  --error-border: #111;
+  --warning-bg: var(--yellow);
+  --warning-text: #111;
+  --warning-border: #111;
+  --info-bg: var(--blue);
+  --info-text: #111;
+  --info-border: #111;
+  font-family: var(--font-body);
 }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+html [data-sonner-toast] {
+  border: 3px solid #111 !important;
+  border-radius: 0 !important;
+  box-shadow: 6px 6px 0 var(--shadow) !important;
+  font-weight: 700;
+}
+
+html [data-sonner-toast] [data-title] {
+  font-weight: 800;
+}
+
+html [data-sonner-toast] [data-description] {
+  color: inherit;
+  opacity: 0.85;
+}
+
+html [data-sonner-toast] [data-button] {
+  border: 2.5px solid #111;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 var(--shadow);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+html [data-sonner-toast] [data-close-button] {
+  border: 2.5px solid #111;
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: none;
 }
 
 /* Responsive global */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 20px;
+@media (max-width: 900px) {
+  .track-grid {
+    grid-template-columns: 1fr;
   }
 
+  .track-edu {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
   .section-header h2 {
     font-size: 32px;
   }
@@ -295,5 +576,28 @@ section {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .shape-star,
+  .shape-ast,
+  .shape-squig {
+    animation: none;
+  }
+
+  .btn:active,
+  .proj:active,
+  .proj-link:active,
+  .exp-row:active,
+  .edu-row:active,
+  .nav-desk a:active,
+  .chips li:active,
+  .socials a:active,
+  .scroll-cue:active,
+  .to-top:active,
+  .wordmark:active,
+  .theme-btn:active,
+  .lang-btn:active,
+  .menu-links a:active {
+    animation: none;
   }
 }

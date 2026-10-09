@@ -1,9 +1,13 @@
 {
+  "sec": "SEC. 05",
   "title": "Escríbeme",
   "info": {
     "location": "Ubicación",
     "my_location": "Granada, España",
-    "email": "Email:"
+    "email": "Email:",
+    "name": "Nombre",
+    "emailLabel": "Email",
+    "message": "Mensaje"
   },
   "form": {
     "name_placeholder": "Tu nombre",
@@ -12,10 +16,12 @@
     "send": "Enviar mensaje",
     "sending": "Enviando..."
   },
+  "social": {
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
   "alerts": {
     "success": "¡Mensaje enviado con éxito!",
-    "error": "Ups, algo salió mal. Inténtalo de nuevo.",
-    "failed": "Error",
-    "success_badge": "Éxito"
+    "error": "Ups, algo salió mal. Inténtalo de nuevo."
   }
 }

@@ -1,9 +1,13 @@
 {
+  "sec": "SEC. 05",
   "title": "Get in Touch",
   "info": {
     "location": "Location",
     "my_location": "Granada, Spain",
-    "email": "Email:"
+    "email": "Email:",
+    "name": "Name",
+    "emailLabel": "Email",
+    "message": "Message"
   },
   "form": {
     "name_placeholder": "Your Name",
@@ -12,10 +16,12 @@
     "send": "Send Message",
     "sending": "Sending..."
   },
+  "social": {
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
   "alerts": {
     "success": "Message sent successfully!",
-    "error": "Ahh, something went wrong. Please try again.",
-    "failed": "Failed",
-    "success_badge": "Success"
+    "error": "Ahh, something went wrong. Please try again."
   }
 }
