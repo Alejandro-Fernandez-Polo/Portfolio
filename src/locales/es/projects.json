@@ -1,4 +1,5 @@
 {
+  "sec": "SEC. 01",
   "title": "Proyectos",
   "intro": "Esta página presenta una recopilación de mis proyectos, que abarcan el diseño web, el desarrollo con React y la programación orientada a objetos. Cada proyecto destaca diferentes habilidades y etapas de mi trayectoria de aprendizaje, lo que demuestra mi capacidad de experimentación, crecimiento y aplicación práctica. En conjunto, reflejan la evolución de mis habilidades.",
   "codigodesconocido": {
@@ -19,5 +20,8 @@
   },
   "made": "Hecho con: ",
   "viewcode": "Ver el código",
-  "livedemo": "Demo en vivo"
+  "livedemo": "Demo en vivo",
+  "featured": "Destacado",
+  "prev": "Proyecto anterior",
+  "next": "Proyecto siguiente"
 }

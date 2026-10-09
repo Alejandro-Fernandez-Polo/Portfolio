@@ -6,12 +6,12 @@ import {
 } from "../assets/images/index.js"
 
 export const projects = [
-  //TODO: Añadir tecnologías usadas
   {
     id: "codigodesconocido", // clave que conecta con traducciones
     img: codigodesconocido,
     technology: "React, Flask, Node.js, MongoDB, MySQL, Docker",
     link: "https://github.com/Alejandro-Fernandez-Polo/DAW/tree/main/Final_project/Codigo-Desconocido",
+    featured: true,
   },
   {
     id: "vehicle",

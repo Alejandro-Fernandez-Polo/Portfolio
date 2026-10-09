@@ -1,4 +1,5 @@
 {
+  "sec": "SEC. 01",
   "title": "Projects",
   "intro": "This page presents a collection of my projects, spanning web design, React development, and object-oriented programming. Each project highlights different skills and stages of my learning journey, demonstrating experimentation, growth, and practical application. Together, they reflect the evolution of my abilities.",
   "codigodesconocido": {
@@ -19,5 +20,8 @@
   },
   "made": "Made with: ",
   "viewcode": "View Code",
-  "livedemo": "Live Demo"
+  "livedemo": "Live Demo",
+  "featured": "Featured",
+  "prev": "Previous project",
+  "next": "Next project"
 }
