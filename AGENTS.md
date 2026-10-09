@@ -23,8 +23,9 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 
 - Entry: `index.html` → `src/main.jsx` (StrictMode) → `src/App.jsx`.
 - `index.html` has an inline script setting `data-theme` from localStorage before React boots — keep it, it prevents theme FOUC.
-- Eager: `Navigation`, `Hero`. Lazy via `Suspense`: Experience, Skills, Projects, Education, Contact, Footer.
+- Eager: `Navigation`, `Hero`. Lazy via `Suspense` (page order): Projects, Skills, Experience, Contact, Footer. Education is no longer a lazy section — it is rendered by `Experience` as a nested `<aside id="education">`.
 - Theme: `data-theme` on `<html>`, localStorage key `theme`, default `'light'`. Light vars on `:root`, dark on `[data-theme="dark"]` in `src/index.css`.
+- Toasts: **Sonner** (`sonner` dep). `<Toaster>` is mounted in `App.jsx` with `theme` bound to the app state; the neo-brutalist overrides live in `src/index.css` and need the `html` prefix to beat the variables Sonner defines on `[data-sonner-toaster][data-sonner-theme=…]` and injects at runtime.
 - Data lives in `src/constants/{education,experience,projects,skills}.js` plus `social.jsx` (`LINKEDIN_URL`, `GITHUB_URL`, `socialLinks` with JSX icons). There is **no** `src/constants/index.js` and **no** `src/assets/icons/`. Image barrel: `src/assets/images/index.js` — always import images through it, never deep relative paths.
 - `vite.config.js` has a custom `ugrStatic` middleware that serves `public/ugr/` at `/ugr` in dev **and** preview. **Do not edit `vite.config.js` without explicit approval.**
 
@@ -33,10 +34,11 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 - Vanilla JS, no build step, no framework. `public/ugr/index.html` loads plain `<script>` tags in fixed order (`data.js` → `convalidaciones.js` → `propuestas.js` → `docentes.js` → `app.js`, then `src/bootstrap.js` as a module) that communicate through globals — order matters, and `app.js` is a ~3.3k-line IIFE monolith.
 - The historical EC corpus is kept as a test fixture in `test/ugr-solver/oracle-ec.json`.
 - Reestructuración: Fases 0–5 completadas (Fase 3 parcial, pendiente de aprobación). Estructura `public/ugr/src/` ya existe. Repo restrictions: no TS, no new deps/scripts sin aprobación, `npm run build` como única verificación gate.
+- Mini tutoriales/walkthroughs (planificado, S05): **Driver.js** (MIT, JS puro, sin build → funciona en `/ugr`). Descartados Intro.js/Shepherd.js (AGPL) y React Joyride (React-only). Los toasts del portfolio NO son tours.
 
 ## i18n (easy to get wrong)
 
-- Exactly 7 namespaces: `hero`, `experience`, `contact`, `projects`, `navbar`, `education`, `skills` — **no `certifications` namespace**.
+- Exactly 8 namespaces: `hero`, `experience`, `contact`, `projects`, `navbar`, `education`, `skills`, `footer` — **no `certifications` namespace**.
 - New namespace requires **three edits** in `src/libs/i18n/i18n.js` (import both langs, add to `resources`, add to `ns` array) **plus** JSON files in **both** `src/locales/en/` and `src/locales/es/`.
 - Pattern: constants hold non-translatable data + an `id`; components fetch text with `t("namespace.id", { returnObjects: true })` (see `Experience.jsx`, `Skills.jsx`, `Projects.jsx`, `Education.jsx`).
 - Date ranges are **inline** in constants as `date: { en: "...", es: "..." }`, rendered via `exp.date[lang]`. Locale JSONs contain no dates — keep them inline.
