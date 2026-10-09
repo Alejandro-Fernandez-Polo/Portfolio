@@ -9,6 +9,7 @@ import projectsEn from "../../locales/en/projects.json"
 import educationEn from "../../locales/en/education.json"
 import contactEn from "../../locales/en/contact.json"
 import skillsEn from "../../locales/en/skills.json"
+import footerEn from "../../locales/en/footer.json"
 
 import navbarEs from "../../locales/es/navbar.json"
 import heroEs from "../../locales/es/hero.json"
@@ -17,6 +18,7 @@ import projectsEs from "../../locales/es/projects.json"
 import educationEs from "../../locales/es/education.json"
 import contactEs from "../../locales/es/contact.json"
 import skillsEs from "../../locales/es/skills.json"
+import footerEs from "../../locales/es/footer.json"
 
 i18n
   .use(LanguageDetector) // 👈 aquí añadimos el detector
@@ -31,6 +33,7 @@ i18n
         navbar: navbarEn,
         education: educationEn,
         skills: skillsEn,
+        footer: footerEn,
       },
       es: {
         hero: heroEs,
@@ -40,10 +43,11 @@ i18n
         navbar: navbarEs,
         education: educationEs,
         skills: skillsEs,
+        footer: footerEs,
       },
     },
     fallbackLng: "en", // idioma por defecto si no encuentra el del navegador
-    ns: ["hero","experience", "contact", "projects", "navbar", "education", "skills"], // namespaces disponibles
+    ns: ["hero","experience", "contact", "projects", "navbar", "education", "skills", "footer"], // namespaces disponibles
     defaultNS: "hero", // 👈 como no usas "common", mejor apunta a uno real
     interpolation: { escapeValue: false },
     detection: {

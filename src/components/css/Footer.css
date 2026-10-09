@@ -1,8 +1,45 @@
-footer {
-  text-align: center;
-  padding: 40px 0;
-  color: var(--text-secondary-old);
-  font-size: 14px;
-  border-top: 1px solid var(--border-old);
-  margin-top: 80px;
+/* ——— Pie ——— */
+.site-foot {
+  background: var(--ink);
+  color: var(--bg);
+  border-top: 3px solid var(--ink);
+  padding-block: 2.2rem;
+  margin-top: clamp(2rem, 6vh, 4rem);
+}
+
+.foot-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.to-top {
+  background: var(--surface);
+  color: var(--ink);
+  border: 2.5px solid var(--surface);
+  box-shadow: 3px 3px 0 var(--blue);
+  padding: 0.5em 0.8em;
+  /* El prototipo no anima su hover (quedó fuera de la regla agrupada con
+     `.socials a`/`.scroll-cue`); se añade para que el chip no dé un salto. */
+  transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+.to-top:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--shadow);
+  background: var(--blue);
+  color: #111;
+}
+
+@media (max-width: 560px) {
+  .foot-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
