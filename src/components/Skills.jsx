@@ -1,33 +1,38 @@
-import { skills } from "../constants/skills.js"
+import { useRef } from "react"
 import { useTranslation } from "react-i18next"
+import { skills } from "../constants/skills.js"
+import { useReveal } from "../hooks/useReveal.js"
 import "./css/Skills.css"
 
 export default function Skills() {
-  const { t, i18n } = useTranslation("skills")
+  const { t } = useTranslation("skills")
+  const sectionRef = useRef(null)
+  useReveal(sectionRef)
 
   return (
-    <section id="skills" data-legacy>
+    <section className="section section-skills" id="skills" ref={sectionRef}>
       <div className="container">
-        <div className="section-header">
-          <h2>{t("title")}</h2>
-        </div>
-        <div className="skills-grid">
-          {skills.map((skill) => {
-            const trans = t(`skills.${skill.title}`, { returnObjects: true })
-            return (
-              <div key={skill.title} className="skill-card">
-                <h3>{trans}</h3>
-                <div className="tech-icons">
-                  {skill.content.map((item) => (
-                    <div key={item.name} className="tech-icon">
-                      <svg viewBox="0 0 24 24">
-                        <path d={item.imageUrl} />
-                      </svg>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )})}
+        <svg className="shape shape-squig" viewBox="0 0 108 40" aria-hidden="true">
+          <path d="M6 26q12-20 24 0t24 0t24 0t24 0" />
+          <path d="M6 26q12-20 24 0t24 0t24 0t24 0" />
+        </svg>
+
+        <header className="sec-head reveal">
+          <span className="sec-num mono">{t("sec")}</span>
+          <h2 className="sec-title">{t("title")}</h2>
+        </header>
+
+        <div className="skill-table reveal">
+          {skills.map((group) => (
+            <div className="skill-group" key={group.title}>
+              <h3 className="skill-label mono">{t(`skills.${group.title}`)}</h3>
+              <ul className="chips">
+                {group.content.map((skill) => (
+                  <li key={skill.name}>{skill.name}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>

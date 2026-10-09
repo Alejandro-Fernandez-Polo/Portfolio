@@ -1,80 +1,93 @@
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  justify-items: center;
-}
-
-.skill-card {
-  background: var(--card-bg-old);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--glass-border-old);
-  border-radius: 20px;
-  padding: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 32px var(--glass-shadow-old),
-              inset 0 1px 1px rgba(255, 255, 255, 0.2);
+/* El contenedor se posiciona para que la forma decorativa quede por detrás
+   del contenido y no tape los chips. */
+.section-skills .container {
   position: relative;
-  overflow: hidden;
-  max-width: 300px;
+  z-index: 0;
 }
 
-.skill-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px var(--glass-shadow-old),
-              inset 0 1px 2px rgba(255, 255, 255, 0.3);
-  border-color: var(--accent-violet-old);
+.skill-table {
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  box-shadow: 7px 7px 0 var(--shadow);
 }
 
-.skill-card h3 {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color: var(--text-secondary-old);
-  font-weight: 600;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-}
-
-.tech-icons {
-  width: 100%;
+.skill-group {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr);
+  align-items: stretch;
 }
 
-.tech-icon {
-  width: 100%;
-  aspect-ratio: 1;
-  background: var(--bg-primary-old);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
+.skill-group + .skill-group {
+  border-top: 3px solid var(--ink);
+}
+
+.skill-label {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  transition: all 0.3s ease;
-  border: 1px solid var(--glass-border-old);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: 1.1rem 1.2rem;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.tech-icon svg {
-  padding: 10px;
-  aspect-ratio: 1/1;
-  width: 100%;
-  fill: var(--text-primary-old);
+.skill-group:nth-child(2) .skill-label {
+  background: var(--accent);
+  color: #fff;
 }
 
-.tech-icon path {
-  fill: var(--text-primary-old);
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 0.65rem;
+  padding: 1.1rem 1.3rem;
 }
 
-.tech-icon:hover {
-  background: linear-gradient(135deg, var(--accent-violet-old), var(--accent-light-old));
-  transform: scale(1.1);
-  box-shadow: 0 8px 20px var(--glass-shadow-old),
-              inset 0 1px 1px rgba(255, 255, 255, 0.3);
-  border-color: transparent;
+.chips li {
+  padding: 0.5em 0.9em;
+  background: var(--surface);
+  color: #111;
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+.chips li:nth-child(6n + 1) {
+  background: var(--yellow);
+}
+.chips li:nth-child(6n + 2) {
+  background: var(--blue);
+}
+.chips li:nth-child(6n + 3) {
+  background: var(--green);
+}
+.chips li:nth-child(6n + 4) {
+  background: var(--surface);
+  color: var(--ink);
+}
+.chips li:nth-child(6n + 5) {
+  background: var(--red);
+}
+.chips li:nth-child(6n + 6) {
+  background: var(--yellow);
+}
+
+.chips li:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--shadow);
+}
+
+@media (max-width: 900px) {
+  .skill-group {
+    grid-template-columns: 1fr;
+  }
 }
