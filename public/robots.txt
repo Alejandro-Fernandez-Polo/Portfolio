@@ -1,0 +1,5 @@
+# Rastreo completo: el portfolio y el planificador de /ugr.
+# El fichero vive en public/ porque el navegador y los crawlers lo piden siempre
+# en la raíz del dominio (/robots.txt).
+User-agent: *
+Allow: /

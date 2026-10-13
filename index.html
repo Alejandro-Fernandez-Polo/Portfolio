@@ -1,23 +1,36 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alejandro Fernández | Portfolio</title>
-    <meta name="description" content="Portfolio de Alejandro Fernández Polo, Desarrollador web y estudiante de Ingeniería Informática.">
-    <!-- 🔹 Open Graph (para compartir en redes) -->
-    <meta property="og:title" content="Alejandro Fernandez Polo | Portfolio" />
-    <meta property="og:description" content="Expola mi portfolio y conoceme." />
-    <!-- <meta property="og:image" content="https://tudominio.com/preview.png" /> -->
-    <meta property="og:url" content="https://alejandrofernandezpolo.com" />
-    <meta property="og:type" content="website" />
+    <meta name="description" content="Portfolio of Alejandro Fernández Polo, web developer and Computer Engineering student.">
 
-    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.ico" />
+    <!-- Open Graph: es lo que leen los crawlers cuando se comparte el enlace.
+         Las URLs van absolutas porque son etiquetas estáticas. El idioma es el
+         de por defecto de la app (`fallbackLng: "en"` en i18n.js) para que el
+         documento no se contradiga: el <html lang> lo acompaña, aunque en
+         runtime lo reescriba App.jsx con el idioma detectado. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://alejandrofernandezpolo.com" />
+    <meta property="og:title" content="Alejandro Fernández Polo | Portfolio" />
+    <meta property="og:description" content="Explore my portfolio and get to know me." />
+    <meta property="og:image" content="https://alejandrofernandezpolo.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Alejandro Fernández Polo — Full Stack Developer" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://alejandrofernandezpolo.com/" />
+
+    <link rel="icon" type="image/x-icon" href="/src/assets/favicon.ico" />
+    <!-- iOS compone el icono cuadrado sobre negro si el PNG lleva alfa, así que
+         apple-touch-icon.png ya viene con el fondo del sitio pintado. -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- Solo lo que pinta el primer pantallazo: display (títulos), body y la
          monoespaciada de los kickers. Los pesos 700 y la itálica de Space Mono
-         los piden las reglas que los usan, sin bloquear el render inicial.
-         Se retiró el preload de Outfit: sin @font-face nunca se llegó a aplicar
-         y sólo costaba una petición de 110 KB. -->
+         los piden las reglas que los usan, sin bloquear el render inicial. -->
     <link
       rel="preload"
       href="/src/assets/fonts/anton-normal-400.woff2"
