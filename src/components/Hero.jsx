@@ -75,9 +75,14 @@ export default function Hero() {
             </span>
           </h1>
           <figure className="hero-photo hero-anim" style={{ "--d": ".26s" }}>
+            {/* `width`/`height` reales del asset: sin ellos la figura mide 0 de
+                alto hasta que la imagen llega y el contenido de debajo salta
+                ~10 px. El CSS la mantiene responsive con `height: auto`. */}
             <img
               src={profile}
               alt={t("photoAlt")}
+              width="527"
+              height="474"
               loading="eager"
               fetchpriority="high"
             />
@@ -117,19 +122,25 @@ export default function Hero() {
         </div>
       </section>
 
-      <div className="ticker" aria-hidden="true">
-        {tickerRows.map((row) => {
-          const text = `${row.items.join(" // ")} // `
+      {/* El ticker sangra un 2 % por cada lado (`width: 104%` + `margin-left: -2%`)
+          para que la banda rotada no deje ver las esquinas de la página en los
+          extremos. Ese sangrado es el único desborde horizontal del documento, así
+          que se recorta aquí, en su contenedor, en vez de taparlo en la raíz. */}
+      <div className="ticker-wrap">
+        <div className="ticker" aria-hidden="true">
+          {tickerRows.map((row) => {
+            const text = `${row.items.join(" // ")} // `
 
-          return (
-            <div className={row.className} key={row.className}>
-              <div className="ticker-track">
-                <span>{text}</span>
-                <span>{text}</span>
+            return (
+              <div className={row.className} key={row.className}>
+                <div className="ticker-track">
+                  <span>{text}</span>
+                  <span>{text}</span>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </>
   )

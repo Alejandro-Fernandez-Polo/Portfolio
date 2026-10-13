@@ -45,9 +45,16 @@
   white-space: nowrap;
   padding: 0.25em 0.45em;
   margin-left: -0.45em;
-  transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease),
+    color 0.15s var(--ease);
 }
 
+/* Familia "lift", en su variante de logo: en reposo el wordmark es texto sin
+   caja, así que su sombra nace en el hover (0 → 4px) y el recorrido es la mitad
+   del crecimiento, no igual que en las tarjetas (que parten de una sombra). */
 .wordmark:hover {
   background: var(--yellow);
   color: #111;
@@ -72,7 +79,10 @@
   border: 2.5px solid var(--ink);
   box-shadow: 3px 3px 0 var(--shadow);
   padding: 0.55em 0.75em;
-  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease);
 }
 
 .nav-desk sup {
@@ -81,11 +91,8 @@
   margin-right: 0.4em;
 }
 
-.nav-desk a:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--shadow);
-}
-
+/* Sin hover propio: la geometría la pone la familia "press" de index.css y este
+   enlace no cambia de color (el fondo activo ya lo marca `.active`). */
 .nav-desk a.active {
   background: var(--yellow);
   color: #111;
@@ -117,7 +124,7 @@
   letter-spacing: 0.05em;
   padding: 0.45em 0.6em;
   color: var(--muted);
-  transition: background-color 0.15s, color 0.15s;
+  transition: background-color 0.15s var(--ease), color 0.15s var(--ease);
 }
 
 .lang-btn.on {
@@ -125,6 +132,8 @@
   color: #111;
 }
 
+/* Excepción a las dos familias: control segmentado sin caja (nada que hundir) y
+   con el relleno ya ocupado por `.on`, así que el hover solo sube el contraste. */
 .lang-btn:not(.on):hover {
   color: var(--ink);
 }
@@ -144,13 +153,15 @@
   border: 2.5px solid var(--ink);
   background: var(--surface);
   box-shadow: 3px 3px 0 var(--shadow);
-  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease);
 }
 
+/* Geometría de la familia "press" en index.css; aquí solo el color. */
 .theme-btn:hover {
   background: var(--yellow);
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--shadow);
 }
 
 .theme-btn svg {
@@ -177,6 +188,16 @@
   background: var(--surface);
   box-shadow: 3px 3px 0 var(--shadow);
   align-items: center;
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease);
+}
+
+/* Mismo gesto que `.theme-btn`: geometría de la familia "press" (index.css) y
+   el amarillo como color de destino. */
+.burger:hover {
+  background: var(--yellow);
 }
 
 .burger span {
@@ -226,7 +247,7 @@
   text-transform: uppercase;
   line-height: 1;
   width: fit-content;
-  transition: transform 0.15s;
+  transition: transform 0.15s var(--ease);
 }
 
 .menu-links sup {
@@ -256,7 +277,7 @@
 }
 
 /* ——— Responsive ——— */
-@media (max-width: 900px) {
+@media (max-width: 995px) {
   .nav-desk {
     display: none;
   }

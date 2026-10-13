@@ -57,8 +57,8 @@
   font-weight: 700;
   text-transform: uppercase;
   transition:
-    transform 0.15s,
-    box-shadow 0.15s;
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease);
 }
 
 .chips li:nth-child(6n + 1) {

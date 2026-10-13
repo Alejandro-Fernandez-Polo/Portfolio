@@ -32,8 +32,8 @@
 .info-label {
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--band-bg);
+  color: var(--band-fg);
   font-size: 0.64rem;
   font-weight: 700;
   padding: 0.3em 0.5em;
@@ -93,6 +93,9 @@
 }
 
 .btn {
+  /* El recorrido de la familia "press" es el largo de la sombra: este la tiene
+     de 6px, así que se hunde 6px donde los chips se hunden 3px. */
+  --travel: 6px;
   justify-self: start;
   background: var(--yellow);
   color: #111;
@@ -104,13 +107,15 @@
   padding: 0.95em 1.7em;
   border: 3px solid #111;
   box-shadow: 6px 6px 0 var(--shadow);
-  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease);
 }
 
+/* Geometría de la familia "press" en index.css; aquí solo el color. */
 .btn:hover {
   background: var(--red);
-  transform: translate(6px, 6px);
-  box-shadow: 0 0 0 var(--shadow);
 }
 
 .btn:disabled {
@@ -120,15 +125,15 @@
 
 /* ——— Banda de contacto (inversa) ——— */
 .section-band {
-  background: var(--ink);
-  color: var(--bg);
-  border-block: 3px solid var(--ink);
+  background: var(--band-bg);
+  color: var(--band-fg);
+  border-block: 3px solid var(--band-line);
 }
 
 .section-band .info-row {
   background: transparent;
   box-shadow: none;
-  border: 2.5px solid color-mix(in srgb, var(--bg) 45%, transparent);
+  border: 2.5px solid color-mix(in srgb, var(--band-fg) 45%, transparent);
 }
 
 .section-band .contact-info {
@@ -136,15 +141,27 @@
 }
 
 .section-band .info-label {
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--band-fg);
+  color: var(--band-bg);
 }
 
 .section-band .contact-info a:hover {
   color: var(--yellow);
 }
 
+/* Los chips de socials llevan el color del papel dentro de la banda: sobre una
+   banda oscura el chip crema es lo que se lee, y en claro queda igual que
+   siempre (superficie + tinta). */
+.section-band .socials a {
+  background: var(--band-chip-bg);
+  color: var(--band-chip-fg);
+}
+
+/* La tarjeta NO es la banda: su texto es tinta en los dos temas. En claro la
+   banda pinta el texto con el color del papel (para el fondo negro) y si la
+   tarjeta lo heredara, las etiquetas quedarían crema sobre blanco. */
 .section-band .contact-form {
+  background: var(--band-card);
   color: var(--ink);
 }
 

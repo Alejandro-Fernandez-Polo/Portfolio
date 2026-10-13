@@ -105,6 +105,18 @@
   letter-spacing: 0.08em;
   border: 2.5px solid var(--ink);
   box-shadow: 3px 3px 0 var(--shadow);
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+
+/* Chip de la familia "press": geometría en index.css, color aquí (mismo azul
+   que sus gemelos .socials a y .scroll-cue). */
+.proj-link:hover {
+  background: var(--blue);
+  color: #111;
 }
 
 .proj-kicker {
@@ -152,11 +164,14 @@
   position: relative;
   margin-top: clamp(1.6rem, 4vw, 2.4rem);
   padding-inline: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 0.5rem;
 }
 
 .proj-viewport {
   overflow: hidden;
   touch-action: pan-y;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
 }
 
 .proj-track {
@@ -200,19 +215,16 @@
 }
 
 .proj-btn.prev {
-  left: 0;
+  left: -10px;
 }
 
 .proj-btn.next {
-  right: 0;
+  right: -10px;
 }
 
+/* Control, así que usa la receta "press" como el resto: el translateY(-50%) que
+   lo centra va delante, por eso no puede entrar en la regla agrupada. */
 .proj-btn:hover {
-  transform: translateY(-50%) translate(-2px, -2px);
-  box-shadow: 5px 5px 0 var(--shadow);
-}
-
-.proj-btn:active {
   transform: translateY(-50%) translate(3px, 3px);
   box-shadow: 0 0 0 var(--shadow);
 }

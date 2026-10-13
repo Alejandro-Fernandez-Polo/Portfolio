@@ -1,8 +1,8 @@
 /* ——— Pie ——— */
 .site-foot {
-  background: var(--ink);
-  color: var(--bg);
-  border-top: 3px solid var(--ink);
+  background: var(--band-bg);
+  color: var(--band-fg);
+  border-top: 3px solid var(--band-line);
   padding-block: 2.2rem;
   margin-top: clamp(2rem, 6vh, 4rem);
 }
@@ -19,20 +19,17 @@
 }
 
 .to-top {
-  background: var(--surface);
-  color: var(--ink);
-  border: 2.5px solid var(--surface);
+  background: var(--band-chip-bg);
+  color: var(--band-chip-fg);
+  border: 2.5px solid var(--band-chip-bg);
   box-shadow: 3px 3px 0 var(--blue);
   padding: 0.5em 0.8em;
-  /* El prototipo no anima su hover (quedó fuera de la regla agrupada con
-     `.socials a`/`.scroll-cue`); se añade para que el chip no dé un salto. */
   transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease),
     background-color 0.15s var(--ease), color 0.15s var(--ease);
 }
 
+/* Geometría de la familia "press" en index.css; aquí solo el color. */
 .to-top:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--shadow);
   background: var(--blue);
   color: #111;
 }

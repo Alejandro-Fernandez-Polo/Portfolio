@@ -109,6 +109,9 @@
 .hero-photo img {
   display: block;
   max-width: 100%;
+  /* Mantiene la proporción derivada de los atributos width/height de la
+     etiqueta (que reservan el hueco y evitan el salto al cargar). */
+  height: auto;
   padding: 0.5rem;
   background: var(--surface);
   border: 3px solid var(--ink);
@@ -162,7 +165,8 @@
 .scroll-cue {
   display: inline-block;
   padding: 0.55em 0.8em;
-  background: var(--surface);
+  background: var(--yellow);
+  color: #111;
   border: 2.5px solid var(--ink);
   box-shadow: 3px 3px 0 var(--shadow);
   font-size: 0.7rem;
@@ -170,22 +174,24 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   transition:
-    transform 0.15s,
-    box-shadow 0.15s,
-    background-color 0.15s,
-    color 0.15s;
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease),
+    color 0.15s var(--ease);
 }
 
+/* Geometría de la familia "press" en index.css; aquí solo el color. */
 .scroll-cue:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--shadow);
   background: var(--blue);
   color: #111;
 }
 
-.scroll-cue {
-  background: var(--yellow);
-  color: #111;
+/* El ticker es un elemento que se sale a propósito del viewport; su contenedor es
+   quien recorta ese sangrado. `clip` (no `hidden`) en un solo eje: recorta sin crear
+   un contenedor de scroll y deja el eje vertical visible, que es lo que necesita el
+   bbox de la banda rotada. */
+.ticker-wrap {
+  overflow-x: clip;
 }
 
 .ticker {
@@ -193,20 +199,20 @@
   margin-block: clamp(2rem, 5vh, 3.2rem);
   margin-left: -2%;
   overflow: hidden;
-  border-block: 3px solid var(--ink);
+  border-block: 3px solid var(--band-line);
   transform: rotate(-1.5deg);
 }
 
 .ticker-row {
   padding-block: 0.7rem;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--band-bg);
+  color: var(--band-fg);
 }
 
 .ticker-row-alt {
   padding-block: 0.55rem;
   background: var(--yellow);
-  border-top: 3px solid var(--ink);
+  border-top: 3px solid var(--band-line);
   color: #111;
 }
 

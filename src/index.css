@@ -1,6 +1,4 @@
-/* Fuentes del diseño neo-brutalista (prototipo pruebas/preview-2-v2).
-   Se declaran ya, aunque ningún componente las use todavía: consumirlas sin
-   @font-face haría que el navegador cayera al font del sistema. */
+/* Fuentes del diseño neo-brutalista (prototipo pruebas/preview-2-v2). */
 @font-face {
   font-family: "Anton";
   src: url("./assets/fonts/anton-normal-400.woff2") format("woff2");
@@ -50,28 +48,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+  /* Aquí NO va `overflow-x: clip`. Se probó para blindar la raíz contra el
+     deslizamiento horizontal y rompe el `position: sticky` del aside de Education:
+     el aside dejaba de pegarse y se iba con el scroll (medido: top 125 → -184 →
+     -487). El desborde horizontal se corrige en su origen, en `.ticker-wrap`. */
 }
 
 :root {
-  --bg-primary-old: #f5f5f7;
-  --bg-secondary-old: rgba(255, 255, 255, 0.7);
-  --text-primary-old: #000000;
-  --text-secondary-old: #666666;
-  --accent-violet-old: #a855f7;
-  --accent-light-old: #c084fc;
-  --border-old: rgba(255, 255, 255, 0.3);
-  --shadow-soft-old: rgba(0, 0, 0, 0.1);
-  --card-bg-old: rgba(255, 255, 255, 0.4);
-  --gradient-start-old: rgba(168, 85, 247, 0.15);
-  --gradient-end-old: rgba(236, 72, 153, 0.15);
-  --glass-border-old: rgba(255, 255, 255, 0.5);
-  --glass-shadow-old: rgba(31, 38, 135, 0.15);
-  --glass-shadow-hover-old: rgba(31, 38, 135, 0.8);
-  --font-body-old: 'Outfit', sans-serif;
-  --line-height-old: 1.6;
-
-  /* Tokens del diseño neo-brutalista conviven con los tokens -old hasta que
-     termine la migración; sus nombres quedan reservados para el prototipo. */
   --bg: #fffdf2;
   --surface: #ffffff;
   --ink: #111111;
@@ -86,6 +69,19 @@ html {
   --shadow: #111111;
   --on-pop: #111111;
 
+  /* ——— Bandas invertidas (Contacto, footer, ticker) ———
+     En claro la banda es "la tinta": bloque negro sobre la página crema, con
+     el texto al color del papel. En oscuro eso no puede seguir siendo --ink
+     porque --ink ya es claro, así que la banda pasa a ser una superficie
+     (--surface) y su texto, el color de tinta. `--band-card` es el tono de la
+     tarjeta que va *dentro* de la banda y necesita despegarse de ella. */
+  --band-bg: var(--ink);
+  --band-fg: var(--bg);
+  --band-line: var(--band-bg);
+  --band-card: var(--surface);
+  --band-chip-bg: var(--surface);
+  --band-chip-fg: var(--ink);
+
   --font-display: "Anton", "Arial Narrow", sans-serif;
   --font-body: "Archivo", "Helvetica Neue", sans-serif;
   --font-mono: "Space Mono", "SFMono-Regular", Menlo, monospace;
@@ -98,21 +94,6 @@ html {
 }
 
 [data-theme="dark"] {
-  --bg-primary-old: #0a0a0f;
-  --bg-secondary-old: rgba(21, 21, 32, 0.6);
-  --text-primary-old: #ffffff;
-  --text-secondary-old: #a0a0a0;
-  --accent-violet-old: #a855f7;
-  --accent-light-old: #c084fc;
-  --border-old: rgba(255, 255, 255, 0.15);
-  --shadow-soft-old: rgba(168, 85, 247, 0.3);
-  --card-bg-old: rgba(26, 26, 46, 0.4);
-  --gradient-start-old: rgba(168, 85, 247, 0.25);
-  --gradient-end-old: rgba(236, 72, 153, 0.25);
-  --glass-border-old: rgba(255, 255, 255, 0.1);
-  --glass-shadow-old: rgba(168, 85, 247, 0.2);
-  --glass-shadow-hover-old: rgba(168, 85, 247, 0.8);
-
   /* Variante oscura de los tokens neo-brutalistas: solo los que cambian
      respecto a :root (el prototipo reutiliza tipografía, acentos de color
      y medidas en ambos temas). */
@@ -124,6 +105,16 @@ html {
   --accent: #ff6b7a;
   --shadow: #000000;
   --on-pop: #111111;
+
+  /* Bandas: ver la nota de :root. La tarjeta de dentro sube un escalón para no
+     fundirse con la banda (mismo tono = el formulario desaparecería). */
+  --band-bg: var(--surface);
+  --band-fg: var(--ink);
+  --band-line: color-mix(in srgb, var(--ink) 20%, transparent);
+  --band-card: #2e2e2e;
+  --band-chip-bg: var(--ink);
+  --band-chip-fg: var(--surface);
+
   --dots: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='4' cy='4' r='1.7' fill='%23ffffff' fill-opacity='0.07'/%3E%3C/svg%3E");
 }
 
@@ -138,14 +129,6 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
   overflow-x: hidden;
-}
-
-/* Conserva la tipografía heredada de las secciones que aún usan el diseño viejo. */
-[data-legacy] {
-  color: var(--text-primary-old);
-  font-family: var(--font-body-old);
-  line-height: var(--line-height-old);
-  -webkit-font-smoothing: auto;
 }
 
 /* Utilidad compartida por varias rebanadas del diseño nuevo (kickers, pie de
@@ -179,15 +162,38 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   transition:
-    transform 0.15s,
-    box-shadow 0.15s,
-    background-color 0.15s,
-    color 0.15s;
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background-color 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+
+/* ——— Hover: dos familias, una receta cada una ———
+   La sombra sólida es la metáfora: la pieza y su sombra se mueven juntas.
+   · press: el control se hunde hacia su sombra y esta desaparece; el recorrido
+     es siempre el largo de esa sombra (`--travel`, 3px). Es la regla agrupada
+     de abajo.
+   · lift: la superficie se aleja y la sombra crece lo mismo que se mueve
+     (`.proj`, `.exp-row`, `.edu-row`, `.proj-btn`, `.wordmark`). Ahí las
+     medidas son por elemento —una tarjeta no se hunde como un chip—, así que la
+     familia se define por su invariante y cada pieza la cumple en su hoja.
+   El color de destino sí es de cada pieza: es lo que dice qué tipo de cosa es.
+   En el prototipo esto era una única regla (pruebas/preview-2-v2/styles.css:665)
+   y al repartirla por hojas `.proj-link` se quedó sin hover, por eso la
+   geometría vive aquí, junto al sello de `:active`. */
+.socials a:hover,
+.scroll-cue:hover,
+.to-top:hover,
+.proj-link:hover,
+.nav-desk a:hover,
+.theme-btn:hover,
+.burger:hover,
+.btn:hover {
+  transform: translate(var(--travel, 3px), var(--travel, 3px));
+  box-shadow: 0 0 0 var(--shadow);
 }
 
 .socials a:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--shadow);
   background: var(--blue);
   color: #111;
 }
@@ -225,22 +231,26 @@ body {
     opacity 0.18s var(--ease);
 }
 
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .cursor {
-    display: block;
-  }
+/* El JS marca <html> con .custom-cursor solo cuando hay puntero fino y el
+   usuario no pide reducir movimiento. La condición vive una sola vez (en
+   useCursor) porque repetirla aquí permitía que CSS y hook se desincronizaran:
+   apagar "Reducir movimiento" sin recargar ocultaba el nativo sin llegar a
+   pintar el círculo. Sin JS se conserva el cursor nativo. */
+html.custom-cursor .cursor {
+  display: block;
+}
 
-  html,
-  body,
-  a,
-  button,
-  input,
-  textarea,
-  label,
-  .chips li,
-  .lang {
-    cursor: none;
-  }
+/* La lista incluye piezas donde el círculo no crece (las etiquetas del
+   formulario): el UA stylesheet les pone `cursor: default`, así que sin esta
+   regla asomaría la flecha nativa por encima del círculo. */
+html.custom-cursor,
+html.custom-cursor a,
+html.custom-cursor button,
+html.custom-cursor input,
+html.custom-cursor textarea,
+html.custom-cursor label,
+html.custom-cursor .lang {
+  cursor: none;
 }
 
 .cursor.visible {
@@ -384,7 +394,7 @@ button {
 }
 
 .shape-star {
-  top: 15%;
+  top: 100px;
   right: 3.5%;
   width: clamp(34px, 4vw, 56px);
   fill: var(--blue);
@@ -446,6 +456,7 @@ button {
 .btn:active,
 .proj:active,
 .proj-link:active,
+.proj-btn:active,
 .exp-row:active,
 .edu-row:active,
 .nav-desk a:active,
@@ -455,6 +466,7 @@ button {
 .to-top:active,
 .wordmark:active,
 .theme-btn:active,
+.burger:active,
 .lang-btn:active,
 .menu-links a:active {
   animation: stamp 0.24s var(--ease);
@@ -474,26 +486,6 @@ button {
     scale: 1;
     outline: 0 solid transparent;
   }
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 50px;
-}
-
-.section-header::before {
-  content: '';
-  width: 6px;
-  height: 50px;
-  background: linear-gradient(to bottom, var(--accent-violet-old), var(--accent-light-old));
-  border-radius: 3px;
-}
-
-.section-header h2 {
-  font-size: 42px;
-  font-weight: 700;
 }
 
 /* ——— Toasts (Sonner) con el estilo del sistema ———
@@ -564,12 +556,6 @@ html [data-sonner-toast] [data-close-button] {
   }
 }
 
-@media (max-width: 768px) {
-  .section-header h2 {
-    font-size: 32px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal.in {
@@ -587,6 +573,7 @@ html [data-sonner-toast] [data-close-button] {
   .btn:active,
   .proj:active,
   .proj-link:active,
+  .proj-btn:active,
   .exp-row:active,
   .edu-row:active,
   .nav-desk a:active,
@@ -596,6 +583,7 @@ html [data-sonner-toast] [data-close-button] {
   .to-top:active,
   .wordmark:active,
   .theme-btn:active,
+  .burger:active,
   .lang-btn:active,
   .menu-links a:active {
     animation: none;

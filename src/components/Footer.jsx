@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="site-foot">
       <div className="container foot-inner mono">
-        <p>© {year} Alejandro Fernández Polo</p>
+        <p>©{year} Alejandro Fernández Polo</p>
         <a className="to-top" href="#top">
           {t("top")}
         </a>

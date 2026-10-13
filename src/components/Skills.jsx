@@ -12,7 +12,8 @@ export default function Skills() {
   return (
     <section className="section section-skills" id="skills" ref={sectionRef}>
       <div className="container">
-        <svg className="shape shape-squig" viewBox="0 0 108 40" aria-hidden="true">
+        {/* viewBox con padding: el trazo negro de 16px sobresale del path (~112x36px de bounding box + medio trazo) */}
+        <svg className="shape shape-squig" viewBox="-4 4 116 44" aria-hidden="true">
           <path d="M6 26q12-20 24 0t24 0t24 0t24 0" />
           <path d="M6 26q12-20 24 0t24 0t24 0t24 0" />
         </svg>
