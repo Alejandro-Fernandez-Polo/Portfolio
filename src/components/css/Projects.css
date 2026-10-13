@@ -1,5 +1,10 @@
+/* Columna para que el alto sobrante de la tarjeta lo absorba `.proj-meta` y no quede como
+   hueco muerto debajo: es lo que permite anclar abajo el bloque chip + CTA en el carrusel
+   (ver `.proj-track .proj .proj-tech`). */
 .proj {
   --pop: var(--yellow);
+  display: flex;
+  flex-direction: column;
   background: var(--surface);
   border: 3px solid var(--ink);
   box-shadow: 8px 8px 0 var(--shadow);
@@ -58,7 +63,14 @@
     color 0.18s var(--ease);
 }
 
+/* Columna flex, la misma receta que la tarjeta destacada: es lo que apila el chip del
+   stack y el CTA. Siendo `inline-block` compartían línea, y como JSX se come el espacio
+   que en el prototipo los separaba, quedaban pegados al píxel y el botón (más alto)
+   tapaba el final del chip. */
 .proj-meta {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 1.3rem 1.4rem 1.5rem;
 }
 
@@ -76,6 +88,9 @@
 
 .proj-desc {
   margin-top: 0.6rem;
+  /* La separación hasta el chip del stack vive aquí (antes la ponía el margen del chip), para
+     que siga habiendo un hueco mínimo cuando en el carrusel el chip se ancla abajo. */
+  margin-bottom: 0.9rem;
   max-width: 55ch;
   color: var(--ink-soft);
   font-size: 0.94rem;
@@ -83,7 +98,6 @@
 
 .proj-tech {
   display: inline-block;
-  margin-top: 0.9rem;
   padding: 0.4em 0.6em;
   background: var(--ink);
   color: var(--bg);
@@ -95,6 +109,9 @@
 
 .proj-link {
   display: inline-block;
+  /* En la columna flex de `.proj-meta` un item se estira a lo ancho por defecto, y el botón
+     debe quedarse del tamaño de su texto (como el chip del stack no, que va a lo ancho). */
+  width: fit-content;
   margin-top: 1rem;
   padding: 0.55em 0.85em;
   background: var(--yellow);
@@ -151,9 +168,9 @@
   min-height: 320px;
 }
 
+/* Solo lo propio de la destacada: el `flex`/`column` y el apilado ya vienen de
+   `.proj-meta`; aquí se centra en vertical y cambia el padding. */
 .proj-featured .proj-meta {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   padding: clamp(1.5rem, 3vw, 2.4rem);
 }
@@ -183,6 +200,14 @@
 
 .proj-track .proj {
   flex: 0 0 calc((100% - 2 * var(--proj-gap)) / 3);
+}
+
+/* El bloque chip + CTA se ancla al fondo de la tarjeta: en el track todas miden lo mismo (el
+   stretch del flex las iguala a la más alta), pero cada descripción ocupa un alto distinto, así
+   que sin ancla el par quedaría a alturas diferentes en cada tarjeta. El hueco mínimo hasta la
+   descripción lo pone su margen inferior. */
+.proj-track .proj .proj-tech {
+  margin-top: auto;
 }
 
 .proj-track .proj:nth-child(4n + 2) {
