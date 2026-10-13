@@ -25,9 +25,28 @@ pruebas/
 # Planes de trabajo (local only)
 planes/
 
+# Maestros de imagen sin comprimir (local only). La app usa los WebP de
+# src/assets/images/; estos originales solo sirven para re-generarlos.
+originales/
+
 # Configuración de agentes (local only)
 .agents/
 skills-lock.json
+
+# Notas locales dentro de /ugr. Vivian en public/ugr/.gitignore, pero Vite copia
+# public/ a dist/ y el fichero acababa publicado en /ugr/.gitignore.
+public/ugr/.git/
+public/ugr/agents.md
+public/ugr/conclusion_final_profesores_ugr.txt
+public/ugr/convalidaciones.html
+public/ugr/generar_horarios_fft.py
+public/ugr/generar_horarios.py
+public/ugr/rankear_horarios.py
+public/ugr/horarios_posibles.txt
+public/ugr/Horarios.txt
+public/ugr/ranking_horarios.txt
+public/ugr/guias_ugr/
+public/ugr/guias_uned/
 
 # Editor directories and files
 .vscode/*
@@ -39,3 +58,5 @@ skills-lock.json
 *.njsproj
 *.sln
 *.sw?
+.vercel
+.env*

@@ -51,8 +51,8 @@ No lint/typecheck/test commands exist. Do not add tooling (ESLint, Prettier, TS,
 - One CSS file per component: `src/components/css/ComponentName.css`, imported as `import "./css/ComponentName.css"`.
 - **Never remove/rename existing CSS custom properties** in `src/index.css` — themes break silently. New vars go in both `:root` and `[data-theme="dark"]`.
 - Glassmorphism: `backdrop-filter: blur(20px) saturate(180%)` (+ `-webkit-` prefix), `var(--glass-border)`, `var(--glass-shadow)`, `var(--card-bg)`.
-- Breakpoints: `768px` is the only active one (`Experience.css`, `src/index.css`); legacy `750px` (Navigation), `960px` (Contact), `970px` (Hero) remain. **There is no 480px breakpoint** despite what copilot-instructions says.
-- Only font is `Outfit` (preloaded in `index.html`).
+- Breakpoints: `900px` and `560px` are the active ones (all component sheets + `src/index.css`). **There is no 480px breakpoint** despite what copilot-instructions says.
+- Fonts: `Anton` (display), `Archivo` (body) and `Space Mono` (mono) — declared with `@font-face` in `src/index.css`, files in `src/assets/fonts/`, preloaded in `index.html`. The legacy `Outfit` font and the `*-old` design tokens were removed with the redesign.
 - Avoid new `!important` and layout inline styles (existing violations are known debt — see below).
 
 ## Repo rules
