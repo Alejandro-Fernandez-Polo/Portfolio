@@ -214,10 +214,16 @@ export default function Navigation({ toggleTheme }) {
         </div>
       </header>
 
+      {/* El menú cerrado sigue en el DOM porque la animación de salida lo
+          necesita, así que se desactiva con `inert`: lo saca del foco, de los
+          clics y del árbol de accesibilidad. Un `transform` no basta —mueve el
+          elemento, no lo desactiva—, y el `aria-hidden` que había antes decía
+          "no existe" mientras sus enlaces seguían siendo enfocables. React 18 no
+          admite el prop booleano, de ahí el `inert=""`. */}
       <div
         className={`menu${isMenuOpen ? " open" : ""}`}
         id="mobile-menu"
-        aria-hidden={!isMenuOpen}
+        inert={isMenuOpen ? undefined : ""}
       >
         <nav className="menu-links" aria-label={t("menu")}>
           {menuItems.map((item) => (
