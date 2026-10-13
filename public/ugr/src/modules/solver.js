@@ -1,6 +1,7 @@
 import { registerModule, getModule } from "../kernel/registry.js";
 import { bus } from "../kernel/bus.js";
 import { solveTopK as clientSolveTopK, cancel, explain, SOLVER_VERSION } from "../solver/client.js";
+import { captureException, count } from "../monitoring/index.js";
 
 function currentCatalog() {
   const api = getModule("catalog");
@@ -26,15 +27,22 @@ function withEvents(options = {}) {
 }
 
 async function solve(problem, options = {}) {
-  const catalog = currentCatalog();
-  if (!catalog) throw new Error("catalog no disponible");
-  const result = await clientSolveTopK(withActiveCatalogVersion(problem), catalog, withEvents(options));
-  bus.emit(
-    "solver:solution",
-    { count: result.items.length, fromCache: result.fromCache, stats: result.stats },
-    "solver",
-  );
-  return result;
+  try {
+    const catalog = currentCatalog();
+    if (!catalog) throw new Error("catalog no disponible");
+    const result = await clientSolveTopK(withActiveCatalogVersion(problem), catalog, withEvents(options));
+    count("ugr.generar_horario");
+    bus.emit(
+      "solver:solution",
+      { count: result.items.length, fromCache: result.fromCache, stats: result.stats },
+      "solver",
+    );
+    return result;
+  } catch (error) {
+    captureException(error);
+    count("ugr.solver_error");
+    throw error;
+  }
 }
 
 export function registerSolver() {

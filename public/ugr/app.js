@@ -2143,6 +2143,8 @@
       showToast(`Aviso: "${duplicate.name}" tiene los mismos grupos`, 'info');
     }
     saveAllConfigs(savedConfigs);
+    // Emit only after persistence succeeds so telemetry counts saved configs, not invalid attempts.
+    document.dispatchEvent(new Event('ugr:configSaved'));
     nameInput.value = '';
     configPage = 1;
     renderSavedConfigs();

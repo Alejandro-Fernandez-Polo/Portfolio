@@ -11,6 +11,7 @@ import { registerSolver } from "./modules/solver.js";
 import { registerProgress } from "./modules/progress.js";
 import { setupImportWizard } from "./ui/import-wizard.js";
 import { setupProgressDashboard } from "./ui/progress-dashboard.js";
+import { count } from "./monitoring/index.js";
 
 async function bootstrap() {
   recordBootTiming("bootstrap_start");
@@ -20,6 +21,7 @@ async function bootstrap() {
 
   if (!storeResult.ok) {
     console.warn("[bootstrap] IndexedDB unavailable, running in degraded mode");
+    count("ugr.degraded_mode");
     showDegradedBanner();
   }
 

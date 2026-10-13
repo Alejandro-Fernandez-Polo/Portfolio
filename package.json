@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@sentry/browser": "^11.7.0",
+    "@sentry/react": "^11.7.0",
     "i18next": "^25.8.4",
     "i18next-browser-languagedetector": "^8.2.0",
     "react": "^18.3.1",

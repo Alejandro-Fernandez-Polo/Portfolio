@@ -1,3 +1,8 @@
 {
-  "top": "Back to top ↑"
+  "top": "Back to top ↑",
+  "error": {
+    "title": "Something went wrong",
+    "description": "The page could not be displayed. Reload to try again.",
+    "reload": "Reload page"
+  }
 }

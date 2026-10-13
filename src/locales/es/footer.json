@@ -1,3 +1,8 @@
 {
-  "top": "Volver arriba ↑"
+  "top": "Volver arriba ↑",
+  "error": {
+    "title": "Algo ha salido mal",
+    "description": "No se ha podido mostrar la página. Recárgala para intentarlo de nuevo.",
+    "reload": "Recargar página"
+  }
 }

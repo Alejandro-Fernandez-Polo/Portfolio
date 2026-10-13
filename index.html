@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alejandro Fernández | Portfolio</title>
+    <title>Alejandro Fernández Polo | Full Stack Developer</title>
     <meta name="description" content="Portfolio of Alejandro Fernández Polo, web developer and Computer Engineering student.">
 
     <!-- Open Graph: es lo que leen los crawlers cuando se comparte el enlace.
@@ -13,7 +13,7 @@
          runtime lo reescriba App.jsx con el idioma detectado. -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://alejandrofernandezpolo.com" />
-    <meta property="og:title" content="Alejandro Fernández Polo | Portfolio" />
+    <meta property="og:title" content="Alejandro Fernández Polo | Full Stack Developer" />
     <meta property="og:description" content="Explore my portfolio and get to know me." />
     <meta property="og:image" content="https://alejandrofernandezpolo.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -23,6 +23,27 @@
     <meta property="og:locale:alternate" content="es_ES" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://alejandrofernandezpolo.com/" />
+
+    <!-- Datos estructurados: le dicen a Google qué entidad hay detrás del sitio (una persona,
+         no una empresa) y enlazan los perfiles, que es lo que alimenta el panel de
+         conocimiento. La `image` apunta a `/og-image.jpg` a propósito: vive en `public/`, así
+         que su URL es estable; las de `src/assets/` llevan hash y cambiarían en cada build. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Alejandro Fernández Polo",
+        "alternateName": "Alejandro Fernández",
+        "jobTitle": "Full Stack Developer",
+        "url": "https://alejandrofernandezpolo.com/",
+        "image": "https://alejandrofernandezpolo.com/og-image.jpg",
+        "sameAs": [
+          "https://www.linkedin.com/in/alejandro-fernandez-polo",
+          "https://github.com/Alejandro-Fernandez-Polo"
+        ],
+        "knowsAbout": ["React", "Node.js", "Java", "PHP", "MongoDB", "MySQL"]
+      }
+    </script>
 
     <link rel="icon" type="image/x-icon" href="/src/assets/favicon.ico" />
     <!-- iOS compone el icono cuadrado sobre negro si el PNG lleva alfa, así que

@@ -3,6 +3,7 @@ import { parseTable } from "../ingest/parseTable.js";
 import { parseJSON } from "../ingest/parseJSON.js";
 import { buildCatalog, rowsToRecords, REQUIRED_MAPPING_FIELDS } from "../ingest/buildCatalog.js";
 import { TEMPLATE_MAPPING, buildTemplateCSV } from "../ingest/template.js";
+import { count } from "../monitoring/index.js";
 
 const FIELD_ORDER = [
   "codigo",
@@ -594,6 +595,7 @@ export function setupImportWizard() {
         return;
       }
       successEl.textContent = `Catálogo «${saved.id}» importado y activado. Ya puedes generar horarios con él.`;
+      count("ugr.importar_catalogo");
       window.setTimeout(closeWizard, 1800);
     } catch (error) {
       stepError(`Error inesperado al importar: ${error && error.message ? error.message : error}`);
