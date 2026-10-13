@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { projects } from "../constants/projects.js"
 import { useReveal } from "../hooks/useReveal.js"
@@ -9,6 +9,7 @@ const pad = (n) => String(n).padStart(2, "0")
 const positionById = new Map(projects.map((project, index) => [project.id, index]))
 const featuredProject = projects.find((project) => project.featured)
 const carouselProjects = projects.filter((project) => !project.featured)
+const expandedQuery = "(max-width: 900px)"
 // Dos copias: la posición `i` y `i + carouselProjects.length` son idénticas, así el
 // salto sin transición al final del recorrido no se ve y el bucle queda infinito.
 const trackItems = carouselProjects.concat(carouselProjects)
@@ -46,11 +47,12 @@ function ProjectCard({ t, project, featured = false }) {
 }
 
 /**
- * Muestra el proyecto destacado y un carrusel infinito que respeta `prefers-reduced-motion`.
+ * Muestra una lista desplegada en pantallas compactas y un carrusel en escritorio.
  * @returns {import("react").JSX.Element} Sección de proyectos.
  */
 export default function Projects() {
   const { t } = useTranslation("projects")
+  const [isExpanded, setIsExpanded] = useState(() => window.matchMedia(expandedQuery).matches)
   const sectionRef = useRef(null)
   const carouselRef = useRef(null)
   const viewportRef = useRef(null)
@@ -59,6 +61,15 @@ export default function Projects() {
   useReveal(sectionRef)
 
   useEffect(() => {
+    const media = window.matchMedia(expandedQuery)
+    const update = () => setIsExpanded(media.matches)
+    media.addEventListener("change", update)
+    return () => media.removeEventListener("change", update)
+  }, [])
+
+  useEffect(() => {
+    if (isExpanded) return
+
     const track = trackRef.current
     const viewport = viewportRef.current
     const carousel = carouselRef.current
@@ -169,7 +180,7 @@ export default function Projects() {
       viewport.removeEventListener("pointerup", onPointerUp)
       viewport.removeEventListener("pointercancel", onPointerUp)
     }
-  }, [])
+  }, [isExpanded])
 
   return (
     <section className="section section-projects" id="projects" ref={sectionRef}>
@@ -182,31 +193,40 @@ export default function Projects() {
 
         <ProjectCard t={t} project={featuredProject} featured />
 
-        <div className="proj-carousel reveal" ref={carouselRef}>
-          <button
-            className="proj-btn prev mono"
-            type="button"
-            aria-label={t("prev")}
-            onClick={() => goRef.current(-1)}
-          >
-            ←
-          </button>
-          <div className="proj-viewport" ref={viewportRef}>
-            <div className="proj-track" ref={trackRef}>
-              {trackItems.map((project, index) => (
-                <ProjectCard key={`${project.id}-${index}`} t={t} project={project} />
-              ))}
-            </div>
+        {/* La lista queda desplegada justo donde desaparecen los controles del carrusel. */}
+        {isExpanded ? (
+          <div className="proj-grid">
+            {carouselProjects.map((project) => (
+              <ProjectCard key={project.id} t={t} project={project} />
+            ))}
           </div>
-          <button
-            className="proj-btn next mono"
-            type="button"
-            aria-label={t("next")}
-            onClick={() => goRef.current(1)}
-          >
-            →
-          </button>
-        </div>
+        ) : (
+          <div className="proj-carousel reveal" ref={carouselRef}>
+            <button
+              className="proj-btn prev mono"
+              type="button"
+              aria-label={t("prev")}
+              onClick={() => goRef.current(-1)}
+            >
+              ←
+            </button>
+            <div className="proj-viewport" ref={viewportRef}>
+              <div className="proj-track" ref={trackRef}>
+                {trackItems.map((project, index) => (
+                  <ProjectCard key={`${project.id}-${index}`} t={t} project={project} />
+                ))}
+              </div>
+            </div>
+            <button
+              className="proj-btn next mono"
+              type="button"
+              aria-label={t("next")}
+              onClick={() => goRef.current(1)}
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

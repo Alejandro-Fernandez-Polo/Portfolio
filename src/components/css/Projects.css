@@ -184,6 +184,10 @@
   padding-top: 0.5rem;
 }
 
+.proj-grid {
+  display: none;
+}
+
 .proj-viewport {
   overflow: hidden;
   touch-action: pan-y;
@@ -267,26 +271,12 @@
     min-height: 0;
   }
 
-  .proj-carousel {
-    padding-inline: 0.5rem;
-  }
-
-  /* Poner el gutter fuera del elemento que recorta evita que asome la tarjeta anterior por su padding. */
-  .proj-viewport {
-    padding-left: 0;
-  }
-
-  .proj-track {
-    gap: 0;
-  }
-
-  .proj-track .proj {
-    flex-basis: 100%;
-  }
-
-  /* En móvil no hay flechas: se navega con swipe. */
-  .proj-btn {
-    display: none;
+  .proj-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    margin-top: clamp(1.6rem, 4vw, 2.4rem);
+    padding: 0.5rem 0.5rem 0;
   }
 }
 
