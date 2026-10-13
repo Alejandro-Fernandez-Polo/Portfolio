@@ -90,8 +90,8 @@ export default function Hero() {
             <img
               src={profile}
               alt={t("photoAlt")}
-              width="527"
-              height="474"
+              width="600"
+              height="600"
               loading="eager"
               fetchpriority="high"
             />

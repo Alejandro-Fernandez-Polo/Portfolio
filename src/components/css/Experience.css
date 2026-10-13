@@ -30,8 +30,12 @@
   transform: rotate(-3deg);
 }
 
-.exp-row:nth-child(3) .exp-num {
+.exp-row:nth-child(2) .exp-num {
   background: var(--blue);
+}
+
+.exp-row:nth-child(3) .exp-num {
+  background: var(--green);
 }
 
 .exp-top {

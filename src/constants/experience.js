@@ -9,16 +9,14 @@ export const experiences = [
     date: { en: "April 2024 - June 2024", es: "Abril 2024 - Junio 2024" },
   },
   {
-    id: "pergolas",
-    company_name: "Pérgolas y Estructuras Javier Aibar",
+    id: "mcdonalds",
+    company_name: "McDonald's",
     date: {
-      en: "June 2023 - September 2023",
-      es: "Junio 2023 - Septiembre 2023",
+      en: "June 2026 - September 2026",
+      es: "Junio 2026 - Septiembre 2026",
     },
   },
   {
-    // Clon temporal de la entrada anterior: sostiene la fila 3 mientras
-    // llega la experiencia real (es la que pinta el exp-num azul).
     id: "pergolas",
     company_name: "Pérgolas y Estructuras Javier Aibar",
     date: {

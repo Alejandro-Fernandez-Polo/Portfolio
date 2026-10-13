@@ -31,10 +31,8 @@ export default function Experience() {
           <div className="track-exp">
             {experiences.map((exp, index) => {
               const trans = t(exp.id, { returnObjects: true })
-              // Clave por índice: mientras exista el clon temporal, dos filas
-              // comparten `id` y una clave por id duplicaría el key de React.
               return (
-                <article className="exp-row reveal" key={index}>
+                <article className="exp-row reveal" key={exp.id}>
                   <div className="exp-num" aria-hidden="true">
                     {pad(index + 1)}
                   </div>

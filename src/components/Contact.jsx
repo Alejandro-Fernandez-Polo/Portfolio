@@ -38,7 +38,7 @@ export default function Contact() {
     }
 
     setIsLoading(true)
-    // `toast.promise` cubre el ciclo completo: enviando → éxito/error.
+    // Sonner devuelve un id de toast, no la promesa; su opción `finally` libera el botón en ambos resultados.
     toast
       .promise(
         emailjs.send(
@@ -60,9 +60,9 @@ export default function Contact() {
             return t("alerts.success")
           },
           error: t("alerts.error"),
+          finally: () => setIsLoading(false),
         },
       )
-      .finally(() => setIsLoading(false))
   }
 
   return (
