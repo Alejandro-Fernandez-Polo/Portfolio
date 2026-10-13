@@ -1,6 +1,10 @@
 import { useTranslation } from "react-i18next"
 import "./css/SentryFallback.css"
 
+/**
+ * Sustituye una pantalla en blanco por un aviso accesible y una acción de recuperación.
+ * @returns {import("react").JSX.Element} Mensaje traducido y acción para recargar.
+ */
 export default function SentryFallback() {
   const { t } = useTranslation("footer")
 

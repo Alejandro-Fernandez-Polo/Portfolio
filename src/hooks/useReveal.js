@@ -1,5 +1,9 @@
 import { useEffect } from "react"
 
+/**
+ * Revela los descendientes al entrar en pantalla y desconecta el observer al desmontar.
+ * @param {import("react").RefObject<HTMLElement|null>} containerRef Sección que contiene los elementos `.reveal`.
+ */
 export function useReveal(containerRef) {
   useEffect(() => {
     const targets = containerRef.current?.querySelectorAll(".reveal")
@@ -15,7 +19,7 @@ export function useReveal(containerRef) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("in")
-            // Revealed sections stay visible, so the observer can stop tracking them.
+            // La sección revelada permanece visible y ya no necesita seguir observándose.
             activeObserver.unobserve(entry.target)
           }
         })

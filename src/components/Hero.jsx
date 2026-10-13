@@ -5,6 +5,7 @@ import { skills } from "../constants/skills.js"
 import { socialLinks } from "../constants/social.jsx"
 import "./css/Hero.css"
 
+// La zona explícita mantiene la hora de Madrid correcta aunque la visita llegue desde otra zona horaria.
 const madridClock = new Intl.DateTimeFormat("en-GB", {
   timeZone: "Europe/Madrid",
   hour: "2-digit",
@@ -12,14 +13,18 @@ const madridClock = new Intl.DateTimeFormat("en-GB", {
   hourCycle: "h23",
 })
 
+/**
+ * Selecciona nombres de skills para las filas decorativas del ticker.
+ * @param {string[]} groupTitles Títulos de grupos presentes en el catálogo.
+ * @returns {string[]} Nombres en el orden original del catálogo.
+ */
 function skillsForGroups(groupTitles) {
   return skills
     .filter((group) => groupTitles.includes(group.title))
     .flatMap((group) => group.content.map((skill) => skill.name))
 }
 
-// The ticker uses the skills catalog as its source so the same technology list
-// cannot drift between this introduction and the Skills section.
+// El ticker reutiliza el catálogo de Skills para que ambas listas de tecnologías no diverjan.
 const tickerRows = [
   {
     className: "ticker-row",
@@ -31,6 +36,10 @@ const tickerRows = [
   },
 ]
 
+/**
+ * Muestra la presentación, el reloj de Madrid, los enlaces sociales y el ticker de skills.
+ * @returns {import("react").JSX.Element} Hero y banda decorativa del ticker.
+ */
 export default function Hero() {
   const { t } = useTranslation("hero")
   const [clock, setClock] = useState(() => madridClock.format(new Date()))

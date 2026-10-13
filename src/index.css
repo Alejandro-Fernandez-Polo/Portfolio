@@ -198,7 +198,7 @@ body {
   color: #111;
 }
 
-/* Reveal stays global because later section slices share the same observer hook. */
+/* Reveal permanece global porque varias secciones comparten el mismo hook observador. */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -548,7 +548,8 @@ html [data-sonner-toast] [data-close-button] {
 /* Responsive global */
 @media (max-width: 900px) {
   .track-grid {
-    grid-template-columns: 1fr;
+    /* `1fr` conserva un mínimo min-content automático y puede invadir el gutter de 20 px a 320 px. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .track-edu {

@@ -1,3 +1,7 @@
+/**
+ * Skills agrupadas para los chips traducidos y el ticker de Hero.
+ * Los títulos de grupo son claves de locale; los nombres son las etiquetas visibles.
+ */
 export const skills = [
   {
     title: "Frontend",

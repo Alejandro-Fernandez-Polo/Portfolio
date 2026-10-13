@@ -8,6 +8,7 @@ import SentryFallback from './components/SentryFallback.jsx'
 import { initSentry } from './libs/monitoring/sentry.js'
 import './index.css'
 
+// Se inicializa antes de montar React para que Sentry también reciba fallos síncronos de arranque.
 initSentry()
 
 ReactDOM.createRoot(document.getElementById('root')).render(

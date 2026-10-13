@@ -4,6 +4,10 @@ import { skills } from "../constants/skills.js"
 import { useReveal } from "../hooks/useReveal.js"
 import "./css/Skills.css"
 
+/**
+ * Agrupa las skills en etiquetas traducidas y chips de texto.
+ * @returns {import("react").JSX.Element} Sección de skills.
+ */
 export default function Skills() {
   const { t } = useTranslation("skills")
   const sectionRef = useRef(null)

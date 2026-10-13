@@ -244,7 +244,8 @@
 }
 
 .proj-btn.next {
-  right: -10px;
+  /* Compensa el inset de 1rem del viewport para igualar la separación de ambas flechas a las tarjetas. */
+  right: calc(-10px - 1rem);
 }
 
 /* Control, así que usa la receta "press" como el resto: el translateY(-50%) que
@@ -267,7 +268,12 @@
   }
 
   .proj-carousel {
-    padding-inline: 0;
+    padding-inline: 0.5rem;
+  }
+
+  /* Poner el gutter fuera del elemento que recorta evita que asome la tarjeta anterior por su padding. */
+  .proj-viewport {
+    padding-left: 0;
   }
 
   .proj-track {

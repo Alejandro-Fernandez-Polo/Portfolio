@@ -230,7 +230,7 @@
   animation-play-state: paused;
 }
 
-/* Identical spans let the translated track loop without a blank seam. */
+/* Duplicar el texto permite que el carril traducido se repita sin dejar un hueco. */
 .ticker-track span {
   display: block;
   white-space: nowrap;

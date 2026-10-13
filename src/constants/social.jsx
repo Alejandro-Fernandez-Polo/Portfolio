@@ -1,6 +1,8 @@
+/** Perfiles públicos reutilizados en Hero, Contact y los metadatos. */
 export const LINKEDIN_URL = "https://www.linkedin.com/in/alejandro-fernandez-polo"
 export const GITHUB_URL = "https://github.com/Alejandro-Fernandez-Polo"
 
+/** Enlaces e iconos sociales; los ids seleccionan etiquetas accesibles traducidas. */
 export const socialLinks = [
   {
     id: "linkedin",

@@ -5,6 +5,10 @@ import "./css/Education.css"
 
 // Sin <section>: es la columna derecha del bloque de Experience. Su `.reveal`
 // lo observa el useReveal de Experience (mismo contenedor).
+/**
+ * Renderiza educación como aside dentro del grid de experiencia, no como sección hermana.
+ * @returns {import("react").JSX.Element} Columna de educación.
+ */
 export default function Education() {
   const { t } = useTranslation("education")
   const lang = useLang()

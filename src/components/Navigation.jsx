@@ -3,6 +3,11 @@ import { useTranslation } from "react-i18next"
 import { useLang } from "../hooks/useLang.js"
 import "./css/Navigation.css"
 
+/**
+ * Muestra la navegación fija y sus controles de idioma, tema y menú móvil.
+ * @param {{ toggleTheme: () => void }} props Alternador de tema propiedad de la app.
+ * @returns {import("react").JSX.Element} Navegación del sitio.
+ */
 export default function Navigation({ toggleTheme }) {
   const [activeSection, setActiveSection] = useState("home")
   const { t, i18n } = useTranslation("navbar")
@@ -37,6 +42,7 @@ export default function Navigation({ toggleTheme }) {
     } else {
       const target = document.querySelector(targetId)
       if (target) {
+        // El offset coincide con la cabecera fija para que el título no quede tapado.
         const offset = 80
         const targetPosition =
           target.getBoundingClientRect().top + window.pageYOffset - offset
@@ -61,7 +67,7 @@ export default function Navigation({ toggleTheme }) {
     const update = () => {
       const scrollY = window.scrollY // Una sola lectura
 
-      // Batch todas las lecturas de geometría
+      // Agrupar las lecturas de geometría evita intercalarlas con escrituras del DOM.
       const sections = document.querySelectorAll("section")
       const offsets = Array.from(sections).map((section) => ({
         id: section.id,

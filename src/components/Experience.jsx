@@ -8,6 +8,10 @@ import "./css/Experience.css"
 
 const pad = (n) => String(n).padStart(2, "0")
 
+/**
+ * Renderiza la experiencia y aloja Educación en la columna sticky adyacente.
+ * @returns {import("react").JSX.Element} Sección conjunta de experiencia y educación.
+ */
 export default function Experience() {
   const { t } = useTranslation("experience")
   const lang = useLang()

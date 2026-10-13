@@ -1,3 +1,7 @@
+/**
+ * Experiencias enlazadas al namespace `experience` mediante su id.
+ * Las fechas viven aquí porque su redacción varía entre inglés y español.
+ */
 export const experiences = [
   {
     id: "atg", // clave que conecta con traducciones

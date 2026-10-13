@@ -7,14 +7,21 @@ import Hero from './components/Hero'
 import { useLang } from "./hooks/useLang.js"
 import { useCursor } from "./hooks/useCursor.js"
 
+// La guarda de producción evita mezclar tráfico local o de previews con los datos reales.
 const productionHosts = new Set([
   "alejandrofernandezpolo.com",
   "www.alejandrofernandezpolo.com",
 ])
 
+/**
+ * Elimina parámetros y fragmentos antes de enviar métricas de usuarios reales.
+ * Los enlaces compartidos de UGR pueden guardar estado cifrado en el fragmento.
+ * @param {{ url: string, route?: string }} event Evento de Web Analytics o Speed Insights.
+ * @returns {{ url: string, route?: string }} Evento limitado a la ruta pública.
+ */
 function sanitizeVercelEvent(event) {
   try {
-    // Shared UGR links carry encrypted state in the fragment; analytics needs only the page path.
+    // El fragmento de un enlace compartido puede incluir estado cifrado; basta con informar la ruta.
     const url = new URL(event.url, window.location.origin)
     return {
       ...event,
@@ -26,6 +33,11 @@ function sanitizeVercelEvent(event) {
   }
 }
 
+/**
+ * Compone la estructura del portfolio y carga las secciones pesadas bajo demanda.
+ * La telemetría solo se monta en el dominio canónico para no mezclar previews ni pruebas locales.
+ * @returns {import("react").JSX.Element} La estructura de página.
+ */
 function App() {
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "light",

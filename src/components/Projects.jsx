@@ -4,7 +4,7 @@ import { projects } from "../constants/projects.js"
 import { useReveal } from "../hooks/useReveal.js"
 import "./css/Projects.css"
 
-// El destacado se separa del carrusel; el P.0n sale de la posición en el array.
+/** Formatea el índice de proyecto como etiqueta estable `P.0n`. */
 const pad = (n) => String(n).padStart(2, "0")
 const positionById = new Map(projects.map((project, index) => [project.id, index]))
 const featuredProject = projects.find((project) => project.featured)
@@ -14,6 +14,14 @@ const carouselProjects = projects.filter((project) => !project.featured)
 const trackItems = carouselProjects.concat(carouselProjects)
 const loopLength = carouselProjects.length
 
+/**
+ * Renderiza un proyecto; el id del array también identifica sus traducciones.
+ * @param {object} props Datos de tarjeta y consulta de idioma.
+ * @param {(key: string) => string} props.t Consulta de traducciones del namespace `projects`.
+ * @param {{ id: string, img: string, technology: string, link: string }} props.project Datos del proyecto.
+ * @param {boolean} [props.featured=false] Indica si es la tarjeta destacada fija.
+ * @returns {import("react").JSX.Element} Tarjeta enlazada al proyecto.
+ */
 function ProjectCard({ t, project, featured = false }) {
   return (
     <article className={`proj${featured ? " proj-featured" : ""}`}>
@@ -37,6 +45,10 @@ function ProjectCard({ t, project, featured = false }) {
   )
 }
 
+/**
+ * Muestra el proyecto destacado y un carrusel infinito que respeta `prefers-reduced-motion`.
+ * @returns {import("react").JSX.Element} Sección de proyectos.
+ */
 export default function Projects() {
   const { t } = useTranslation("projects")
   const sectionRef = useRef(null)
@@ -63,7 +75,7 @@ export default function Projects() {
     const place = (animated) => {
       track.style.transition = animated ? "" : "none"
       track.style.transform = `translateX(${-index * step()}px)`
-      if (!animated) void track.offsetWidth // reflow antes de reactivar la transición
+      if (!animated) void track.offsetWidth // Separar el salto silencioso del siguiente movimiento animado.
     }
 
     const go = (direction) => {
@@ -111,7 +123,7 @@ export default function Projects() {
     carousel.addEventListener("focusout", resume)
     document.addEventListener("visibilitychange", onVisibility)
 
-    // Swipe: pointer events, así funciona con dedo y con ratón.
+    // El arrastre usa pointer events para funcionar tanto con dedo como con ratón.
     let startX = 0
     let dx = 0
     let dragging = false

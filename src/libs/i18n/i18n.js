@@ -20,8 +20,10 @@ import contactEs from "../../locales/es/contact.json"
 import skillsEs from "../../locales/es/skills.json"
 import footerEs from "../../locales/es/footer.json"
 
+// Mantener aquí ambos idiomas y los ocho namespaces evita que un cambio de idioma
+// deje traducciones incompletas o dependa de otro mapa cargado en runtime.
 i18n
-  .use(LanguageDetector) // 👈 aquí añadimos el detector
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
@@ -46,9 +48,10 @@ i18n
         footer: footerEs,
       },
     },
-    fallbackLng: "en", // idioma por defecto si no encuentra el del navegador
-    ns: ["hero","experience", "contact", "projects", "navbar", "education", "skills", "footer"], // namespaces disponibles
-    defaultNS: "hero", // 👈 como no usas "common", mejor apunta a uno real
+    fallbackLng: "en",
+    ns: ["hero", "experience", "contact", "projects", "navbar", "education", "skills", "footer"],
+    defaultNS: "hero",
+    // React escapa el texto interpolado; desactivar el escape de i18next evita duplicarlo.
     interpolation: { escapeValue: false },
     detection: {
       order: [
@@ -59,7 +62,7 @@ i18n
         "path",
         "subdomain",
       ],
-      caches: ["localStorage", "cookie"], // guarda la preferencia
+      caches: ["localStorage", "cookie"],
     },
     react: {
       useSuspense: false,

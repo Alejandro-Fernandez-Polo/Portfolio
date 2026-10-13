@@ -1,3 +1,4 @@
+/** Entradas de educación enlazadas al namespace `education` mediante su id. */
 export const education = [
   {
     id: "grado",

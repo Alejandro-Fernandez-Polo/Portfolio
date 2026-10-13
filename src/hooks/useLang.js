@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
+/**
+ * Devuelve el idioma base y se suscribe a los cambios en caliente.
+ * @returns {string} Código normalizado (`en` o `es`).
+ */
 export function useLang() {
   const { i18n } = useTranslation()
   const [lang, setLang] = useState(() =>

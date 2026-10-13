@@ -5,6 +5,11 @@ import { useEffect } from "react"
 // (La etiqueta sigue abriendo su campo al pulsarla: eso es del navegador.)
 const interactiveSelector = "a, button, input, textarea, .lang"
 
+/**
+ * Conecta el cursor personalizado y conserva el nativo para pantallas táctiles
+ * y personas que prefieren reducir el movimiento.
+ * @param {import("react").RefObject<HTMLElement|null>} cursorRef Elemento controlado por la app.
+ */
 export function useCursor(cursorRef) {
   useEffect(() => {
     const cursor = cursorRef.current

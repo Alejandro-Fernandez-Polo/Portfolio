@@ -5,6 +5,10 @@ import {
   proyectosreact,
 } from "../assets/images/index.js"
 
+/**
+ * Catálogo de proyectos: cada id conecta la tarjeta con sus claves de idioma.
+ * `featured` selecciona la tarjeta fija que queda fuera del carrusel.
+ */
 export const projects = [
   {
     id: "codigodesconocido", // clave que conecta con traducciones

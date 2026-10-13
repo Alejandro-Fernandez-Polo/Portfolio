@@ -6,6 +6,10 @@ import { socialLinks } from "../constants/social.jsx"
 import { useReveal } from "../hooks/useReveal.js"
 import "./css/Contact.css"
 
+/**
+ * Ofrece el formulario de EmailJS y los enlaces sociales sin adjuntar sus valores a telemetría.
+ * @returns {import("react").JSX.Element} Sección de contacto.
+ */
 export default function Contact() {
   const { t } = useTranslation("contact")
   const sectionRef = useRef(null)
