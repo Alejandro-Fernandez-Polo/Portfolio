@@ -1,116 +1,56 @@
-# Portfolio Project - AI Coding Agent Instructions
+# Copilot instructions — Portfolio
 
-## Architecture Overview
+React 18 + Vite 6 SPA: personal portfolio (neo-brutalist CSS, i18next EN/ES, EmailJS contact form, light/dark theme). No router, no TypeScript, no CI.
 
-This is a React 18 + Vite SPA portfolio with i18next internationalization (EN/ES), glassmorphic design, and light/dark theming. All components are in `src/components/`, static data in `src/constants/index.js`, and translations in `src/locales/{en,es}/`.
+**Source of truth: [`AGENTS.md`](../AGENTS.md).** This file deliberately does not repeat the volatile details (file inventories, breakpoints, namespace lists, debt table). When the two disagree, `AGENTS.md` wins — update this file.
 
-**Key architectural decisions:**
-- i18next namespaces mirror components (e.g., `navbar.json`, `contact.json`, `skills.json`)
-- Theme state lives in `App.jsx` and uses CSS variables (`--bg-primary`, `--accent`, etc.)
-- Navigation uses smooth scroll with 80px offset for fixed nav
-- EmailJS for contact form (credentials in `.env` as `VITE_APP_EMAILJS_*`)
-
-## Development Workflow
+## Commands
 
 ```bash
-npm run dev      # Development server (Vite)
-npm run build    # Production build
-npm run preview  # Preview production build
+npm run dev        # dev server (HMR)
+npm run build      # production build → dist/
+npm run preview    # serves dist/ (runs the /ugr middleware too)
+npm test           # vitest run, suite in test/
+npm run test:watch
 ```
 
-**No test suite exists.** Add tests only if explicitly requested.
+Verification before calling something done: `npm run build` **and** `npm test`. There is no lint/typecheck command. Do not add dependencies or tooling (ESLint, Prettier, TS, another test runner) without asking.
 
-## Critical Conventions
+## Patterns to respect
 
-### Internationalization Pattern
-**ALL user-facing text MUST use i18n**, even seemingly static content:
+### i18n
 
-```jsx
-import { useTranslation } from "react-i18next"
+- 8 namespaces: `hero`, `experience`, `contact`, `projects`, `navbar`, `education`, `skills`, `footer`.
+- Every user-facing string goes through `t()` and exists in **both** `src/locales/en/*.json` and `src/locales/es/*.json`.
+- New namespace = three edits in `src/libs/i18n/i18n.js` (both imports, `resources`, `ns`) plus the two JSON files.
+- Data lives in `src/constants/*.js` with an `id`; components fetch the text with `t("ns.id", { returnObjects: true })`.
 
-export default function MyComponent() {
-  const { t } = useTranslation("namespace")  // namespace matches JSON filename
-  return <h2>{t("title")}</h2>
-}
-```
+### Theme
 
-- Namespace selection: use existing namespaces when possible (`navbar`, `contact`, `skills`, `about`, `projects`, `education`, `home`, `cta`)
-- Add translations to BOTH `locales/en/*.json` AND `locales/es/*.json`
-- Reference in `src/libs/i18n/i18n.js` if creating new namespace
+- `data-theme` on `<html>` plus localStorage key `theme`; variables in `src/index.css` (`:root` light, `[data-theme="dark"]` dark).
+- Never remove or rename existing custom properties — the themes break silently. New ones go in both blocks.
 
-### Theme System
-Theme switching managed via:
-1. `App.jsx` state + localStorage (`'light'` or `'dark'`)
-2. `data-theme` attribute on `<html>` element
-3. CSS variables in `index.css` (`:root` for light, `[data-theme="dark"]` for dark)
+### Data and assets
 
-### Data Management
-Static content (skills, projects, experience) lives in `src/constants/index.js`:
-```javascript
-export const skills = [
-  { imageUrl: reactlogo, name: "React", type: "Frontend" },
-  // ...
-]
-```
+- `src/constants/{education,experience,projects,skills}.js` plus `social.jsx`. There is no `src/constants/index.js` and no `src/assets/icons/`.
+- Import images through the barrel `src/assets/images/index.js`, never deep relative paths.
 
-Icons imported from `src/assets/icons/index.js`, images from `src/assets/images/index.js`.
+### Styling
 
-### Styling Approach
-- Glassmorphic cards with `backdrop-filter: blur()` 
-- CSS variables for all colors (never hardcode colors)
-- Animations use keyframes defined in `index.css`
-- No CSS modules or preprocessors—plain CSS only
-- Responsive breakpoints: 768px (tablet), 480px (mobile)
+- Neo-brutalism: thick borders, hard offset shadows, `--band-*` section bands. No glassmorphism is left in the codebase.
+- One CSS file per component in `src/components/css/`, imported as `import "./css/ComponentName.css"`.
+- Breakpoints are 900px and 560px (there is no 480px).
 
-### Navigation Pattern
-Smooth scrolling implemented in `Navigation.jsx` with:
-```javascript
-const offset = 80  // Account for fixed nav height
-const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset
-window.scrollTo({ top: targetPosition, behavior: "smooth" })
-```
+### Components
 
-Active section tracking via scroll listener comparing `scrollY` to section offsets.
+- Functional components, `export default function Name()`, destructured props, 2-space indent, no class components.
+- Sections carry an `id` for navigation; smooth scroll uses an 80px offset.
+- Comments explain the *why*, not the *what*; no `console.log` left behind.
 
-### Component Structure
-Each section component follows this pattern:
-- Self-contained functional component (no props except theme-related)
-- Uses appropriate i18n namespace
-- Wrapped in `<section id="section-name">` for navigation
-- Data pulled from constants or translation files
+## `/ugr` sub-app
 
-## Common Operations
+Vanilla JS in `public/ugr/` (no build step, globals, `app.js` is a megafile) served at `/ugr` in dev and preview. Different stack — read `AGENTS.md` before touching it.
 
-**Adding a new skill:**
-1. Import icon in `src/assets/icons/index.js`
-2. Add to `skills` array in `src/constants/index.js`
-3. No translation needed (name displayed as-is)
+## Deployment
 
-**Adding translatable content:**
-1. Add key to `locales/en/[namespace].json`
-2. Add Spanish equivalent to `locales/es/[namespace].json`
-3. Use in component: `{t("your.key.path")}`
-
-**EmailJS integration (Contact form):**
-Requires environment variables in `.env`:
-```
-VITE_APP_EMAILJS_SERVICE_ID=your_service_id
-VITE_APP_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_APP_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-## File Organization
-```
-src/
-├── components/          # All React components (Navigation, Hero, Skills, etc.)
-├── constants/index.js   # Static data (skills, projects, experience)
-├── hooks/              # Custom hooks (useAlert)
-├── libs/i18n/          # i18n configuration
-├── locales/{en,es}/    # Translation JSON files by namespace
-└── assets/             # Icons, images, flags, 3D models
-```
-
-## Known TODOs
-- `src/constants/index.js` header: "TODO: poner mis datos" (update personal data)
-- `src/hooks/useAlert.js`: "TODO: improve this alerts to look cool"
-- Several placeholder social links set to `"#"` in Hero and Contact components
+Vercel with no `vercel.json`: the build command and the `VITE_APP_EMAILJS_*` variables live in the dashboard. Preview deployments sit behind Vercel Deployment Protection, so they cannot be reached anonymously.
