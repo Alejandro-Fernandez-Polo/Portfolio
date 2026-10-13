@@ -28,6 +28,8 @@ Si quieres que el formulario de contacto funcione en local, copia `.env.example`
 
 `/ugr` usa el mismo proyecto Sentry y carga el SDK desde un bundle local para no depender de un CDN; copia la DSN pública en `public/ugr/src/monitoring/config.js`. El módulo permanece desactivado si no hay DSN o si se ejecuta en localhost. Session Replay y la captura de datos personales no están habilitados.
 
+Vercel Web Analytics y Speed Insights cubren tanto la SPA como `/ugr` (esta última con sus scripts HTML propios). Solo recogen datos en el dominio canónico de producción y eliminan parámetros y fragmentos de las URLs enviadas.
+
 ## 🛠️ Tecnologías
 
 - **React 18** + **Vite 6**

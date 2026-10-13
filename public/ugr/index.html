@@ -619,6 +619,36 @@
     </div>
   </div>
 
+  <!-- /ugr bypasses React and Vite's bundle, so it needs its own guarded Vercel clients. -->
+  <script>
+    if (["alejandrofernandezpolo.com", "www.alejandrofernandezpolo.com"].includes(location.hostname)) {
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+
+      const sanitizeVercelEvent = (event) => {
+        try {
+          // Shared links keep encrypted state in the fragment, which must not enter analytics.
+          const url = new URL(event.url, location.origin);
+          return {
+            ...event,
+            url: `${url.origin}${url.pathname}`,
+            ...(event.route ? { route: url.pathname } : {}),
+          };
+        } catch {
+          return event;
+        }
+      };
+      window.va("beforeSend", sanitizeVercelEvent);
+      window.si("beforeSend", sanitizeVercelEvent);
+
+      ["/_vercel/insights/script.js", "/_vercel/speed-insights/script.js"].forEach((src) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.defer = true;
+        document.head.appendChild(script);
+      });
+    }
+  </script>
   <script src="/ugr/vendor/sentry.bundle.js"></script>
   <script src="/ugr/src/monitoring/config.js"></script>
   <script src="/ugr/src/monitoring/init.js"></script>

@@ -1,9 +1,30 @@
 import { useState, useEffect, useRef, lazy, Suspense } from "react"
 import { Toaster } from "sonner"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import { useLang } from "./hooks/useLang.js"
 import { useCursor } from "./hooks/useCursor.js"
+
+const productionHosts = new Set([
+  "alejandrofernandezpolo.com",
+  "www.alejandrofernandezpolo.com",
+])
+
+function sanitizeVercelEvent(event) {
+  try {
+    // Shared UGR links carry encrypted state in the fragment; analytics needs only the page path.
+    const url = new URL(event.url, window.location.origin)
+    return {
+      ...event,
+      url: `${url.origin}${url.pathname}`,
+      ...(event.route ? { route: url.pathname } : {}),
+    }
+  } catch {
+    return event
+  }
+}
 
 function App() {
   const [theme, setTheme] = useState(
@@ -12,6 +33,8 @@ function App() {
   const cursorRef = useRef(null)
   const lang = useLang()
   useCursor(cursorRef)
+  const collectVercelMetrics =
+    import.meta.env.PROD && productionHosts.has(window.location.hostname)
   const Experience = lazy(() => import("./components/Experience"))
   const Skills = lazy(() => import("./components/Skills"))
   const Projects = lazy(() => import("./components/Projects"))
@@ -58,6 +81,12 @@ function App() {
         closeButton
         theme={theme}
       />
+      {collectVercelMetrics && (
+        <>
+          <Analytics mode="production" beforeSend={sanitizeVercelEvent} />
+          <SpeedInsights beforeSend={sanitizeVercelEvent} />
+        </>
+      )}
     </>
   )
 }

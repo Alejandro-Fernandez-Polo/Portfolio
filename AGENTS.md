@@ -37,6 +37,7 @@ npm run test:watch # vitest in watch mode
 
 - Vanilla JS, no build step, no framework. `public/ugr/index.html` loads plain `<script>` tags in fixed order (`data.js` → `convalidaciones.js` → `propuestas.js` → `docentes.js` → `app.js`, then `src/bootstrap.js` as a module) that communicate through globals — order matters, and `app.js` is a ~4.2k-line IIFE monolith.
 - Sentry's browser SDK is locally bundled at `public/ugr/vendor/sentry.bundle.js` and initialized before the legacy scripts; the DSN is public config, not a secret. Keep `sendDefaultPii` disabled and avoid adding replay or recording form contents.
+- Vercel Analytics/Speed Insights mount in the React app and use first-party HTML clients in `/ugr`; the latter is separate because the static sub-app never mounts React. Both are restricted to the canonical production host and strip query/hash from reported URLs.
 - The historical EC corpus is kept as a test fixture in `test/ugr-solver/oracle-ec.json`.
 - Reestructuración: Fases 0–5 completadas (Fase 3 parcial, pendiente de aprobación). Estructura `public/ugr/src/` ya existe. Repo restrictions: no TS, no new deps/scripts sin aprobación, `npm run build` + `npm test` como verificación.
 - Mini tutoriales/walkthroughs (planificado, S05): **Driver.js** (MIT, JS puro, sin build → funciona en `/ugr`). Descartados Intro.js/Shepherd.js (AGPL) y React Joyride (React-only). Los toasts del portfolio NO son tours.
