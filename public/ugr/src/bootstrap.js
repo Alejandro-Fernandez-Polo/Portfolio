@@ -11,6 +11,7 @@ import { registerSolver } from "./modules/solver.js";
 import { registerProgress } from "./modules/progress.js";
 import { setupImportWizard } from "./ui/import-wizard.js";
 import { setupProgressDashboard } from "./ui/progress-dashboard.js";
+import { setupStickyHeaders } from "./ui/sticky-headers.js";
 import { count } from "./monitoring/index.js";
 
 async function bootstrap() {
@@ -132,6 +133,9 @@ async function bootstrap() {
   // #progress-dashboard ya está en el DOM, así el primer render del dashboard
   // sale con datos reales.
   setupProgressDashboard();
+  // Y con las vistas ya montadas: mide las tablas y vuelve a medirlas cuando
+  // se repintan, se cambia de pestaña o se redimensiona la ventana.
+  setupStickyHeaders();
 
   window.addEventListener("beforeunload", () => flush());
   window.addEventListener("pagehide", () => flush());
