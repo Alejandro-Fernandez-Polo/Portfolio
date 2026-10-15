@@ -10,12 +10,31 @@ import {
   validateCatalog,
   catalogVersion,
   attachDocents,
+  attachPlan,
   getDocent as getDocentByKey,
+  getProfesor as getProfesorByTriple,
   difficultyScore,
 } from "../solver/catalog.js";
 
 export const LEGACY_CATALOG_ID = "UGR/GI/legacy-1";
 export const ACTIVE_CATALOG_META_KEY = "activeCatalog";
+
+/**
+ * Bloques del plan de estudios que trae el volcado y que hay que arrastrar por el
+ * almacén: si se guardara solo `subjects` y `docents`, un catálogo importado
+ * perdería los perfiles de profesor, las menciones, el personal y las
+ * asignaturas del plan sin horario. Se copian **solo si existen**, para no
+ * inventar listas vacías en un catálogo antiguo.
+ */
+const PLAN_KEYS = ["profesores", "menciones", "tutoresTfg", "masteres", "extraSubjects"];
+
+function planBlocksOf(source) {
+  const out = {};
+  for (const key of PLAN_KEYS) {
+    if (source && Array.isArray(source[key])) out[key] = source[key];
+  }
+  return out;
+}
 
 /**
  * Registro del store `catalogs`.
@@ -69,6 +88,14 @@ function getDocents() {
   return catalog && Array.isArray(catalog.docents) ? catalog.docents : [];
 }
 
+function getProfesores() {
+  return catalog && Array.isArray(catalog.profesores) ? catalog.profesores : [];
+}
+
+function getProfesor(code, modalidad, name) {
+  return getProfesorByTriple(catalog, code, modalidad, name);
+}
+
 function getDocentScores(codes) {
   const scores = {};
   if (!catalog || !Array.isArray(codes)) return scores;
@@ -76,10 +103,16 @@ function getDocentScores(codes) {
     const subject = getSubject(catalog, code);
     if (!subject) continue;
     for (const group of subject.grupos || []) {
-      const docent = getDocentByKey(catalog, `${code}-${group.letra}`);
-      const dificultad = docent?.profile?.dificultad;
+      const asignacion = getDocentByKey(catalog, `${code}-${group.letra}`);
+      // La dificultad es del perfil (asignatura + modalidad + nombre), no de la
+      // asignación: si el volcado no trae perfil para esa terna, no hay
+      // puntuación.
+      const profesor = asignacion
+        ? getProfesorByTriple(catalog, asignacion.subjectCode, asignacion.modalidad, asignacion.name)
+        : null;
+      const dificultad = profesor?.dificultad;
       if (!dificultad) continue;
-      // «Desconocido» no puntúa (I-11): `difficultyScore` devuelve `null` y la
+      // «Desconocido» no puntúa: `difficultyScore` devuelve `null` y la
       // clave se omite en vez de guardar un `null` que el motor leería igual
       // pero que ensuciaría el mapa.
       const score = difficultyScore(dificultad);
@@ -93,9 +126,10 @@ function nowIso() {
   return new Date().toISOString();
 }
 
-function buildLegacyCatalog(legacy, docentes) {
+function buildLegacyCatalog(legacy, docentes, profesores) {
   const built = fromLegacySubjects(legacy);
   attachDocents(built, docentes);
+  attachPlan(built, { profesores });
   return built;
 }
 
@@ -111,6 +145,7 @@ function recordToCatalog(record) {
     meta: { ...record.meta },
     subjects: record.subjects,
     docents: Array.isArray(record.docents) ? record.docents : [],
+    ...planBlocksOf(record),
   };
 }
 
@@ -118,17 +153,18 @@ function storeFailure(err) {
   return { ok: false, error: err?.code || "store_error" };
 }
 
-async function loadFromStore(legacy, docentes) {
+async function loadFromStore(legacy, docentes, profesores) {
   const rows = await getAll("catalogs");
   if (rows.length === 0) {
     if (!Array.isArray(legacy)) return false;
-    const seeded = buildLegacyCatalog(legacy, docentes);
+    const seeded = buildLegacyCatalog(legacy, docentes, profesores);
     const timestamp = nowIso();
     const record = {
       key: catalogRecordId(seeded.meta) || LEGACY_CATALOG_ID,
       meta: { ...seeded.meta },
       subjects: seeded.subjects,
       docents: seeded.docents,
+      ...planBlocksOf(seeded),
       createdAt: timestamp,
       updatedAt: timestamp,
     };
@@ -160,18 +196,19 @@ async function start() {
 
   const legacy = typeof SUBJECTS !== "undefined" ? SUBJECTS : null;
   const docentes = typeof DOCENTES !== "undefined" ? DOCENTES : [];
+  const profesores = typeof PROFESORES !== "undefined" ? PROFESORES : [];
 
   let loaded = false;
   if (storeReady) {
     try {
-      loaded = await loadFromStore(legacy, docentes);
+      loaded = await loadFromStore(legacy, docentes, profesores);
     } catch {
       storeReady = false;
     }
   }
 
   if (!loaded && Array.isArray(legacy)) {
-    catalog = buildLegacyCatalog(legacy, docentes);
+    catalog = buildLegacyCatalog(legacy, docentes, profesores);
     activeKey = LEGACY_CATALOG_ID;
   }
 
@@ -232,6 +269,7 @@ async function exportCatalog(id) {
     meta: { ...record.meta },
     subjects: record.subjects,
     docents: Array.isArray(record.docents) ? record.docents : [],
+    ...planBlocksOf(record),
   };
 }
 
@@ -249,6 +287,7 @@ async function saveCatalog(catalogInput, options = {}) {
       meta: { ...catalogInput.meta },
       subjects: catalogInput.subjects,
       docents: Array.isArray(catalogInput.docents) ? catalogInput.docents : [],
+      ...planBlocksOf(catalogInput),
       createdAt: existing?.createdAt || timestamp,
       updatedAt: timestamp,
     };
@@ -307,6 +346,8 @@ export function registerCatalog() {
       getCatalog,
       getDocent,
       getDocents,
+      getProfesor,
+      getProfesores,
       getDocentScores,
       difficultyScore,
       listCatalogs,

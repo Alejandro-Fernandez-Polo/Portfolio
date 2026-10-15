@@ -17,7 +17,7 @@
   <!-- Navegación principal -->
   <nav id="main-nav">
     <button class="nav-tab active" data-view="horario">Horario</button>
-    <button class="nav-tab" data-view="asignaturas">Asignaturas</button>
+    <button class="nav-tab" data-view="datos">Datos</button>
     <button class="nav-tab" data-view="convalidaciones">Convalidaciones</button>
     <button class="nav-tab" data-view="progreso">Progreso</button>
   </nav>
@@ -175,11 +175,10 @@
     </section>
     </div>
 
-    <!-- ═══ VISTA: ASIGNATURAS ═══ -->
-    <div id="view-asignaturas" class="view" style="display:none;">
-      <!-- Datos -->
+    <!-- ═══ VISTA: DATOS ═══ -->
+    <div id="view-datos" class="view" style="display:none;">
       <section id="data-section" class="panel">
-        <h2>Datos</h2>
+        <h2>Catálogo</h2>
         <div class="catalog-row">
           <div class="config-field catalog-field">
             <label for="catalog-select">Catálogo activo</label>
@@ -203,9 +202,21 @@
       <section class="panel">
         <div class="panel-header">
           <h2>Gestionar Asignaturas</h2>
-          <button id="btn-add-subject" class="btn btn-primary">+ Añadir Asignatura</button>
+          <div class="manage-subjects-actions">
+            <select id="manage-subjects-mencion" class="filter-select" aria-label="Ver solo una mención"></select>
+            <button id="btn-add-subject" class="btn btn-primary">+ Añadir Asignatura</button>
+          </div>
         </div>
         <div id="manage-subjects-container"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Profesores</h2>
+          <input type="search" id="profesores-search" class="filter-select profesores-search"
+                 placeholder="Buscar por nombre o asignatura" aria-label="Buscar profesor">
+        </div>
+        <div id="profesores-container"></div>
       </section>
     </div>
 
@@ -261,7 +272,7 @@
       </section>
     </div>
 
-    <!-- ═══ VISTA: PROGRESO (Fase 5) ═══ -->
+    <!-- ═══ VISTA: PROGRESO ═══ -->
     <!-- Los IDs de dentro los consulta src/ui/progress-dashboard.js: si cambian,
          ese módulo se queda en modo degradado sin renderizar nada. -->
     <div id="view-progreso" class="view" style="display:none;">
@@ -276,7 +287,7 @@
         <div id="progress-subjects"></div>
         <div id="progress-equivalences"></div>
 
-        <!-- Backup/restore (Fase 5.4): los IDs los consulta
+        <!-- Backup/restore: los IDs los consulta
              src/ui/progress-dashboard.js; si faltan, el bloque queda inerte y
              el dashboard sigue funcionando. -->
         <div class="progress-backup" id="progress-backup">
@@ -649,6 +660,17 @@
       });
     }
   </script>
+  <div id="profesor-modal" class="modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="profesor-modal-title" hidden>
+    <div class="modal profesor-modal">
+      <div class="modal-header">
+        <h2 id="profesor-modal-title">Profesor</h2>
+        <button type="button" class="modal-close-btn" id="profesor-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body" id="profesor-modal-body"></div>
+    </div>
+  </div>
+
   <script src="/ugr/vendor/sentry.bundle.js"></script>
   <script src="/ugr/src/monitoring/config.js"></script>
   <script src="/ugr/src/monitoring/init.js"></script>

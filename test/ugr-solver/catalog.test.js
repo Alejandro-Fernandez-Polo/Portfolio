@@ -13,7 +13,10 @@ import {
   isValidTime,
   difficultyScore,
   DIFFICULTY_SCORES,
+  difficultyFromLabel,
   normalizeDocent,
+  normalizeProfesor,
+  normalizeSubject,
 } from "../../public/ugr/src/solver/catalog.js";
 
 const FFT = {
@@ -190,7 +193,7 @@ describe("difficultyScore", () => {
     expect(difficultyScore("negro")).toBe(1);
   });
 
-  it("«Desconocido» (`gris`) no puntúa: null, no un 3 por defecto (I-11, 2026-10-15)", () => {
+  it("«Desconocido» (`gris`) no puntúa: null, no un 3 por defecto", () => {
     expect(DIFFICULTY_SCORES).not.toHaveProperty("gris");
     expect(difficultyScore("gris")).toBeNull();
   });
@@ -202,51 +205,136 @@ describe("difficultyScore", () => {
   });
 });
 
-describe("normalizeDocent", () => {
-  it("conserva las opiniones múltiples y descarta las vacías (I-11)", () => {
-    const d = normalizeDocent({
-      key: "FFT-A",
-      name: "Alba Delgado",
-      subjectCode: "FFT",
-      groupLetter: "A",
-      profile: { dificultad: "cyan", razon: "", opinions: ["Primera", "  ", "Segunda"] },
+describe("normalizeProfesor (perfil del volcado)", () => {
+  const base = { subjectCode: "FFT", modalidad: "Prácticas", name: "Alba Delgado" };
+
+  it("conserva las opiniones múltiples y descarta las vacías", () => {
+    const p = normalizeProfesor({
+      ...base,
+      dificultad: "cyan",
+      opinions: ["Primera", "  ", "Segunda"],
     });
-    expect(d.profile.opinions).toEqual(["Primera", "Segunda"]);
+    expect(p.opinions).toEqual(["Primera", "Segunda"]);
   });
 
-  it("convierte el `opinion` singular heredado en una lista de uno", () => {
-    const d = normalizeDocent({
-      key: "FFT-A",
-      name: "Ana",
-      profile: { dificultad: null, razon: "", opinion: "Explica desde cero" },
-    });
-    expect(d.profile.opinions).toEqual(["Explica desde cero"]);
-    expect(d.profile).not.toHaveProperty("opinion");
-  });
-
-  it("sin opiniones devuelve lista vacía, nunca undefined", () => {
-    const d = normalizeDocent({ key: "FFT-A", name: "Ana", profile: {} });
-    expect(d.profile.opinions).toEqual([]);
-    expect(d.profile.dificultad).toBeNull();
+  it("convierte el `opinion` singular de la hoja en una lista de uno", () => {
+    const p = normalizeProfesor({ ...base, dificultad: null, opinion: "Explica desde cero" });
+    expect(p.opinions).toEqual(["Explica desde cero"]);
+    expect(p).not.toHaveProperty("opinion");
   });
 
   it("si vienen las dos formas, manda `opinions[]`", () => {
-    const d = normalizeDocent({
-      key: "FFT-A",
-      name: "Ana",
-      profile: { opinion: "vieja", opinions: ["nueva"] },
-    });
-    expect(d.profile.opinions).toEqual(["nueva"]);
+    const p = normalizeProfesor({ ...base, opinion: "vieja", opinions: ["nueva"] });
+    expect(p.opinions).toEqual(["nueva"]);
   });
 
-  it("deriva la clave de asignatura y grupo cuando falta `key`", () => {
+  it("sin opiniones devuelve lista vacía, nunca undefined", () => {
+    const p = normalizeProfesor({ ...base });
+    expect(p.opinions).toEqual([]);
+    expect(p.dificultad).toBeNull();
+  });
+
+  it("la clave es la terna (asignatura, modalidad, nombre)", () => {
+    expect(normalizeProfesor(base).key).toBe("FFT|Prácticas|Alba Delgado");
+  });
+
+  it("sin la terna completa no hay profesor", () => {
+    expect(normalizeProfesor({ subjectCode: "FFT", name: "Ana" })).toBeNull();
+    expect(normalizeProfesor({ subjectCode: "FFT", modalidad: "Teoría" })).toBeNull();
+    expect(normalizeProfesor(null)).toBeNull();
+  });
+
+  it("los comentarios pierden el `autor` y conservan el resto", () => {
+    const p = normalizeProfesor({
+      ...base,
+      comentarios: [
+        {
+          autor: "OSCAR GARCIA CALLEJAS",
+          fecha: "2023-02-23",
+          texto: "Corrige en binario",
+          campo: "opinion",
+          celda: "G12",
+          anclaje: "directo",
+        },
+        { autor: "quien sea", texto: "   " },
+      ],
+    });
+    expect(p.comentarios).toEqual([
+      { fecha: "2023-02-23", texto: "Corrige en binario", campo: "opinion", celda: "G12", anclaje: "directo" },
+    ]);
+    expect(JSON.stringify(p)).not.toContain("OSCAR");
+  });
+});
+
+describe("normalizeDocent (asignación)", () => {
+  it("deriva la clave de asignatura y destino cuando falta `key`", () => {
     const d = normalizeDocent({ name: "Ana", subjectCode: "FFT", groupLetter: "B" });
     expect(d.key).toBe("FFT-B");
-    expect(d.profile.opinions).toEqual([]);
+    expect(d.groupLetter).toBe("B");
   });
 
-  it("sin clave no hay docente", () => {
+  it("sin perfil: la dificultad y las opiniones ya no viven aquí", () => {
+    const d = normalizeDocent({ key: "FFT-A", name: "Ana", profile: { dificultad: "cyan" } });
+    expect(d).not.toHaveProperty("profile");
+    expect(d.modalidad).toBe("Teoría");
+  });
+
+  it("la modalidad por defecto es teoría y las prácticas se declaran", () => {
+    const teoria = normalizeDocent({ key: "FFT-A", name: "Ana" });
+    const practicas = normalizeDocent({ key: "FFT-A1", name: "Ana", modalidad: "Prácticas" });
+    expect(teoria.modalidad).toBe("Teoría");
+    expect(practicas.modalidad).toBe("Prácticas");
+    expect(normalizeDocent({ key: "FFT-A", name: "Ana", modalidad: "inventada" }).modalidad).toBe("Teoría");
+  });
+
+  it("sin clave no hay asignación", () => {
     expect(normalizeDocent({ name: "Ana" })).toBeNull();
     expect(normalizeDocent(null)).toBeNull();
+  });
+});
+
+describe("difficultyFromLabel", () => {
+  it("traduce las siete etiquetas de la hoja a las claves de color de la app", () => {
+    expect(difficultyFromLabel("Muy fácil")).toBe("cyan");
+    expect(difficultyFromLabel("Fácil")).toBe("verde");
+    expect(difficultyFromLabel("Normal")).toBe("amarillo");
+    expect(difficultyFromLabel("Difícil")).toBe("naranja");
+    expect(difficultyFromLabel("Muy difícil")).toBe("rojo");
+    expect(difficultyFromLabel("Extremo (3% aprobados)")).toBe("negro");
+    expect(difficultyFromLabel("Se desconoce")).toBe("gris");
+  });
+
+  it("una etiqueta desconocida no se convierte en una dificultad inventada", () => {
+    expect(difficultyFromLabel("Regular")).toBeNull();
+    expect(difficultyFromLabel("")).toBeNull();
+    expect(difficultyFromLabel(undefined)).toBeNull();
+  });
+
+  it("«Se desconoce» entra como gris, que ya vale 0 puntos", () => {
+    expect(difficultyScore(difficultyFromLabel("Se desconoce"))).toBeNull();
+  });
+});
+
+describe("la asignatura con el plan del volcado", () => {
+  it("acepta dificultad y descripción por modalidad y las normaliza a teoria/practicas", () => {
+    const s = normalizeSubject({
+      ...FFT,
+      caracter: "Obligatoria",
+      mencion: "Común",
+      dificultad: { "Teoría": "rojo", "Prácticas": "gris" },
+      descripcion: { "Teoría": "Con demostraciones" },
+    });
+    expect(s.caracter).toBe("Obligatoria");
+    expect(s.mencion).toBe("Común");
+    expect(s.dificultad).toEqual({ teoria: "rojo", practicas: "gris" });
+    expect(s.descripcion).toEqual({ teoria: "Con demostraciones" });
+  });
+
+  it("sin plan no inventa claves (una muestra sin volcado no las trae)", () => {
+    const s = normalizeSubject(FFT);
+    expect(s).not.toHaveProperty("caracter");
+    expect(s).not.toHaveProperty("mencion");
+    expect(s).not.toHaveProperty("dificultad");
+    expect(s).not.toHaveProperty("descripcion");
   });
 });

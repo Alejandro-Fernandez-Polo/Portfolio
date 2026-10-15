@@ -85,6 +85,86 @@ const SESSION_SCHEMA = {
   additionalProperties: false,
 };
 
+const MENCION_SCHEMA = {
+  type: "object",
+  required: ["codigo", "nombre", "descripcion"],
+  properties: {
+    codigo: { type: "string" },
+    nombre: { type: "string" },
+    descripcion: { type: "string" },
+  },
+  additionalProperties: false,
+};
+
+const MODALIDAD_SCHEMA = { type: "string", enum: ["Teoría", "Prácticas"] };
+
+const DIFFICULTY_SCHEMA = { type: ["string", "null"] };
+
+/**
+ * Comentario de la hoja sobre una fila. **No admite `autor`**: el modelo no lo
+ * guarda (se incluye todo el volcado menos el autor), así
+ * que un comentario con autor se rechaza en la puerta en vez de colarse.
+ */
+const COMMENT_SCHEMA = {
+  type: "object",
+  required: ["fecha", "texto", "campo", "celda", "anclaje"],
+  properties: {
+    fecha: { type: "string" },
+    texto: { type: "string" },
+    campo: { type: "string" },
+    celda: { type: "string" },
+    anclaje: { type: "string" },
+  },
+  additionalProperties: false,
+};
+
+const PROFESOR_SCHEMA = {
+  type: "object",
+  required: ["key", "name", "subjectCode", "modalidad", "asignatura", "dificultad", "opinions"],
+  properties: {
+    key: { type: "string" },
+    name: { type: "string" },
+    subjectCode: { type: "string" },
+    modalidad: MODALIDAD_SCHEMA,
+    asignatura: { type: "string" },
+    dificultad: DIFFICULTY_SCHEMA,
+    razon: { type: "string" },
+    opinions: { type: "array", items: { type: "string" } },
+    // La hoja marca así las filas cuyo profesor acumula más de una opinión
+    // (definición del autor); se guarda tal cual, sin deducir nada de ella.
+    cruzada: { type: "boolean" },
+    comentarios: { type: "array", items: COMMENT_SCHEMA },
+  },
+  additionalProperties: false,
+};
+
+/** Lista de personal sin asignatura: tutores de TFG y másteres. */
+const STAFF_SCHEMA = {
+  type: "object",
+  required: ["nombre", "dificultad", "opinions"],
+  properties: {
+    nombre: { type: "string" },
+    dificultad: DIFFICULTY_SCHEMA,
+    opinions: { type: "array", items: { type: "string" } },
+  },
+  additionalProperties: false,
+};
+
+/** Asignatura del plan sin horario en la app (para las menciones). */
+const EXTRA_SUBJECT_SCHEMA = {
+  type: "object",
+  required: ["codigo", "nombre", "curso", "cuatrimestre", "caracter", "mencion"],
+  properties: {
+    codigo: { type: "string" },
+    nombre: { type: "string" },
+    curso: { type: "number" },
+    cuatrimestre: { type: "number", enum: [1, 2] },
+    caracter: { type: "string" },
+    mencion: { type: "string" },
+  },
+  additionalProperties: false,
+};
+
 const SUBJECT_SCHEMA = {
   type: "object",
   required: ["codigo", "nombre", "curso", "cuatrimestre", "creditos", "grupos"],
@@ -94,6 +174,21 @@ const SUBJECT_SCHEMA = {
     curso: { type: "number" },
     cuatrimestre: { type: "number", enum: [1, 2] },
     creditos: { type: "number" },
+    // Campos del plan de estudios. Son opcionales porque los trae el volcado y el
+    // plan antiguo no los tiene: una muestra sin ellos sigue siendo válida y la
+    // app no pinta lo que no hay.
+    caracter: { type: "string" },
+    mencion: { type: "string" },
+    dificultad: {
+      type: "object",
+      properties: { teoria: DIFFICULTY_SCHEMA, practicas: DIFFICULTY_SCHEMA },
+      additionalProperties: false,
+    },
+    descripcion: {
+      type: "object",
+      properties: { teoria: { type: "string" }, practicas: { type: "string" } },
+      additionalProperties: false,
+    },
     grupos: {
       type: "array",
       items: {
@@ -133,42 +228,42 @@ export const CATALOG_SCHEMA = {
         version: { type: "string" },
         hash: { type: "string" },
         sources: { type: "array", items: { type: "string" } },
-        // Marca del catálogo de ejemplo del repo (I-11): sus docentes son
-        // inventados. El maestro privado del autor lo lleva a `false` y el
-        // paquete cifrado conserva el suyo.
+        // Marca de la muestra pública: `true` cuando los docentes de este
+        // catálogo son la muestra que sirve la app sin contraseña; el catálogo
+        // real del autor lo lleva a `false` y viaja cifrado en el paquete.
         sampleDocents: { type: "boolean" },
         updatedAt: { type: "string" },
       },
       additionalProperties: false,
     },
     subjects: { type: "array", items: SUBJECT_SCHEMA },
+    // La asignación grupo → profesor: qué profesor da la teoría de una
+    // letra o las prácticas de un subgrupo. **No lleva perfil**: el perfil vive
+    // en `profesores`, que es dato del volcado y del usuario. Se sigue
+    // aceptando el `profile` de antes para no rechazar un catálogo exportado
+    // anterior al cambio, pero ya no se produce ni se usa.
     docents: {
       type: "array",
       items: {
         type: "object",
-        required: ["key", "name", "subjectCode", "groupLetter", "profile"],
+        required: ["key", "name", "subjectCode", "groupLetter"],
         properties: {
           key: { type: "string" },
           name: { type: "string" },
           subjectCode: { type: "string" },
           groupLetter: { type: "string" },
-          profile: {
-            type: "object",
-            properties: {
-              dificultad: { type: ["string", "null"] },
-              razon: { type: "string" },
-              // Forma canónica desde I-11: varias opiniones por profesor. Se
-              // acepta también el `opinion` singular heredado para no rechazar
-              // un catálogo exportado antes del cambio.
-              opinions: { type: "array", items: { type: "string" } },
-              opinion: { type: "string" },
-            },
-            additionalProperties: false,
-          },
+          modalidad: MODALIDAD_SCHEMA,
+          profile: { type: "object" },
         },
         additionalProperties: false,
       },
     },
+    // Perfiles del volcado, uno por (asignatura, modalidad, profesor).
+    profesores: { type: "array", items: PROFESOR_SCHEMA },
+    menciones: { type: "array", items: MENCION_SCHEMA },
+    tutoresTfg: { type: "array", items: STAFF_SCHEMA },
+    masteres: { type: "array", items: STAFF_SCHEMA },
+    extraSubjects: { type: "array", items: EXTRA_SUBJECT_SCHEMA },
   },
   additionalProperties: false,
 };

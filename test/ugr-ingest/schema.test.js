@@ -184,36 +184,86 @@ describe("CATALOG_SCHEMA / validateCatalogJSON", () => {
     expect(validateCatalogJSON(catalog).ok).toBe(true);
   });
 
-  it("acepta opiniones múltiples (`opinions[]`, I-11) y la marca de docentes de ejemplo", () => {
+  it("acepta una asignación con su modalidad y perfiles de profesor", () => {
     const catalog = validCatalog();
     catalog.meta.sampleDocents = true;
     catalog.docents = [
+      { key: "FFT-A", name: "Alba Delgado", subjectCode: "FFT", groupLetter: "A", modalidad: "Teoría" },
+      { key: "FFT-A1", name: "Alba Delgado", subjectCode: "FFT", groupLetter: "A1", modalidad: "Prácticas" },
+    ];
+    catalog.profesores = [
       {
-        key: "FFT-A",
+        key: "FFT|Teoría|Alba Delgado",
         name: "Alba Delgado",
         subjectCode: "FFT",
-        groupLetter: "A",
-        profile: {
-          dificultad: "cyan",
-          razon: "",
-          opinions: ["Explica con calma", "Los apuntes se siguen solos"],
-        },
+        modalidad: "Teoría",
+        asignatura: "FFT",
+        dificultad: "cyan",
+        razon: "",
+        opinions: ["Explica con calma", "Los apuntes se siguen solos"],
+        cruzada: false,
+        comentarios: [
+          { fecha: "2023-02-23", texto: "Corrige en binario", campo: "opinion", celda: "G12", anclaje: "directo" },
+        ],
       },
     ];
-    expect(validateCatalogJSON(catalog).ok).toBe(true);
+    expect(validateCatalogJSON(catalog)).toEqual({ ok: true, errors: [] });
   });
 
   it("rechaza una opinión que no sea texto", () => {
     const catalog = validCatalog();
-    catalog.docents = [
+    catalog.profesores = [
       {
-        key: "FFT-A",
+        key: "FFT|Teoría|Ana",
         name: "Ana",
         subjectCode: "FFT",
-        groupLetter: "A",
-        profile: { dificultad: null, razon: "", opinions: [42] },
+        modalidad: "Teoría",
+        asignatura: "FFT",
+        dificultad: null,
+        opinions: [42],
       },
     ];
     expect(validateCatalogJSON(catalog).ok).toBe(false);
+  });
+
+  it("rechaza un comentario con `autor`: el modelo no lo guarda", () => {
+    const catalog = validCatalog();
+    catalog.profesores = [
+      {
+        key: "FFT|Teoría|Ana",
+        name: "Ana",
+        subjectCode: "FFT",
+        modalidad: "Teoría",
+        asignatura: "FFT",
+        dificultad: null,
+        opinions: [],
+        comentarios: [
+          {
+            autor: "OSCAR GARCIA CALLEJAS",
+            fecha: "2023-02-23",
+            texto: "Corrige en binario",
+            campo: "opinion",
+            celda: "G12",
+            anclaje: "directo",
+          },
+        ],
+      },
+    ];
+    const result = validateCatalogJSON(catalog);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((e) => e.message === "propiedad no permitida")).toBe(true);
+  });
+
+  it("acepta el plan de la asignatura y las menciones", () => {
+    const catalog = validCatalog();
+    catalog.subjects[0].caracter = "Obligatoria";
+    catalog.subjects[0].mencion = "Común";
+    catalog.subjects[0].dificultad = { teoria: "rojo", practicas: "gris" };
+    catalog.subjects[0].descripcion = { teoria: "Con demostraciones" };
+    catalog.menciones = [{ codigo: "CSI", nombre: "Computación y Sistemas Inteligentes", descripcion: "IA" }];
+    catalog.extraSubjects = [
+      { codigo: "AA", nombre: "Aprendizaje Automático", curso: 3, cuatrimestre: 2, caracter: "Obligatoria de Rama", mencion: "CSI" },
+    ];
+    expect(validateCatalogJSON(catalog)).toEqual({ ok: true, errors: [] });
   });
 });

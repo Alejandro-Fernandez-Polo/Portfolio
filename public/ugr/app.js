@@ -11,7 +11,7 @@
   const START_HOUR = 8;
   const END_HOUR = 21;
   let compareIds = [];
-  // «Ignorar profesores» (I-11): la preferencia vive en el store
+  // «Ignorar profesores»: la preferencia vive en el store
   // (`ui.ignoreDocents`) y esta variable es la caché que lee el render, igual
   // que `compareIds`. Con el modo activo los docentes no entran ni en la
   // generación ni en la pantalla.
@@ -35,11 +35,11 @@
   }
 
   function saveAllConfigs(list) {
-    // Delegación B4-e: la implementación vive en el adaptador ESM.
+    // Delegación: la implementación vive en el adaptador ESM.
     getPersistence().saveAllConfigs(list);
   }
 
-  // B4-e: la carga real se hace en `init()` (vía `getPersistence().loadSavedConfigs()`),
+  // La carga real se hace en `init()` (vía `getPersistence().loadSavedConfigs()`),
   // cuando la composición ESM ya está montada. Este IIFE es un script clásico:
   // no puede resolver el `import()` del adaptador durante la evaluación del
   // cierre, así que aquí solo se siembra el binding vacío. Mientras `init()`
@@ -89,7 +89,7 @@
     }
   }
 
-  // ─── Perfil en el store (Fase B) ────────────────────────────
+  // ─── Perfil en el store ────────────────────────────────────
   // `state.apellido`/`state.turnoPreferente` siguen siendo la caché que lee el
   // render: el store es la capa de persistencia (C3) y la verdad que viaja a
   // IndexedDB, mientras que `saveState()` solo toca localStorage en modo
@@ -264,7 +264,7 @@
   }
 
   // Corte único entre "el store existe" y "el store tiene datos de usuario".
-  // Un userState recién creado (o solo con defaults de Fase 5) no debe ganarle
+  // Un userState recién creado (o solo con valores por defecto) no debe ganarle
   // a un `ugr-horario-state` legacy que aún no se ha migrado: en ese caso la
   // caché sigue el fallback y el push posterior siembra el store.
   function storeHasUserData(s) {
@@ -283,10 +283,10 @@
     return false;
   }
 
-  // Hidratación única de las cuatro rebanadas que app.js cachea. Devuelve true
+  // Hidratación única de las cuatro partes que app.js cachea. Devuelve true
   // si el store aportó datos; false = store virgen → el llamante cae al
   // fallback legacy. Se llama solo desde `loadState()`; la reactividad en vivo
-  // la hacen las suscripciones de cada rebanada.
+  // la hacen las suscripciones de cada parte.
   function hydrateAllFromStore() {
     const store = isStoreAuthoritative() ? __getStore() : null;
     if (!store) return false;
@@ -313,7 +313,7 @@
   let configShowFavoritesOnly = false;
   const CONFIG_PAGE_SIZE = 50;
 
-  // ─── Solver (Fase 1) ────────────────────────────────────────
+  // ─── Solver ────────────────────────────────────────────────
   const SOLVER_FILTER_TYPES = [
     'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
     'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
@@ -346,20 +346,20 @@
   // ─── Init ───────────────────────────────────────────────────
   async function init() {
     console.log('UGR Horario v1.0.0');
-    // Composición ESM (Bloque 1) al PRINCIPIO: cualquier render/persistencia
+    // Composición ESM al PRINCIPIO: cualquier render/persistencia
     // posterior (y las funciones de dominio delegadas) necesitan `ugrAppInstance`
     // ya montado. No fatal si el import falla — el monolito sigue siendo la
     // fachada operativa y `getDomain()` avisará solo si alguien lo consulta.
     await ensureUgrApp();
-    // B4-e: las configuraciones guardadas se cargan aquí, cuando la composición
+    // Las configuraciones guardadas se cargan aquí, cuando la composición
     // ESM (y su adaptador de persistencia) ya está montada. Si el import o el
     // adaptador fallan, arranca sin configs en vez de romper.
     try { savedConfigs = getPersistence().loadSavedConfigs(); } catch (e) { savedConfigs = []; }
-    // B3-b: la vista de materias vive en ESM (features/subjects.js). Se monta
+    // La vista de materias vive en ESM (features/subjects.js). Se monta
     // antes del primer `renderSubjects()` para que ese render ya delegue; no
     // fatal si el import falla — la delegación queda en no-op.
     await ensureSubjectsView();
-    // B3-c: los controles de vista del calendario (semana/lista + compacto)
+    // Los controles de vista del calendario (semana/lista + compacto)
     // viven en ESM. Se cargan antes de `setupActions()` para que ese montaje
     // ya encuentre el feature; no fatal si el import falla — la delegación y
     // el montaje quedan en no-op.
@@ -426,7 +426,7 @@
   }
 
   function calcPropuestaCreditos(p) {
-    // Delegación T02.5: la única implementación vive en ESM (src/app/domain).
+    // Delegación: la única implementación vive en ESM (src/app/domain).
     return getDomain().calcPropuestaCreditos(p);
   }
 
@@ -643,7 +643,7 @@
 
   // ─── Apellido Rule ──────────────────────────────────────────
   function getSubgrupoForApellido(apellido) {
-    // Delegación B3-a: la única implementación vive en ESM
+    // Delegación: la única implementación vive en ESM
     // (src/app/domain/selection.js).
     return getDomain().getSubgrupoForApellido(apellido);
   }
@@ -653,7 +653,7 @@
     const subgrupoNum = getSubgrupoForApellido(state.apellido);
     if (!subgrupoNum) return;
 
-    // Delegación B3-a: solo la mutación de `groupChoices` vive en ESM; la
+    // Delegación: solo la mutación de `groupChoices` vive en ESM; la
     // persistencia sigue siendo responsabilidad de este monolito.
     getDomain().applyApellidoSubgroups(
       state.selectedSubjects,
@@ -666,7 +666,7 @@
 
   // ─── Render Subjects ────────────────────────────────────────
   function renderSubjects() {
-    // Delegación B3-b: el render y sus handlers viven en ESM
+    // Delegación: el render y sus handlers viven en ESM
     // (src/app/features/subjects.js). Antes de que la vista esté montada
     // (o si su import falló) es un no-op: nunca se cae a una copia legacy.
     const view = getSubjectsView();
@@ -687,14 +687,14 @@
 
   // ─── Get Active Schedule ────────────────────────────────────
   function getActiveSchedule() {
-    // Delegación B3-a: la única construcción de entradas vive en ESM
+    // Delegación: la única construcción de entradas vive en ESM
     // (src/app/domain/calendar.js); este monolito solo inyecta el estado.
     return getDomain().buildActiveSchedule(state.selectedSubjects, state.groupChoices, SUBJECTS);
   }
 
   // ─── Config Metrics ─────────────────────────────────────────
   function calculateConfigMetrics(selectedSubjects, groupChoices) {
-    // Delegación T02.4: la única implementación vive en ESM
+    // Delegación: la única implementación vive en ESM
     // (src/app/domain/metrics.js); aquí solo se inyectan los datos legacy.
     // Con «Ignorar profesores» se inyecta un lookup vacío: la columna «Prof»
     // desaparece del cálculo (queda a hueco) sin tocar la implementación pura.
@@ -706,21 +706,21 @@
   }
 
   function calculateConfigDeadHours(selectedSubjects, groupChoices) {
-    // Delegación T02.4: la única implementación vive en ESM (metrics.js).
+    // Delegación: la única implementación vive en ESM (metrics.js).
     return getDomain().calculateConfigDeadHours(selectedSubjects, groupChoices, {
       subjects: SUBJECTS,
     });
   }
 
   function calculateConfigDays(selectedSubjects, groupChoices) {
-    // Delegación T02.4: la única implementación vive en ESM (metrics.js).
+    // Delegación: la única implementación vive en ESM (metrics.js).
     return getDomain().calculateConfigDays(selectedSubjects, groupChoices, {
       subjects: SUBJECTS,
     });
   }
 
   function addBlockFilter(type) {
-    // Delegación B4-c: validar y construir el payload es regla pura
+    // Delegación: validar y construir el payload es regla pura
     // (src/app/domain/configs.js `buildBlockPayload`); aquí solo se leen los
     // selects del panel. El `return` temprano con payload nulo es legacy: NO
     // se re-renderiza cuando la validación falla (ni con `type` desconocida,
@@ -930,7 +930,7 @@
       eventDiv.dataset.subject = entry.codigo;
       eventDiv.tabIndex = 0;
       eventDiv.setAttribute('role', 'group');
-      // B3-d: la etiqueta accesible vive en el feature ESM; sin feature el
+      // La etiqueta accesible vive en el feature ESM; sin feature el
       // aria-label queda vacío (mismo no-op que el resto de delegaciones).
       const calView = getCalendarViewFeature();
       eventDiv.setAttribute('aria-label', calView ? calView.buildEventLabel(entry, false) : '');
@@ -1015,68 +1015,85 @@
 
   // ─── Conflict Detection ─────────────────────────────────────
   function detectConflicts() {
-    // Delegación T02.4: la detección pura vive en ESM (metrics.js);
+    // Delegación: la detección pura vive en ESM (metrics.js);
     // este IIFE solo conserva la asignación a su array de estado.
     conflicts = getDomain().findConflicts(getActiveSchedule());
   }
 
   function timesOverlap(s1, e1, s2, e2) {
-    // Delegación T02.x: la única implementación vive en ESM (src/app/domain).
+    // Delegación: la única implementación vive en ESM (src/app/domain).
     return getDomain().timesOverlap(s1, e1, s2, e2);
   }
 
   function timeToMinutes(t) {
-    // Delegación T02.x: la única implementación vive en ESM (src/app/domain).
+    // Delegación: la única implementación vive en ESM (src/app/domain).
     return getDomain().timeToMinutes(t);
   }
 
   // ─── Professor Preferences Helpers ──────────────────────────
+  // Dos capas: `DOCENTES` son las **asignaciones** (qué profesor da
+  // la teoría de una letra de grupo o las prácticas de un subgrupo) y
+  // `PROFESORES` son los **perfiles** del volcado, uno por (asignatura,
+  // modalidad, nombre). El perfil no cuelga de la asignación: se busca por la
+  // terna, con la misma clave que construye `profesorKey` en
+  // `src/solver/catalog.js`. Así la asignación es del usuario y el perfil de la
+  // hoja, y ninguno de los dos duplica al otro.
   function getProfKey(codigo, letra) {
     return codigo + '-' + letra;
   }
 
-  const docentesByKey = (typeof DOCENTES !== 'undefined' && Array.isArray(DOCENTES) ? DOCENTES : [])
-    .reduce((acc, d) => {
-      if (d && d.key) acc[d.key] = d;
+  function getProfesorKey(asignacion) {
+    return asignacion.subjectCode + '|' + (asignacion.modalidad || 'Teoría') + '|' + asignacion.name;
+  }
+
+  function indexByKey(list, keyOf) {
+    return (Array.isArray(list) ? list : []).reduce((acc, entry) => {
+      const key = keyOf(entry);
+      if (key) acc[key] = entry;
       return acc;
     }, {});
+  }
+
+  const docentesByKey = indexByKey(typeof DOCENTES !== 'undefined' ? DOCENTES : [], d => d && d.key);
+  const profesoresByKey = indexByKey(typeof PROFESORES !== 'undefined' ? PROFESORES : [], p => p && p.key);
 
   function getDocentInfo(key) {
     return docentesByKey[key] || null;
   }
 
+  /**
+   * Perfil del profesor asignado a un grupo (teoría) o subgrupo (prácticas).
+   * `null` cuando no hay asignación o cuando el volcado no trae perfil para esa
+   * terna —los 10 nombres del maestro antiguo que no están en la hoja—, que es
+   * «sin dificultad», no «difícil».
+   */
+  function getProfesorInfo(codigo, letra) {
+    const asignacion = getDocentInfo(getProfKey(codigo, letra));
+    if (!asignacion) return null;
+    return profesoresByKey[getProfesorKey(asignacion)] || null;
+  }
+
   function getDifficultyScore(dificultad) {
     const api = typeof window !== 'undefined' && window.__ugrCatalog ? window.__ugrCatalog : null;
     // Sin catálogo no se inventa un peso: «sin puntuación» (`null`) es un valor
-    // legítimo que el motor y las métricas entienden (I-11, 2026-10-15).
+    // legítimo que el motor y las métricas entienden.
     if (api && typeof api.difficultyScore === 'function') return api.difficultyScore(dificultad);
     return null;
   }
 
-  function getProfName(codigo, letra) {
-    const info = getDocentInfo(getProfKey(codigo, letra));
-    return info ? info.name : '';
+  /** Perfiles del catálogo activo como lista: el índice es por clave. */
+  function profesoresList() {
+    return Object.keys(profesoresByKey).map(key => profesoresByKey[key]);
   }
 
-  function getProfRazon(codigo, letra) {
-    const info = getDocentInfo(getProfKey(codigo, letra));
-    return info && info.profile ? info.profile.razon : '';
+  function getProfName(codigo, letra) {
+    const asignacion = getDocentInfo(getProfKey(codigo, letra));
+    return asignacion && asignacion.name ? asignacion.name : '';
   }
 
   function getDificultad(codigo, letra) {
-    const info = getDocentInfo(getProfKey(codigo, letra));
-    return info && info.profile && info.profile.dificultad ? info.profile.dificultad : null;
-  }
-
-  /**
-   * Opiniones del profesor de un grupo (`profile.opinions[]`, I-11). Siempre un
-   * array: el llamante decide cómo apilarlas, y `[]` significa «sin
-   * opiniones», que es el caso normal.
-   */
-  function getOpinions(codigo, letra) {
-    const info = getDocentInfo(getProfKey(codigo, letra));
-    const list = info && info.profile ? info.profile.opinions : null;
-    return Array.isArray(list) ? list : [];
+    const info = getProfesorInfo(codigo, letra);
+    return info && info.dificultad ? info.dificultad : null;
   }
 
   function getDificultadLabel(d) {
@@ -1128,7 +1145,6 @@
         html += `<input type="radio" name="teoria-${codigo}" ${isSelected ? 'checked' : ''}>`;
         html += `<div class="group-info">`;
         const profName = getProfName(codigo, group.letra);
-        const profRazon = getProfRazon(codigo, group.letra);
 
         html += `<div class="group-label">G${group.letra} <span style="font-weight:400;color:#888;font-size:0.65rem;">${group.turno}</span></div>`;
         html += `<div class="group-schedule">`;
@@ -1141,20 +1157,24 @@
         html += `</div>`;
         // Con «Ignorar profesores» el bloque del profesor no se pinta: el modo
         // apaga también la parte informativa, no solo el peso en el coste.
+        //
+        // El bloque se queda corto a propósito: el nombre, que abre la ficha, y
+        // la insignia de dificultad. La razón, las opiniones y los comentarios
+        // viven en la ficha. El nombre solo es un botón cuando hay ficha que
+        // abrir, es decir, cuando el catálogo activo trae perfil para esa terna.
         if (profName && !ignoreDocents) {
           const diff = getDificultad(codigo, group.letra);
-          const opinions = getOpinions(codigo, group.letra);
+          const nombre = escapeCatalogText(profName);
           html += `<div class="group-profesor">`;
-          html += `<span class="prof-name">${profName}</span>`;
+          if (getProfesorInfo(codigo, group.letra)) {
+            html += `<button type="button" class="prof-name-btn" data-prof-name="${nombre}"`
+              + ` data-prof-codigo="${codigo}" data-prof-modalidad="Teoría">${nombre}</button>`;
+          } else {
+            html += `<span class="prof-name">${nombre}</span>`;
+          }
           if (diff) {
             html += `<span class="dificultad-badge" style="background:${getDificultadColor(diff)}">${getDificultadLabel(diff)}</span>`;
           }
-          html += `<span class="prof-razon">${profRazon}</span>`;
-          // Una línea por opinión: el modelo admite varias desde I-11 y
-          // apilarlas es más legible que concatenarlas en un texto largo.
-          opinions.forEach(text => {
-            html += `<span class="prof-opinion">${text}</span>`;
-          });
           html += `</div>`;
         }
         html += `</div></div>`;
@@ -1220,7 +1240,192 @@
     });
   }
 
-  // ─── Render Calendar (B3-d) ─────────────────────────────────
+  // ─── Ficha del profesor y listado del claustro ──────────────
+  // El bloque del profesor enseña el nombre y la insignia; todo lo demás se
+  // consulta aquí. La ficha la compone el dominio (`buildProfesorFicha`), que
+  // agrupa los perfiles por nombre: cada perfil es de (asignatura, modalidad),
+  // así que la ficha enseña al profesor en todas sus asignaturas, con la que se
+  // ha pulsado primero y resaltada.
+  let fichaOpener = null;
+
+  /**
+   * Vuelve a encontrar el botón que abrió la ficha: mismo nombre y, si se abrió
+   * desde un grupo, misma asignatura y modalidad. El listado de profesores no
+   * lleva asignatura, así que ahí basta el nombre.
+   */
+  function findProfesorButton(name, subjectCode, modalidad) {
+    for (const btn of document.querySelectorAll('.prof-name-btn')) {
+      if (btn.dataset.profName !== name) continue;
+      if (subjectCode && btn.dataset.profCodigo !== subjectCode) continue;
+      if (modalidad && btn.dataset.profModalidad !== modalidad) continue;
+      return btn;
+    }
+    return null;
+  }
+
+  function profesorModalEls() {
+    return {
+      modal: document.getElementById('profesor-modal'),
+      title: document.getElementById('profesor-modal-title'),
+      body: document.getElementById('profesor-modal-body'),
+      close: document.getElementById('profesor-modal-close'),
+    };
+  }
+
+  function dificultadBadgeHtml(dificultad) {
+    if (!dificultad) return '';
+    return `<span class="dificultad-badge" style="background:${getDificultadColor(dificultad)}">${getDificultadLabel(dificultad)}</span>`;
+  }
+
+  /** Una entrada de la ficha: el profesor en una asignatura y una modalidad. */
+  function fichaEntryHtml(entry) {
+    const dec = entry.highlighted ? ' is-focus' : '';
+    let html = `<article class="profesor-ficha-entry${dec}">`;
+    html += '<div class="profesor-ficha-head">';
+    html += `<span class="profesor-ficha-code">${escapeCatalogText(entry.subjectCode)}</span>`;
+    if (entry.nombreAsignatura) {
+      html += `<span class="profesor-ficha-subject">${escapeCatalogText(entry.nombreAsignatura)}</span>`;
+    }
+    html += `<span class="profesor-ficha-modalidad">${escapeCatalogText(entry.modalidad)}</span>`;
+    html += dificultadBadgeHtml(entry.dificultad);
+    if (entry.cruzada) {
+      html += `<span class="profesor-ficha-flag" title="Acumula más de una opinión en la hoja">cruzada</span>`;
+    }
+    html += '</div>';
+    const plan = [entry.caracter, entry.mencion ? `Mención ${entry.mencion}` : ''].filter(Boolean).join(' · ');
+    if (plan) html += `<div class="profesor-ficha-plan">${escapeCatalogText(plan)}</div>`;
+    if (entry.descripcion) html += `<p class="profesor-ficha-desc">${escapeCatalogText(entry.descripcion)}</p>`;
+    if (entry.razon) html += `<p class="profesor-ficha-razon">${escapeCatalogText(entry.razon)}</p>`;
+    entry.opinions.forEach(text => {
+      html += `<p class="profesor-ficha-opinion">${escapeCatalogText(text)}</p>`;
+    });
+    if (entry.comentarios.length) {
+      html += '<ul class="profesor-ficha-comentarios">';
+      entry.comentarios.forEach(comentario => {
+        const meta = [comentario.fecha, comentario.campo].filter(Boolean).join(' · ');
+        html += '<li>';
+        if (meta) html += `<span class="profesor-ficha-comentario-meta">${escapeCatalogText(meta)}</span>`;
+        html += `<span class="profesor-ficha-comentario-texto">${escapeCatalogText(comentario.texto)}</span>`;
+        html += '</li>';
+      });
+      html += '</ul>';
+    }
+    if (!entry.razon && entry.opinions.length === 0 && entry.comentarios.length === 0) {
+      html += '<p class="profesor-ficha-vacio">Sin opiniones ni comentarios.</p>';
+    }
+    html += '</article>';
+    return html;
+  }
+
+  /**
+   * Abre la ficha de un profesor. `focus` es la entrada pulsada (asignatura y
+   * modalidad) y `opener` el botón, para devolverle el foco al cerrar. Desde el
+   * listado de profesores no hay foco: no se resalta ninguna asignatura.
+   */
+  function openProfesorFicha(name, focus, opener) {
+    const els = profesorModalEls();
+    if (!els.modal || !els.title || !els.body || !name) return;
+    const ficha = getDomain().buildProfesorFicha(profesoresList(), SUBJECTS, name, focus || null);
+    if (!ficha.entries.length) return;
+    els.title.textContent = ficha.name;
+    els.body.innerHTML = `<div class="profesor-ficha">${ficha.entries.map(fichaEntryHtml).join('')}</div>`;
+    fichaOpener = {
+      name,
+      subjectCode: (focus && focus.subjectCode) || '',
+      modalidad: (focus && focus.modalidad) || '',
+      element: opener || null,
+    };
+    els.modal.hidden = false;
+    if (els.close) els.close.focus();
+  }
+
+  function closeProfesorFicha() {
+    const els = profesorModalEls();
+    if (!els.modal || els.modal.hidden) return;
+    els.modal.hidden = true;
+    // El foco vuelve a quien abrió la ficha, siempre que siga en el documento:
+    // los paneles se repintan enteros, así que el botón puede haber muerto.
+    const opener = fichaOpener;
+    fichaOpener = null;
+    if (!opener) return;
+    // El panel se repinta entero ante cualquier cambio del estado, así que el
+    // nodo que abrió la ficha puede estar muerto: si lo está, se busca por sus
+    // datos en la pantalla (mismo nombre y misma entrada) en vez de rendirse.
+    const vivo = opener.element && document.contains(opener.element)
+      ? opener.element
+      : findProfesorButton(opener.name, opener.subjectCode, opener.modalidad);
+    if (vivo && typeof vivo.focus === 'function') vivo.focus();
+  }
+
+  /** Listado del claustro de la pestaña de datos, con su buscador. */
+  function renderProfesores() {
+    const container = document.getElementById('profesores-container');
+    if (!container) return;
+    const search = document.getElementById('profesores-search');
+    const rows = getDomain().listProfesores(profesoresList(), { query: search ? search.value : '' });
+
+    if (rows.length === 0) {
+      container.innerHTML = '<p class="profesores-vacio">Ningún profesor coincide con la búsqueda.</p>';
+      return;
+    }
+
+    let html = '<div class="manage-table-wrapper"><table class="manage-table profesores-table">';
+    html += '<thead><tr><th>Profesor</th><th>Asignaturas</th><th>Dificultad</th></tr></thead><tbody>';
+    rows.forEach(row => {
+      const asignaturas = row.asignaturas
+        .map(a => (a.modalidad === 'Prácticas' ? `${a.code} (P)` : a.code))
+        .join(', ');
+      const insignias = row.dificultades.map(dificultadBadgeHtml).join(' ') || '—';
+      html += '<tr>';
+      html += `<td><button type="button" class="prof-name-btn" data-prof-name="${escapeCatalogText(row.name)}">${escapeCatalogText(row.name)}</button></td>`;
+      html += `<td class="profesores-asignaturas">${escapeCatalogText(asignaturas)}</td>`;
+      html += `<td>${insignias}</td>`;
+      html += '</tr>';
+    });
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+  }
+
+  function setupProfesorFicha() {
+    const els = profesorModalEls();
+    if (!els.modal) return;
+    if (els.close) els.close.addEventListener('click', closeProfesorFicha);
+    els.modal.addEventListener('click', (e) => {
+      if (e.target === els.modal) closeProfesorFicha();
+    });
+    els.modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeProfesorFicha();
+      }
+    });
+    // Delegado: el panel de grupos y el listado se repintan enteros, así que un
+    // listener por botón se perdería en cada repintado.
+    const groupConfig = document.getElementById('group-config-content');
+    if (groupConfig) {
+      groupConfig.addEventListener('click', (e) => {
+        const btn = e.target.closest('.prof-name-btn');
+        if (!btn) return;
+        openProfesorFicha(
+          btn.dataset.profName,
+          { subjectCode: btn.dataset.profCodigo, modalidad: btn.dataset.profModalidad },
+          btn,
+        );
+      });
+    }
+    const lista = document.getElementById('profesores-container');
+    if (lista) {
+      lista.addEventListener('click', (e) => {
+        const btn = e.target.closest('.prof-name-btn');
+        if (!btn) return;
+        openProfesorFicha(btn.dataset.profName, null, btn);
+      });
+    }
+    const search = document.getElementById('profesores-search');
+    if (search) search.addEventListener('input', renderProfesores);
+  }
+
+  // ─── Render Calendar ───────────────────────────────────────
   // El render de semana (`renderCalendar`), la vista lista, el tooltip y sus
   // helpers (etiqueta accesible, horas ocupadas, turno) viven en ESM
   // (src/app/features/calendar.js), montados por `ensureCalendarViewFeature`.
@@ -1373,6 +1578,7 @@
 
   function setupActions() {
     setupShareDialog();
+    setupProfesorFicha();
     document.getElementById('btn-export').addEventListener('click', exportCalendar);
     document.getElementById('btn-share').addEventListener('click', shareLink);
     document.getElementById('btn-clear-selected').addEventListener('click', clearSelected);
@@ -1381,6 +1587,8 @@
       if (e.key === 'Enter') saveConfig();
     });
     document.getElementById('btn-add-subject').addEventListener('click', openAddModal);
+    const mencionSelect = document.getElementById('manage-subjects-mencion');
+    if (mencionSelect) mencionSelect.addEventListener('change', renderManageSubjects);
     document.getElementById('modal-close').addEventListener('click', closeModal);
     document.getElementById('modal-cancel').addEventListener('click', closeModal);
     document.getElementById('modal-save').addEventListener('click', saveSubject);
@@ -1426,7 +1634,7 @@
       }
     });
     setupGroupConfigToggle();
-    // B3-c: los toggles semana/lista y compacto los gestiona el feature ESM
+    // Los toggles semana/lista y compacto los gestiona el feature ESM
     // (listeners idempotentes: un `init()` repetido no los duplica).
     const calView = getCalendarViewFeature();
     if (calView) calView.mount();
@@ -1823,7 +2031,7 @@
     return savedConfigs.concat(solverResults);
   }
 
-  // ─── Solver UI (Fase 1) ─────────────────────────────────────
+  // ─── Solver UI ─────────────────────────────────────────────
   function loadSolverFilters() {
     try {
       const parsed = JSON.parse(localStorage.getItem('ugr-solver-filters') || '[]');
@@ -1856,7 +2064,7 @@
         const info = getDocentInfo(key);
         if (!info || !info.name) return;
         if (!byName.has(info.name)) {
-          byName.set(info.name, { name: info.name, dificultad: info.profile ? info.profile.dificultad : null, keys: [], subjects: new Set() });
+          byName.set(info.name, { name: info.name, dificultad: (getProfesorInfo(s.codigo, g.letra) || {}).dificultad || null, keys: [], subjects: new Set() });
         }
         const entry = byName.get(info.name);
         entry.keys.push(key);
@@ -1898,7 +2106,7 @@
       html += `<option value="${key}" ${solverStrategy === key ? 'selected' : ''}>${s.label}</option>`;
     });
     html += '</select></label>';
-    // «Ignorar profesores» (I-11): casilla provisional en el panel del
+    // «Ignorar profesores»: casilla provisional en el panel del
     // generador —es donde hoy vive todo lo de docentes—; cuando exista la
     // sección «Profesores» se mudará allí.
     html += '<label class="solver-ignore-docents"><input type="checkbox" id="solver-ignore-docents"'
@@ -2040,9 +2248,9 @@
   }
 
   function buildSolverProblem() {
-    // Delegación I-11: la construcción vive en ESM (src/app/domain/problem.js);
+    // Delegación: la construcción vive en ESM (src/app/domain/problem.js);
     // aquí solo se juntan los datos del cierre (estado, catálogo, superadas) y
-    // la preferencia del store. Antes de esta rebanada, las asignaturas
+    // la preferencia del store. Las asignaturas
     // superadas se dejaban fuera del dominio aquí mismo: el solver no debe
     // planificar lo aprobado, y sin `__ugrProgress` (modo degradado) no se
     // excluye nada.
@@ -2173,13 +2381,13 @@
   }
 
   function isConfigFavorited(config) {
-    // Delegación B4-a: la única implementación vive en ESM
+    // Delegación: la única implementación vive en ESM
     // (src/app/domain/configs.js).
     return getDomain().isConfigFavorited(config);
   }
 
   function findDuplicateConfig(newGroupChoices, newSelectedSubjects) {
-    // Delegación B4-a (configs.js): la lista de candidatas se inyecta aquí
+    // Delegación (configs.js): la lista de candidatas se inyecta aquí
     // porque el IIFE es quien posee `savedConfigs`.
     return getDomain().findDuplicateConfig(savedConfigs, newGroupChoices, newSelectedSubjects);
   }
@@ -2218,7 +2426,7 @@
     const config = getDisplayConfigs().find(c => c.id === id);
     if (!config) return;
 
-    // Delegación B4-b: las 4 asignaciones viven en `applyConfigToState` (copia
+    // Delegación: las 4 asignaciones viven en `applyConfigToState` (copia
     // de materias + clon profundo de grupos); DOM, store y toast siguen aquí.
     getDomain().applyConfigToState(state, config);
     pushProfileToStore();
@@ -2236,7 +2444,7 @@
     if (!config) return;
     if (!confirm(`¿Eliminar "${config.name}"?`)) return;
 
-    // Delegación B4-b: el filtrado puro devuelve la nueva lista; el binding
+    // Delegación: el filtrado puro devuelve la nueva lista; el binding
     // local se reasigna aquí (confirm/persistencia/render no cambian).
     savedConfigs = getDomain().removeConfigById(savedConfigs, id);
     saveAllConfigs(savedConfigs);
@@ -2253,7 +2461,7 @@
       return;
     }
 
-    // Delegación B4-d: orden + filtros (bloqueos, favoritos, techos de días)
+    // Delegación: orden + filtros (bloqueos, favoritos, techos de días)
     // viven en ESM (src/app/domain/configs.js `selectVisibleConfigs`); aquí
     // solo se inyecta el criterio del cierre y los datos legacy (store,
     // catálogo y lookups de dificultad).
@@ -2278,7 +2486,7 @@
       return;
     }
 
-    // Delegación B4-d: totales, recorte de página y slice viven en ESM
+    // Delegación: totales, recorte de página y slice viven en ESM
     // (`paginateConfigs`); el cierre solo reasigna su `configPage` con el
     // valor ya recortado al rango [1, totalPages].
     const { totalEntries, totalPages, page, entries: pageEntries } = getDomain().paginateConfigs(filtered, configPage, CONFIG_PAGE_SIZE);
@@ -2548,7 +2756,7 @@
     const config = allConfigs.find(c => c.id === id);
     if (!config) return;
 
-    // Delegación B4-b: envoltorio exacto `{version, type, exportedAt, config}`
+    // Delegación: envoltorio exacto `{version, type, exportedAt, config}`
     // (clon profundo) y nombre de fichero, ambos en el dominio puro; la fecha
     // ISO se pasa aquí para que el dominio no lea el reloj.
     const data = getDomain().buildSingleConfigExport(config, new Date().toISOString());
@@ -2562,7 +2770,7 @@
       return;
     }
 
-    // Delegación B4-b: mismo envoltorio batch (type '…-configs-batch') con la
+    // Delegación: mismo envoltorio batch (type '…-configs-batch') con la
     // lista clonada; el nombre de fichero legacy vive en `app.js`.
     const data = getDomain().buildBatchConfigExport(savedConfigs, new Date().toISOString());
     downloadJSON(data, 'ugr-horario-configs.json');
@@ -2579,7 +2787,7 @@
       try {
         const data = JSON.parse(evt.target.result);
 
-        // Delegación B4-b: la validación de formato (single/batch → lista) es
+        // Delegación: la validación de formato (single/batch → lista) es
         // pura; `null` significa envoltorio no reconocido. Los `id` siguen
         // generándose aquí: son efecto secundario, no regla de dominio.
         const configsToAdd = getDomain().parseConfigImport(data);
@@ -2619,7 +2827,6 @@
     console.log('Setting up navigation...');
     document.querySelectorAll('.nav-tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        console.log('Nav pulsado:', tab.dataset.view);
         const view = tab.dataset.view;
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
@@ -2632,8 +2839,9 @@
           target.style.display = '';
           target.classList.add('active');
         }
-        if (view === 'asignaturas') {
+        if (view === 'datos') {
           renderManageSubjects();
+          renderProfesores();
         }
         if (view === 'convalidaciones') {
           renderConvalidaciones();
@@ -2659,30 +2867,53 @@
   // ─── Manage Subjects ────────────────────────────────────────
   function renderManageSubjects() {
     const container = document.getElementById('manage-subjects-container');
+    const select = document.getElementById('manage-subjects-mencion');
+    // La lista es el plan entero: las asignaturas del catálogo (con horario, que
+    // se editan aquí) y las del plan que la app no planifica, en modo lectura.
+    const lista = getDomain().listPlanSubjects(SUBJECTS, catalogExtraSubjects());
+    const options = getDomain().mencionOptions(lista, catalogMenciones());
+    const elegida = select ? select.value : '';
+
+    // Las opciones se rehacen con el catálogo activo y se conserva la elegida si
+    // sigue existiendo. Un catálogo sin plan (una muestra sin volcado) no tiene
+    // menciones que ofrecer, así que el desplegable no se pinta.
+    if (select) {
+      select.innerHTML = '<option value="">Todas las menciones</option>'
+        + options.map(o => {
+          const etiqueta = o.nombre ? `${o.codigo} — ${o.nombre}` : o.codigo;
+          return `<option value="${escapeCatalogText(o.codigo)}">${escapeCatalogText(etiqueta)}</option>`;
+        }).join('');
+      select.value = options.some(o => o.codigo === elegida) ? elegida : '';
+      select.hidden = options.length === 0;
+    }
+
+    const visibles = getDomain().filterSubjectsByMention(lista, select ? select.value : '');
 
     let html = '<div class="manage-table-wrapper"><table class="manage-table">';
     html += '<thead><tr>';
-    html += '<th>Código</th><th>Nombre</th><th>Curso</th><th>Cuat.</th><th>ECTS</th><th>Estado</th><th>Grupos</th><th>Acciones</th>';
+    html += '<th>Nombre</th><th>Tipo</th><th>Curso</th><th>Cuat.</th><th>ECTS</th><th>Grupos</th><th>Acciones</th>';
     html += '</tr></thead><tbody>';
 
-    const sorted = [...SUBJECTS].sort((a, b) => a.curso - b.curso || a.cuatrimestre - b.cuatrimestre || a.codigo.localeCompare(b.codigo));
-
-    sorted.forEach(s => {
+    visibles.forEach(s => {
+      const tipo = getDomain().tipoDeAsignatura(s);
+      const clave = getDomain().tipoClave(s);
       html += '<tr>';
-      html += `<td class="td-codigo">${s.codigo}</td>`;
-      html += `<td>${s.nombre}</td>`;
+      html += `<td>${escapeCatalogText(s.nombre)}</td>`;
+      html += `<td class="td-tipo${clave ? ` td-tipo-${clave}` : ''}">`
+        + `${tipo ? escapeCatalogText(tipo) : '<span class="td-tipo-vacio">—</span>'}</td>`;
       html += `<td>${s.curso}º</td>`;
       html += `<td>${s.cuatrimestre}</td>`;
-      html += `<td>${s.creditos}</td>`;
-      if (s.aprobada) {
-        html += `<td><span class="badge-aprobada">Aprobada</span>${s.corresponde ? `<br><small style="color:var(--text-light)">→ ${s.corresponde}</small>` : ''}</td>`;
+      // Las del plan sin horario no traen ECTS ni grupos, y no se editan aquí:
+      // no están en el catálogo con el que se resuelven los horarios.
+      html += `<td>${s.enCatalogo ? s.creditos : '<span class="td-tipo-vacio">—</span>'}</td>`;
+      html += `<td>${s.enCatalogo ? s.grupos.length : '<span class="td-tipo-vacio">—</span>'}</td>`;
+      html += '<td class="td-actions">';
+      if (s.enCatalogo) {
+        html += `<button class="btn btn-sm btn-secondary" data-action="edit" data-codigo="${s.codigo}">Editar</button> `;
+        html += `<button class="btn btn-sm btn-danger" data-action="delete" data-codigo="${s.codigo}">Eliminar</button>`;
       } else {
-        html += `<td><span class="badge-pendiente">Pendiente</span></td>`;
+        html += '<span class="td-solo-plan" title="Asignatura del plan sin horario: no entra en los horarios, así que no se edita aquí">Solo plan</span>';
       }
-      html += `<td>${s.grupos.length}</td>`;
-      html += `<td class="td-actions">`;
-      html += `<button class="btn btn-sm btn-secondary" data-action="edit" data-codigo="${s.codigo}">Editar</button> `;
-      html += `<button class="btn btn-sm btn-danger" data-action="delete" data-codigo="${s.codigo}">Eliminar</button>`;
       html += '</td></tr>';
     });
 
@@ -3012,10 +3243,24 @@
     } catch (e) { /* ignore */ }
   }
 
-  // ─── Catálogo activo (Fase 2.4b) ────────────────────────────
+  // ─── Catálogo activo ───────────────────────────────────────
   const LEGACY_CATALOG_ID = 'UGR/GI/legacy-1';
   const LEGACY_SUBJECT_FIELDS = ['aprobada', 'corresponde', 'descripcion'];
   let catalogBridgeBound = false;
+
+  /** Menciones del catálogo activo (con su nombre largo), si las trae. */
+  function catalogMenciones() {
+    const api = getCatalogApi();
+    const catalog = api && typeof api.getCatalog === 'function' ? api.getCatalog() : null;
+    return catalog && Array.isArray(catalog.menciones) ? catalog.menciones : [];
+  }
+
+  /** Asignaturas del plan que la app no planifica (sin horario), si las trae. */
+  function catalogExtraSubjects() {
+    const api = getCatalogApi();
+    const catalog = api && typeof api.getCatalog === 'function' ? api.getCatalog() : null;
+    return catalog && Array.isArray(catalog.extraSubjects) ? catalog.extraSubjects : [];
+  }
 
   function getCatalogApi() {
     return (typeof window !== 'undefined' && window.__ugrCatalog) ? window.__ugrCatalog : null;
@@ -3025,10 +3270,22 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  function rebuildDocentesIndex(docents) {
+  /**
+   * Rehace los dos índices del profesor con lo que sirva el catálogo activo:
+   * las asignaciones y los perfiles. Se vacían en sitio porque son `const` que
+   * comparten los ayudantes del profesor (no se reasigna la referencia).
+   *
+   * @param {Array} docents asignaciones.
+   * @param {Array} profesores perfiles.
+   */
+  function rebuildDocentIndexes(docents, profesores) {
     Object.keys(docentesByKey).forEach(key => { delete docentesByKey[key]; });
+    Object.keys(profesoresByKey).forEach(key => { delete profesoresByKey[key]; });
     (Array.isArray(docents) ? docents : []).forEach(d => {
       if (d && d.key) docentesByKey[d.key] = d;
+    });
+    (Array.isArray(profesores) ? profesores : []).forEach(p => {
+      if (p && p.key) profesoresByKey[p.key] = p;
     });
   }
 
@@ -3056,7 +3313,10 @@
 
     SUBJECTS.length = 0;
     incoming.forEach(s => SUBJECTS.push(s));
-    rebuildDocentesIndex(typeof api.getDocents === 'function' ? api.getDocents() : []);
+    rebuildDocentIndexes(
+      typeof api.getDocents === 'function' ? api.getDocents() : [],
+      typeof api.getProfesores === 'function' ? api.getProfesores() : [],
+    );
 
     DEFAULT_SUBJECTS.length = 0;
     incoming.forEach(s => DEFAULT_SUBJECTS.push(cloneCatalogValue(s)));
@@ -4058,7 +4318,7 @@
     });
   }
 
-  // ─── Composición ESM (Bloque 1) ─────────────────────────────
+  // ─── Composición ESM ───────────────────────────────────────
   // Único puente hacia `src/app/createUgrApp.js`. `import()` dinámico porque
   // este fichero sigue siendo un script clásico sin imports. Dos guardas de
   // idempotencia: la instancia se crea una sola vez y la promesa se cachea,
@@ -4141,7 +4401,7 @@
     return ugrAppInitPromise;
   }
 
-  // ─── Features ESM (Bloque 3, rebanada B3-b) ─────────────────
+  // ─── Features ESM ──────────────────────────────────────────
   // Mismo patrón (y misma red de seguridad) que `ensureUgrApp`: import
   // dinámico del feature de materias, instancia cacheada y promesa cacheada
   // para que `init()` repetido no duplique la vista. Si el import falla se
@@ -4180,7 +4440,7 @@
     return ugrSubjectsInitPromise;
   }
 
-  // ─── Features ESM (Bloque 3, rebanadas B3-c/B3-d) ───────────
+  // ─── Features ESM ──────────────────────────────────────────
   // Mismo patrón (y misma red de seguridad) que `ensureSubjectsView`: import
   // dinámico del feature del calendario (controles de vista + renders de
   // semana/lista + tooltip), instancia cacheada y promesa cacheada. La
@@ -4215,7 +4475,7 @@
             dayLabels: DAY_LABELS,
             startHour: START_HOUR,
             endHour: END_HOUR,
-            // «Ignorar profesores» (I-11): el modo también apaga lo que se ve,
+            // «Ignorar profesores»: el modo también apaga lo que se ve,
             // así que el calendario recibe lookups vacíos mientras esté activo
             // (el punto de dificultad y la línea del profesor del tooltip
             // desaparecen sin tocar el feature).

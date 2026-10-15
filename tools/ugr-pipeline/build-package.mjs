@@ -1,11 +1,17 @@
 /**
- * Construye el paquete cifrado de `/ugr` (I-11).
+ * Construye el paquete cifrado de `/ugr`.
  *
- * Mete en un solo criptograma los docentes y el catálogo reales del autor
- * —`privado/docentes.json` y `privado/catalogo.json`— y lo deja en
+ * Mete en un solo criptograma el catálogo maestro del autor —todo lo que saca
+ * `extract-private-master.mjs` del volcado: asignaturas con su plan, perfiles de
+ * profesor, menciones, personal y plan no planificado— y lo deja en
  * `public/ugr/datasets/ugr/gi/package.enc.json`, que es lo único que viaja al
  * repositorio. Quien escriba la contraseña en la app lo descifra, pero **no**
- * saca las convalidaciones ni el estado de las asignaturas: eso no entra aquí.
+ * saca las convalidaciones, el estado de las asignaturas ni las asignaciones de
+ * grupo (esas las hace el usuario en la app): eso no entra aquí.
+ *
+ * La muestra sin contraseña (los docentes por letra) **no** se genera aquí: la
+ * siembra `emit-seed.mjs` desde `sample-docents.json`. Este script solo cifra
+ * lo privado.
  *
  * El cifrado es el mismo del backup (`src/backup/crypto.js`: PBKDF2 600 000 +
  * AES-GCM 256), sin reimplementar nada. La contraseña **no** se guarda en
@@ -32,7 +38,6 @@ import { decrypt, encrypt } from "../../public/ugr/src/backup/crypto.js";
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const PRIVATE_DIR = path.join(ROOT, "privado");
 const PACKAGE_PATH = path.join(ROOT, "public/ugr/datasets/ugr/gi/package.enc.json");
-const DOCENTS_PATH = path.join(PRIVATE_DIR, "docentes.json");
 const CATALOG_PATH = path.join(PRIVATE_DIR, "catalogo.json");
 const PROMPT = "Contraseña del paquete (no se muestra): ";
 
@@ -41,7 +46,7 @@ const PROMPT = "Contraseña del paquete (no se muestra): ";
  * cifra con una contraseña de mentira y descifra con el mismo módulo que usa el
  * navegador.
  *
- * @param {{docents: Array, catalog: Object}} payload contenido del paquete.
+ * @param {{catalog: Object}} payload contenido del paquete.
  * @param {string} passphrase contraseña elegida por el autor.
  * @returns {Promise<{v: number, salt: string, iv: string, data: string}>}
  *   criptograma listo para `JSON.stringify`.
@@ -87,9 +92,8 @@ function canonicalJson(value) {
 }
 
 async function main() {
-  const docents = JSON.parse(readFileSync(DOCENTS_PATH, "utf8"));
   const catalog = JSON.parse(readFileSync(CATALOG_PATH, "utf8"));
-  const payload = { docents, catalog };
+  const payload = { catalog };
   const plaintext = canonicalJson(payload);
 
   const fromEnv = process.env.UGR_PACKAGE_PASSPHRASE;
@@ -116,10 +120,12 @@ async function main() {
   mkdirSync(path.dirname(PACKAGE_PATH), { recursive: true });
   writeFileSync(PACKAGE_PATH, `${JSON.stringify(cipher, null, 2)}\n`, "utf8");
 
-  const opinions = docents.reduce((n, d) => n + (d.profile?.opinions?.length || 0), 0);
+  const profesores = Array.isArray(catalog.profesores) ? catalog.profesores : [];
+  const opinions = profesores.reduce((n, p) => n + (p.opinions?.length || 0), 0);
+  const comentarios = profesores.reduce((n, p) => n + (p.comentarios?.length || 0), 0);
   process.stdout.write(
     [
-      `docents: ${docents.length} (opiniones: ${opinions})`,
+      `profesores: ${profesores.length} (opiniones: ${opinions}, comentarios: ${comentarios})`,
       `subjects: ${Array.isArray(catalog.subjects) ? catalog.subjects.length : 0}`,
       `plano: ${Buffer.byteLength(plaintext, "utf8")} bytes`,
       `cifrado: ${Buffer.byteLength(JSON.stringify(cipher), "utf8")} bytes`,

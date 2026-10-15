@@ -503,14 +503,22 @@ main {
   color: var(--text);
   font-weight: 500;
 }
-.prof-razon {
-  display: block;
-  width: 100%;
-  font-size: 0.58rem;
-  color: var(--text-light);
-  font-style: italic;
-  line-height: 1.3;
+/* El nombre abre la ficha: es un botón, pero se lee como texto, con un
+   subrayado punteado como única pista de que se puede pulsar. */
+.prof-name-btn {
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--primary);
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--accent);
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
 }
+.prof-name-btn:hover { color: var(--accent); }
+.prof-name-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .dificultad-badge {
   display: inline-block;
   padding: 1px 6px;
@@ -520,15 +528,6 @@ main {
   color: var(--text-inverse);
   margin-left: 0.2rem;
   vertical-align: middle;
-}
-.prof-opinion {
-  display: block;
-  width: 100%;
-  font-size: 0.55rem;
-  color: var(--text-light);
-  font-style: italic;
-  line-height: 1.2;
-  margin-top: 0.15rem;
 }
 .dificultad-legend {
   display: flex;
@@ -1228,6 +1227,135 @@ main {
 .manage-table tr:hover td {
   background: var(--surface-hover);
 }
+
+/* ─── Lista de asignaturas: tipo y filtro por mención ───────── */
+/* Un color por mención y, dentro de cada una, un tono claro para sus optativas
+   y otro más oscuro para sus obligatorias (que en el plan son «Obligatoria de
+   Rama»). El núcleo común —básicas y obligatorias de todos— va en gris, para
+   que las menciones se distingan de un vistazo. */
+:root {
+  --tipo-comun-basica: #eceff1;
+  --tipo-comun-obligatoria: #e0e0e0;
+  --tipo-comun-optativa: #f5f5f5;
+  --tipo-csi-optativa: #f3e5f5;
+  --tipo-csi-obligatoria: #e1bee7;
+  --tipo-is-optativa: #e3f2fd;
+  --tipo-is-obligatoria: #bbdefb;
+  --tipo-ti-optativa: #e0f2f1;
+  --tipo-ti-obligatoria: #b2dfdb;
+  --tipo-si-optativa: #fff8e1;
+  --tipo-si-obligatoria: #ffecb3;
+  --tipo-ic-optativa: #fce4ec;
+  --tipo-ic-obligatoria: #f8bbd0;
+}
+.manage-subjects-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.td-tipo {
+  white-space: nowrap;
+  font-size: 0.82rem;
+}
+.td-tipo-comun-basica { background: var(--tipo-comun-basica); }
+.td-tipo-comun-obligatoria { background: var(--tipo-comun-obligatoria); }
+.td-tipo-comun-optativa { background: var(--tipo-comun-optativa); }
+.td-tipo-csi-optativa { background: var(--tipo-csi-optativa); }
+.td-tipo-csi-obligatoria { background: var(--tipo-csi-obligatoria); }
+.td-tipo-is-optativa { background: var(--tipo-is-optativa); }
+.td-tipo-is-obligatoria { background: var(--tipo-is-obligatoria); }
+.td-tipo-ti-optativa { background: var(--tipo-ti-optativa); }
+.td-tipo-ti-obligatoria { background: var(--tipo-ti-obligatoria); }
+.td-tipo-si-optativa { background: var(--tipo-si-optativa); }
+.td-tipo-si-obligatoria { background: var(--tipo-si-obligatoria); }
+.td-tipo-ic-optativa { background: var(--tipo-ic-optativa); }
+.td-tipo-ic-obligatoria { background: var(--tipo-ic-obligatoria); }
+.td-tipo-vacio { color: var(--text-light); }
+.td-solo-plan { color: var(--text-light); font-size: 0.75rem; }
+
+/* ─── Ficha del profesor (modal) y listado del claustro ─────── */
+#profesor-modal .modal { max-width: 620px; }
+.profesor-ficha {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.profesor-ficha-entry {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.7rem;
+}
+.profesor-ficha-entry.is-focus {
+  background: var(--surface-hover);
+  border-left-color: var(--accent);
+}
+.profesor-ficha .dificultad-badge,
+.profesores-table .dificultad-badge { font-size: 0.68rem; }
+.profesor-ficha-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.profesor-ficha-code {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.profesor-ficha-subject { font-size: 0.78rem; }
+.profesor-ficha-modalidad {
+  font-size: 0.68rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.profesor-ficha-flag {
+  font-size: 0.62rem;
+  color: var(--text-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 4px;
+}
+.profesor-ficha-plan {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  margin-top: 0.2rem;
+}
+.profesor-ficha-desc,
+.profesor-ficha-razon,
+.profesor-ficha-opinion,
+.profesor-ficha-vacio {
+  font-size: 0.8rem;
+  margin: 0.35rem 0 0;
+}
+.profesor-ficha-razon,
+.profesor-ficha-vacio { color: var(--text-light); }
+.profesor-ficha-razon { font-style: italic; }
+.profesor-ficha-comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+.profesor-ficha-comentario-meta {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-light);
+}
+.profesor-ficha-comentario-texto { font-size: 0.78rem; }
+.profesores-search { max-width: 260px; }
+.profesores-asignaturas {
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+.profesores-vacio {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
 .td-codigo {
   font-family: monospace;
   font-weight: 600;
@@ -1899,7 +2027,7 @@ footer {
 .solver-day-check {
   font-size: 0.85rem;
 }
-/* «Ignorar profesores» (I-11): casilla de modo, con algo más de peso visual
+/* «Ignorar profesores»: casilla de modo, con algo más de peso visual
    que el resto de filtros porque cambia qué se genera y qué se muestra. */
 .solver-ignore-docents {
   font-weight: 600;
@@ -2298,7 +2426,7 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Dashboard de progreso (Fase 5.2) — pestaña "Progreso"
+   Dashboard de progreso — pestaña "Progreso"
    Solo clases nuevas: reutiliza tokens existentes, .manage-table y
    .empty-state. El color nunca es la única señal: cada barra y badge
    va acompañado de texto con el dato.
@@ -2517,7 +2645,7 @@ footer {
   max-width: 22rem;
 }
 
-/* ─── Backup / restore (Fase 5.4) ─────────────────────────── */
+/* ─── Backup / restore ────────────────────────────────────── */
 .progress-backup {
   margin-top: 1.25rem;
   border-top: 1px solid var(--border);

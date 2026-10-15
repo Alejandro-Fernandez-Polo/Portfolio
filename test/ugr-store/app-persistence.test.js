@@ -18,6 +18,14 @@ import {
 } from "../../public/ugr/src/app/domain/selection.js";
 import { buildActiveSchedule, buildConflictSet } from "../../public/ugr/src/app/domain/calendar.js";
 import { buildDocentScores, buildProblem } from "../../public/ugr/src/app/domain/problem.js";
+import { buildProfesorFicha, listProfesores } from "../../public/ugr/src/app/domain/profesor.js";
+import {
+  filterSubjectsByMention,
+  listPlanSubjects,
+  mencionOptions,
+  tipoClave,
+  tipoDeAsignatura,
+} from "../../public/ugr/src/app/domain/plan.js";
 import {
   isConfigFavorited,
   findDuplicateConfig,
@@ -136,12 +144,12 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
   };
   if (store) windowObj.__ugrStore = store;
   if (degraded) windowObj.__ugrDegraded = true;
-  // Reglas de dominio (T02.x + B3-a + B4-a/B4-b + I-11): `loadState()`/`updateAll()`
+  // Reglas de dominio: `loadState()`/`updateAll()`
   // y las funciones de selección/calendario/configuraciones delegan en
   // `getDomain()`, que en producción las recibe de la composición ESM
   // (`deps.domain`). Aquí no se monta la composición, así que se inyecta el
   // MISMO módulo ESM real por el escape hatch, con el dominio completo
-  // (29 funciones), sin duplicar nada.
+  // (36 funciones), sin duplicar nada.
   windowObj.__ugrAppDomain = {
     timeToMinutes,
     timesOverlap,
@@ -158,6 +166,13 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
     buildConflictSet,
     buildDocentScores,
     buildProblem,
+    buildProfesorFicha,
+    listProfesores,
+    mencionOptions,
+    filterSubjectsByMention,
+    tipoDeAsignatura,
+    tipoClave,
+    listPlanSubjects,
     isConfigFavorited,
     findDuplicateConfig,
     buildConfigFromState,

@@ -38,11 +38,13 @@ function canonicalize(value) {
   return value;
 }
 
-async function contentHash(subjects, docents) {
+async function contentHash(subjects, docents, profesores, menciones, extraSubjects) {
   const subtle = globalThis.crypto && globalThis.crypto.subtle;
   if (!subtle) return "";
   try {
-    const bytes = new TextEncoder().encode(JSON.stringify(canonicalize({ subjects, docents })));
+    const bytes = new TextEncoder().encode(
+      JSON.stringify(canonicalize({ subjects, docents, profesores, menciones, extraSubjects })),
+    );
     const digest = await subtle.digest("SHA-256", bytes);
     return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
   } catch {
@@ -166,7 +168,13 @@ export function createCatalogRemote(ctx) {
       };
     }
 
-    const digest = await contentHash(dataset.subjects, dataset.docents);
+    const digest = await contentHash(
+      dataset.subjects,
+      dataset.docents,
+      dataset.profesores,
+      dataset.menciones,
+      dataset.extraSubjects,
+    );
     if (digest && hash !== `sha256-${digest}`) {
       return {
         ok: false,

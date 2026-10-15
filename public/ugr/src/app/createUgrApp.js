@@ -16,6 +16,14 @@ import {
 } from "./domain/selection.js";
 import { buildActiveSchedule, buildConflictSet } from "./domain/calendar.js";
 import { buildDocentScores, buildProblem } from "./domain/problem.js";
+import { buildProfesorFicha, listProfesores } from "./domain/profesor.js";
+import {
+  filterSubjectsByMention,
+  listPlanSubjects,
+  mencionOptions,
+  tipoClave,
+  tipoDeAsignatura,
+} from "./domain/plan.js";
 import {
   isConfigFavorited,
   findDuplicateConfig,
@@ -34,7 +42,7 @@ import {
 } from "./domain/configs.js";
 
 /**
- * Composición de la app `/ugr` (S01 Bloque 1).
+ * Composición de la app `/ugr`.
  *
  * Recibe TODO por argumento (store, catálogo, solver, progreso, datos clásicos,
  * storage, raíz DOM y flag degradado) y construye los dos adaptadores de
@@ -66,21 +74,18 @@ export function createUgrApp(dependencies) {
     progress: input.progress,
     legacyData,
     persistence,
-    // Reglas puras de dominio (T02.x): el IIFE clásico `app.js` no puede
-    // importar ESM y delega aquí en lugar de duplicar la implementación.
-    // `metrics.js` (T02.4) añade métricas de configuración y conflictos;
-    // `selection.js`/`calendar.js` (Bloque 3) la selección, la regla por
-    // apellido y el horario activo; `configs.js` (B4-a/B4-b) las reglas puras
-    // de las configuraciones guardadas: búsqueda/orden/objeto persistible y,
-    // desde B4-b, aplicar una config al estado, borrar por id y
-    // export/import; B4-c añade la evaluación de bloqueos y la construcción
-    // del payload de `blocks/add` (el almacenamiento de los bloqueos sigue en
-    // el store, que inyecta el llamante); B4-d añade el pipeline puro de
-    // listado (ordenar/filtrar y paginar) que usa `renderSavedConfigs`;
-    // `problem.js` (I-11) construye el problema del solver (cuatrimestre,
-    // superadas, puntuaciones de profesor y modo profesores). Los
-    // `subjects`/lookups concretos los inyecta el llamante en cada
-    // invocación.
+    // Reglas puras de dominio: el IIFE clásico `app.js` no puede importar ESM
+    // y delega aquí en lugar de duplicar la implementación. `metrics.js` añade
+    // métricas de configuración y conflictos; `selection.js`/`calendar.js` la
+    // selección, la regla por apellido y el horario activo; `configs.js` las
+    // reglas puras de las configuraciones guardadas (búsqueda, orden, objeto
+    // persistible, aplicar una config al estado, borrar por id, export/import,
+    // evaluación de bloqueos y construcción del payload de `blocks/add` —el
+    // almacenamiento de los bloqueos sigue en el store, que inyecta el
+    // llamante— y el pipeline puro de listado que usa `renderSavedConfigs`);
+    // `problem.js` construye el problema del solver (cuatrimestre, superadas,
+    // puntuaciones de profesor y modo profesores). Los `subjects`/lookups
+    // concretos los inyecta el llamante en cada invocación.
     domain: {
       timeToMinutes,
       timesOverlap,
@@ -97,6 +102,13 @@ export function createUgrApp(dependencies) {
       buildConflictSet,
       buildDocentScores,
       buildProblem,
+      buildProfesorFicha,
+      listProfesores,
+      mencionOptions,
+      filterSubjectsByMention,
+      tipoDeAsignatura,
+      tipoClave,
+      listPlanSubjects,
       isConfigFavorited,
       findDuplicateConfig,
       buildConfigFromState,

@@ -3,18 +3,27 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, it, expect } from "vitest";
 
-// Guarda contra fugas del maestro privado (I-11): el repositorio solo puede
-// llevar docentes de ejemplo y el paquete cifrado, nunca tu texto plano.
+// Guarda contra fugas del maestro privado: el repositorio puede llevar
+// las **asignaciones** de la muestra (los docentes por letra del autor, que son
+// públicos a propósito) y el **paquete cifrado**, pero no el
+// contenido del volcado en claro.
 //
-// Cómo funciona: si existe `privado/` (tu maestro), recoge los nombres,
-// opiniones y razones y comprueba que no aparezcan en ningún fichero de
-// `public/`. Se limita a los ficheros **rastreados por git**: un fichero local
-// que no está en el repositorio es tuyo y no se publica (si algún día lo
-// commiteas, el test pasa a vigilarlo solo). Sin `privado/` —un clon limpio—
-// no hay nada que comparar y la suite lo omite en vez de fingir que vigila.
+// Qué vigila exactamente: las opiniones y los comentarios del maestro —texto de
+// terceros que vive en la hoja—, no los nombres. Los nombres de los 46
+// profesores de la muestra están en `public/` a propósito; las **opiniones** del
+// volcado, no.
+//
+// Cómo funciona: si existe `privado/` (el maestro del autor), recoge esos textos
+// y comprueba que no aparezcan en ningún fichero de `public/`. Se limita a los
+// ficheros **rastreados por git**: un fichero local que no está en el
+// repositorio es del autor y no se publica (si algún día lo commitea, el test
+// pasa a vigilarlo solo). Sin `privado/` —un clon limpio— no hay nada que
+// comparar y la suite lo omite en vez de fingir que vigila.
 
 const ROOT = path.resolve(import.meta.dirname, "../..");
-const MASTER_PATH = path.join(ROOT, "privado/docentes.json");
+const MASTER_PATH = path.join(ROOT, "privado/catalogo.json");
+const FIXTURE_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
+const PACKAGE_PATH = path.join(ROOT, "public/ugr/datasets/ugr/gi/package.enc.json");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const MIN_LENGTH = 12;
 
@@ -34,17 +43,48 @@ function trackedFiles() {
   return new Set(out.split("\0").filter(Boolean).map((p) => path.join(ROOT, p)));
 }
 
+function longTexts(list) {
+  return list.filter((s) => typeof s === "string" && s.length > MIN_LENGTH);
+}
+
+/** Todo el texto de terceros del maestro: opiniones, comentarios y personal. */
+function masterSecrets(master) {
+  const staff = [...(master.tutoresTfg || []), ...(master.masteres || [])];
+  return longTexts([
+    ...(master.profesores || []).flatMap((p) => p.opinions || []),
+    ...(master.profesores || []).flatMap((p) => (p.comentarios || []).map((c) => c.texto)),
+    ...staff.flatMap((s) => s.opinions || []),
+  ]);
+}
+
+/**
+ * Lo que la muestra publica **a propósito**: 8 de sus opiniones son texto que
+ * también está en la hoja (decisión del autor: se publican y la
+ * guarda protege solo lo exclusivo del volcado). Una de ellas es el mismo texto
+ * con un punto de más, así que la dispensa se comprueba con `includes` —igual
+ * que se detecta la fuga— y no por igualdad literal.
+ *
+ * Se leen del propio fixture en vez de fijarlas a mano, así que la dispensa es
+ * visible y revisable: si la muestra creciera con más texto de la hoja, habría
+ * que verlo en el fixture.
+ */
+function sampleTexts() {
+  const fixture = JSON.parse(readFileSync(FIXTURE_PATH, "utf8"));
+  return longTexts([
+    ...(fixture.profesores || []).flatMap((p) => p.opinions || []),
+    ...(fixture.profesores || []).flatMap((p) => (p.razon ? [p.razon] : [])),
+  ]);
+}
+
 const hasMaster = existsSync(MASTER_PATH);
 
-describe.skipIf(!hasMaster)("fuga del maestro privado (I-11)", () => {
-  it("ningún dato real de `privado/` aparece en los ficheros versionados de public/", () => {
+describe.skipIf(!hasMaster)("fuga del maestro privado", () => {
+  it("ninguna opinión ni comentario exclusivo del volcado aparece en los ficheros versionados de public/", () => {
     const master = JSON.parse(readFileSync(MASTER_PATH, "utf8"));
-    const secrets = [
-      ...master.map((d) => d.name),
-      ...master.flatMap((d) => d.profile.opinions || []),
-      ...master.map((d) => d.profile.razon).filter(Boolean),
-    ].filter((s) => typeof s === "string" && s.length > MIN_LENGTH);
-
+    const muestra = sampleTexts();
+    // Publicado a propósito = la muestra contiene ese texto (idéntico o con
+    // retoques), que es la misma relación con la que se detecta la fuga.
+    const secrets = masterSecrets(master).filter((s) => !muestra.some((t) => t.includes(s)));
     expect(secrets.length).toBeGreaterThan(0);
 
     const tracked = trackedFiles();
@@ -62,25 +102,20 @@ describe.skipIf(!hasMaster)("fuga del maestro privado (I-11)", () => {
     expect(leaks).toEqual([]);
   });
 
-  it("los docentes reales no están en el fixture de ejemplo ni en el dataset", () => {
+  it("el paquete cifrado, si existe, no lleva nada en claro (ni lo que la muestra ya publica)", () => {
+    if (!existsSync(PACKAGE_PATH)) return;
+    const cipher = readFileSync(PACKAGE_PATH, "utf8");
     const master = JSON.parse(readFileSync(MASTER_PATH, "utf8"));
-    const fixture = JSON.parse(
-      readFileSync(path.join(ROOT, "tools/ugr-pipeline/sample-docents.json"), "utf8"),
-    );
-    const realNames = new Set(master.map((d) => d.name));
-    expect(fixture.filter((d) => realNames.has(d.name))).toEqual([]);
+    for (const secret of masterSecrets(master)) {
+      expect(cipher).not.toContain(secret);
+    }
   });
 
-  it("el paquete cifrado, si existe, no lleva texto en claro", () => {
-    const packagePath = path.join(ROOT, "public/ugr/datasets/ugr/gi/package.enc.json");
-    if (!existsSync(packagePath)) return;
-    const cipher = readFileSync(packagePath, "utf8");
+  it("el maestro no conserva el autor de ningún comentario", () => {
     const master = JSON.parse(readFileSync(MASTER_PATH, "utf8"));
-    for (const d of master) {
-      expect(cipher).not.toContain(d.name);
-      for (const opinion of d.profile.opinions || []) {
-        if (opinion.length > MIN_LENGTH) expect(cipher).not.toContain(opinion);
-      }
-    }
+    const conAutor = (master.profesores || []).filter((p) =>
+      (p.comentarios || []).some((c) => "autor" in c),
+    );
+    expect(conAutor).toEqual([]);
   });
 });
