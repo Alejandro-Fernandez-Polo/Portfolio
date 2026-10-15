@@ -40,6 +40,11 @@ describe("store/commands.js: import real (humo de sintaxis)", () => {
   });
 
   it("el initialState del reducer trae progress a plena forma (contrato que normalizeProgress respeta)", () => {
-    expect(initialState.progress).toEqual({ credits: {}, equivalences: [], plan: { totalECTS: 240 } });
+    expect(initialState.progress).toEqual({
+      credits: {},
+      equivalences: [],
+      plan: { totalECTS: 240 },
+      mencion: "",
+    });
   });
 });

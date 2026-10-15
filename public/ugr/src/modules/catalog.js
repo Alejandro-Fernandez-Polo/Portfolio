@@ -244,6 +244,10 @@ async function listCatalogs() {
         plan: row.meta?.plan || "",
         version: row.meta?.version || "",
         subjectCount: Array.isArray(row.subjects) ? row.subjects.length : 0,
+        // Las fuentes distinguen el catálogo de la muestra del importado del
+        // paquete: los dos tienen la misma versión y el mismo número de
+        // asignaturas, así que sin esto el desplegable los mostraría iguales.
+        sources: Array.isArray(row.meta?.sources) ? row.meta.sources : [],
         updatedAt: row.updatedAt || "",
       }))
       .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0));

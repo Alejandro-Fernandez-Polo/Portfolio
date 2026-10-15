@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
+import { STATUS } from '../../public/ugr/src/progress/status.js';
 import {
   buildSubjectRows,
   buildCourseBars,
+  buildCreditBreakdown,
+  buildMenciones,
   buildSummary,
   buildProjection,
   buildEquivalenceRows,
@@ -89,16 +92,18 @@ describe('buildSubjectRows', () => {
 });
 
 describe('buildCourseBars', () => {
-  it('una barra por curso con ECTS totales, superados y porcentaje', () => {
+  it('una barra por curso, con los 60 ECTS del plan como máximo', () => {
+    // El plan son 60 ECTS por curso; el catálogo trae además las optativas de
+    // todas las menciones, así que el máximo no se saca de sumar asignaturas.
     const bars = buildCourseBars(SUBJECTS, { FFT: 'sup', SO: 'sup' }, { totalECTS: 240 });
     expect(bars.find((bar) => bar.curso === 1)).toEqual({
       curso: 1,
-      totalECTS: 12,
+      totalECTS: 60,
       passedECTS: 6,
-      pct: 50,
+      pct: 10,
     });
-    expect(bars.find((bar) => bar.curso === 2)).toMatchObject({ totalECTS: 6, passedECTS: 6, pct: 100 });
-    expect(bars.find((bar) => bar.curso === 'Opt')).toMatchObject({ totalECTS: 6, passedECTS: 0, pct: 0 });
+    expect(bars.find((bar) => bar.curso === 2)).toMatchObject({ totalECTS: 60, passedECTS: 6, pct: 10 });
+    expect(bars.find((bar) => bar.curso === 'Opt')).toMatchObject({ totalECTS: 60, passedECTS: 0, pct: 0 });
   });
 
   it('la fila de optativas va tras los cursos y antes del total del plan', () => {
@@ -125,7 +130,9 @@ describe('buildSummary', () => {
     expect(summary).toMatchObject({
       ectsPassed: 6,
       ectsEnrolled: 6,
-      ectsPending: 12,
+      // Lo pendiente es lo que falta para los 240 del título, no la suma de
+      // todas las asignaturas del catálogo.
+      ectsPending: 228,
       ectsTotal: 24,
       counts: { passed: 1, enrolled: 1, pending: 2 },
       totalECTS: 240,
@@ -270,5 +277,92 @@ describe('buildEquivalenceRows', () => {
     expect(rows).toEqual([]);
     expect(buildEquivalenceRows(undefined, undefined, undefined, undefined)).toEqual([]);
     expect(buildEquivalenceRows(ENTRIES, 'roto', null, null)).toHaveLength(3);
+  });
+});
+
+// Plan con las piezas del grado: básicas, obligatorias, el módulo de una mención,
+// una optativa libre y el TFG. Los créditos de mención son los de **una**
+// mención, no los de las cinco: cada alumno cursa una.
+const PLAN = [
+  { codigo: 'FFT', nombre: 'Fundamentos Físicos', creditos: 6, curso: 1, cuatrimestre: 1, caracter: 'Básica', mencion: 'Común' },
+  { codigo: 'SO', nombre: 'Sistemas Operativos', creditos: 6, curso: 2, cuatrimestre: 1, caracter: 'Obligatoria', mencion: 'Común' },
+  { codigo: 'AA', nombre: 'Aprendizaje Automático', creditos: 6, curso: 4, cuatrimestre: 1, caracter: 'Obligatoria de Rama', mencion: 'CSI' },
+  { codigo: 'TSI', nombre: 'Técnicas de los Sistemas Inteligentes', creditos: 6, curso: 4, cuatrimestre: 2, caracter: 'Obligatoria de Rama', mencion: 'CSI' },
+  { codigo: 'DI', nombre: 'Derecho Informático', creditos: 6, curso: 4, cuatrimestre: 1, caracter: 'Optativa', mencion: 'Común' },
+  { codigo: 'PFG', nombre: 'Proyecto Fin de Grado', creditos: 12, curso: 4, cuatrimestre: 2, caracter: 'Trabajo Fin de Grado', mencion: 'Común' },
+];
+
+describe('buildCreditBreakdown', () => {
+  it('reparte los créditos por los bloques del grado, sin mezclar menciones', () => {
+    const bloques = buildCreditBreakdown(PLAN, {});
+    expect(bloques.map((b) => [b.clave, b.total])).toEqual([
+      ['basica', 6],
+      ['obligatoria', 6],
+      ['mencion', 12],
+      // Las optativas del plan son 30: es el requisito, no lo que hay en el
+      // catálogo (que trae las de todas las menciones).
+      ['optativa', 30],
+      ['tfg', 12],
+    ]);
+    // La mención que se enseña en el bloque es una (el desglose va aparte).
+    expect(bloques.find((b) => b.clave === 'mencion').detalle).toBe('CSI');
+  });
+
+  it('cuenta lo superado y deja en cero lo que no está marcado', () => {
+    const bloques = buildCreditBreakdown(PLAN, {
+      AA: STATUS.SUPERADA,
+      PFG: STATUS.CONVALIDADA,
+      SO: STATUS.EN_CURSO,
+    });
+    const porClave = Object.fromEntries(bloques.map((b) => [b.clave, b]));
+    expect(porClave.mencion.passed).toBe(6);
+    expect(porClave.tfg.passed).toBe(12);
+    expect(porClave.obligatoria.passed).toBe(0);
+    expect(porClave.basica.passed).toBe(0);
+  });
+});
+
+describe('buildMenciones', () => {
+  it('dice qué falta para la mención: hay que cursar el módulo entero', () => {
+    const menciones = buildMenciones(PLAN, { AA: STATUS.SUPERADA }, [
+      { codigo: 'CSI', nombre: 'Computación y Sistemas Inteligentes' },
+    ]);
+    expect(menciones).toHaveLength(1);
+    expect(menciones[0]).toMatchObject({ codigo: 'CSI', total: 12, passed: 6, completa: false });
+    expect(menciones[0].faltan.map((f) => f.code)).toEqual(['TSI']);
+  });
+
+  it('solo la marca como obtenida con el módulo completo', () => {
+    const menciones = buildMenciones(PLAN, { AA: STATUS.SUPERADA, TSI: STATUS.CONVALIDADA }, [{ codigo: 'CSI' }]);
+    expect(menciones[0].completa).toBe(true);
+    expect(menciones[0].passed).toBe(12);
+  });
+
+  it('sin menciones en el catálogo no devuelve nada', () => {
+    expect(buildMenciones(PLAN, {}, [])).toEqual([]);
+  });
+});
+
+describe('buildSubjectRows: sin marcar no es pendiente', () => {
+  it('señala con `marked` solo las asignaturas con estado propio', () => {
+    const rows = buildSubjectRows(PLAN, { SO: STATUS.SUPERADA });
+    expect(rows.find((r) => r.code === 'SO').marked).toBe(true);
+    expect(rows.find((r) => r.code === 'FFT').marked).toBe(false);
+  });
+});
+
+describe('buildSubjectRows: orden curso → cuatrimestre → tipo → nombre', () => {
+  it('dentro del mismo curso y cuatrimestre manda el tipo, no el nombre', () => {
+    // El mismo orden que la lista de datos: primero el curso, luego el
+    // cuatrimestre, luego el tipo y por último el nombre.
+    const rows = buildSubjectRows(
+      [
+        { codigo: 'ZZ', nombre: 'Zeta', creditos: 6, curso: 1, cuatrimestre: 1, caracter: 'Optativa', mencion: 'Común' },
+        { codigo: 'AA', nombre: 'Alfa', creditos: 6, curso: 1, cuatrimestre: 1, caracter: 'Básica', mencion: 'Común' },
+        { codigo: 'MM', nombre: 'Mmm', creditos: 6, curso: 1, cuatrimestre: 2, caracter: 'Básica', mencion: 'Común' },
+      ],
+      {},
+    );
+    expect(rows.map((r) => r.code)).toEqual(['AA', 'ZZ', 'MM']);
   });
 });

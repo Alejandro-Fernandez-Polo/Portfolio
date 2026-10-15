@@ -36,6 +36,8 @@ export const initialState = {
     credits: {},
     equivalences: [],
     plan: { totalECTS: 240 },
+    // Mención elegida (vacío = sin decidir): el título lleva una y se asigna.
+    mencion: "",
   },
 };
 
@@ -277,16 +279,30 @@ export function reducePropuestas(state, cmd) {
 
 export function reduceProgress(state, cmd) {
   switch (cmd.type) {
+    case "progress/setMencion": {
+      const { mencion } = cmd.payload || {};
+      if (typeof mencion !== "string") return state;
+      if (state.progress.mencion === mencion) return state;
+      const ns = clone(state);
+      ns.progress.mencion = mencion;
+      ns.progress.updatedAt = new Date().toISOString();
+      return nextRev(ns);
+    }
+
     case "progress/setStatus":
     case "progress/setCredit": {
       // setCredit es el alias histórico de setStatus (mismo contrato
       // { code, status }). Estado inválido o sin cambios → no tocar: es
       // idempotente y evita writes en IDB al repetir el mismo comando.
       const { code, status } = cmd.payload || {};
-      if (!code || !isValidStatus(status)) return state;
-      if (state.progress.credits[code] === status) return state;
+      // El estado vacío es «sin marcar»: la asignatura deja de tener estado.
+      const sinMarcar = status === "";
+      if (!code || (!sinMarcar && !isValidStatus(status))) return state;
+      if (!sinMarcar && state.progress.credits[code] === status) return state;
+      if (sinMarcar && !(code in state.progress.credits)) return state;
       const ns = clone(state);
-      ns.progress.credits[code] = status;
+      if (sinMarcar) delete ns.progress.credits[code];
+      else ns.progress.credits[code] = status;
       // updatedAt propio del progreso: lo usa buildMergePlan para decidir
       // qué versión gana al fusionar dos bundles.
       ns.progress.updatedAt = new Date().toISOString();
@@ -377,7 +393,7 @@ const KNOWN_COMMANDS = new Set([
   "blocks/add", "blocks/remove", "blocks/setAll",
   "ui/setView", "ui/setCompareIds", "ui/toggleFavorite", "ui/setIgnoreDocents",
   "propuestas/save", "propuestas/delete", "propuestas/setActive", "propuestas/setVista", "propuestas/setAll",
-  "progress/setStatus", "progress/setCredit", "progress/setMapping", "progress/setEquivalenceEstados", "progress/setAll",
+  "progress/setStatus", "progress/setCredit", "progress/setMencion", "progress/setMapping", "progress/setEquivalenceEstados", "progress/setAll",
   "configs/save",
 ]);
 

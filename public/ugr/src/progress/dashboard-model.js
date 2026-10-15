@@ -1,3 +1,4 @@
+import { compararAsignaturas, rangoDeCurso } from "../app/domain/plan.js";
 import { STATUS, PASSED_STATUSES, isValidStatus, normalizeEstado } from "./status.js";
 import { isPassed } from "./filter.js";
 import {
@@ -40,20 +41,8 @@ function effectiveStatus(credits, code) {
   return isValidStatus(status) ? status : STATUS.PENDIENTE;
 }
 
-// subjectCourse devuelve "Opt" para las optativas: se ordenan al final para
-// que la UI pueda pintar su fila después de los cursos numéricos.
-function courseRank(curso) {
-  return curso === "Opt" ? Number.MAX_SAFE_INTEGER : Number(curso) || 0;
-}
-
-function byCourseTermName(a, b) {
-  return (
-    courseRank(a.curso) - courseRank(b.curso) ||
-    a.term - b.term ||
-    a.name.localeCompare(b.name) ||
-    a.code.localeCompare(b.code)
-  );
-}
+/** Créditos de cada curso del plan: 240 en cuatro cursos. */
+const ECTS_PER_COURSE = 60;
 
 // Entero 0-100: los mismos números que muestra la UI y que lee aria-valuenow.
 function pct(part, total) {
@@ -80,10 +69,132 @@ export function buildSubjectRows(subjects, credits) {
       curso: subjectCourse(subject),
       term: subjectTerm(subject),
       ects: subjectEcts(subject),
+      caracter: subject?.caracter || "",
+      mencion: subject?.mencion || "",
       status: effectiveStatus(map, code),
+      // Sin estado propio la asignatura no está «pendiente»: está sin marcar.
+      // Lo que está pendiente son los créditos.
+      marked: isValidStatus(map[code]),
     });
   }
-  return rows.sort(byCourseTermName);
+  // Mismo orden que la lista de datos: curso, cuatrimestre, tipo y nombre.
+  return rows.sort(compararAsignaturas);
+}
+
+/**
+ * Bloques de créditos del grado, en el orden en que los reparte la UGR: 60 de
+ * formación básica, 90 obligatorias, 48 de materias de mención, 30 optativas
+ * —las libres, que son las del núcleo común— y 12 del trabajo fin de grado.
+ *
+ * Los totales salen del catálogo (que trae carácter y créditos de cada
+ * asignatura, incluidas las del plan sin horario) y suman los 240 de la
+ * titulación: las materias de mención son las de **una** mención, no las de las
+ * cinco, porque cada alumno cursa una.
+ */
+const BLOQUES_DE_CREDITOS = [
+  { clave: "basica", etiqueta: "Formación básica", caracteres: ["Básica"] },
+  { clave: "obligatoria", etiqueta: "Obligatorias", caracteres: ["Obligatoria"] },
+  { clave: "mencion", etiqueta: "Materias de mención", caracteres: ["Obligatoria de Rama"], porMencion: true },
+  // Las 30 optativas del plan se pueden cubrir con optativas de la mención o
+  // con las libres (Derecho, Ética, Prácticas de Empresa), así que el bloque
+  // cuenta todas y el total es el del plan, no la suma del catálogo.
+  { clave: "optativa", etiqueta: "Optativas", caracteres: ["Optativa"], totalPlan: 30 },
+  { clave: "tfg", etiqueta: "Trabajo fin de grado", caracteres: ["Trabajo Fin de Grado"] },
+];
+
+/**
+ * Créditos superados y totales de cada bloque del grado.
+ *
+ * @param {Array} subjects asignaturas del catálogo (y del plan).
+ * @param {Object} credits mapa `codigo → estado`.
+ * @returns {Array<{clave: string, etiqueta: string, detalle: string, total: number,
+ *   passed: number, count: number}>}
+ */
+export function buildCreditBreakdown(subjects, credits, mencionElegida = "") {
+  const map = asCredits(credits);
+  const lista = asList(subjects);
+  const esComun = (s) => !s?.mencion || s.mencion === "Común";
+
+  const superados = (dentro) =>
+    dentro
+      .filter((s) => PASSED_STATUSES.includes(effectiveStatus(map, subjectCode(s))))
+      .reduce((sum, s) => sum + subjectEcts(s), 0);
+
+  // De las cinco menciones se enseña la que más se lleva: el desglose una a una
+  // está en el panel de menciones.
+  const porMencion = new Map();
+  for (const subject of lista) {
+    if ((subject?.caracter || "") !== "Obligatoria de Rama" || esComun(subject)) continue;
+    const clave = subject.mencion;
+    const acumulado = porMencion.get(clave) || { total: 0, passed: 0, count: 0 };
+    acumulado.total += subjectEcts(subject);
+    acumulado.count += 1;
+    porMencion.set(clave, acumulado);
+  }
+  for (const [clave, acumulado] of porMencion) {
+    const dentro = lista.filter((s) => s.mencion === clave && (s?.caracter || "") === "Obligatoria de Rama");
+    acumulado.passed = superados(dentro);
+  }
+  // Si no hay mención elegida se enseña la que más se lleva, pero el bloque dice
+  // cuál es: la mención se pide y se asigna una.
+  const ordenadas = [...porMencion.entries()].sort(
+    (a, b) => b[1].passed - a[1].passed || a[0].localeCompare(b[0]),
+  );
+  const elegida = porMencion.has(mencionElegida) ? [mencionElegida, porMencion.get(mencionElegida)] : null;
+  const mejorMencion = elegida || ordenadas[0];
+
+  return BLOQUES_DE_CREDITOS.map((bloque) => {
+    if (bloque.porMencion) {
+      const [codigo, acumulado] = mejorMencion || ["", { total: 0, passed: 0, count: 0 }];
+      return { ...bloque, detalle: codigo, total: acumulado.total, passed: acumulado.passed, count: acumulado.count };
+    }
+    const dentro = lista.filter((s) => bloque.caracteres.includes(s?.caracter || ""));
+    const total = bloque.totalPlan || dentro.reduce((sum, s) => sum + subjectEcts(s), 0);
+    return { ...bloque, detalle: "", total, passed: superados(dentro), count: dentro.length };
+  });
+}
+
+/**
+ * Estado de cada mención: los ECTS de su módulo superados y las materias que
+ * faltan. La UGR lo dice así: el plan pide **48 ECTS de materias de mención**
+ * (que se pueden cubrir con asignaturas de cualquier mención) y, para obtener
+ * una mención concreta, hay que cursar **todas** las materias de su módulo de
+ * especialidad. Por eso se informa de las que faltan, no solo del total.
+ *
+ * @param {Array} subjects asignaturas del catálogo.
+ * @param {Object} credits mapa `codigo → estado`.
+ * @param {Array} [menciones] menciones del catálogo (código y nombre largo).
+ * @returns {Array<{codigo: string, nombre: string, total: number, passed: number,
+ *   faltan: Array, completa: boolean}>}
+ */
+export function buildMenciones(subjects, credits, menciones = [], mencionElegida = "") {
+  const map = asCredits(credits);
+  const lista = asList(subjects);
+  return asList(menciones)
+    .map((mencion) => {
+      const modulo = lista.filter(
+        (s) => (s?.mencion || "") === mencion.codigo && (s?.caracter || "") === "Obligatoria de Rama",
+      );
+      const faltan = modulo
+        .filter((s) => !PASSED_STATUSES.includes(effectiveStatus(map, subjectCode(s))))
+        .map((s) => ({
+          code: subjectCode(s),
+          name: subjectName(s) || subjectCode(s),
+          ects: subjectEcts(s),
+        }));
+      const total = modulo.reduce((sum, s) => sum + subjectEcts(s), 0);
+      const passed = total - faltan.reduce((sum, s) => sum + s.ects, 0);
+      return {
+        codigo: mencion.codigo,
+        nombre: mencion.nombre || "",
+        total,
+        passed,
+        faltan,
+        completa: modulo.length > 0 && faltan.length === 0,
+        elegida: mencion.codigo === mencionElegida,
+      };
+    })
+    .filter((mencion) => mencion.total > 0);
 }
 
 /**
@@ -101,14 +212,15 @@ export function buildCourseBars(subjects, credits, plan) {
   for (const row of rows) {
     let bar = byCourse.get(row.curso);
     if (!bar) {
-      bar = { curso: row.curso, totalECTS: 0, passedECTS: 0, pct: 0 };
+      // El plan son 60 ECTS por curso: el catálogo trae además las optativas de
+      // todas las menciones, así que sumarlas daría un máximo que nadie cursa.
+      bar = { curso: row.curso, totalECTS: ECTS_PER_COURSE, passedECTS: 0, pct: 0 };
       byCourse.set(row.curso, bar);
     }
-    bar.totalECTS += row.ects;
     if (PASSED_STATUSES.includes(row.status)) bar.passedECTS += row.ects;
   }
 
-  const bars = Array.from(byCourse.values()).sort((a, b) => courseRank(a.curso) - courseRank(b.curso));
+  const bars = Array.from(byCourse.values()).sort((a, b) => rangoDeCurso(a) - rangoDeCurso(b));
   for (const bar of bars) {
     bar.pct = pct(bar.passedECTS, bar.totalECTS);
   }
@@ -133,7 +245,10 @@ export function buildSummary(subjects, credits, plan) {
   return {
     ectsPassed: summary.ectsPassed,
     ectsEnrolled: summary.ectsEnrolled,
-    ectsPending: summary.ectsPending,
+    // Lo pendiente es lo que falta para el título (240), no la suma de todas las
+    // asignaturas del catálogo: el catálogo trae las optativas de las cinco
+    // menciones y nadie cursa las cinco.
+    ectsPending: Math.max(0, totalECTS - summary.ectsPassed - summary.ectsEnrolled),
     ectsTotal: summary.ectsTotal,
     counts: { passed: summary.passed, enrolled: summary.enrolled, pending: summary.pending },
     totalECTS,

@@ -14,9 +14,12 @@ function loadLegacySubjects() {
 }
 
 describe("catalog against real data.js", () => {
-  it("normalizes all 42 subjects without validation errors", () => {
+  it("normalizes every subject of data.js without validation errors", () => {
     const legacy = loadLegacySubjects();
-    expect(legacy).toHaveLength(42);
+    // El número sale del fichero: `data.js` lo reconstruye el repaso del horario
+    // y crece cuando el horario publica asignaturas que antes no estaban.
+    expect(legacy.length).toBeGreaterThan(40);
+    expect(new Set(legacy.map((s) => s.codigo)).size).toBe(legacy.length);
     const catalog = fromLegacySubjects(legacy);
     const result = validateCatalog(catalog);
     expect(result.errors).toEqual([]);
@@ -33,7 +36,8 @@ describe("catalog against real data.js", () => {
   });
 
   it("exposes a stable version string", () => {
-    const catalog = fromLegacySubjects(loadLegacySubjects());
-    expect(catalogVersion(catalog)).toMatch(/legacy-1::42$/);
+    const legacy = loadLegacySubjects();
+    const catalog = fromLegacySubjects(legacy);
+    expect(catalogVersion(catalog)).toMatch(new RegExp(`legacy-1::${legacy.length}$`));
   });
 });

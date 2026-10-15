@@ -234,6 +234,31 @@ describe("módulo catalog actualización remota", () => {
     expect(status.lastCheckAt).toBeTruthy();
   });
 
+  it("un catálogo importado del paquete no lo pisa la comprobación remota", async () => {
+    // El catálogo del volcado no viene del manifest público: si el chequeo lo
+    // tratara como la muestra, al arrancar lo cambiaría por el dataset y se
+    // perdería lo importado.
+    await boot(true);
+    const importado = {
+      ...FIXTURE,
+      meta: { ...FIXTURE.meta, sources: ["volcado", "guías"] },
+    };
+    const IMPORTADO_ID = "UGR/GI/2026-1+volcado";
+    expect(await api.saveCatalog(importado, { id: IMPORTADO_ID })).toEqual({ ok: true, id: IMPORTADO_ID });
+    expect(await api.setActiveCatalogKey(IMPORTADO_ID)).toEqual({ ok: true, id: IMPORTADO_ID });
+
+    const fetchMock = stubFetch(
+      onlyManifest({ manifest: () => jsonResponse(manifestOf(FIXTURE)) }),
+    );
+
+    const res = await api.checkForUpdates();
+
+    expect(res).toMatchObject({ ok: true, reason: "private", id: IMPORTADO_ID });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(api.getActiveCatalogKey()).toBe(IMPORTADO_ID);
+    expect(api.getSubjects()).toHaveLength(FIXTURE.subjects.length);
+  });
+
   it("nueva versión → fetch del dataset, guardado, activación y catalog:updated", async () => {
     await boot(true);
 

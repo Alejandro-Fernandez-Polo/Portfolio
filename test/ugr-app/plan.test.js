@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import {
   filterSubjectsByMention,
   listPlanSubjects,
+  mencionClave,
   mencionOptions,
   tipoClave,
   tipoDeAsignatura,
@@ -94,6 +95,25 @@ describe("listPlanSubjects", () => {
   });
 });
 
+describe("mencionClave", () => {
+  it("da la clave de la mención, y `comun` cuando no es de ninguna", () => {
+    expect(mencionClave({ mencion: "CSI" })).toBe("csi");
+    expect(mencionClave({ mencion: "IS" })).toBe("is");
+    expect(mencionClave({ mencion: "TI" })).toBe("ti");
+    expect(mencionClave({ mencion: "SI" })).toBe("si");
+    expect(mencionClave({ mencion: "IC" })).toBe("ic");
+    expect(mencionClave({ mencion: "Común" })).toBe("comun");
+    expect(mencionClave({})).toBe("comun");
+    expect(mencionClave(null)).toBe("comun");
+  });
+
+  it("no mira el carácter: en el horario el color distingue menciones, no tipos", () => {
+    expect(mencionClave({ mencion: "TI", caracter: "Optativa" })).toBe(
+      mencionClave({ mencion: "TI", caracter: "Obligatoria de Rama" }),
+    );
+  });
+});
+
 describe("tipoClave", () => {
   it("da un color por mención, distinguiendo sus obligatorias de sus optativas", () => {
     expect(tipoClave({ caracter: "Optativa", mencion: "CSI" })).toBe("csi-optativa");
@@ -105,6 +125,10 @@ describe("tipoClave", () => {
   it("«Obligatoria de Rama» es la obligatoria de su mención, no otro cubo", () => {
     expect(tipoClave({ caracter: "Obligatoria de Rama", mencion: "SI" })).toBe("si-obligatoria");
     expect(tipoClave({ caracter: "Obligatoria de Rama", mencion: "IC" })).toBe("ic-obligatoria");
+  });
+
+  it("el trabajo fin de grado tiene su propio cubo", () => {
+    expect(tipoClave({ caracter: "Trabajo Fin de Grado", mencion: "Común" })).toBe("comun-tfg");
   });
 
   it("el núcleo común va aparte, con su carácter", () => {
@@ -153,7 +177,10 @@ describe("filterSubjectsByMention", () => {
   });
 
   it("las básicas, las obligatorias y las que no traen mención siguen viéndose", () => {
+    // La regla es la misma para la lista de datos y para la tabla del progreso:
+    // elegir una mención oculta solo las de las otras, nunca las que no tienen.
     const visibles = filterSubjectsByMention(SUBJECTS, "CSI").map((s) => s.codigo);
     expect(visibles).toEqual(["CA", "SO", "AA", "SINPLAN"]);
   });
 });
+

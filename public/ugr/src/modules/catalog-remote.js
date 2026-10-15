@@ -91,6 +91,13 @@ export function createCatalogRemote(ctx) {
     const activeMeta = (ctx.getCatalog() && ctx.getCatalog().meta) || {};
     const from = ctx.getActiveKey();
 
+    // Un catálogo importado del paquete no sale del manifest público: si la
+    // comprobación lo pisara, al arrancar se perdería el volcado y volvería la
+    // muestra. Se reconoce por su fuente.
+    if (Array.isArray(activeMeta.sources) && activeMeta.sources.includes("volcado")) {
+      return { ok: true, reason: "private", id: from, from };
+    }
+
     let res;
     try {
       const headers = state.etag ? { "If-None-Match": state.etag } : {};

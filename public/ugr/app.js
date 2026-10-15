@@ -390,6 +390,7 @@
     setupNavigation();
     setupPropuestas();
     setupCatalogUI();
+    setupPackageUI();
     updateAll();
     checkUrlShare();
     checkUrlPropuesta();
@@ -1056,6 +1057,10 @@
 
   const docentesByKey = indexByKey(typeof DOCENTES !== 'undefined' ? DOCENTES : [], d => d && d.key);
   const profesoresByKey = indexByKey(typeof PROFESORES !== 'undefined' ? PROFESORES : [], p => p && p.key);
+  /** Nombres con alguna valoración: los que pueden abrir ficha. */
+  const nombresConFicha = new Set(
+    Object.keys(profesoresByKey).map(key => profesoresByKey[key]).filter(p => p && p.name).map(p => p.name),
+  );
 
   function getDocentInfo(key) {
     return docentesByKey[key] || null;
@@ -1166,7 +1171,7 @@
           const diff = getDificultad(codigo, group.letra);
           const nombre = escapeCatalogText(profName);
           html += `<div class="group-profesor">`;
-          if (getProfesorInfo(codigo, group.letra)) {
+          if (nombresConFicha.has(profName)) {
             html += `<button type="button" class="prof-name-btn" data-prof-name="${nombre}"`
               + ` data-prof-codigo="${codigo}" data-prof-modalidad="Teoría">${nombre}</button>`;
           } else {
@@ -1215,7 +1220,7 @@
               const diffPracticas = getDificultad(codigo, sub);
               const nombrePracticas = escapeCatalogText(profPracticas);
               html += `<div class="group-profesor">`;
-              if (getProfesorInfo(codigo, sub)) {
+              if (nombresConFicha.has(profPracticas)) {
                 html += `<button type="button" class="prof-name-btn" data-prof-name="${nombrePracticas}"`
                   + ` data-prof-codigo="${codigo}" data-prof-modalidad="Prácticas">${nombrePracticas}</button>`;
               } else {
@@ -3301,11 +3306,16 @@
   function rebuildDocentIndexes(docents, profesores) {
     Object.keys(docentesByKey).forEach(key => { delete docentesByKey[key]; });
     Object.keys(profesoresByKey).forEach(key => { delete profesoresByKey[key]; });
+    nombresConFicha.clear();
     (Array.isArray(docents) ? docents : []).forEach(d => {
       if (d && d.key) docentesByKey[d.key] = d;
     });
     (Array.isArray(profesores) ? profesores : []).forEach(p => {
       if (p && p.key) profesoresByKey[p.key] = p;
+      // La ficha agrupa todo lo que se sabe de un profesor, así que se abre
+      // aunque no haya valoración de *esta* asignatura: si tiene alguna en otra,
+      // el nombre es un botón y la ficha la enseña.
+      if (p && p.name) nombresConFicha.add(p.name);
     });
   }
 
@@ -3441,6 +3451,7 @@
     renderManageSubjects();
     renderSolverFilters();
     renderSavedConfigs();
+    renderProfesores();
     renderCatalogSelector();
   }
 
@@ -3466,7 +3477,8 @@
       return;
     }
     select.innerHTML = list.map(c => {
-      const label = [c.university, c.degree, c.version, `${c.subjectCount} asignaturas`]
+      const marca = (c.sources || []).includes('volcado') ? 'volcado' : 'muestra';
+      const label = [c.university, c.degree, c.version, `${c.subjectCount} asignaturas`, marca]
         .filter(Boolean)
         .join(' · ') || c.id;
       return `<option value="${escapeCatalogText(c.id)}">${escapeCatalogText(label)}</option>`;
@@ -3522,6 +3534,100 @@
       exportBtn.addEventListener('click', exportActiveCatalog);
     }
     renderCatalogSelector();
+  }
+
+  // ─── Paquete cifrado del autor ──────────────────────────────
+  /**
+   * El volcado completo viaja cifrado. Con la contraseña se importa como un
+   * catálogo **propio** —identificador distinto al de la muestra, así que se
+   * puede volver a ella desde «Catálogo activo»— y con aviso y copia previa,
+   * porque pasa a ser el catálogo con el que se resuelven los horarios.
+   *
+   * La contraseña no se guarda: se pide cada vez.
+   */
+  function loadPackageModule() {
+    if (typeof window !== 'undefined' && window.__ugrPackage) {
+      return Promise.resolve(window.__ugrPackage);
+    }
+    return import('/ugr/src/package/unlockPackage.js').then(() => window.__ugrPackage);
+  }
+
+  function setupPackageUI() {
+    const input = document.getElementById('package-password');
+    const button = document.getElementById('btn-package-unlock');
+    const status = document.getElementById('package-status');
+    if (!input || !button || button.dataset.packageBound) return;
+    button.dataset.packageBound = '1';
+
+    const setStatus = (texto, tipo) => {
+      if (!status) return;
+      status.textContent = texto || '';
+      status.className = tipo ? `package-status ${tipo}` : 'package-status';
+    };
+
+    const importar = async () => {
+      const password = input.value;
+      if (!password) {
+        setStatus('Escribe la contraseña del paquete.', 'error');
+        input.focus();
+        return;
+      }
+      const api = getCatalogApi();
+      if (!api || typeof api.saveCatalog !== 'function') {
+        setStatus('Sin almacenamiento no se puede importar el catálogo.', 'error');
+        return;
+      }
+
+      button.disabled = true;
+      setStatus('Abriendo el paquete…');
+      try {
+        const mod = await loadPackageModule();
+        const res = await mod.unlockPackage(password);
+        if (!res.ok) {
+          const mensaje = (mod.PACKAGE_ERRORS && mod.PACKAGE_ERRORS[res.reason]) || 'No se pudo abrir el paquete.';
+          setStatus(mensaje, 'error');
+          return;
+        }
+
+        const asignaciones = Array.isArray(res.catalog.docents) ? res.catalog.docents.length : 0;
+        const perfiles = Array.isArray(res.catalog.profesores) ? res.catalog.profesores.length : 0;
+        if (confirm(`El paquete trae ${asignaciones} asignaciones y ${perfiles} perfiles de profesor.\n\n¿Descargar antes una copia de tus datos actuales?`)) {
+          exportAllJSON();
+        }
+        if (!confirm('El catálogo del volcado pasará a ser el activo. El que usas ahora seguirá guardado y podrás volver a él desde «Catálogo activo».\n\n¿Importar?')) {
+          setStatus('Importación cancelada.');
+          return;
+        }
+
+        setStatus('Guardando el catálogo…');
+        const guardado = await api.saveCatalog(res.catalog, { id: res.id });
+        if (!guardado || !guardado.ok) {
+          const detalle = guardado && guardado.error ? ` (${guardado.error})` : '';
+          setStatus(`No se pudo guardar el catálogo importado${detalle}.`, 'error');
+          return;
+        }
+        const activado = await api.setActiveCatalogKey(guardado.id);
+        if (!activado || !activado.ok) {
+          setStatus('El catálogo se guardó, pero no se pudo activar.', 'error');
+          return;
+        }
+        input.value = '';
+        setStatus(`Catálogo del volcado activo: ${asignaciones} asignaciones y ${perfiles} perfiles.`);
+        showToast('Catálogo del volcado importado', 'success');
+      } catch (err) {
+        setStatus('No se pudo abrir el paquete.', 'error');
+      } finally {
+        button.disabled = false;
+      }
+    };
+
+    button.addEventListener('click', importar);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        importar();
+      }
+    });
   }
 
   // ─── Propuestas ─────────────────────────────────────────────
@@ -4448,6 +4554,7 @@
             getConflicts: () => conflicts,
             saveState,
             updateAll,
+            getMenciones: () => catalogMenciones(),
           });
           return ugrSubjectsView;
         })

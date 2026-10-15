@@ -15,6 +15,7 @@
  * render), igual que el legacy: no hay riesgo de listeners duplicados.
  */
 import { buildGroupChoice, applyTurnoPreference } from "../domain/selection.js";
+import { filterSubjectsByMention, mencionClave, mencionOptions } from "../domain/plan.js";
 
 /**
  * Crea la vista de materias inyectada por `app.js`.
@@ -26,6 +27,8 @@ import { buildGroupChoice, applyTurnoPreference } from "../domain/selection.js";
  * @param {() => Array} deps.getConflicts lee el array `conflicts` corriente.
  * @param {() => void} deps.saveState persiste (store/espejo) el estado.
  * @param {() => void} deps.updateAll re-renderiza el resto de vistas.
+ * @param {() => Array} [deps.getMenciones] lee las menciones del catálogo (para
+ *   el desplegable de mención).
  * @returns {{render: () => void, toggleSubject: (codigo: string) => void,
  *   selectCourse: (curso: number, cuatrimestre: number) => void}}
  */
@@ -36,7 +39,43 @@ export function createSubjectsView({
   getConflicts,
   saveState,
   updateAll,
+  getMenciones,
 }) {
+  /** Mención elegida en el desplegable: vacío es «todas». */
+  let mencionElegida = "";
+
+  /** Materias del catálogo que la mención elegida deja visibles. */
+  function subjectsVisibles() {
+    return filterSubjectsByMention(getSubjects(), mencionElegida);
+  }
+
+  /**
+   * Pinta el desplegable de mención con lo que traiga el catálogo y conserva la
+   * elegida si sigue existiendo. Sin menciones (catálogo sin plan) no se pinta.
+   */
+  function renderMencionSelect() {
+    const select = document.getElementById("subjects-mencion");
+    if (!select) return;
+    const opciones = mencionOptions(getSubjects(), typeof getMenciones === "function" ? getMenciones() : []);
+    select.innerHTML =
+      '<option value="">Todas las menciones</option>' +
+      opciones
+        .map((o) => {
+          const etiqueta = o.nombre ? `${o.codigo} — ${o.nombre}` : o.codigo;
+          return `<option value="${o.codigo}">${etiqueta}</option>`;
+        })
+        .join("");
+    select.value = opciones.some((o) => o.codigo === mencionElegida) ? mencionElegida : "";
+    mencionElegida = select.value;
+    select.hidden = opciones.length === 0;
+    if (!select.dataset.mencionBound) {
+      select.dataset.mencionBound = "1";
+      select.addEventListener("change", () => {
+        mencionElegida = select.value;
+        render();
+      });
+    }
+  }
   /**
    * Elección por defecto de una materia si aún no la tiene. El `null` de
    * `buildGroupChoice` (sin grupos) no se guarda: el legacy salía sin asignar
@@ -81,10 +120,12 @@ export function createSubjectsView({
     updateAll();
   }
 
-  /** Marca/desmarca todas las materias de un curso del cuatrimestre dado. */
+  /** Marca/desmarca todas las materias visibles de un curso del cuatrimestre. */
   function selectCourse(curso, cuatrimestre) {
     const state = getState();
-    const courseSubjects = getSubjects().filter(
+    // Solo las visibles: con una mención elegida, «Seleccionar todo» no debe
+    // marcar las que el filtro ha escondido.
+    const courseSubjects = subjectsVisibles().filter(
       s => s.curso === curso && s.cuatrimestre === cuatrimestre
     );
     const allSelected = courseSubjects.every(s => state.selectedSubjects[s.codigo]);
@@ -108,7 +149,11 @@ export function createSubjectsView({
     const conflictsList = getConflicts();
     const container = document.getElementById('subjects-container');
     const cuat = state.cuatrimestreActivo;
-    const subjects = subjectsCatalog.filter(s => s.cuatrimestre === cuat);
+    renderMencionSelect();
+    // El filtro de mención es el mismo que el de la lista de datos: elegir una
+    // mención solo deja invisibles las asignaturas de las otras, nunca las
+    // básicas ni las obligatorias comunes.
+    const subjects = subjectsVisibles().filter(s => s.cuatrimestre === cuat);
 
     // Group by course
     const byCourse = {};
@@ -136,8 +181,12 @@ export function createSubjectsView({
         const isSelected = state.selectedSubjects[s.codigo];
         const hasConflict = conflictsList.some(c => c.codigo1 === s.codigo || c.codigo2 === s.codigo);
         const isAprobada = !!s.aprobada;
+        // La mención va en la clase (color de la tarjeta) y en una etiqueta con
+        // su código: el color solo no basta para leerlo.
+        const mencion = mencionClave(s);
         const cls = [
           'subject-card',
+          `mencion-${mencion}`,
           isSelected ? 'selected' : '',
           hasConflict ? 'has-conflict' : '',
           isAprobada ? 'aprobada' : ''
@@ -148,6 +197,11 @@ export function createSubjectsView({
           html += `<span class="badge-aprobada">Aprobada</span>`;
         }
         html += `<div class="check-indicator ${isSelected ? 'checked' : 'unchecked'}">${isSelected ? '✓' : ''}</div>`;
+        // El tipo va primero (qué es la asignatura) y la mención después.
+        const etiquetas = [];
+        if (s.caracter) etiquetas.push(`<span class="subject-tipo">${s.caracter}</span>`);
+        if (mencion !== 'comun') etiquetas.push(`<span class="subject-mencion">${s.mencion}</span>`);
+        if (etiquetas.length) html += `<div class="subject-etiquetas">${etiquetas.join('')}</div>`;
         html += `<div class="subject-code">${s.codigo}</div>`;
         html += `<div class="subject-name">${s.nombre}</div>`;
         if (isAprobada && s.corresponde) {

@@ -404,11 +404,15 @@ export function normalizeExtraSubject(subject) {
   if (!codigo) return null;
   const curso = Number(subject.curso);
   const cuatrimestre = Number(subject.cuatrimestre);
+  const creditos = Number(subject.creditos);
   return {
     codigo,
     nombre: typeof subject.nombre === "string" ? subject.nombre : "",
     curso: Number.isFinite(curso) ? curso : 0,
     cuatrimestre: cuatrimestre === 2 ? 2 : 1,
+    // Los créditos hacen falta para cuadrar los 240 del grado: las asignaturas
+    // del plan cuentan igual que las del catálogo.
+    creditos: Number.isFinite(creditos) ? creditos : 0,
     caracter: typeof subject.caracter === "string" ? subject.caracter : "",
     mencion: typeof subject.mencion === "string" ? subject.mencion : "",
   };

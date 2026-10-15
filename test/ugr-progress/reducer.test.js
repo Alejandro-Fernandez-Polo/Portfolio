@@ -10,7 +10,22 @@ describe('reducer: estado inicial', () => {
       credits: {},
       equivalences: [],
       plan: { totalECTS: 240 },
+      mencion: '',
     });
+  });
+});
+
+describe('reducer: progress/setMencion', () => {
+  it('guarda la mención elegida y admite volver a «sin decidir»', () => {
+    const s0 = reducer(null, { type: 'progress/setMencion', payload: { mencion: 'CSI' } });
+    expect(s0.progress.mencion).toBe('CSI');
+    expect(s0.rev).toBe(1);
+    const s1 = reducer(s0, { type: 'progress/setMencion', payload: { mencion: '' } });
+    expect(s1.progress.mencion).toBe('');
+    // Repetir la misma mención no toca el estado.
+    expect(reducer(s0, { type: 'progress/setMencion', payload: { mencion: 'CSI' } })).toBe(s0);
+    // Y un valor que no es texto se ignora.
+    expect(reducer(s0, { type: 'progress/setMencion', payload: { mencion: 7 } })).toBe(s0);
   });
 });
 
@@ -20,6 +35,15 @@ describe('reducer: progress/setStatus', () => {
     expect(s.progress.credits.FFT).toBe('pass');
     expect(s.rev).toBe(1);
     expect(s.progress.updatedAt).toBeTruthy();
+  });
+
+  it('con estado vacío desmarca la asignatura', () => {
+    const s0 = reducer(null, setStatus('FFT', STATUS.SUPERADA));
+    const s1 = reducer(s0, setStatus('FFT', ''));
+    expect(s1.progress.credits.FFT).toBeUndefined();
+    expect(s1.rev).toBe(s0.rev + 1);
+    // Desmarcar lo que ya estaba sin marcar no toca el estado.
+    expect(reducer(s1, setStatus('FFT', ''))).toBe(s1);
   });
 
   it('ignora un estado inválido (misma referencia)', () => {

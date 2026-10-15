@@ -49,6 +49,7 @@
       <section id="subject-selection" class="panel">
         <div class="panel-header">
           <h2>Asignaturas</h2>
+          <select id="subjects-mencion" class="filter-select" aria-label="Ver solo una mención" hidden></select>
         </div>
 
         <!-- Cuatrimestre tabs -->
@@ -191,6 +192,19 @@
             <button id="btn-open-import-wizard" class="btn btn-secondary" type="button">Importar catálogo</button>
           </div>
         </div>
+        <div class="package-row">
+          <div class="config-field catalog-field">
+            <label for="package-password">Paquete del autor (cifrado)</label>
+            <input type="password" id="package-password" class="filter-select" placeholder="Contraseña"
+                   autocomplete="off" aria-describedby="package-hint">
+            <small id="package-hint">Con la contraseña se importan las valoraciones reales del volcado —profesores,
+              opiniones y comentarios— como un catálogo propio. La contraseña no se guarda.</small>
+          </div>
+          <div class="catalog-actions">
+            <button id="btn-package-unlock" class="btn btn-secondary" type="button">Desbloquear</button>
+          </div>
+        </div>
+        <p id="package-status" class="package-status" role="status"></p>
         <div class="data-actions">
           <button id="btn-export-json" class="btn btn-secondary">Exportar Todo (JSON)</button>
           <button id="btn-import-json" class="btn btn-secondary">Importar JSON</button>
@@ -282,8 +296,22 @@
         </div>
         <div id="progress-summary"></div>
         <p class="empty-state" id="progress-empty" hidden>No hay asignaturas en el catálogo activo. Importa un catálogo (pestaña Asignaturas) o restaura tus datos para empezar a marcar tu progreso.</p>
+        <div class="progress-mencion-picker">
+          <label for="progress-mencion">Mención elegida</label>
+          <select id="progress-mencion" class="filter-select"></select>
+        </div>
+        <div id="progress-creditos"></div>
+        <div id="progress-menciones"></div>
         <div id="progress-course-bars"></div>
         <div id="progress-projection"></div>
+        <!-- Filtro de la lista de asignaturas del progreso: enseña solo las de
+             una mención (ni el núcleo común ni las demás). Lo rellena
+             src/ui/progress-dashboard.js; si no hay menciones, se queda
+             oculto. -->
+        <div class="progress-mencion-picker" id="progress-subjects-filter" hidden>
+          <label for="progress-subjects-mencion">Filtrar por mención</label>
+          <select id="progress-subjects-mencion" class="filter-select"></select>
+        </div>
         <div id="progress-subjects"></div>
         <div id="progress-equivalences"></div>
 

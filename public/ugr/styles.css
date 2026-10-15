@@ -1206,6 +1206,22 @@ main {
 .manage-table-wrapper {
   overflow-x: auto;
 }
+/* Cabecera pegajosa en las tablas largas: las marca src/ui/sticky-headers.js
+   midiendo la tabla contra la ventana. El contenedor deja de desplazar
+   (`is-tall`) para que la cabecera se pegue a la ventana, o se queda con el
+   scroll y un tope de alto (`is-tall-scroll`) cuando la tabla no cabe a lo
+   ancho; el porqué, en el comentario de ese módulo. */
+.manage-table-wrapper.is-tall { overflow: visible; }
+.manage-table-wrapper.is-tall-scroll {
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+.is-tall thead th,
+.is-tall-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
 .manage-table {
   width: 100%;
   border-collapse: collapse;
@@ -1228,6 +1244,103 @@ main {
   background: var(--surface-hover);
 }
 
+/* ─── Progreso: créditos del grado y menciones ──────────────── */
+.progress-mencion-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+}
+.progress-mencion-picker label { font-size: 0.85rem; font-weight: 600; }
+.progress-mencion-elegida {
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-inverse);
+  background: var(--accent);
+}
+.progress-criterios { margin-top: 0.5rem; }
+.progress-mencion-nombre { color: var(--text-light); font-weight: 400; font-size: 0.8rem; }
+.progress-mencion-ok { color: #28a745; font-weight: 600; }
+
+/* ─── Menciones en la parrilla de asignaturas ───────────────── */
+/* Un color por mención: una franja a la izquierda de la tarjeta y una etiqueta
+   con el código. El color solo no basta (no se lee), así que la etiqueta lo
+   dice; la franja del núcleo común va en gris para que las menciones destaquen. */
+:root {
+  --mencion-comun: #5f6b7a;
+  --mencion-csi: #7a4fa3;
+  --mencion-is: #2f6ca8;
+  --mencion-ti: #2b7d72;
+  --mencion-si: #a06d16;
+  --mencion-ic: #a83e58;
+}
+.subject-card { overflow: hidden; }
+.subject-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--mencion-comun);
+}
+.subject-card.mencion-csi::before { background: var(--mencion-csi); }
+.subject-card.mencion-is::before { background: var(--mencion-is); }
+.subject-card.mencion-ti::before { background: var(--mencion-ti); }
+.subject-card.mencion-si::before { background: var(--mencion-si); }
+.subject-card.mencion-ic::before { background: var(--mencion-ic); }
+.subject-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.subject-tipo {
+  display: inline-block;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text-light);
+  border: 1px solid var(--border);
+}
+.subject-mencion {
+  display: inline-block;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text-inverse);
+  background: var(--mencion-comun);
+}
+.subject-card.mencion-csi .subject-mencion { background: var(--mencion-csi); }
+.subject-card.mencion-is .subject-mencion { background: var(--mencion-is); }
+.subject-card.mencion-ti .subject-mencion { background: var(--mencion-ti); }
+.subject-card.mencion-si .subject-mencion { background: var(--mencion-si); }
+.subject-card.mencion-ic .subject-mencion { background: var(--mencion-ic); }
+
+/* ─── Paquete cifrado del autor (panel de catálogo) ─────────── */
+.package-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+.package-row .catalog-field { flex: 1 1 340px; }
+.package-status {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  min-height: 1.1rem;
+  color: var(--text-light);
+}
+.package-status.error { color: #dc3545; }
+.package-status.ok { color: #28a745; }
+
 /* ─── Lista de asignaturas: tipo y filtro por mención ───────── */
 /* Un color por mención y, dentro de cada una, un tono claro para sus optativas
    y otro más oscuro para sus obligatorias (que en el plan son «Obligatoria de
@@ -1237,6 +1350,7 @@ main {
   --tipo-comun-basica: #eceff1;
   --tipo-comun-obligatoria: #e0e0e0;
   --tipo-comun-optativa: #f5f5f5;
+  --tipo-comun-tfg: #eceff4;
   --tipo-csi-optativa: #f3e5f5;
   --tipo-csi-obligatoria: #e1bee7;
   --tipo-is-optativa: #e3f2fd;
@@ -1260,6 +1374,7 @@ main {
 .td-tipo-comun-basica { background: var(--tipo-comun-basica); }
 .td-tipo-comun-obligatoria { background: var(--tipo-comun-obligatoria); }
 .td-tipo-comun-optativa { background: var(--tipo-comun-optativa); }
+.td-tipo-comun-tfg { background: var(--tipo-comun-tfg); }
 .td-tipo-csi-optativa { background: var(--tipo-csi-optativa); }
 .td-tipo-csi-obligatoria { background: var(--tipo-csi-obligatoria); }
 .td-tipo-is-optativa { background: var(--tipo-is-optativa); }

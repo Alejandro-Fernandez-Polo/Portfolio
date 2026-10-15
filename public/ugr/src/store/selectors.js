@@ -2,7 +2,7 @@ import { getState } from "./commands.js";
 import { summarize, projectDegree } from "../progress/index.js";
 import { isValidEstado } from "../progress/status.js";
 
-const EMPTY_PROGRESS = { credits: {}, equivalences: [], plan: { totalECTS: 240 } };
+const EMPTY_PROGRESS = { credits: {}, equivalences: [], plan: { totalECTS: 240 }, mencion: "" };
 
 export function getSelectedCodes() {
   const state = getState();
@@ -55,6 +55,7 @@ export function getProgress() {
     credits: p.credits && typeof p.credits === "object" ? p.credits : {},
     equivalences: Array.isArray(p.equivalences) ? p.equivalences : [],
     plan: { totalECTS: 240, ...(p.plan || {}) },
+    mencion: typeof p.mencion === "string" ? p.mencion : "",
   };
 }
 

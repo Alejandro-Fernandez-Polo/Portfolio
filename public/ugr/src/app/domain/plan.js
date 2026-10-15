@@ -21,6 +21,7 @@ const CLAVES_DE_CARACTER = {
   "Obligatoria": "obligatoria",
   "Obligatoria de Rama": "obligatoria",
   "Optativa": "optativa",
+  "Trabajo Fin de Grado": "tfg",
 };
 
 /**
@@ -41,6 +42,20 @@ export function tipoClave(subject) {
   const mencion = (subject && subject.mencion) || "";
   const ambito = mencion && mencion !== MENCION_COMUN ? mencion.toLowerCase() : "comun";
   return `${ambito}-${caracter}`;
+}
+
+/**
+ * Clave de la mención de una asignatura, para pintarla en el horario: el código
+ * en minúsculas (`csi`, `is`, `ti`, `si`, `ic`) o `comun` cuando no es de
+ * ninguna. A diferencia de `tipoClave`, aquí el carácter no entra: en la lista
+ * de asignaturas el color distingue menciones, no tipos.
+ *
+ * @param {Object} subject asignatura del catálogo.
+ * @returns {string} `comun` | `csi` | `is` | `ti` | `si` | `ic`.
+ */
+export function mencionClave(subject) {
+  const mencion = (subject && subject.mencion) || "";
+  return mencion && mencion !== MENCION_COMUN ? mencion.toLowerCase() : "comun";
 }
 
 /**
@@ -70,7 +85,7 @@ const ORDEN_DE_CARACTER = {
   "Optativa": 3,
 };
 
-function rangoDeCaracter(subject) {
+export function rangoDeCaracter(subject) {
   return ORDEN_DE_CARACTER[(subject && subject.caracter) || ""] ?? 4;
 }
 
@@ -80,14 +95,34 @@ function mencionParaOrdenar(subject) {
   return mencion === MENCION_COMUN ? "" : mencion;
 }
 
-function compararAsignaturas(a, b) {
+/** Curso numérico; «Opt» (datos antiguos) va al final. */
+export function rangoDeCurso(fila) {
+  const curso = fila && fila.curso;
+  if (curso === "Opt") return Number.MAX_SAFE_INTEGER;
+  return Number(curso) || 0;
+}
+
+/**
+ * Orden de la lista de asignaturas: **curso, cuatrimestre, tipo y nombre**. Vale
+ * para la lista de datos y para la tabla del progreso —la regla es la misma—,
+ * así que acepta las dos formas de fila (`cuatrimestre`/`term`, `nombre`/`name`,
+ * `codigo`/`code`).
+ *
+ * @param {Object} a fila.
+ * @param {Object} b fila.
+ * @returns {number}
+ */
+export function compararAsignaturas(a, b) {
+  const cuatrimestre = (fila) => Number(fila.cuatrimestre ?? fila.term) || 0;
+  const nombre = (fila) => String(fila.nombre ?? fila.name ?? "");
+  const codigo = (fila) => String(fila.codigo ?? fila.code ?? "");
   return (
-    a.curso - b.curso ||
-    a.cuatrimestre - b.cuatrimestre ||
+    rangoDeCurso(a) - rangoDeCurso(b) ||
+    cuatrimestre(a) - cuatrimestre(b) ||
     rangoDeCaracter(a) - rangoDeCaracter(b) ||
     mencionParaOrdenar(a).localeCompare(mencionParaOrdenar(b)) ||
-    String(a.nombre).localeCompare(String(b.nombre)) ||
-    String(a.codigo).localeCompare(String(b.codigo))
+    nombre(a).localeCompare(nombre(b)) ||
+    codigo(a).localeCompare(codigo(b))
   );
 }
 
@@ -142,7 +177,10 @@ export function mencionOptions(subjects, menciones = []) {
  * mención. Las del núcleo común —básicas y obligatorias, con `mencion` «Común»
  * o sin mención— siguen viéndose, porque son de todos.
  *
- * @param {Array} subjects asignaturas del catálogo.
+ * Es la regla de los **dos** filtros de mención: el de la lista de datos (donde
+ * se monta el horario) y el de la tabla del progreso (donde se revisa el plan).
+ *
+ * @param {Array} subjects asignaturas del catálogo, o filas con `mencion`.
  * @param {string} mencion código de mención; vacío = sin filtro.
  * @returns {Array} las asignaturas que se ven.
  */

@@ -36,9 +36,17 @@ function getStatus(code) {
 
 function setStatus(code, status) {
   // El reducer ya valida, pero evitamos el dispatch (y su write en IDB) si
-  // el comando va a ser descartado de todas formas.
-  if (!code || !isValidStatus(status)) return false;
+  // el comando va a ser descartado de todas formas. El estado vacío es válido:
+  // significa «sin marcar» y borra la marca.
+  if (!code || (status !== "" && !isValidStatus(status))) return false;
   dispatch({ type: "progress/setStatus", payload: { code, status } });
+  return true;
+}
+
+/** Mención elegida (vacío = sin decidir). */
+function setMencion(mencion) {
+  if (typeof mencion !== "string") return false;
+  dispatch({ type: "progress/setMencion", payload: { mencion } });
   return true;
 }
 
@@ -83,6 +91,7 @@ export function registerProgress() {
       getSummary,
       getStatus,
       setStatus,
+      setMencion,
       getPassedCodes,
       projectDegree,
       mapEquivalences,

@@ -159,6 +159,8 @@ const EXTRA_SUBJECT_SCHEMA = {
     nombre: { type: "string" },
     curso: { type: "number" },
     cuatrimestre: { type: "number", enum: [1, 2] },
+    // Opcional: un catálogo anterior al volcado no los trae.
+    creditos: { type: "number" },
     caracter: { type: "string" },
     mencion: { type: "string" },
   },

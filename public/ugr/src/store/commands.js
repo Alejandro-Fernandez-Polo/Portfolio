@@ -53,6 +53,7 @@ function normalizeProgress(raw) {
     credits: { ...credits },
     equivalences: [...equivalences],
     plan: { ...plan, totalECTS },
+    mencion: typeof sp.mencion === "string" ? sp.mencion : "",
   };
 }
 

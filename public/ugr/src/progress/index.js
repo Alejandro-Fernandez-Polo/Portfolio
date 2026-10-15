@@ -14,6 +14,8 @@ export {
 export {
   buildSubjectRows,
   buildCourseBars,
+  buildCreditBreakdown,
+  buildMenciones,
   buildSummary,
   buildProjection,
   buildEquivalenceRows,

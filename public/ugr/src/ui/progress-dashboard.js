@@ -1,4 +1,5 @@
 import { getModule } from "../kernel/registry.js";
+import { filterSubjectsByMention, mencionOptions, tipoClave, tipoDeAsignatura } from "../app/domain/plan.js";
 import { subscribe, flush } from "../store/commands.js";
 import { getProgress } from "../store/selectors.js";
 import {
@@ -7,6 +8,8 @@ import {
   ECTS_PER_TERM,
   buildSubjectRows,
   buildCourseBars,
+  buildCreditBreakdown,
+  buildMenciones,
   buildSummary,
   buildProjection,
   buildEquivalenceRows,
@@ -83,6 +86,34 @@ function getRawConvalidaciones() {
   return [];
 }
 
+/**
+ * Asignaturas del plan que el catálogo no planifica (el TFG, las prácticas de
+ * empresa y la `RI` sin horario): cuentan para los créditos del grado igual que
+ * las demás, aunque no tengan horario.
+ */
+function getPlanSubjects() {
+  const catalog = getModule("catalog");
+  const extra = typeof catalog?.getCatalog === "function" ? catalog.getCatalog()?.extraSubjects : null;
+  return Array.isArray(extra) ? extra : [];
+}
+
+/** Menciones del catálogo activo (código y nombre largo). */
+function getMenciones() {
+  const catalog = getModule("catalog");
+  const list = typeof catalog?.getCatalog === "function" ? catalog.getCatalog()?.menciones : null;
+  return Array.isArray(list) ? list : [];
+}
+
+/**
+ * ¿El catálogo activo es el del volcado, importado con la contraseña? El
+ * resumen de cómo se consigue el título solo se enseña entonces.
+ */
+function esCatalogoImportado() {
+  const catalog = getModule("catalog");
+  const meta = typeof catalog?.getCatalog === "function" ? catalog.getCatalog()?.meta : null;
+  return Array.isArray(meta?.sources) && meta.sources.includes("volcado");
+}
+
 function getProgressApi() {
   const api = typeof window !== "undefined" ? window.__ugrProgress : null;
   return api && typeof api.setStatus === "function" ? api : null;
@@ -92,10 +123,15 @@ function statusSelect(row, canWrite) {
   // El código es la clave del select: sirve de id estable para el <label> y
   // para recuperar el foco tras un re-render.
   const id = `progress-status-${String(row.code).replace(/[^\w-]/g, "-")}`;
-  const options = STATUS_ORDER.map(
-    (value) =>
-      `<option value="${value}"${value === row.status ? " selected" : ""}>${STATUS_LABELS[value]}</option>`,
-  ).join("");
+  // Sin estado propio la opción elegida es «Sin marcar»: una asignatura sin
+  // marcar no está pendiente, lo que está pendiente son los créditos.
+  const sinMarcar = `<option value=""${row.marked ? "" : " selected"}>Sin marcar</option>`;
+  const options =
+    sinMarcar +
+    STATUS_ORDER.map(
+      (value) =>
+        `<option value="${value}"${row.marked && value === row.status ? " selected" : ""}>${STATUS_LABELS[value]}</option>`,
+    ).join("");
   return `<label class="progress-visually-hidden" for="${id}">Estado de ${escapeHtml(row.code)} — ${escapeHtml(
     row.name,
   )}</label>
@@ -213,9 +249,14 @@ export function setupProgressDashboard() {
   if (!root) return;
   const summaryEl = document.getElementById("progress-summary");
   const emptyEl = document.getElementById("progress-empty");
+  const mencionPickerEl = document.getElementById("progress-mencion");
+  const creditosEl = document.getElementById("progress-creditos");
+  const mencionesEl = document.getElementById("progress-menciones");
   const barsEl = document.getElementById("progress-course-bars");
   const projectionEl = document.getElementById("progress-projection");
   const subjectsEl = document.getElementById("progress-subjects");
+  const mencionFiltroEl = document.getElementById("progress-subjects-mencion");
+  const mencionFiltroBox = document.getElementById("progress-subjects-filter");
   const equivalencesEl = document.getElementById("progress-equivalences");
   if (!summaryEl || !barsEl || !projectionEl || !subjectsEl || !equivalencesEl) return;
   if (root.dataset.progressBound === "1") return;
@@ -227,6 +268,11 @@ export function setupProgressDashboard() {
   // Clave de lo que cambia el render: si el store notifica por un cambio que
   // no afecta al progreso (selección del solver, UI…) no se repinta la tabla.
   let lastKey = null;
+
+  // Mención del filtro de la lista de asignaturas: vacío es «todas». Es una
+  // preferencia de la vista y no se guarda en el store, a diferencia de la
+  // mención elegida, que sí forma parte del progreso.
+  let mencionFiltro = "";
 
   function captureFocus() {
     const active = document.activeElement;
@@ -246,7 +292,135 @@ export function setupProgressDashboard() {
         <div class="progress-kpi"><span class="progress-kpi-value">${summary.ectsPending}</span><span class="progress-kpi-label">ECTS pendientes</span></div>
         <div class="progress-kpi"><span class="progress-kpi-value">${summary.pct}%</span><span class="progress-kpi-label">del grado (${summary.totalECTS} ECTS)</span></div>
       </div>
-      <p class="progress-hint">${summary.counts.passed} asignaturas superadas · ${summary.counts.enrolled} en curso · ${summary.counts.pending} pendientes</p>`;
+      <p class="progress-hint">${summary.counts.passed} asignaturas superadas · ${summary.counts.enrolled} en curso · ${summary.counts.pending} sin marcar</p>`;
+  }
+
+  /**
+   * Créditos por bloque del grado. Los totales salen del catálogo (suman los 240
+   * de la titulación) y el resumen de cómo se consigue solo se enseña con el
+   * catálogo del volcado, es decir, con la contraseña puesta.
+   */
+  function renderCreditos(breakdown, importado) {
+    if (!creditosEl) return;
+    const conCreditos = breakdown.filter((b) => b.total > 0);
+    if (!conCreditos.length) {
+      creditosEl.innerHTML = "";
+      return;
+    }
+    const total = conCreditos.reduce((sum, b) => sum + b.total, 0);
+    const passed = conCreditos.reduce((sum, b) => sum + b.passed, 0);
+    const filas = conCreditos
+      .map(
+        (b) => `<tr>
+          <th scope="row">${escapeHtml(b.etiqueta)}${
+            b.detalle ? ` <span class="progress-mencion-nombre">${escapeHtml(b.detalle)}</span>` : ""
+          }</th>
+          <td>${b.passed}/${b.total} ECTS</td>
+          <td>${b.count}</td>
+        </tr>`,
+      )
+      .join("");
+    const criterios = importado
+      ? `<p class="progress-hint progress-criterios">El grado son <strong>240 ECTS</strong>: 60 de formación básica, 90 obligatorias, 48 de materias de mención, 30 optativas y 12 del trabajo fin de grado. Para obtener una mención hay que cursar <strong>todas</strong> las materias de su módulo: no vale sumar 48 ECTS mezclando especialidades.</p>`
+      : "";
+    creditosEl.innerHTML = `<h3>Créditos del grado</h3>
+      <p class="progress-projection-text">${passed} de ${total} ECTS superados.</p>
+      <div class="manage-table-wrapper">
+        <table class="manage-table progress-table">
+          <caption class="progress-visually-hidden">Créditos superados por bloque del plan</caption>
+          <thead><tr><th scope="col">Bloque</th><th scope="col">Superados</th><th scope="col">Asignaturas</th></tr></thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>
+      ${criterios}`;
+  }
+
+  /**
+   * Desplegable de mención elegida: puede quedarse en «sin decidir». No filtra
+   * nada por su cuenta —el progreso se marca asignatura a asignatura—, pero
+   * decide qué mención enseñan el bloque de créditos y el panel de menciones.
+   */
+  function renderMencionPicker(mencion) {
+    if (!mencionPickerEl) return;
+    const opciones = getMenciones();
+    mencionPickerEl.innerHTML =
+      '<option value="">Sin decidir</option>' +
+      opciones
+        .map((m) => `<option value="${escapeHtml(m.codigo)}">${escapeHtml(m.codigo)} — ${escapeHtml(m.nombre || "")}</option>`)
+        .join("");
+    mencionPickerEl.value = opciones.some((m) => m.codigo === mencion) ? mencion : "";
+    mencionPickerEl.hidden = opciones.length === 0;
+    if (!mencionPickerEl.dataset.mencionBound) {
+      mencionPickerEl.dataset.mencionBound = "1";
+      mencionPickerEl.addEventListener("change", () => {
+        const api = getProgressApi();
+        if (api && typeof api.setMencion === "function") api.setMencion(mencionPickerEl.value);
+        else render(true);
+      });
+    }
+  }
+
+  /**
+   * Desplegable que filtra la lista de asignaturas por mención: «Todas» enseña
+   * el plan entero y una mención oculta las asignaturas de **las otras**, nunca
+   * las que no tienen mención. No toca el progreso —los estados se marcan
+   * asignatura a asignatura— ni los créditos ni las barras, que siguen contando
+   * el plan completo.
+   */
+  function renderMencionFiltro() {
+    if (!mencionFiltroEl) return;
+    const opciones = mencionOptions(getSubjects(), getMenciones());
+    mencionFiltroEl.innerHTML =
+      '<option value="">Todas las menciones</option>' +
+      opciones
+        .map(
+          (o) =>
+            `<option value="${escapeHtml(o.codigo)}">${escapeHtml(o.codigo)}${
+              o.nombre ? ` — ${escapeHtml(o.nombre)}` : ""
+            }</option>`,
+        )
+        .join("");
+    mencionFiltroEl.value = opciones.some((o) => o.codigo === mencionFiltro) ? mencionFiltro : "";
+    mencionFiltro = mencionFiltroEl.value;
+    if (mencionFiltroBox) mencionFiltroBox.hidden = opciones.length === 0;
+    if (!mencionFiltroEl.dataset.mencionFiltroBound) {
+      mencionFiltroEl.dataset.mencionFiltroBound = "1";
+      mencionFiltroEl.addEventListener("change", () => {
+        mencionFiltro = mencionFiltroEl.value;
+        render(true);
+      });
+    }
+  }
+
+  /** Estado de cada mención: ECTS de su módulo y materias que faltan. */
+  function renderMenciones(menciones) {
+    if (!mencionesEl) return;
+    if (!menciones.length) {
+      mencionesEl.innerHTML = "";
+      return;
+    }
+    const filas = menciones
+      .map((m) => {
+        const estado = m.completa
+          ? `<span class="progress-mencion-ok">Obtenida</span>`
+          : `Faltan: ${escapeHtml(m.faltan.map((f) => f.code).join(", "))}`;
+        const marca = m.elegida ? ' <span class="progress-mencion-elegida">elegida</span>' : "";
+        return `<tr>
+          <th scope="row">${escapeHtml(m.codigo)} <span class="progress-mencion-nombre">${escapeHtml(m.nombre)}</span>${marca}</th>
+          <td>${m.passed}/${m.total} ECTS</td>
+          <td>${estado}</td>
+        </tr>`;
+      })
+      .join("");
+    mencionesEl.innerHTML = `<h3>Menciones</h3>
+      <p class="progress-projection-text">El título lleva <strong>una</strong> mención: se obtiene cursando <strong>todas</strong> las materias de su módulo de especialidad (48 ECTS). Los 48 ECTS de mención del plan se pueden cubrir con asignaturas de cualquier mención, pero entonces no se obtiene ninguna. Las <strong>30 optativas</strong> son aparte y las eliges tú.</p>
+      <div class="manage-table-wrapper">
+        <table class="manage-table progress-table">
+          <caption class="progress-visually-hidden">Materias de mención y lo que falta</caption>
+          <thead><tr><th scope="col">Mención</th><th scope="col">Superadas</th><th scope="col">Estado</th></tr></thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>`;
   }
 
   function renderCourseBars(bars) {
@@ -284,33 +458,54 @@ export function setupProgressDashboard() {
     projectionEl.innerHTML = `${head}<p class="progress-projection-text">${text}</p>`;
   }
 
-  function renderSubjects(rows, canWrite) {
-    // Las filas llegan ya ordenadas por curso: agrupar es detectar cambios de
-    // curso seguidos, sin volver a ordenar aquí.
-    const groups = [];
+  function renderSubjects(rows, canWrite, filtro = "") {
+    // Con una mención elegida la tabla oculta las asignaturas de las **otras**
+    // menciones; las que no tienen mención (el núcleo común) siguen a la vista.
+    // Los ECTS de cada curso se calculan sobre **todas** las del curso: son los
+    // del plan (60), no los de la mención.
+    const visibles = filterSubjectsByMention(rows, filtro);
+    const passedPorCurso = new Map();
     for (const row of rows) {
-      const last = groups[groups.length - 1];
-      if (!last || last.curso !== row.curso) groups.push({ curso: row.curso, rows: [row] });
-      else last.rows.push(row);
+      if (!PASSED_STATUSES.includes(row.status)) continue;
+      passedPorCurso.set(row.curso, (passedPorCurso.get(row.curso) || 0) + row.ects);
     }
 
     const hint = canWrite
       ? ""
       : `<p class="progress-hint progress-hint-warning">El módulo de progreso no está disponible en esta sesión: los estados son de solo lectura.</p>`;
 
+    if (!visibles.length) {
+      subjectsEl.innerHTML = `${hint}<p class="empty-state">No hay asignaturas que mostrar con ese filtro.</p>`;
+      return;
+    }
+
+    // Las filas llegan ya ordenadas por curso: agrupar es detectar cambios de
+    // curso seguidos, sin volver a ordenar aquí.
+    const groups = [];
+    for (const row of visibles) {
+      const last = groups[groups.length - 1];
+      if (!last || last.curso !== row.curso) groups.push({ curso: row.curso, rows: [row] });
+      else last.rows.push(row);
+    }
+
     let body = "";
     for (const group of groups) {
-      const totalECTS = group.rows.reduce((sum, row) => sum + row.ects, 0);
-      const passedECTS = group.rows
-        .filter((row) => PASSED_STATUSES.includes(row.status))
-        .reduce((sum, row) => sum + row.ects, 0);
-      body += `<tr class="progress-course-sep"><th colspan="5" scope="rowgroup">${escapeHtml(
+      // El máximo del curso es el del plan (60 ECTS), no la suma del catálogo:
+      // trae las optativas de todas las menciones y nadie cursa las cinco.
+      const totalECTS = 60;
+      const passedECTS = passedPorCurso.get(group.curso) || 0;
+      body += `<tr class="progress-course-sep"><th colspan="6" scope="rowgroup">${escapeHtml(
         courseLabel(group.curso),
       )} · ${passedECTS}/${totalECTS} ECTS superados</th></tr>`;
       for (const row of group.rows) {
+        // El tipo va con el mismo color que en la lista de datos: es la misma
+        // clasificación (carácter y mención) leída del plan.
+        const tipo = tipoDeAsignatura(row);
+        const clave = tipoClave(row);
         body += `<tr>
           <td class="td-codigo">${escapeHtml(row.code)}</td>
           <td>${escapeHtml(row.name)}</td>
+          <td class="td-tipo${clave ? ` td-tipo-${clave}` : ""}">${tipo ? escapeHtml(tipo) : "—"}</td>
           <td>${row.ects}</td>
           <td>${escapeHtml(termLabel(row.term))}</td>
           <td class="progress-status-cell">${statusSelect(row, canWrite)}</td>
@@ -322,8 +517,8 @@ export function setupProgressDashboard() {
       <table class="manage-table progress-table">
         <caption class="progress-visually-hidden">Asignaturas del catálogo con su estado</caption>
         <thead><tr>
-          <th scope="col">Código</th><th scope="col">Asignatura</th><th scope="col">ECTS</th>
-          <th scope="col">Cuatrimestre</th><th scope="col">Estado</th>
+          <th scope="col">Código</th><th scope="col">Asignatura</th><th scope="col">Tipo</th>
+          <th scope="col">ECTS</th><th scope="col">Cuatrimestre</th><th scope="col">Estado</th>
         </tr></thead>
         <tbody>${body}</tbody>
       </table>
@@ -401,14 +596,21 @@ export function setupProgressDashboard() {
 
     const focusId = captureFocus();
     const credits = progress.credits;
-    const rows = buildSubjectRows(subjects, credits);
-    const summary = buildSummary(subjects, credits, progress.plan);
+    // Las asignaturas del plan (TFG, prácticas) cuentan para los créditos y se
+    // pueden marcar, aunque no tengan horario.
+    const todos = [...subjects, ...getPlanSubjects()];
+    const rows = buildSubjectRows(todos, credits);
+    const summary = buildSummary(todos, credits, progress.plan);
 
     renderSummary(summary);
+    renderMencionPicker(progress.mencion || "");
+    renderMencionFiltro();
+    renderCreditos(buildCreditBreakdown(todos, credits, progress.mencion || ""), esCatalogoImportado());
+    renderMenciones(buildMenciones(subjects, credits, getMenciones(), progress.mencion || ""));
     if (emptyEl) emptyEl.hidden = rows.length > 0;
     if (rows.length) {
-      renderCourseBars(buildCourseBars(subjects, credits, progress.plan));
-      renderSubjects(rows, Boolean(getProgressApi()));
+      renderCourseBars(buildCourseBars(todos, credits, progress.plan));
+      renderSubjects(rows, Boolean(getProgressApi()), mencionFiltro);
     } else {
       barsEl.innerHTML = "";
       subjectsEl.innerHTML = "";
