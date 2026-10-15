@@ -3,7 +3,7 @@
  *
  * Genera, desde tres fuentes —`sample-docents.json` (los perfiles de profesor y
  * el plan), `guias-docentes.json` (qué profesor lleva cada grupo) y
- * `horarios-subgrupos.json` (a qué etiqueta del horario corresponde cada número
+ * `horarios-grupos.json` (a qué etiqueta del horario corresponde cada número
  * de grupo de prácticas)—, las dos copias que la app consulta:
  *   - `public/ugr/docentes.js` — el global `DOCENTES` con las **asignaciones**
  *     (qué profesor da la teoría de una letra o las prácticas de un subgrupo),
@@ -23,7 +23,7 @@
  * Las **asignaciones** no se escriben aquí: salen de las guías docentes de la
  * ETSIIT (`guias-docentes.json`), que es donde la escuela publica qué profesor
  * da la teoría de cada letra y las prácticas de cada subgrupo, cruzadas con los
- * subgrupos de los horarios (`horarios-subgrupos.json`), que dicen a qué
+ * subgrupos de los horarios (`horarios-grupos.json`), que dicen a qué
  * etiqueta corresponde cada número. Son currículo público y sin opiniones, así
  * que la muestra las lleva tal cual y sin contraseña el horario ya enseña los
  * profesores reales de cada grupo.
@@ -50,12 +50,13 @@ import vm from "node:vm";
 
 import { attachDocents, attachPlan, fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
 import { buildAsignaciones } from "./guias.js";
+import { practicasPorAsignatura } from "./horarios.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 const SAMPLE_DOCENTS_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
 const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
-const SUBGRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
+const GRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-grupos.json");
 const DOCENTES_PATH = path.join(ROOT, "public/ugr/docentes.js");
 const DATASETS_DIR = path.join(ROOT, "public/ugr/datasets");
 const CATALOG_ID = "ugr/gi/2026-1";
@@ -118,7 +119,7 @@ function writeJson(filePath, value) {
 const legacySubjects = loadLegacyGlobal(DATA_PATH, "SUBJECTS");
 const fixture = JSON.parse(readFileSync(SAMPLE_DOCENTS_PATH, "utf8"));
 const guiasFixture = JSON.parse(readFileSync(GUIAS_PATH, "utf8"));
-const subgruposFixture = JSON.parse(readFileSync(SUBGRUPOS_PATH, "utf8"));
+const gruposFixture = JSON.parse(readFileSync(GRUPOS_PATH, "utf8"));
 
 const catalog = fromLegacySubjects(legacySubjects);
 
@@ -144,7 +145,7 @@ if (sinPlanAplicado.length) {
 // ninguna guía, lo que ha cambiado es el nombre de una o de otra y hay que
 // verlo, no sembrar un horario sin profesores.
 const guias = Array.isArray(guiasFixture.guias) ? guiasFixture.guias : [];
-const subgrupos = subgruposFixture.asignaturas || {};
+const subgrupos = practicasPorAsignatura(gruposFixture.asignaturas || {});
 const {
   asignaciones: docents,
   sinGuia,

@@ -4,7 +4,7 @@
     "degree": "GI",
     "plan": "2022",
     "version": "2026-1",
-    "hash": "sha256-763d0cfba18b21d05372868c561be855267b40e681bb7e4c31b8872584587ed6",
+    "hash": "sha256-0097bcf0f06efeceff3998ec82e54a971bdc73dee60962d6897419305b90e500",
     "sources": [
       "legacy",
       "muestra"
@@ -363,17 +363,17 @@
           "turno": "mañana",
           "teoria": [
             {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
               "dia": "martes",
               "inicio": "10:30",
               "fin": "11:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
-            },
-            {
-              "dia": "jueves",
               "inicio": "9:30",
               "fin": "10:30"
             }
@@ -461,11 +461,6 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "11:30",
               "fin": "12:30"
@@ -474,6 +469,11 @@
               "dia": "jueves",
               "inicio": "12:30",
               "fin": "13:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -502,14 +502,14 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "miercoles",
-              "inicio": "18:30",
-              "fin": "19:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "16:30",
               "fin": "17:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
             },
             {
               "dia": "viernes",
@@ -600,12 +600,12 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "martes",
+              "dia": "jueves",
               "inicio": "18:30",
               "fin": "19:30"
             },
             {
-              "dia": "jueves",
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             },
@@ -630,8 +630,8 @@
             "F2": [
               {
                 "dia": "martes",
-                "inicio": "16:30",
-                "fin": "17:30"
+                "inicio": "15:30",
+                "fin": "16:30"
               }
             ]
           }
@@ -1258,7 +1258,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3"
             ],
             "A1": [
               {
@@ -1276,6 +1278,40 @@
                 "inicio": "13:30",
                 "fin": "14:30"
               }
+            ],
+            "A2": [
+              {
+                "dia": "martes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
             ]
           }
         },
@@ -1291,7 +1327,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2",
+              "B3"
             ],
             "B1": [
               {
@@ -1306,6 +1344,40 @@
               },
               {
                 "dia": "miercoles",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "lunes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "B3": [
+              {
+                "dia": "viernes",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "viernes",
                 "inicio": "10:30",
                 "fin": "11:30"
               }
@@ -1324,7 +1396,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "C1"
+              "C1",
+              "C2"
             ],
             "C1": [
               {
@@ -1339,6 +1412,23 @@
               },
               {
                 "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "C2": [
+              {
+                "dia": "lunes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "16:30",
                 "fin": "17:30"
               }
@@ -1357,7 +1447,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "D1"
+              "D1",
+              "D2"
             ],
             "D1": [
               {
@@ -1374,6 +1465,23 @@
                 "dia": "viernes",
                 "inicio": "15:30",
                 "fin": "16:30"
+              }
+            ],
+            "D2": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "17:30",
+                "fin": "18:30"
               }
             ]
           }
@@ -1406,7 +1514,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3"
             ],
             "A1": [
               {
@@ -1416,6 +1526,30 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "lunes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "lunes",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -1439,7 +1573,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2",
+              "B3"
             ],
             "B1": [
               {
@@ -1449,6 +1585,30 @@
               },
               {
                 "dia": "lunes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B3": [
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "jueves",
                 "inicio": "10:30",
                 "fin": "11:30"
               }
@@ -1472,7 +1632,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "C1"
+              "C1",
+              "C2"
             ],
             "C1": [
               {
@@ -1482,6 +1643,18 @@
               },
               {
                 "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "C2": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "16:30",
                 "fin": "17:30"
               }
@@ -1505,7 +1678,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "D1"
+              "D1",
+              "D2"
             ],
             "D1": [
               {
@@ -1517,6 +1691,18 @@
                 "dia": "viernes",
                 "inicio": "17:30",
                 "fin": "18:30"
+              }
+            ],
+            "D2": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
               }
             ]
           }
@@ -1538,7 +1724,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "E1"
+              "E1",
+              "E2"
             ],
             "E1": [
               {
@@ -1548,6 +1735,18 @@
               },
               {
                 "dia": "miercoles",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "E2": [
+              {
+                "dia": "martes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -1582,7 +1781,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3"
             ],
             "A1": [
               {
@@ -1592,6 +1793,30 @@
               },
               {
                 "dia": "miercoles",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "viernes",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -1615,7 +1840,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2",
+              "B3"
             ],
             "B1": [
               {
@@ -1625,6 +1852,30 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "martes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B3": [
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "10:30",
                 "fin": "11:30"
               }
@@ -1648,7 +1899,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "C1"
+              "C1",
+              "C2"
             ],
             "C1": [
               {
@@ -1658,6 +1910,18 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "C2": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
                 "inicio": "16:30",
                 "fin": "17:30"
               }
@@ -1681,7 +1945,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "D1"
+              "D1",
+              "D2"
             ],
             "D1": [
               {
@@ -1691,6 +1956,18 @@
               },
               {
                 "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "D2": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "16:30",
                 "fin": "17:30"
               }
@@ -1714,7 +1991,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "E1"
+              "E1",
+              "E2",
+              "E3"
             ],
             "E1": [
               {
@@ -1724,6 +2003,30 @@
               },
               {
                 "dia": "lunes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "E2": [
+              {
+                "dia": "miercoles",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "E3": [
+              {
+                "dia": "martes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -1758,7 +2061,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3"
             ],
             "A1": [
               {
@@ -1770,6 +2075,30 @@
                 "dia": "jueves",
                 "inicio": "13:30",
                 "fin": "14:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "jueves",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
               }
             ]
           }
@@ -1802,9 +2131,48 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3",
+              "A4"
             ],
             "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ],
+            "A4": [
               {
                 "dia": "jueves",
                 "inicio": "8:30",
@@ -1886,7 +2254,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3"
             ],
             "A1": [
               {
@@ -1898,6 +2268,30 @@
                 "dia": "viernes",
                 "inicio": "11:30",
                 "fin": "12:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "13:30",
+                "fin": "14:30"
               }
             ]
           }
@@ -2010,7 +2404,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2",
+              "A3"
             ],
             "A1": [
               {
@@ -2020,6 +2416,30 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "lunes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "miercoles",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2043,7 +2463,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2",
+              "B3"
             ],
             "B1": [
               {
@@ -2053,6 +2475,30 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "martes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "B3": [
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "10:30",
                 "fin": "11:30"
               }
@@ -2076,7 +2522,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "C1"
+              "C1",
+              "C2"
             ],
             "C1": [
               {
@@ -2086,6 +2533,18 @@
               },
               {
                 "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "C2": [
+              {
+                "dia": "martes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2109,7 +2568,9 @@
           ],
           "practicas": {
             "subgrupos": [
-              "D1"
+              "D1",
+              "D2",
+              "D3"
             ],
             "D1": [
               {
@@ -2119,6 +2580,30 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "D2": [
+              {
+                "dia": "miercoles",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "D3": [
+              {
+                "dia": "martes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -2142,7 +2627,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "E1"
+              "E1",
+              "E2"
             ],
             "E1": [
               {
@@ -2152,6 +2638,18 @@
               },
               {
                 "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "E2": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "16:30",
                 "fin": "17:30"
               }
@@ -2186,7 +2684,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2"
             ],
             "A1": [
               {
@@ -2196,6 +2695,18 @@
               },
               {
                 "dia": "martes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "lunes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "lunes",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2219,7 +2730,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2"
             ],
             "B1": [
               {
@@ -2229,6 +2741,18 @@
               },
               {
                 "dia": "martes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "miercoles",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -2263,7 +2787,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2"
             ],
             "A1": [
               {
@@ -2273,6 +2798,18 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "miercoles",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "miercoles",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2296,7 +2833,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2"
             ],
             "B1": [
               {
@@ -2306,6 +2844,18 @@
               },
               {
                 "dia": "jueves",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "lunes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "lunes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -2340,7 +2890,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2"
             ],
             "A1": [
               {
@@ -2350,6 +2901,18 @@
               },
               {
                 "dia": "miercoles",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "martes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2373,7 +2936,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2"
             ],
             "B1": [
               {
@@ -2383,6 +2947,18 @@
               },
               {
                 "dia": "lunes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "viernes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "viernes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -2417,7 +2993,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2"
             ],
             "A1": [
               {
@@ -2427,6 +3004,18 @@
               },
               {
                 "dia": "lunes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "viernes",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2450,7 +3039,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2"
             ],
             "B1": [
               {
@@ -2460,6 +3050,18 @@
               },
               {
                 "dia": "miercoles",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "jueves",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "jueves",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -2494,7 +3096,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "A1"
+              "A1",
+              "A2"
             ],
             "A1": [
               {
@@ -2504,6 +3107,18 @@
               },
               {
                 "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              },
+              {
+                "dia": "jueves",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -2527,7 +3142,8 @@
           ],
           "practicas": {
             "subgrupos": [
-              "B1"
+              "B1",
+              "B2"
             ],
             "B1": [
               {
@@ -2537,6 +3153,18 @@
               },
               {
                 "dia": "viernes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "martes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "martes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -2799,17 +3427,17 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "miercoles",
-              "inicio": "12:30",
-              "fin": "13:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "11:30",
               "fin": "12:30"
             },
             {
               "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2848,11 +3476,6 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "miercoles",
-              "inicio": "11:30",
-              "fin": "12:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "11:30",
               "fin": "12:30"
@@ -2861,6 +3484,11 @@
               "dia": "jueves",
               "inicio": "12:30",
               "fin": "13:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
             }
           ],
           "practicas": {
@@ -2955,8 +3583,16 @@
           ],
           "practicas": {
             "subgrupos": [
+              "D1",
               "D2",
               "D3"
+            ],
+            "D1": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              }
             ],
             "D2": [
               {
@@ -3028,12 +3664,12 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "martes",
+              "dia": "jueves",
               "inicio": "17:30",
               "fin": "18:30"
             },
             {
-              "dia": "jueves",
+              "dia": "martes",
               "inicio": "17:30",
               "fin": "18:30"
             },
@@ -3058,8 +3694,8 @@
             "F2": [
               {
                 "dia": "martes",
-                "inicio": "15:30",
-                "fin": "16:30"
+                "inicio": "16:30",
+                "fin": "17:30"
               }
             ]
           }
@@ -3158,37 +3794,37 @@
             "B1": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "miercoles",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -3199,13 +3835,13 @@
           "teoria": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -3244,19 +3880,45 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "miercoles",
+              "dia": "jueves",
               "inicio": "15:30",
               "fin": "16:30"
             },
             {
-              "dia": "jueves",
+              "dia": "miercoles",
               "inicio": "15:30",
               "fin": "16:30"
             }
           ],
           "practicas": {
             "subgrupos": [
+              "D1",
+              "D2",
               "D3"
+            ],
+            "D1": [
+              {
+                "dia": "lunes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "D2": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
             ],
             "D3": [
               {
@@ -3453,13 +4115,13 @@
           "teoria": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -3471,37 +4133,37 @@
             "B1": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
               {
                 "dia": "miercoles",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "martes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "martes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -3512,13 +4174,13 @@
           "teoria": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -3529,13 +4191,13 @@
             "C1": [
               {
                 "dia": "viernes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "viernes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "C2": [
@@ -3555,10 +4217,23 @@
         {
           "letra": "D",
           "turno": "tarde",
-          "teoria": [],
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
           "practicas": {
             "subgrupos": [
-              "D1"
+              "D1",
+              "D2",
+              "D3"
             ],
             "D1": [
               {
@@ -3570,6 +4245,30 @@
                 "dia": "viernes",
                 "inicio": "18:30",
                 "fin": "19:30"
+              }
+            ],
+            "D2": [
+              {
+                "dia": "lunes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "D3": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
               }
             ]
           }
@@ -3744,9 +4443,9 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
             },
             {
               "dia": "martes",
@@ -3754,9 +4453,9 @@
               "fin": "10:30"
             },
             {
-              "dia": "jueves",
-              "inicio": "11:30",
-              "fin": "12:30"
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -3793,7 +4492,7 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "miercoles",
+              "dia": "jueves",
               "inicio": "9:30",
               "fin": "10:30"
             },
@@ -3803,7 +4502,7 @@
               "fin": "11:30"
             },
             {
-              "dia": "jueves",
+              "dia": "miercoles",
               "inicio": "9:30",
               "fin": "10:30"
             }
@@ -3834,17 +4533,17 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "martes",
-              "inicio": "16:30",
-              "fin": "17:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "15:30",
               "fin": "16:30"
             },
             {
               "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -3984,7 +4683,12 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "lunes",
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "10:30",
               "fin": "11:30"
             },
@@ -3994,9 +4698,9 @@
               "fin": "10:30"
             },
             {
-              "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -4038,13 +4742,13 @@
           "teoria": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             },
             {
               "dia": "viernes",
@@ -4124,22 +4828,22 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "lunes",
+              "dia": "jueves",
               "inicio": "17:30",
               "fin": "18:30"
             },
             {
-              "dia": "lunes",
+              "dia": "jueves",
               "inicio": "18:30",
               "fin": "19:30"
             },
             {
-              "dia": "jueves",
+              "dia": "lunes",
               "inicio": "17:30",
               "fin": "18:30"
             },
             {
-              "dia": "jueves",
+              "dia": "lunes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -4170,13 +4874,13 @@
             },
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -4214,13 +4918,13 @@
           "teoria": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             },
             {
               "dia": "viernes",
@@ -4303,11 +5007,6 @@
           "turno": "tarde",
           "teoria": [
             {
-              "dia": "martes",
-              "inicio": "15:30",
-              "fin": "16:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "17:30",
               "fin": "18:30"
@@ -4316,6 +5015,11 @@
               "dia": "jueves",
               "inicio": "18:30",
               "fin": "19:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
             }
           ],
           "practicas": {
@@ -4496,13 +5200,13 @@
             "A3": [
               {
                 "dia": "martes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "martes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -4531,37 +5235,37 @@
             "B1": [
               {
                 "dia": "viernes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "viernes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -4823,13 +5527,13 @@
             "A2": [
               {
                 "dia": "martes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "martes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "A3": [
@@ -4870,37 +5574,37 @@
             "B1": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "viernes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "viernes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -4911,13 +5615,13 @@
           "teoria": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -5150,23 +5854,23 @@
             "A1": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "A2": [
               {
-                "dia": "miercoles",
+                "dia": "martes",
                 "inicio": "9:30",
                 "fin": "10:30"
               },
               {
-                "dia": "miercoles",
+                "dia": "martes",
                 "inicio": "10:30",
                 "fin": "11:30"
               }
@@ -5191,13 +5895,13 @@
           "teoria": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -5250,13 +5954,13 @@
           "teoria": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -5326,7 +6030,7 @@
             ],
             "D1": [
               {
-                "dia": "miercoles",
+                "dia": "jueves",
                 "inicio": "15:30",
                 "fin": "16:30"
               },
@@ -5389,7 +6093,7 @@
                 "fin": "18:30"
               },
               {
-                "dia": "martes",
+                "dia": "miercoles",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -5401,7 +6105,7 @@
                 "fin": "18:30"
               },
               {
-                "dia": "lunes",
+                "dia": "martes",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -5473,9 +6177,9 @@
           "turno": "mañana",
           "teoria": [
             {
-              "dia": "miercoles",
-              "inicio": "8:30",
-              "fin": "9:30"
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
@@ -5483,9 +6187,9 @@
               "fin": "11:30"
             },
             {
-              "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "dia": "miercoles",
+              "inicio": "8:30",
+              "fin": "9:30"
             }
           ],
           "practicas": {
@@ -5523,13 +6227,13 @@
           "teoria": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             },
             {
               "dia": "viernes",
@@ -5620,6 +6324,11 @@
           "turno": "tarde",
           "teoria": [
             {
+              "dia": "jueves",
+              "inicio": "19:30",
+              "fin": "20:30"
+            },
+            {
               "dia": "miercoles",
               "inicio": "15:30",
               "fin": "16:30"
@@ -5628,18 +6337,12 @@
               "dia": "miercoles",
               "inicio": "16:30",
               "fin": "17:30"
-            },
-            {
-              "dia": "jueves",
-              "inicio": "19:30",
-              "fin": "20:30"
             }
           ],
           "practicas": {
             "subgrupos": [
               "E1",
-              "E2",
-              "E3"
+              "E2"
             ],
             "E1": [
               {
@@ -5651,13 +6354,6 @@
             "E2": [
               {
                 "dia": "lunes",
-                "inicio": "17:30",
-                "fin": "18:30"
-              }
-            ],
-            "E3": [
-              {
-                "dia": "miercoles",
                 "inicio": "17:30",
                 "fin": "18:30"
               }
@@ -5699,37 +6395,37 @@
             "A1": [
               {
                 "dia": "miercoles",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "A2": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "A3": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -5974,13 +6670,13 @@
           "teoria": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             },
             {
               "dia": "viernes",
@@ -6077,20 +6773,19 @@
             },
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
             "subgrupos": [
               "C1",
-              "C2",
-              "C3"
+              "C2"
             ],
             "C1": [
               {
@@ -6102,13 +6797,6 @@
             "C2": [
               {
                 "dia": "jueves",
-                "inicio": "11:30",
-                "fin": "12:30"
-              }
-            ],
-            "C3": [
-              {
-                "dia": "lunes",
                 "inicio": "11:30",
                 "fin": "12:30"
               }
@@ -6222,13 +6910,13 @@
           "teoria": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -6299,37 +6987,37 @@
             "B1": [
               {
                 "dia": "martes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "martes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -6340,13 +7028,13 @@
           "teoria": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -6544,17 +7232,17 @@
             ],
             "A2": [
               {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
                 "dia": "miercoles",
                 "inicio": "11:30",
                 "fin": "12:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "12:30",
-                "fin": "13:30"
-              },
-              {
-                "dia": "jueves",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -6597,13 +7285,13 @@
             "B1": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               },
               {
                 "dia": "viernes",
@@ -6613,31 +7301,31 @@
             ],
             "B2": [
               {
-                "dia": "miercoles",
-                "inicio": "10:30",
-                "fin": "11:30"
-              },
-              {
-                "dia": "miercoles",
-                "inicio": "9:30",
-                "fin": "10:30"
-              },
-              {
                 "dia": "jueves",
                 "inicio": "9:30",
                 "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "martes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "martes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               },
               {
                 "dia": "viernes",
@@ -6681,17 +7369,17 @@
             ],
             "C2": [
               {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
                 "dia": "miercoles",
                 "inicio": "11:30",
                 "fin": "12:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "12:30",
-                "fin": "13:30"
-              },
-              {
-                "dia": "jueves",
                 "inicio": "12:30",
                 "fin": "13:30"
               }
@@ -6750,17 +7438,17 @@
             ],
             "D3": [
               {
+                "dia": "jueves",
+                "inicio": "18:30",
+                "fin": "19:30"
+              },
+              {
                 "dia": "miercoles",
                 "inicio": "17:30",
                 "fin": "18:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "18:30",
-                "fin": "19:30"
-              },
-              {
-                "dia": "jueves",
                 "inicio": "18:30",
                 "fin": "19:30"
               }
@@ -6835,13 +7523,13 @@
           "teoria": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -6911,13 +7599,13 @@
             "B1": [
               {
                 "dia": "miercoles",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "miercoles",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
@@ -6925,11 +7613,6 @@
                 "dia": "viernes",
                 "inicio": "10:30",
                 "fin": "11:30"
-              },
-              {
-                "dia": "viernes",
-                "inicio": "9:30",
-                "fin": "10:30"
               }
             ]
           }
@@ -6940,13 +7623,13 @@
           "teoria": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -7089,13 +7772,13 @@
           "teoria": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -7178,25 +7861,25 @@
             "B2": [
               {
                 "dia": "viernes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "viernes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "lunes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "lunes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -7356,13 +8039,13 @@
           "teoria": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "practicas": {
@@ -7433,37 +8116,37 @@
             "B1": [
               {
                 "dia": "viernes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "viernes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B2": [
               {
                 "dia": "jueves",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "jueves",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ],
             "B3": [
               {
                 "dia": "martes",
-                "inicio": "10:30",
-                "fin": "11:30"
+                "inicio": "9:30",
+                "fin": "10:30"
               },
               {
                 "dia": "martes",
-                "inicio": "9:30",
-                "fin": "10:30"
+                "inicio": "10:30",
+                "fin": "11:30"
               }
             ]
           }
@@ -7576,6 +8259,2906 @@
       ],
       "caracter": "Obligatoria",
       "mencion": "Común"
+    },
+    {
+      "codigo": "AA",
+      "nombre": "Aprendizaje Automático",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "lunes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "martes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ]
+          }
+        },
+        {
+          "letra": "B",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "B1",
+              "B2"
+            ],
+            "B1": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "jueves",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "IC",
+      "nombre": "Ingeniería del Conocimiento",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "martes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ]
+          }
+        },
+        {
+          "letra": "B",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "B1",
+              "B2"
+            ],
+            "B1": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "MAC",
+      "nombre": "Modelos Avanzados de Computación",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "lunes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ]
+          }
+        },
+        {
+          "letra": "B",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "B1",
+              "B2"
+            ],
+            "B1": [
+              {
+                "dia": "jueves",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "MH",
+      "nombre": "Metaheurísticas",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "lunes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ]
+          }
+        },
+        {
+          "letra": "B",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "B1",
+              "B2"
+            ],
+            "B1": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "TSI",
+      "nombre": "Técnicas de los Sistemas Inteligentes",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "miercoles",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "martes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              }
+            ]
+          }
+        },
+        {
+          "letra": "B",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "B1",
+              "B2"
+            ],
+            "B1": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "B2": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "CUIA",
+      "nombre": "Computación Ubicua e Inteligencia Ambiental",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "SWAP",
+      "nombre": "Servidores Web de Altas Prestaciones",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "SMM",
+      "nombre": "Sistemas Multimedia",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "TW",
+      "nombre": "Tecnologías Web",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "TDRC",
+      "nombre": "Transmisión de Datos y Redes de Computadores",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "ABD",
+      "nombre": "Administración de Bases de Datos",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "martes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "ISI",
+      "nombre": "Ingeniería de Sistemas de Información",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "PW",
+      "nombre": "Programación Web",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "martes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "miercoles",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "SIE",
+      "nombre": "Sistemas de Información para Empresas",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "miercoles",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "lunes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "SMD",
+      "nombre": "Sistemas Multidimensionales",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "lunes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "17:30",
+                "fin": "18:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "18:30",
+                "fin": "19:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "ACAP",
+      "nombre": "Arquitectura y Computación de Altas Prestaciones",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "AS",
+      "nombre": "Arquitectura de Sistemas",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "DHD",
+      "nombre": "Desarrollo de Hardware Digital",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "miercoles",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "miercoles",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "SMP",
+      "nombre": "Sistemas con Microprocesadores",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "martes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "martes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "DSE",
+      "nombre": "Diseño de Sistemas Electrónicos",
+      "curso": 3,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "tarde",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "lunes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "lunes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "15:30",
+                "fin": "16:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "16:30",
+                "fin": "17:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "VC",
+      "nombre": "Visión por Computador",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "NPI",
+      "nombre": "Nuevos Paradigmas de Interacción",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "viernes",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "PL",
+      "nombre": "Procesadores de Lenguajes",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "TIC",
+      "nombre": "Teoría de la Información y la Codificación",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "PTC",
+      "nombre": "Programación Técnica y Científica",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "SS",
+      "nombre": "Simulación de Sistemas",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "DAI",
+      "nombre": "Desarrollo de Aplicaciones para Internet",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A3": [
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "IV",
+      "nombre": "Infraestructura Virtual",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "SPSI",
+      "nombre": "Seguridad y Protección de Sistemas Informáticos",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "TID",
+      "nombre": "Tratamiento de Imágenes Digitales",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "CRIM",
+      "nombre": "Compresión y Recuperación de Información Multimedia",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "IN",
+      "nombre": "Inteligencia de Negocio",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "BDD",
+      "nombre": "Bases de Datos Distribuidas",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "jueves",
+                "inicio": "10:30",
+                "fin": "11:30"
+              },
+              {
+                "dia": "jueves",
+                "inicio": "11:30",
+                "fin": "12:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "RI",
+      "nombre": "Recuperación de Información",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": [
+              "A1",
+              "A2"
+            ],
+            "A1": [
+              {
+                "dia": "viernes",
+                "inicio": "12:30",
+                "fin": "13:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "13:30",
+                "fin": "14:30"
+              }
+            ],
+            "A2": [
+              {
+                "dia": "viernes",
+                "inicio": "8:30",
+                "fin": "9:30"
+              },
+              {
+                "dia": "viernes",
+                "inicio": "9:30",
+                "fin": "10:30"
+              }
+            ]
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "SIG",
+      "nombre": "Sistemas de Información Geográfica",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "RSC",
+      "nombre": "Redes y Sistemas Complejos",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "GRD",
+      "nombre": "Gestión de Recursos Digitales",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "SE",
+      "nombre": "Sistemas Empotrados",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "TR",
+      "nombre": "Tecnologías de Red",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "CPD",
+      "nombre": "Centros de Procesamiento de Datos",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Obligatoria de Rama",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "II",
+      "nombre": "Informática Industrial",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "TE",
+      "nombre": "Tecnologías Emergentes",
+      "curso": 4,
+      "cuatrimestre": 1,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "PLD",
+      "nombre": "Programación Lúdica",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "CRIP",
+      "nombre": "Criptografía y Computación",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "CSI"
+    },
+    {
+      "codigo": "PDM",
+      "nombre": "Programación de Dispositivos Móviles",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "PDS",
+      "nombre": "Procesamiento Digital de Señales",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "RMS",
+      "nombre": "Redes Multiservicio",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "TI"
+    },
+    {
+      "codigo": "SCGC",
+      "nombre": "Sistemas Cooperativos y Gestión de Contenidos",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "PDIH",
+      "nombre": "Periféricos y Dispositivos de Interfaz Humana",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "SI"
+    },
+    {
+      "codigo": "CII",
+      "nombre": "Circuitos Integrados e Impresos",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "IC"
+    },
+    {
+      "codigo": "MEI",
+      "nombre": "Mantenimiento de Equipos Informáticos",
+      "curso": 4,
+      "cuatrimestre": 2,
+      "creditos": 6,
+      "grupos": [
+        {
+          "letra": "A",
+          "turno": "mañana",
+          "teoria": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "practicas": {
+            "subgrupos": []
+          }
+        }
+      ],
+      "caracter": "Optativa",
+      "mencion": "IC"
     }
   ],
   "docents": [
@@ -8189,6 +11772,27 @@
       "modalidad": "Teoría"
     },
     {
+      "key": "DDSI-A3",
+      "name": "Ignacio Aguilera Martos",
+      "subjectCode": "DDSI",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DDSI-A2",
+      "name": "Francisco Javier Baldán Lozano",
+      "subjectCode": "DDSI",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DDSI-B3",
+      "name": "Francisco Javier Baldán Lozano",
+      "subjectCode": "DDSI",
+      "groupLetter": "B3",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "DDSI-D1",
       "name": "Francisco Javier Baldán Lozano",
       "subjectCode": "DDSI",
@@ -8203,6 +11807,13 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "DDSI-D2",
+      "name": "David Criado Ramón",
+      "subjectCode": "DDSI",
+      "groupLetter": "D2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "DDSI-C1",
       "name": "Carlos Alberto Cruz Corona",
       "subjectCode": "DDSI",
@@ -8210,10 +11821,24 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "DDSI-C2",
+      "name": "Carlos Alberto Cruz Corona",
+      "subjectCode": "DDSI",
+      "groupLetter": "C2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "DDSI-A1",
       "name": "María José Martín Bautista",
       "subjectCode": "DDSI",
       "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DDSI-B2",
+      "name": "Daniel Peralta Cámara",
+      "subjectCode": "DDSI",
+      "groupLetter": "B2",
       "modalidad": "Prácticas"
     },
     {
@@ -8252,10 +11877,24 @@
       "modalidad": "Teoría"
     },
     {
+      "key": "IG-A3",
+      "name": "Santiago Carbó García",
+      "subjectCode": "IG",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "IG-E1",
       "name": "Alberto Jesús Durán López",
       "subjectCode": "IG",
       "groupLetter": "E1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IG-E2",
+      "name": "Alberto Jesús Durán López",
+      "subjectCode": "IG",
+      "groupLetter": "E2",
       "modalidad": "Prácticas"
     },
     {
@@ -8266,6 +11905,13 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "IG-B3",
+      "name": "Alberto Jesús Durán López",
+      "subjectCode": "IG",
+      "groupLetter": "B3",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "IG-A1",
       "name": "Luis López Escudero",
       "subjectCode": "IG",
@@ -8273,10 +11919,38 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "IG-A2",
+      "name": "Luis López Escudero",
+      "subjectCode": "IG",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IG-B2",
+      "name": "Luis López Escudero",
+      "subjectCode": "IG",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "IG-C1",
       "name": "Antonio López Fernández",
       "subjectCode": "IG",
       "groupLetter": "C1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IG-C2",
+      "name": "Antonio López Fernández",
+      "subjectCode": "IG",
+      "groupLetter": "C2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IG-D2",
+      "name": "Guillermo Medialdea Burgos",
+      "subjectCode": "IG",
+      "groupLetter": "D2",
       "modalidad": "Prácticas"
     },
     {
@@ -8322,6 +11996,27 @@
       "modalidad": "Teoría"
     },
     {
+      "key": "ISE-C2",
+      "name": "Eusebio Naif Al-Soliman Fuentes",
+      "subjectCode": "ISE",
+      "groupLetter": "C2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISE-B2",
+      "name": "Oresti Baños Legrán",
+      "subjectCode": "ISE",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISE-E3",
+      "name": "Juan Helios García Guzmán",
+      "subjectCode": "ISE",
+      "groupLetter": "E3",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "ISE-D1",
       "name": "Juan Helios García Guzmán",
       "subjectCode": "ISE",
@@ -8343,6 +12038,34 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "ISE-B3",
+      "name": "Alberto Guillén Perales",
+      "subjectCode": "ISE",
+      "groupLetter": "B3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISE-D2",
+      "name": "Diego Navarro Cabrera",
+      "subjectCode": "ISE",
+      "groupLetter": "D2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISE-E2",
+      "name": "Diego Navarro Cabrera",
+      "subjectCode": "ISE",
+      "groupLetter": "E2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISE-A2",
+      "name": "Alberto Ortega Ruiz",
+      "subjectCode": "ISE",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "ISE-B1",
       "name": "Alberto Ortega Ruiz",
       "subjectCode": "ISE",
@@ -8354,6 +12077,62 @@
       "name": "Ciro Rodríguez León",
       "subjectCode": "ISE",
       "groupLetter": "E1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISE-A3",
+      "name": "Ciro Rodríguez León",
+      "subjectCode": "ISE",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DGP-A1",
+      "name": "Juan José Escobar Pérez",
+      "subjectCode": "DGP",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DGP-A2",
+      "name": "María Belén Prados Suárez",
+      "subjectCode": "DGP",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DGP-A3",
+      "name": "María Belén Prados Suárez",
+      "subjectCode": "DGP",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DGP-A4",
+      "name": "María Belén Prados Suárez",
+      "subjectCode": "DGP",
+      "groupLetter": "A4",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "MDA-A1",
+      "name": "Juan José Escobar Pérez",
+      "subjectCode": "MDA",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "MDA-A3",
+      "name": "Juan José Escobar Pérez",
+      "subjectCode": "MDA",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "MDA-A2",
+      "name": "María José Rodríguez Fortiz",
+      "subjectCode": "MDA",
+      "groupLetter": "A2",
       "modalidad": "Prácticas"
     },
     {
@@ -8392,10 +12171,24 @@
       "modalidad": "Teoría"
     },
     {
+      "key": "IA-B2",
+      "name": "María Isabel Abellán Benítez",
+      "subjectCode": "IA",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "IA-E1",
       "name": "Juan Fernández Olivares",
       "subjectCode": "IA",
       "groupLetter": "E1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IA-E2",
+      "name": "Juan Fernández Olivares",
+      "subjectCode": "IA",
+      "groupLetter": "E2",
       "modalidad": "Prácticas"
     },
     {
@@ -8406,10 +12199,31 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "IA-D2",
+      "name": "Francisco G.Raúl Pérez Rodríguez",
+      "subjectCode": "IA",
+      "groupLetter": "D2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IA-D3",
+      "name": "Francisco G.Raúl Pérez Rodríguez",
+      "subjectCode": "IA",
+      "groupLetter": "D3",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "IA-C1",
       "name": "Francisco G.Raúl Pérez Rodríguez",
       "subjectCode": "IA",
       "groupLetter": "C1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IA-C2",
+      "name": "Francisco G.Raúl Pérez Rodríguez",
+      "subjectCode": "IA",
+      "groupLetter": "C2",
       "modalidad": "Prácticas"
     },
     {
@@ -8424,6 +12238,27 @@
       "name": "María Cristina Zuheros Montes",
       "subjectCode": "IA",
       "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IA-A2",
+      "name": "María Cristina Zuheros Montes",
+      "subjectCode": "IA",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IA-A3",
+      "name": "María Cristina Zuheros Montes",
+      "subjectCode": "IA",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IA-B3",
+      "name": "María Cristina Zuheros Montes",
+      "subjectCode": "IA",
+      "groupLetter": "B3",
       "modalidad": "Prácticas"
     },
     {
@@ -8448,10 +12283,24 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "DSD-A2",
+      "name": "Luis López Escudero",
+      "subjectCode": "DSD",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "DSD-B1",
       "name": "José Ángel Segura Muros",
       "subjectCode": "DSD",
       "groupLetter": "B1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DSD-B2",
+      "name": "José Ángel Segura Muros",
+      "subjectCode": "DSD",
+      "groupLetter": "B2",
       "modalidad": "Prácticas"
     },
     {
@@ -8476,10 +12325,24 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "DS-A2",
+      "name": "Alberto Jesús Durán López",
+      "subjectCode": "DS",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "DS-B1",
       "name": "Alberto Jesús Durán López",
       "subjectCode": "DS",
       "groupLetter": "B1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DS-B2",
+      "name": "Alberto Jesús Durán López",
+      "subjectCode": "DS",
+      "groupLetter": "B2",
       "modalidad": "Prácticas"
     },
     {
@@ -8504,10 +12367,38 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "DIU-B2",
+      "name": "Miguel Gea Mejías",
+      "subjectCode": "DIU",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "DIU-A2",
+      "name": "Brunil Dalila Romero Mariño",
+      "subjectCode": "DIU",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "SIBW-A1",
       "name": "José María Guirao Miras",
       "subjectCode": "SIBW",
       "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "SIBW-A2",
+      "name": "Carmen Josefa Martínez Cruz",
+      "subjectCode": "SIBW",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "SIBW-B2",
+      "name": "Carmen Josefa Martínez Cruz",
+      "subjectCode": "SIBW",
+      "groupLetter": "B2",
       "modalidad": "Prácticas"
     },
     {
@@ -8585,6 +12476,13 @@
       "name": "Gerardo Martín Escolano",
       "subjectCode": "CA",
       "groupLetter": "D3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "CA-D1",
+      "name": "Gerardo Martín Escolano",
+      "subjectCode": "CA",
+      "groupLetter": "D1",
       "modalidad": "Prácticas"
     },
     {
@@ -8763,6 +12661,13 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "FP-D2",
+      "name": "Javier Martínez Baena",
+      "subjectCode": "FP",
+      "groupLetter": "D2",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "FP-D3",
       "name": "Javier Martínez Baena",
       "subjectCode": "FP",
@@ -8774,6 +12679,13 @@
       "name": "Javier Martínez Baena",
       "subjectCode": "FP",
       "groupLetter": "F2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "FP-D1",
+      "name": "Javier Martínez Baena",
+      "subjectCode": "FP",
+      "groupLetter": "D1",
       "modalidad": "Prácticas"
     },
     {
@@ -8889,6 +12801,13 @@
       "modalidad": "Prácticas"
     },
     {
+      "key": "FS-D3",
+      "name": "Santiago Carbó García",
+      "subjectCode": "FS",
+      "groupLetter": "D3",
+      "modalidad": "Prácticas"
+    },
+    {
       "key": "FS-F2",
       "name": "Juan José Escobar Pérez",
       "subjectCode": "FS",
@@ -8900,6 +12819,13 @@
       "name": "Juan José Escobar Pérez",
       "subjectCode": "FS",
       "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "FS-D2",
+      "name": "Diego Jesús García Gil",
+      "subjectCode": "FS",
+      "groupLetter": "D2",
       "modalidad": "Prácticas"
     },
     {
@@ -10686,6 +14612,258 @@
       "subjectCode": "MC",
       "groupLetter": "C2",
       "modalidad": "Prácticas"
+    },
+    {
+      "key": "AA-B",
+      "name": "Salvador García López",
+      "subjectCode": "AA",
+      "groupLetter": "B",
+      "modalidad": "Teoría"
+    },
+    {
+      "key": "AA-A",
+      "name": "Francisco Herrera Triguero",
+      "subjectCode": "AA",
+      "groupLetter": "A",
+      "modalidad": "Teoría"
+    },
+    {
+      "key": "AA-A1",
+      "name": "Salvador López Joya",
+      "subjectCode": "AA",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "AA-B2",
+      "name": "Salvador López Joya",
+      "subjectCode": "AA",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "AA-A2",
+      "name": "Manuel Pegalajar Cuéllar",
+      "subjectCode": "AA",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "AA-A3",
+      "name": "Manuel Pegalajar Cuéllar",
+      "subjectCode": "AA",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IC-B1",
+      "name": "Juan Luis Castro Peña",
+      "subjectCode": "IC",
+      "groupLetter": "B1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IC-A1",
+      "name": "Andrea Morales Garzón",
+      "subjectCode": "IC",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IC-A2",
+      "name": "Andrea Morales Garzón",
+      "subjectCode": "IC",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IC-A3",
+      "name": "Andrea Morales Garzón",
+      "subjectCode": "IC",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "IC-B2",
+      "name": "Andrea Morales Garzón",
+      "subjectCode": "IC",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "MH-B",
+      "name": "Óscar Cordón García",
+      "subjectCode": "MH",
+      "groupLetter": "B",
+      "modalidad": "Teoría"
+    },
+    {
+      "key": "MH-A",
+      "name": "Francisco Herrera Triguero",
+      "subjectCode": "MH",
+      "groupLetter": "A",
+      "modalidad": "Teoría"
+    },
+    {
+      "key": "TSI-A2",
+      "name": "David Criado Ramón",
+      "subjectCode": "TSI",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "TSI-B1",
+      "name": "David Criado Ramón",
+      "subjectCode": "TSI",
+      "groupLetter": "B1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "TSI-B2",
+      "name": "David Criado Ramón",
+      "subjectCode": "TSI",
+      "groupLetter": "B2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "TSI-A1",
+      "name": "Pablo Mesejo Santiago",
+      "subjectCode": "TSI",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "TSI-A3",
+      "name": "Pablo Mesejo Santiago",
+      "subjectCode": "TSI",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "SWAP-A",
+      "name": "Míriam Mengíbar Rodríguez",
+      "subjectCode": "SWAP",
+      "groupLetter": "A",
+      "modalidad": "Teoría"
+    },
+    {
+      "key": "SWAP-A2",
+      "name": "Míriam Mengíbar Rodríguez",
+      "subjectCode": "SWAP",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "SWAP-A1",
+      "name": "José Manuel Soto Hidalgo",
+      "subjectCode": "SWAP",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "TDRC-A1",
+      "name": "Andrés Biedma Pérez",
+      "subjectCode": "TDRC",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "TDRC-A2",
+      "name": "Cleofás Segura Gómez",
+      "subjectCode": "TDRC",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ABD-A2",
+      "name": "Ignacio José Blanco Medina",
+      "subjectCode": "ABD",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ABD-A1",
+      "name": "David Criado Ramón",
+      "subjectCode": "ABD",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISI-A1",
+      "name": "Fernando Berzal Galiano",
+      "subjectCode": "ISI",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "ISI-A2",
+      "name": "Miguel López Pérez",
+      "subjectCode": "ISI",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "SMD-A1",
+      "name": "Antonio Javier Fernández Ares",
+      "subjectCode": "SMD",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "SMD-A2",
+      "name": "José Samos Jiménez",
+      "subjectCode": "SMD",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "VC-A2",
+      "name": "Pablo Mesejo Santiago",
+      "subjectCode": "VC",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "VC-A3",
+      "name": "Pablo Mesejo Santiago",
+      "subjectCode": "VC",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "VC-A1",
+      "name": "Siham Tabik Ouled Hrour",
+      "subjectCode": "VC",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "PL-A2",
+      "name": "Ramón López-Cózar Delgado",
+      "subjectCode": "PL",
+      "groupLetter": "A2",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "PL-A1",
+      "name": "Jorge Revelles Moreno",
+      "subjectCode": "PL",
+      "groupLetter": "A1",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "PL-A3",
+      "name": "Jorge Revelles Moreno",
+      "subjectCode": "PL",
+      "groupLetter": "A3",
+      "modalidad": "Prácticas"
+    },
+    {
+      "key": "II-A",
+      "name": "Miguel Damas Hermoso",
+      "subjectCode": "II",
+      "groupLetter": "A",
+      "modalidad": "Teoría"
     }
   ],
   "profesores": [
@@ -11619,420 +15797,31 @@
   ],
   "extraSubjects": [
     {
-      "codigo": "AA",
-      "nombre": "Aprendizaje Automático",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "IC",
-      "nombre": "Ingeniería del Conocimiento",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "MAC",
-      "nombre": "Modelos Avanzados de Computación",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "MH",
-      "nombre": "Metaheurísticas",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "TSI",
-      "nombre": "Técnicas de los Sistemas Inteligentes",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "CUIA",
-      "nombre": "Computación Ubicua e Inteligencia Ambiental",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "SWAP",
-      "nombre": "Servidores Web de Altas Prestaciones",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "SMM",
-      "nombre": "Sistemas Multimedia",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "TW",
-      "nombre": "Tecnologías Web",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "TDRC",
-      "nombre": "Transmisión de Datos y Redes de Computadores",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "ABD",
-      "nombre": "Administración de Bases de Datos",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "ISI",
-      "nombre": "Ingeniería de Sistemas de Información",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "PW",
-      "nombre": "Programación Web",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "SIE",
-      "nombre": "Sistemas de Información para Empresas",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "SMD",
-      "nombre": "Sistemas Multidimensionales",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "ACAP",
-      "nombre": "Arquitectura y Computación de Altas Prestaciones",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "AS",
-      "nombre": "Arquitectura de Sistemas",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "DHD",
-      "nombre": "Desarrollo de Hardware Digital",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "SMP",
-      "nombre": "Sistemas con Microprocesadores",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "DSE",
-      "nombre": "Diseño de Sistemas Electrónicos",
-      "curso": 3,
-      "cuatrimestre": 2,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "VC",
-      "nombre": "Visión por Computador",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "NPI",
-      "nombre": "Nuevos Paradigmas de Interacción",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "PL",
-      "nombre": "Procesadores de Lenguajes",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "TIC",
-      "nombre": "Teoría de la Información y la Codificación",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "PTC",
-      "nombre": "Programación Técnica y Científica",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "SS",
-      "nombre": "Simulación de Sistemas",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "DAI",
-      "nombre": "Desarrollo de Aplicaciones para Internet",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "IV",
-      "nombre": "Infraestructura Virtual",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "SPSI",
-      "nombre": "Seguridad y Protección de Sistemas Informáticos",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "TID",
-      "nombre": "Tratamiento de Imágenes Digitales",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "CRIM",
-      "nombre": "Compresión y Recuperación de Información Multimedia",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "IN",
-      "nombre": "Inteligencia de Negocio",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "BDD",
-      "nombre": "Bases de Datos Distribuidas",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "RI",
-      "nombre": "Recuperación de Información",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "SIG",
-      "nombre": "Sistemas de Información Geográfica",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "RSC",
-      "nombre": "Redes y Sistemas Complejos",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "GRD",
-      "nombre": "Gestión de Recursos Digitales",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "SE",
-      "nombre": "Sistemas Empotrados",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "TR",
-      "nombre": "Tecnologías de Red",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "CPD",
-      "nombre": "Centros de Procesamiento de Datos",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Obligatoria de Rama",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "II",
-      "nombre": "Informática Industrial",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "TE",
-      "nombre": "Tecnologías Emergentes",
-      "curso": 4,
-      "cuatrimestre": 1,
-      "caracter": "Optativa",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "PLD",
-      "nombre": "Programación Lúdica",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "CSI"
-    },
-    {
-      "codigo": "CRIP",
-      "nombre": "Criptografía y Computación",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "CSI"
-    },
-    {
       "codigo": "RI",
       "nombre": "Robótica Industrial",
       "curso": 4,
       "cuatrimestre": 2,
+      "creditos": 6,
       "caracter": "Optativa",
       "mencion": "CSI"
     },
     {
-      "codigo": "PDM",
-      "nombre": "Programación de Dispositivos Móviles",
+      "codigo": "PFG",
+      "nombre": "Proyecto Fin de Grado",
       "curso": 4,
       "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "TI"
+      "creditos": 12,
+      "caracter": "Trabajo Fin de Grado",
+      "mencion": "Común"
     },
     {
-      "codigo": "PDS",
-      "nombre": "Procesamiento Digital de Señales",
+      "codigo": "PE",
+      "nombre": "Prácticas de Empresa",
       "curso": 4,
       "cuatrimestre": 2,
+      "creditos": 12,
       "caracter": "Optativa",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "RMS",
-      "nombre": "Redes Multiservicio",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "TI"
-    },
-    {
-      "codigo": "SCGC",
-      "nombre": "Sistemas Cooperativos y Gestión de Contenidos",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "PDIH",
-      "nombre": "Periféricos y Dispositivos de Interfaz Humana",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "SI"
-    },
-    {
-      "codigo": "CII",
-      "nombre": "Circuitos Integrados e Impresos",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "IC"
-    },
-    {
-      "codigo": "MEI",
-      "nombre": "Mantenimiento de Equipos Informáticos",
-      "curso": 4,
-      "cuatrimestre": 2,
-      "caracter": "Optativa",
-      "mencion": "IC"
+      "mencion": "Común"
     }
   ]
 }

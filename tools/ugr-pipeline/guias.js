@@ -101,11 +101,34 @@ function parseProfesorado(bloque) {
 }
 
 /**
- * Lee una guía docente y devuelve lo que interesa de ella: el nombre de la
- * asignatura, el curso al que pertenece la guía y el profesorado con sus grupos.
+ * Valor de uno de los campos de cabecera de la guía (`Curso`, `Semestre`,
+ * `Créditos`, `Tipo`), que van como encabezado seguido de su valor.
  *
  * @param {string} html HTML de la guía.
- * @returns {{titulo: string, nombre: string, curso: string, teorico: Array, practico: Array}}
+ * @param {string} campo nombre del campo.
+ * @returns {string} valor, o cadena vacía si no está.
+ */
+function campoDeGuia(html, campo) {
+  const marca = `>${campo}</h2>`;
+  const desde = html.indexOf(marca);
+  if (desde === -1) return "";
+  const texto = html
+    .slice(desde + marca.length, desde + marca.length + 200)
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return texto.split(" ")[0] || "";
+}
+
+/**
+ * Lee una guía docente y devuelve lo que interesa de ella: el nombre de la
+ * asignatura, el curso al que pertenece la guía, sus créditos y el profesorado
+ * con sus grupos.
+ *
+ * @param {string} html HTML de la guía.
+ * @returns {{titulo: string, nombre: string, curso: string, creditos: number,
+ *   semestre: number, teorico: Array, practico: Array}}
  */
 export function parseGuia(html) {
   const page = String(html || "");
@@ -126,6 +149,8 @@ export function parseGuia(html) {
     // sobra el prefijo y sobra el código del plan, que no es el de la app.
     nombre: titulo.replace(/^Gu[ií]a docente de\s*/i, "").trim(),
     curso: curso ? curso[1].replace(/\s+/g, "") : "",
+    creditos: Number(campoDeGuia(page, "Créditos")) || 0,
+    semestre: Number(campoDeGuia(page, "Semestre")) || 0,
     ...profesorado,
   };
 }
@@ -153,7 +178,8 @@ function tieneSubgrupo(subject, etiqueta) {
  *
  * @param {{guias: Array, subjects: Array, subgrupos: Object}} entrada guías
  *   leídas, asignaturas del catálogo con horario (`SUBJECTS` de `data.js`) y los
- *   subgrupos de cada asignatura en orden (`horarios-subgrupos.json`).
+ *   subgrupos de cada asignatura en orden, con sus franjas
+ *   (`horarios-subgrupos.json`).
  * @returns {{asignaciones: Array, sinGuia: string[], conflictos: string[], sinEtiqueta: string[]}}
  */
 export function buildAsignaciones({ guias, subjects, subgrupos }) {
@@ -175,7 +201,7 @@ export function buildAsignaciones({ guias, subjects, subgrupos }) {
       continue;
     }
 
-    const etiquetas = Array.isArray(subgrupos?.[subject.codigo]) ? subgrupos[subject.codigo] : [];
+    const etiquetas = Object.keys(subgrupos?.[subject.codigo] || {});
 
     // Un destino, un profesor: la guía a veces lista al mismo grupo con dos
     // nombres (docencia compartida) y el modelo solo admite uno por clave, así
@@ -206,14 +232,15 @@ export function buildAsignaciones({ guias, subjects, subgrupos }) {
     for (const entrada of guia.practico || []) {
       for (const numero of entrada.grupos || []) {
         const etiqueta = etiquetas[Number(numero) - 1];
-        if (!etiqueta) {
-          // La guía numera un grupo que el horario no lista: es un dato que no
-          // cuadra, así que se informa en vez de colocarlo donde no toca.
-          sinEtiqueta.push(`${subject.codigo}-nº${numero}`);
-          continue;
-        }
-        if (!tieneSubgrupo(subject, etiqueta)) {
-          sinEtiqueta.push(`${subject.codigo}-${etiqueta}`);
+        // Lo que no tiene destino se informa en vez de colocarlo donde no toca;
+        // sin repetir, que un grupo con dos nombres lo diría dos veces.
+        const sinDestino = !etiqueta
+          ? `${subject.codigo}-nº${numero}`
+          : !tieneSubgrupo(subject, etiqueta)
+            ? `${subject.codigo}-${etiqueta}`
+            : "";
+        if (sinDestino) {
+          if (!sinEtiqueta.includes(sinDestino)) sinEtiqueta.push(sinDestino);
           continue;
         }
         pon(etiqueta, "Prácticas", entrada.nombre);

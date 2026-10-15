@@ -7,6 +7,8 @@
    "titulo": "Guía docente de Administración de Bases de Datos (Especialidad Sistemas de Información) (296113T)",
    "nombre": "Administración de Bases de Datos (Especialidad Sistemas de Información) (296113T)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -28,6 +30,8 @@
    "titulo": "Guía docente de Álgebra Lineal y Estructuras Matemáticas (2961111)",
    "nombre": "Álgebra Lineal y Estructuras Matemáticas (2961111)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Jesús García Miranda",
@@ -105,6 +109,8 @@
    "titulo": "Guía docente de Algorítmica (2961126)",
    "nombre": "Algorítmica (2961126)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Francisco Javier Abad Ortega",
@@ -176,6 +182,8 @@
    "titulo": "Guía docente de Animación por Ordenador (Especialidad Ingeniería del Software) (29611BE)",
    "nombre": "Animación por Ordenador (Especialidad Ingeniería del Software) (29611BE)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -184,6 +192,8 @@
    "titulo": "Guía docente de Aprendizaje Automático (Especialidad Computación y Sistemas Inteligentes) (296113C)",
    "nombre": "Aprendizaje Automático (Especialidad Computación y Sistemas Inteligentes) (296113C)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Salvador García López",
@@ -220,6 +230,8 @@
    "titulo": "Guía docente de Arquitectura de Computadores (296112A)",
    "nombre": "Arquitectura de Computadores (296112A)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Mancia Anguita López",
@@ -301,6 +313,8 @@
    "titulo": "Guía docente de Arquitectura de Sistemas (Especialidad Ingeniería de Computadores) (296113K)",
    "nombre": "Arquitectura de Sistemas (Especialidad Ingeniería de Computadores) (296113K)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -309,6 +323,8 @@
    "titulo": "Guía docente de Arquitectura y Computación de Altas Prestaciones (Especialidad Ingeniería de Computadores) (296113L)",
    "nombre": "Arquitectura y Computación de Altas Prestaciones (Especialidad Ingeniería de Computadores) (296113L)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -317,6 +333,8 @@
    "titulo": "Guía docente de Bases de Datos Distribuidas (Especialidad Sistemas de Información) (296114L)",
    "nombre": "Bases de Datos Distribuidas (Especialidad Sistemas de Información) (296114L)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -325,6 +343,8 @@
    "titulo": "Guía docente de Cálculo (2961112)",
    "nombre": "Cálculo (2961112)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Jerónimo Alaminos Prats",
@@ -401,6 +421,8 @@
    "titulo": "Guía docente de Centros de Procesamiento de Datos (Especialidad Ingeniería de Computadores) (296114H)",
    "nombre": "Centros de Procesamiento de Datos (Especialidad Ingeniería de Computadores) (296114H)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": [
     {
@@ -422,6 +444,8 @@
    "titulo": "Guía docente de Circuitos Integrados e Impresos (Especialidad Ingeniería de Computadores) (29611CC)",
    "nombre": "Circuitos Integrados e Impresos (Especialidad Ingeniería de Computadores) (29611CC)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -430,6 +454,8 @@
    "titulo": "Guía docente de Compresión y Recuperación de Información Multimedia (Especialidad Tecnologías de la Información) (29611FC)",
    "nombre": "Compresión y Recuperación de Información Multimedia (Especialidad Tecnologías de la Información) (29611FC)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -438,6 +464,8 @@
    "titulo": "Guía docente de Computación Ubicua e Inteligencia Ambiental (Especialidadtecnologías de la Información) (296113W)",
    "nombre": "Computación Ubicua e Inteligencia Ambiental (Especialidadtecnologías de la Información) (296113W)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -446,6 +474,8 @@
    "titulo": "Guía docente de Creación de Empresas y Gestión Emprendedora (29611A5)",
    "nombre": "Creación de Empresas y Gestión Emprendedora (29611A5)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Francisco Juan López Martín",
@@ -467,6 +497,8 @@
    "titulo": "Guía docente de Criptografía y Computación (Especialidad Computación y Sistemas Inteligentes) (29611AF)",
    "nombre": "Criptografía y Computación (Especialidad Computación y Sistemas Inteligentes) (29611AF)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -475,6 +507,8 @@
    "titulo": "Guía docente de Derecho Informático (29611A6)",
    "nombre": "Derecho Informático (29611A6)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -496,6 +530,8 @@
    "titulo": "Guía docente de Desarrollo de Aplicaciones para Internet (Especialidad Tecnologías de la Información) (296114M)",
    "nombre": "Desarrollo de Aplicaciones para Internet (Especialidad Tecnologías de la Información) (296114M)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -504,6 +540,8 @@
    "titulo": "Guía docente de Desarrollo Basado en Agentes (Especialidad Ingeniería del Software) (296114F)",
    "nombre": "Desarrollo Basado en Agentes (Especialidad Ingeniería del Software) (296114F)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -512,6 +550,8 @@
    "titulo": "Guía docente de Desarrollo de Hardware Digital (Especialidad Ingeniería de Computadores) (296113N)",
    "nombre": "Desarrollo de Hardware Digital (Especialidad Ingeniería de Computadores) (296113N)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -520,6 +560,8 @@
    "titulo": "Guía docente de Desarrollo de Sistemas Distribuidos (Especialidad Ingeniería del Software) (296113I)",
    "nombre": "Desarrollo de Sistemas Distribuidos (Especialidad Ingeniería del Software) (296113I)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "José Luis Garrido Bullejos",
@@ -556,6 +598,8 @@
    "titulo": "Guía docente de Desarrollo de Software (Especialidad Ingeniería del Software) (296113F)",
    "nombre": "Desarrollo de Software (Especialidad Ingeniería del Software) (296113F)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "María del Mar Abad Grau",
@@ -592,6 +636,8 @@
    "titulo": "Guía docente de Dirección y Gestión de Proyectos (Especialidad Ingeniería del Software) (296113G)",
    "nombre": "Dirección y Gestión de Proyectos (Especialidad Ingeniería del Software) (296113G)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": [
     {
@@ -615,6 +661,8 @@
    "titulo": "Guía docente de Diseño de Interfaces de Usuario (Especialidad Ingeniería del Software) (296114E)",
    "nombre": "Diseño de Interfaces de Usuario (Especialidad Ingeniería del Software) (296114E)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Miguel Gea Mejías",
@@ -655,6 +703,8 @@
    "titulo": "Guía docente de Diseño de Sistemas Electrónicos (Especialidad Ingeniería de Computadores) (296113M)",
    "nombre": "Diseño de Sistemas Electrónicos (Especialidad Ingeniería de Computadores) (296113M)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -663,6 +713,8 @@
    "titulo": "Guía docente de Diseño y Desarrollo de Sistemas de Información (2961132)",
    "nombre": "Diseño y Desarrollo de Sistemas de Información (2961132)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Ignacio Aguilera Martos",
@@ -742,6 +794,8 @@
    "titulo": "Guía docente de Estadística (296111A)",
    "nombre": "Estadística (296111A)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Manuela Expósito Ruiz",
@@ -827,6 +881,8 @@
    "titulo": "Guía docente de Estructura de Computadores (2961125)",
    "nombre": "Estructura de Computadores (2961125)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Antonio Cañas Vargas",
@@ -886,6 +942,8 @@
    "titulo": "Guía docente de Estructura de Datos (2961122)",
    "nombre": "Estructura de Datos (2961122)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Joaquín Fernández Valdivia",
@@ -960,6 +1018,8 @@
    "titulo": "Guía docente de Ética Informática y Sociedad de la Información (29611A2)",
    "nombre": "Ética Informática y Sociedad de la Información (29611A2)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -968,6 +1028,8 @@
    "titulo": "Guía docente de Fundamentos de Bases de Datos (2961128)",
    "nombre": "Fundamentos de Bases de Datos (2961128)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Christoph Norbert Bergmeir",
@@ -1036,6 +1098,8 @@
    "titulo": "Guía docente de Fundamentos del Software (2961114)",
    "nombre": "Fundamentos del Software (2961114)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "María del Mar Abad Grau",
@@ -1128,6 +1192,8 @@
    "titulo": "Guía docente de Fundamentos Físicos y Tecnológicos (2961113)",
    "nombre": "Fundamentos Físicos y Tecnológicos (2961113)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Pedro Cartujo Cassinello",
@@ -1225,6 +1291,8 @@
    "titulo": "Guía docente de Fundamentos de Ingeniería del Software (2961127)",
    "nombre": "Fundamentos de Ingeniería del Software (2961127)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "María del Mar Abad Grau",
@@ -1311,6 +1379,8 @@
    "titulo": "Guía docente de Fundamentos de Programación (2961115)",
    "nombre": "Fundamentos de Programación (2961115)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Manuel Jesús Cobo Martín",
@@ -1398,6 +1468,8 @@
    "titulo": "Guía docente de Fundamentos de Redes (2961134)",
    "nombre": "Fundamentos de Redes (2961134)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Juan Manuel López Soler",
@@ -1481,6 +1553,8 @@
    "titulo": "Guía docente de Gestión de Recursos Digitales (Especialidad Sistemas de Información) (29611DC)",
    "nombre": "Gestión de Recursos Digitales (Especialidad Sistemas de Información) (29611DC)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -1489,6 +1563,8 @@
    "titulo": "Guía docente de Informática Gráfica (2961133)",
    "nombre": "Informática Gráfica (2961133)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Germán Arroyo Moreno",
@@ -1561,6 +1637,8 @@
    "titulo": "Guía docente de Informática Industrial (Especialidad Ingeniería de Computadores) (29611CB)",
    "nombre": "Informática Industrial (Especialidad Ingeniería de Computadores) (29611CB)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Miguel Damas Hermoso",
@@ -1595,6 +1673,8 @@
    "titulo": "Guía docente de Infraestructura Virtual (Especialidad Tecnologías de la Información) (296114N)",
    "nombre": "Infraestructura Virtual (Especialidad Tecnologías de la Información) (296114N)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -1603,6 +1683,8 @@
    "titulo": "Guía docente de Ingeniería del Conocimiento (Especialidad Computación y Sistemas Inteligentes) (296113A)",
    "nombre": "Ingeniería del Conocimiento (Especialidad Computación y Sistemas Inteligentes) (296113A)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -1627,6 +1709,8 @@
    "titulo": "Guía docente de Ingeniería, Empresa y Sociedad (2961119)",
    "nombre": "Ingeniería, Empresa y Sociedad (2961119)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Javier Delgado Ceballos",
@@ -1681,6 +1765,8 @@
    "titulo": "Guía docente de Ingeniería de Servidores (2961135)",
    "nombre": "Ingeniería de Servidores (2961135)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Pablo García Sánchez",
@@ -1764,6 +1850,8 @@
    "titulo": "Guía docente de Ingeniería de Sistemas de Información (Especialidad Sistemas de Información) (296113S)",
    "nombre": "Ingeniería de Sistemas de Información (Especialidad Sistemas de Información) (296113S)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -1785,6 +1873,8 @@
    "titulo": "Guía docente de Inteligencia Artificial (2961129)",
    "nombre": "Inteligencia Artificial (2961129)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Juan Fernández Olivares",
@@ -1848,6 +1938,8 @@
    "titulo": "Guía docente de Inteligencia de Negocio (Especialidad Sistemas Información) (296114K)",
    "nombre": "Inteligencia de Negocio (Especialidad Sistemas Información) (296114K)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -1856,6 +1948,8 @@
    "titulo": "Guía docente de Lógica y Métodos Discretos (2961116)",
    "nombre": "Lógica y Métodos Discretos (2961116)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Celia Cordovilla Sánchez",
@@ -1948,6 +2042,8 @@
    "titulo": "Guía docente de Lógica y Programación (Especialidad Ingeniería Software) (29611BA)",
    "nombre": "Lógica y Programación (Especialidad Ingeniería Software) (29611BA)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -1956,6 +2052,8 @@
    "titulo": "Guía docente de Mantenimiento de Equipos Informáticos (Especialidad Ingeniería de Computadores) (29611CF)",
    "nombre": "Mantenimiento de Equipos Informáticos (Especialidad Ingeniería de Computadores) (29611CF)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -1964,6 +2062,8 @@
    "titulo": "Guía docente de Metaheurísticas (Especialidad Computación y Sistemas Inteligentes) (296113E)",
    "nombre": "Metaheurísticas (Especialidad Computación y Sistemas Inteligentes) (296113E)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Óscar Cordón García",
@@ -1985,6 +2085,8 @@
    "titulo": "Guía docente de Metodología de la Programación (2961118)",
    "nombre": "Metodología de la Programación (2961118)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Francisco José Cortijo Bon",
@@ -2082,6 +2184,8 @@
    "titulo": "Guía docente de Metodologías de Desarrollo Ágil (Especialidad Ingeniería del Software) (296114D)",
    "nombre": "Metodologías de Desarrollo Ágil (Especialidad Ingeniería del Software) (296114D)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": [
     {
@@ -2104,6 +2208,8 @@
    "titulo": "Guía docente de Modelos Avanzados de Computación (Especialidad Computación y Sistemas Inteligentes) (296113D)",
    "nombre": "Modelos Avanzados de Computación (Especialidad Computación y Sistemas Inteligentes) (296113D)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2112,6 +2218,8 @@
    "titulo": "Guía docente de Modelos de Computación (2961131)",
    "nombre": "Modelos de Computación (2961131)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "José Antonio García Soria",
@@ -2176,6 +2284,8 @@
    "titulo": "Guía docente de Nuevas Tecnologías de la Programación (Especialidad Ingeniería del Software) (29611BD)",
    "nombre": "Nuevas Tecnologías de la Programación (Especialidad Ingeniería del Software) (29611BD)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2184,6 +2294,8 @@
    "titulo": "Guía docente de Nuevos Paradigmas de Interacción (Especialidad Computación y Sistemas Inteligentes) (296114C)",
    "nombre": "Nuevos Paradigmas de Interacción (Especialidad Computación y Sistemas Inteligentes) (296114C)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2192,6 +2304,8 @@
    "titulo": "Guía docente de Periféricos y Dispositivos de Interfaz Humana (Especialidad Sistemas de Información) (29611DB)",
    "nombre": "Periféricos y Dispositivos de Interfaz Humana (Especialidad Sistemas de Información) (29611DB)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2200,6 +2314,8 @@
    "titulo": "Guía docente de Prácticas de Empresa (29611P8)",
    "nombre": "Prácticas de Empresa (29611P8)",
    "curso": "2026/2027",
+   "creditos": 12,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2208,6 +2324,8 @@
    "titulo": "Guía docente de Procesadores de Lenguajes (Especialidad Computación y Sistemas Inteligentes) (296114A)",
    "nombre": "Procesadores de Lenguajes (Especialidad Computación y Sistemas Inteligentes) (296114A)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": [
     {
@@ -2230,6 +2348,8 @@
    "titulo": "Guía docente de Procesamiento Digital de Señales (Especialidad Tecnologías de la Información) (29611FB)",
    "nombre": "Procesamiento Digital de Señales (Especialidad Tecnologías de la Información) (29611FB)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2238,6 +2358,8 @@
    "titulo": "Guía docente de Programación de Dispositivos Móviles (Especialidad Tecnologías de la Información) (29611FD)",
    "nombre": "Programación de Dispositivos Móviles (Especialidad Tecnologías de la Información) (29611FD)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2246,6 +2368,8 @@
    "titulo": "Guía docente de Programación Gráfica de Videojuegos (Especialidad Ingeniería del Software) (29611BB)",
    "nombre": "Programación Gráfica de Videojuegos (Especialidad Ingeniería del Software) (29611BB)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2254,6 +2378,8 @@
    "titulo": "Guía docente de Programación Lúdica (Especialidad Computación y Sistemas Inteligentes) (29611AB)",
    "nombre": "Programación Lúdica (Especialidad Computación y Sistemas Inteligentes) (29611AB)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2262,6 +2388,8 @@
    "titulo": "Guía docente de Programación Paralela (Especialidad Ingeniería del Software) (29611BC)",
    "nombre": "Programación Paralela (Especialidad Ingeniería del Software) (29611BC)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2270,6 +2398,8 @@
    "titulo": "Guía docente de Programación Técnica y Científica (Especialidad Computación y Sistemas Inteligentes) (29611AD)",
    "nombre": "Programación Técnica y Científica (Especialidad Computación y Sistemas Inteligentes) (29611AD)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2278,6 +2408,8 @@
    "titulo": "Guía docente de Programación Web (Especialidad Sistemas de Información) (296113Q)",
    "nombre": "Programación Web (Especialidad Sistemas de Información) (296113Q)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2286,6 +2418,8 @@
    "titulo": "Guía docente de Programación y Diseño Orientado a Objetos (2961121)",
    "nombre": "Programación y Diseño Orientado a Objetos (2961121)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "Zoraida Callejas Carrión",
@@ -2382,6 +2516,8 @@
    "titulo": "Guía docente de Proyecto Fin de Grado (2961199)",
    "nombre": "Proyecto Fin de Grado (2961199)",
    "curso": "2026/2027",
+   "creditos": 12,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2390,6 +2526,8 @@
    "titulo": "Guía docente de Recuperación de Información (Especialidad Sistemas de Información) (296114J)",
    "nombre": "Recuperación de Información (Especialidad Sistemas de Información) (296114J)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2398,6 +2536,8 @@
    "titulo": "Guía docente de Redes Multiservicio (Especialidad Tecnologías de la Información) (29611FE)",
    "nombre": "Redes Multiservicio (Especialidad Tecnologías de la Información) (29611FE)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2406,6 +2546,8 @@
    "titulo": "Guía docente de Redes y Sistemas Complejos (Especialidad Sistemas de Información) (29611DE)",
    "nombre": "Redes y Sistemas Complejos (Especialidad Sistemas de Información) (29611DE)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2414,6 +2556,8 @@
    "titulo": "Guía docente de Robótica Industrial (Especialidad Computación y Sistemas Inteligentes) (29611AC)",
    "nombre": "Robótica Industrial (Especialidad Computación y Sistemas Inteligentes) (29611AC)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2422,6 +2566,8 @@
    "titulo": "Guía docente de Seguridad en Sistemas Operativos (Especialidad Ingeniería de Software) (29611BF)",
    "nombre": "Seguridad en Sistemas Operativos (Especialidad Ingeniería de Software) (29611BF)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2430,6 +2576,8 @@
    "titulo": "Guía docente de Seguridad y Protección de Sistemas Informáticos (Especialidad Tecnologías de la Información) (296114P)",
    "nombre": "Seguridad y Protección de Sistemas Informáticos (Especialidad Tecnologías de la Información) (296114P)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2438,6 +2586,8 @@
    "titulo": "Guía docente de Servidores Web de Altas Prestaciones (Especialidadtecnologías de la Información) (296113Y)",
    "nombre": "Servidores Web de Altas Prestaciones (Especialidadtecnologías de la Información) (296113Y)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Míriam Mengíbar Rodríguez",
@@ -2472,6 +2622,8 @@
    "titulo": "Guía docente de Simulación de Sistemas (Especialidad Computación y Sistemas Inteligentes) (29611AE)",
    "nombre": "Simulación de Sistemas (Especialidad Computación y Sistemas Inteligentes) (29611AE)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2480,6 +2632,8 @@
    "titulo": "Guía docente de Sistemas Concurrentes y Distribuidos (2961124)",
    "nombre": "Sistemas Concurrentes y Distribuidos (2961124)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "José Miguel Mantas Ruiz",
@@ -2559,6 +2713,8 @@
    "titulo": "Guía docente de Sistemas Cooperativos y Gestión de Contenidos (Especialidad Sistemas de Información) (29611DD)",
    "nombre": "Sistemas Cooperativos y Gestión de Contenidos (Especialidad Sistemas de Información) (29611DD)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2567,6 +2723,8 @@
    "titulo": "Guía docente de Sistemas Empotrados (Especialidad Ingeniería de Computadores) (296114I)",
    "nombre": "Sistemas Empotrados (Especialidad Ingeniería de Computadores) (296114I)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2575,6 +2733,8 @@
    "titulo": "Guía docente de Sistemas Gráficos (Especialidad Ingeniería del Software) (296113H)",
    "nombre": "Sistemas Gráficos (Especialidad Ingeniería del Software) (296113H)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2583,6 +2743,8 @@
    "titulo": "Guía docente de Sistemas de Información Basados en Web (Especialidad Ingeniería del Software) (296113J)",
    "nombre": "Sistemas de Información Basados en Web (Especialidad Ingeniería del Software) (296113J)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -2605,6 +2767,8 @@
    "titulo": "Guía docente de Sistemas de Información para Empresas (Especialidad Sistemas de Información) (296113R)",
    "nombre": "Sistemas de Información para Empresas (Especialidad Sistemas de Información) (296113R)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2613,6 +2777,8 @@
    "titulo": "Guía docente de Sistemas de Información Geográfica (Especialidad Sistemas de Información) (29611DA)",
    "nombre": "Sistemas de Información Geográfica (Especialidad Sistemas de Información) (29611DA)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2621,6 +2787,8 @@
    "titulo": "Guía docente de Sistemas con Microprocesadores (Especialidad Ingeniería de Computadores) (296113P)",
    "nombre": "Sistemas con Microprocesadores (Especialidad Ingeniería de Computadores) (296113P)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2629,6 +2797,8 @@
    "titulo": "Guía docente de Sistemas Multidimensionales (Especialidad Sistemas de Información) (296113U)",
    "nombre": "Sistemas Multidimensionales (Especialidad Sistemas de Información) (296113U)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -2650,6 +2820,8 @@
    "titulo": "Guía docente de Sistemas Multimedia (Especialidadtecnologías de la Información) (296113V)",
    "nombre": "Sistemas Multimedia (Especialidadtecnologías de la Información) (296113V)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2658,6 +2830,8 @@
    "titulo": "Guía docente de Sistemas Operativos (2961123)",
    "nombre": "Sistemas Operativos (2961123)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [
     {
      "nombre": "José Luis Garrido Bullejos",
@@ -2761,6 +2935,8 @@
    "titulo": "Guía docente de Técnicas de los Sistemas Inteligentes (Especialidad Computación y Sistemas Inteligentes) (296113B)",
    "nombre": "Técnicas de los Sistemas Inteligentes (Especialidad Computación y Sistemas Inteligentes) (296113B)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -2785,6 +2961,8 @@
    "titulo": "Guía docente de Tecnología y Organización de Computadores (2961117)",
    "nombre": "Tecnología y Organización de Computadores (2961117)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [
     {
      "nombre": "Richard Rafael Carrillo Sánchez",
@@ -2887,6 +3065,8 @@
    "titulo": "Guía docente de Tecnologías Emergentes (Especialidad Ingeniería de Computadores) (29611CD)",
    "nombre": "Tecnologías Emergentes (Especialidad Ingeniería de Computadores) (29611CD)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2895,6 +3075,8 @@
    "titulo": "Guía docente de Tecnologías de Red (Especialidad Ingeniería de Computadores) (296114G)",
    "nombre": "Tecnologías de Red (Especialidad Ingeniería de Computadores) (296114G)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2903,6 +3085,8 @@
    "titulo": "Guía docente de Tecnologías Web (Especialidad Tecnologías de la Información) (296113X)",
    "nombre": "Tecnologías Web (Especialidad Tecnologías de la Información) (296113X)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": []
   },
@@ -2911,6 +3095,8 @@
    "titulo": "Guía docente de Teoría de la Información y la Codificación (Especialidad Computación y Sistemas Inteligentes) (29611AA)",
    "nombre": "Teoría de la Información y la Codificación (Especialidad Computación y Sistemas Inteligentes) (29611AA)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2919,6 +3105,8 @@
    "titulo": "Guía docente de Transmisión de Datos y Redes de Computadores (Especialidadtecnologías de la Información) (296113Z)",
    "nombre": "Transmisión de Datos y Redes de Computadores (Especialidadtecnologías de la Información) (296113Z)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 2,
    "teorico": [],
    "practico": [
     {
@@ -2940,6 +3128,8 @@
    "titulo": "Guía docente de Tratamiento de Imágenes Digitales (Especialidad Tecnologías de la Información) (29611FA)",
    "nombre": "Tratamiento de Imágenes Digitales (Especialidad Tecnologías de la Información) (29611FA)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": []
   },
@@ -2948,6 +3138,8 @@
    "titulo": "Guía docente de Visión por Computador (Especialidad Computación y Sistemas Inteligentes) (296114B)",
    "nombre": "Visión por Computador (Especialidad Computación y Sistemas Inteligentes) (296114B)",
    "curso": "2026/2027",
+   "creditos": 6,
+   "semestre": 1,
    "teorico": [],
    "practico": [
     {

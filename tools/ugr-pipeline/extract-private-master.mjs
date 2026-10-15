@@ -23,7 +23,7 @@
  *     cada (asignatura, modalidad), pero no las letras de grupo. Quién da cada
  *     letra y cada subgrupo lo publican las guías docentes de la ETSIIT
  *     (`guias-docentes.json`, cruzado con los subgrupos de los horarios en
- *     `horarios-subgrupos.json`), así que el maestro las recibe de
+ *     `horarios-grupos.json`), así que el maestro las recibe de
  *     `buildAsignaciones`, las mismas que siembra la muestra.
  *   - El sufijo `" (optativa)"` de `asignatura` **no** es decorativo ni
  *     sistemático: la hoja lo usa en unas optativas y no en otras, y es lo
@@ -57,14 +57,37 @@ import {
   validateCatalog,
 } from "../../public/ugr/src/solver/catalog.js";
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
-import { buildAsignaciones } from "./guias.js";
+import { buildAsignaciones, subjectMatchKey } from "./guias.js";
+import { practicasPorAsignatura } from "./horarios.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
+
+/** Asignaturas del plan que el índice del volcado no trae (sus datos, de la guía). */
+const PLAN_FUERA_DEL_INDICE = [
+  {
+    codigo: "PFG",
+    nombre: "Proyecto Fin de Grado",
+    curso: 4,
+    cuatrimestre: 2,
+    creditos: 12,
+    caracter: "Trabajo Fin de Grado",
+    mencion: "Común",
+  },
+  {
+    codigo: "PE",
+    nombre: "Prácticas de Empresa",
+    curso: 4,
+    cuatrimestre: 2,
+    creditos: 12,
+    caracter: "Optativa",
+    mencion: "Común",
+  },
+];
 const PRIVATE_DIR = path.join(ROOT, "privado");
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 const DUMP_PATH = path.join(ROOT, "public/ugr/datasets/docentes_excel.json");
 const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
-const SUBGRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
+const GRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-grupos.json");
 const CATALOG_PATH = path.join(PRIVATE_DIR, "catalogo.json");
 const DISCARDED_PATH = path.join(PRIVATE_DIR, "descartados.json");
 
@@ -235,16 +258,37 @@ export function buildMaster(dump, legacySubjects, guias = [], subgrupos = {}) {
   }
 
   // ─── El resto del plan ─────────────────────────────────────────────────────
+  // El plan trae asignaturas distintas con el mismo código (`RI` es
+  // Recuperación de Información y Robótica Industrial): se compara también el
+  // nombre, o la segunda desaparecería del catálogo.
+  const nombresEnCatalogo = new Map(
+    enrichedSubjects.map((s) => [s.codigo, subjectMatchKey(s.nombre)]),
+  );
+  const creditosDeGuia = new Map(
+    (Array.isArray(guias) ? guias : [])
+      .filter((g) => g && g.creditos)
+      .map((g) => [subjectMatchKey(g.nombre || g.titulo), g.creditos]),
+  );
   const extraSubjects = indexRows
-    .filter((entry) => !catalogCodes.has(entry.codigo))
+    .filter((entry) => {
+      if (!catalogCodes.has(entry.codigo)) return true;
+      // La comparación de nombres es la misma que usa el cruce con las guías:
+      // sin acentos ni puntuación, que el plan y el catálogo no escriben igual.
+      return nombresEnCatalogo.get(entry.codigo) !== subjectMatchKey(entry.nombreCompleto);
+    })
     .map((entry) => ({
       codigo: entry.codigo,
       nombre: String(entry.nombreCompleto || ""),
       curso: Number(entry.curso),
       cuatrimestre: Number(entry.cuatrimestre),
+      creditos: creditosDeGuia.get(subjectMatchKey(entry.nombreCompleto)) || 6,
       caracter: String(entry.tipo || ""),
       mencion: String(entry.mencion || ""),
-    }));
+    }))
+    // El índice del volcado no trae el TFG ni las prácticas de empresa, y sin
+    // ellos los 240 ECTS del grado no cuadran (12 + 12). Sus datos son de sus
+    // guías: 12 créditos cada uno, de cuarto, segundo cuatrimestre.
+    .concat(PLAN_FUERA_DEL_INDICE.map((s) => ({ ...s })));
 
   const staff = (list) =>
     (Array.isArray(list) ? list : []).map((entry) => ({
@@ -321,12 +365,12 @@ async function main() {
   const legacySubjects = loadLegacyGlobal(DATA_PATH, "SUBJECTS");
   const dump = JSON.parse(readFileSync(DUMP_PATH, "utf8"));
   const guiasFixture = JSON.parse(readFileSync(GUIAS_PATH, "utf8"));
-  const subgruposFixture = JSON.parse(readFileSync(SUBGRUPOS_PATH, "utf8"));
+  const gruposFixture = JSON.parse(readFileSync(GRUPOS_PATH, "utf8"));
   const { catalog, stats } = buildMaster(
     dump,
     legacySubjects,
     guiasFixture.guias || [],
-    subgruposFixture.asignaturas || {},
+    practicasPorAsignatura(gruposFixture.asignaturas || {}),
   );
 
   // Puerta de calidad: si el catálogo no pasa el mismo esquema y las mismas

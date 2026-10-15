@@ -348,17 +348,17 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
             "dia": "martes",
             "inicio": "10:30",
             "fin": "11:30"
           },
           {
             "dia": "miercoles",
-            "inicio": "9:30",
-            "fin": "10:30"
-          },
-          {
-            "dia": "jueves",
             "inicio": "9:30",
             "fin": "10:30"
           }
@@ -446,11 +446,6 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "lunes",
-            "inicio": "10:30",
-            "fin": "11:30"
-          },
-          {
             "dia": "jueves",
             "inicio": "11:30",
             "fin": "12:30"
@@ -459,6 +454,11 @@ const SUBJECTS = [
             "dia": "jueves",
             "inicio": "12:30",
             "fin": "13:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -487,14 +487,14 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "miercoles",
-            "inicio": "18:30",
-            "fin": "19:30"
-          },
-          {
             "dia": "jueves",
             "inicio": "16:30",
             "fin": "17:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "18:30",
+            "fin": "19:30"
           },
           {
             "dia": "viernes",
@@ -585,12 +585,12 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "martes",
+            "dia": "jueves",
             "inicio": "18:30",
             "fin": "19:30"
           },
           {
-            "dia": "jueves",
+            "dia": "martes",
             "inicio": "18:30",
             "fin": "19:30"
           },
@@ -615,8 +615,8 @@ const SUBJECTS = [
           "F2": [
             {
               "dia": "martes",
-              "inicio": "16:30",
-              "fin": "17:30"
+              "inicio": "15:30",
+              "fin": "16:30"
             }
           ]
         }
@@ -1237,7 +1237,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -1255,6 +1257,40 @@ const SUBJECTS = [
               "inicio": "13:30",
               "fin": "14:30"
             }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
           ]
         }
       },
@@ -1270,7 +1306,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -1285,6 +1323,40 @@ const SUBJECTS = [
             },
             {
               "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -1303,7 +1375,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2"
           ],
           "C1": [
             {
@@ -1318,6 +1391,23 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -1336,7 +1426,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2"
           ],
           "D1": [
             {
@@ -1353,6 +1444,23 @@ const SUBJECTS = [
               "dia": "viernes",
               "inicio": "15:30",
               "fin": "16:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
             }
           ]
         }
@@ -1383,7 +1491,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -1393,6 +1503,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -1416,7 +1550,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -1426,6 +1562,30 @@ const SUBJECTS = [
             },
             {
               "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -1449,7 +1609,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2"
           ],
           "C1": [
             {
@@ -1459,6 +1620,18 @@ const SUBJECTS = [
             },
             {
               "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -1482,7 +1655,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2"
           ],
           "D1": [
             {
@@ -1494,6 +1668,18 @@ const SUBJECTS = [
               "dia": "viernes",
               "inicio": "17:30",
               "fin": "18:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
             }
           ]
         }
@@ -1515,7 +1701,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2"
           ],
           "E1": [
             {
@@ -1525,6 +1712,18 @@ const SUBJECTS = [
             },
             {
               "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -1557,7 +1756,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -1567,6 +1768,30 @@ const SUBJECTS = [
             },
             {
               "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -1590,7 +1815,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -1600,6 +1827,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -1623,7 +1874,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2"
           ],
           "C1": [
             {
@@ -1633,6 +1885,18 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -1656,7 +1920,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2"
           ],
           "D1": [
             {
@@ -1666,6 +1931,18 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -1689,7 +1966,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2",
+            "E3"
           ],
           "E1": [
             {
@@ -1699,6 +1978,30 @@ const SUBJECTS = [
             },
             {
               "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "E3": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -1731,7 +2034,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -1743,6 +2048,30 @@ const SUBJECTS = [
               "dia": "jueves",
               "inicio": "13:30",
               "fin": "14:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
             }
           ]
         }
@@ -1773,9 +2102,48 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3",
+            "A4"
           ],
           "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A4": [
             {
               "dia": "jueves",
               "inicio": "8:30",
@@ -1853,7 +2221,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -1865,6 +2235,30 @@ const SUBJECTS = [
               "dia": "viernes",
               "inicio": "11:30",
               "fin": "12:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
             }
           ]
         }
@@ -1971,7 +2365,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2",
+            "A3"
           ],
           "A1": [
             {
@@ -1981,6 +2377,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2004,7 +2424,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2",
+            "B3"
           ],
           "B1": [
             {
@@ -2014,6 +2436,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "B3": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -2037,7 +2483,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "C1"
+            "C1",
+            "C2"
           ],
           "C1": [
             {
@@ -2047,6 +2494,18 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "C2": [
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2070,7 +2529,9 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2",
+            "D3"
           ],
           "D1": [
             {
@@ -2080,6 +2541,30 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D3": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -2103,7 +2588,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "E1"
+            "E1",
+            "E2"
           ],
           "E1": [
             {
@@ -2113,6 +2599,18 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "E2": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "16:30",
               "fin": "17:30"
             }
@@ -2145,7 +2643,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2"
           ],
           "A1": [
             {
@@ -2155,6 +2654,18 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "lunes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "lunes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2178,7 +2689,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2"
           ],
           "B1": [
             {
@@ -2188,6 +2700,18 @@ const SUBJECTS = [
             },
             {
               "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -2220,7 +2744,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2"
           ],
           "A1": [
             {
@@ -2230,6 +2755,18 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "miercoles",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2253,7 +2790,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2"
           ],
           "B1": [
             {
@@ -2263,6 +2801,18 @@ const SUBJECTS = [
             },
             {
               "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -2295,7 +2845,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2"
           ],
           "A1": [
             {
@@ -2305,6 +2856,18 @@ const SUBJECTS = [
             },
             {
               "dia": "miercoles",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2328,7 +2891,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2"
           ],
           "B1": [
             {
@@ -2338,6 +2902,18 @@ const SUBJECTS = [
             },
             {
               "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -2370,7 +2946,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2"
           ],
           "A1": [
             {
@@ -2380,6 +2957,18 @@ const SUBJECTS = [
             },
             {
               "dia": "lunes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "viernes",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2403,7 +2992,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2"
           ],
           "B1": [
             {
@@ -2413,6 +3003,18 @@ const SUBJECTS = [
             },
             {
               "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -2445,7 +3047,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "A1"
+            "A1",
+            "A2"
           ],
           "A1": [
             {
@@ -2455,6 +3058,18 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            },
+            {
+              "dia": "jueves",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -2478,7 +3093,8 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
-            "B1"
+            "B1",
+            "B2"
           ],
           "B1": [
             {
@@ -2488,6 +3104,18 @@ const SUBJECTS = [
             },
             {
               "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -2736,17 +3364,17 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "miercoles",
-            "inicio": "12:30",
-            "fin": "13:30"
-          },
-          {
             "dia": "jueves",
             "inicio": "11:30",
             "fin": "12:30"
           },
           {
             "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "miercoles",
             "inicio": "12:30",
             "fin": "13:30"
           }
@@ -2785,11 +3413,6 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "miercoles",
-            "inicio": "11:30",
-            "fin": "12:30"
-          },
-          {
             "dia": "jueves",
             "inicio": "11:30",
             "fin": "12:30"
@@ -2798,6 +3421,11 @@ const SUBJECTS = [
             "dia": "jueves",
             "inicio": "12:30",
             "fin": "13:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "11:30",
+            "fin": "12:30"
           }
         ],
         "practicas": {
@@ -2892,8 +3520,16 @@ const SUBJECTS = [
         ],
         "practicas": {
           "subgrupos": [
+            "D1",
             "D2",
             "D3"
+          ],
+          "D1": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            }
           ],
           "D2": [
             {
@@ -2965,12 +3601,12 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "martes",
+            "dia": "jueves",
             "inicio": "17:30",
             "fin": "18:30"
           },
           {
-            "dia": "jueves",
+            "dia": "martes",
             "inicio": "17:30",
             "fin": "18:30"
           },
@@ -2995,8 +3631,8 @@ const SUBJECTS = [
           "F2": [
             {
               "dia": "martes",
-              "inicio": "15:30",
-              "fin": "16:30"
+              "inicio": "16:30",
+              "fin": "17:30"
             }
           ]
         }
@@ -3095,37 +3731,37 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -3136,13 +3772,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "miercoles",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "miercoles",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -3181,19 +3817,45 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "miercoles",
+            "dia": "jueves",
             "inicio": "15:30",
             "fin": "16:30"
           },
           {
-            "dia": "jueves",
+            "dia": "miercoles",
             "inicio": "15:30",
             "fin": "16:30"
           }
         ],
         "practicas": {
           "subgrupos": [
+            "D1",
+            "D2",
             "D3"
+          ],
+          "D1": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
           ],
           "D3": [
             {
@@ -3390,13 +4052,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "viernes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "viernes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -3408,37 +4070,37 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -3449,13 +4111,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "martes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "martes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -3466,13 +4128,13 @@ const SUBJECTS = [
           "C1": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "C2": [
@@ -3492,10 +4154,23 @@ const SUBJECTS = [
       {
         "letra": "D",
         "turno": "tarde",
-        "teoria": [],
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "15:30",
+            "fin": "16:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "16:30",
+            "fin": "17:30"
+          }
+        ],
         "practicas": {
           "subgrupos": [
-            "D1"
+            "D1",
+            "D2",
+            "D3"
           ],
           "D1": [
             {
@@ -3507,6 +4182,30 @@ const SUBJECTS = [
               "dia": "viernes",
               "inicio": "18:30",
               "fin": "19:30"
+            }
+          ],
+          "D2": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "D3": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
             }
           ]
         }
@@ -3681,9 +4380,9 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "martes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "dia": "jueves",
+            "inicio": "11:30",
+            "fin": "12:30"
           },
           {
             "dia": "martes",
@@ -3691,9 +4390,9 @@ const SUBJECTS = [
             "fin": "10:30"
           },
           {
-            "dia": "jueves",
-            "inicio": "11:30",
-            "fin": "12:30"
+            "dia": "martes",
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -3730,7 +4429,7 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "miercoles",
+            "dia": "jueves",
             "inicio": "9:30",
             "fin": "10:30"
           },
@@ -3740,7 +4439,7 @@ const SUBJECTS = [
             "fin": "11:30"
           },
           {
-            "dia": "jueves",
+            "dia": "miercoles",
             "inicio": "9:30",
             "fin": "10:30"
           }
@@ -3771,17 +4470,17 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "martes",
-            "inicio": "16:30",
-            "fin": "17:30"
-          },
-          {
             "dia": "jueves",
             "inicio": "15:30",
             "fin": "16:30"
           },
           {
             "dia": "jueves",
+            "inicio": "16:30",
+            "fin": "17:30"
+          },
+          {
+            "dia": "martes",
             "inicio": "16:30",
             "fin": "17:30"
           }
@@ -3921,7 +4620,12 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "lunes",
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "jueves",
             "inicio": "10:30",
             "fin": "11:30"
           },
@@ -3931,9 +4635,9 @@ const SUBJECTS = [
             "fin": "10:30"
           },
           {
-            "dia": "jueves",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -3975,13 +4679,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "lunes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "lunes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           },
           {
             "dia": "viernes",
@@ -4061,22 +4765,22 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "lunes",
+            "dia": "jueves",
             "inicio": "17:30",
             "fin": "18:30"
           },
           {
-            "dia": "lunes",
+            "dia": "jueves",
             "inicio": "18:30",
             "fin": "19:30"
           },
           {
-            "dia": "jueves",
+            "dia": "lunes",
             "inicio": "17:30",
             "fin": "18:30"
           },
           {
-            "dia": "jueves",
+            "dia": "lunes",
             "inicio": "18:30",
             "fin": "19:30"
           }
@@ -4107,13 +4811,13 @@ const SUBJECTS = [
           },
           {
             "dia": "miercoles",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "miercoles",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -4151,13 +4855,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "miercoles",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "miercoles",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           },
           {
             "dia": "viernes",
@@ -4240,11 +4944,6 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
-            "dia": "martes",
-            "inicio": "15:30",
-            "fin": "16:30"
-          },
-          {
             "dia": "jueves",
             "inicio": "17:30",
             "fin": "18:30"
@@ -4253,6 +4952,11 @@ const SUBJECTS = [
             "dia": "jueves",
             "inicio": "18:30",
             "fin": "19:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "15:30",
+            "fin": "16:30"
           }
         ],
         "practicas": {
@@ -4433,13 +5137,13 @@ const SUBJECTS = [
           "A3": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -4468,37 +5172,37 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -4760,13 +5464,13 @@ const SUBJECTS = [
           "A2": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "A3": [
@@ -4807,37 +5511,37 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -4848,13 +5552,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "martes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "martes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -5087,23 +5791,23 @@ const SUBJECTS = [
           "A1": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "A2": [
             {
-              "dia": "miercoles",
+              "dia": "martes",
               "inicio": "9:30",
               "fin": "10:30"
             },
             {
-              "dia": "miercoles",
+              "dia": "martes",
               "inicio": "10:30",
               "fin": "11:30"
             }
@@ -5128,13 +5832,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "viernes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "viernes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -5187,13 +5891,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "lunes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "lunes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -5263,7 +5967,7 @@ const SUBJECTS = [
           ],
           "D1": [
             {
-              "dia": "miercoles",
+              "dia": "jueves",
               "inicio": "15:30",
               "fin": "16:30"
             },
@@ -5326,7 +6030,7 @@ const SUBJECTS = [
               "fin": "18:30"
             },
             {
-              "dia": "martes",
+              "dia": "miercoles",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -5338,7 +6042,7 @@ const SUBJECTS = [
               "fin": "18:30"
             },
             {
-              "dia": "lunes",
+              "dia": "martes",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -5410,9 +6114,9 @@ const SUBJECTS = [
         "turno": "mañana",
         "teoria": [
           {
-            "dia": "miercoles",
-            "inicio": "8:30",
-            "fin": "9:30"
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "jueves",
@@ -5420,9 +6124,9 @@ const SUBJECTS = [
             "fin": "11:30"
           },
           {
-            "dia": "jueves",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "dia": "miercoles",
+            "inicio": "8:30",
+            "fin": "9:30"
           }
         ],
         "practicas": {
@@ -5460,13 +6164,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "jueves",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "jueves",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           },
           {
             "dia": "viernes",
@@ -5557,6 +6261,11 @@ const SUBJECTS = [
         "turno": "tarde",
         "teoria": [
           {
+            "dia": "jueves",
+            "inicio": "19:30",
+            "fin": "20:30"
+          },
+          {
             "dia": "miercoles",
             "inicio": "15:30",
             "fin": "16:30"
@@ -5565,18 +6274,12 @@ const SUBJECTS = [
             "dia": "miercoles",
             "inicio": "16:30",
             "fin": "17:30"
-          },
-          {
-            "dia": "jueves",
-            "inicio": "19:30",
-            "fin": "20:30"
           }
         ],
         "practicas": {
           "subgrupos": [
             "E1",
-            "E2",
-            "E3"
+            "E2"
           ],
           "E1": [
             {
@@ -5588,13 +6291,6 @@ const SUBJECTS = [
           "E2": [
             {
               "dia": "lunes",
-              "inicio": "17:30",
-              "fin": "18:30"
-            }
-          ],
-          "E3": [
-            {
-              "dia": "miercoles",
               "inicio": "17:30",
               "fin": "18:30"
             }
@@ -5636,37 +6332,37 @@ const SUBJECTS = [
           "A1": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "A2": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "A3": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -5911,13 +6607,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "jueves",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "jueves",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           },
           {
             "dia": "viernes",
@@ -6014,20 +6710,19 @@ const SUBJECTS = [
           },
           {
             "dia": "martes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "martes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
           "subgrupos": [
             "C1",
-            "C2",
-            "C3"
+            "C2"
           ],
           "C1": [
             {
@@ -6039,13 +6734,6 @@ const SUBJECTS = [
           "C2": [
             {
               "dia": "jueves",
-              "inicio": "11:30",
-              "fin": "12:30"
-            }
-          ],
-          "C3": [
-            {
-              "dia": "lunes",
               "inicio": "11:30",
               "fin": "12:30"
             }
@@ -6159,13 +6847,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "martes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "martes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -6236,37 +6924,37 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -6277,13 +6965,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "jueves",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "jueves",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -6481,17 +7169,17 @@ const SUBJECTS = [
           ],
           "A2": [
             {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
               "dia": "miercoles",
               "inicio": "11:30",
               "fin": "12:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "12:30",
-              "fin": "13:30"
-            },
-            {
-              "dia": "jueves",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -6534,13 +7222,13 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             },
             {
               "dia": "viernes",
@@ -6550,31 +7238,31 @@ const SUBJECTS = [
           ],
           "B2": [
             {
-              "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
-            },
-            {
-              "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
-            },
-            {
               "dia": "jueves",
               "inicio": "9:30",
               "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             },
             {
               "dia": "viernes",
@@ -6618,17 +7306,17 @@ const SUBJECTS = [
           ],
           "C2": [
             {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
               "dia": "miercoles",
               "inicio": "11:30",
               "fin": "12:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "12:30",
-              "fin": "13:30"
-            },
-            {
-              "dia": "jueves",
               "inicio": "12:30",
               "fin": "13:30"
             }
@@ -6687,17 +7375,17 @@ const SUBJECTS = [
           ],
           "D3": [
             {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            },
+            {
               "dia": "miercoles",
               "inicio": "17:30",
               "fin": "18:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "18:30",
-              "fin": "19:30"
-            },
-            {
-              "dia": "jueves",
               "inicio": "18:30",
               "fin": "19:30"
             }
@@ -6772,13 +7460,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "miercoles",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "miercoles",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -6848,13 +7536,13 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "miercoles",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "miercoles",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
@@ -6862,11 +7550,6 @@ const SUBJECTS = [
               "dia": "viernes",
               "inicio": "10:30",
               "fin": "11:30"
-            },
-            {
-              "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
             }
           ]
         }
@@ -6877,13 +7560,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "viernes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "viernes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -7026,13 +7709,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "jueves",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "jueves",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -7115,25 +7798,25 @@ const SUBJECTS = [
           "B2": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "lunes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "lunes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -7293,13 +7976,13 @@ const SUBJECTS = [
         "teoria": [
           {
             "dia": "lunes",
-            "inicio": "10:30",
-            "fin": "11:30"
+            "inicio": "9:30",
+            "fin": "10:30"
           },
           {
             "dia": "lunes",
-            "inicio": "9:30",
-            "fin": "10:30"
+            "inicio": "10:30",
+            "fin": "11:30"
           }
         ],
         "practicas": {
@@ -7370,37 +8053,37 @@ const SUBJECTS = [
           "B1": [
             {
               "dia": "viernes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "viernes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B2": [
             {
               "dia": "jueves",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "jueves",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ],
           "B3": [
             {
               "dia": "martes",
-              "inicio": "10:30",
-              "fin": "11:30"
+              "inicio": "9:30",
+              "fin": "10:30"
             },
             {
               "dia": "martes",
-              "inicio": "9:30",
-              "fin": "10:30"
+              "inicio": "10:30",
+              "fin": "11:30"
             }
           ]
         }
@@ -7513,5 +8196,2803 @@ const SUBJECTS = [
     ],
     "aprobada": true,
     "corresponde": "AGL"
+  },
+  {
+    "codigo": "AA",
+    "nombre": "Aprendizaje Automático",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ]
+        }
+      },
+      {
+        "letra": "B",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "B1",
+            "B2"
+          ],
+          "B1": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "IC",
+    "nombre": "Ingeniería del Conocimiento",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ]
+        }
+      },
+      {
+        "letra": "B",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "B1",
+            "B2"
+          ],
+          "B1": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "MAC",
+    "nombre": "Modelos Avanzados de Computación",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ]
+        }
+      },
+      {
+        "letra": "B",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "B1",
+            "B2"
+          ],
+          "B1": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "MH",
+    "nombre": "Metaheurísticas",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "lunes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ]
+        }
+      },
+      {
+        "letra": "B",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "B1",
+            "B2"
+          ],
+          "B1": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TSI",
+    "nombre": "Técnicas de los Sistemas Inteligentes",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "miercoles",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            }
+          ]
+        }
+      },
+      {
+        "letra": "B",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "B1",
+            "B2"
+          ],
+          "B1": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "B2": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "CUIA",
+    "nombre": "Computación Ubicua e Inteligencia Ambiental",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SWAP",
+    "nombre": "Servidores Web de Altas Prestaciones",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SMM",
+    "nombre": "Sistemas Multimedia",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TW",
+    "nombre": "Tecnologías Web",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TDRC",
+    "nombre": "Transmisión de Datos y Redes de Computadores",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "ABD",
+    "nombre": "Administración de Bases de Datos",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "15:30",
+            "fin": "16:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "16:30",
+            "fin": "17:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "ISI",
+    "nombre": "Ingeniería de Sistemas de Información",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "15:30",
+            "fin": "16:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "16:30",
+            "fin": "17:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PW",
+    "nombre": "Programación Web",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "15:30",
+            "fin": "16:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "16:30",
+            "fin": "17:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "martes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SIE",
+    "nombre": "Sistemas de Información para Empresas",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "15:30",
+            "fin": "16:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "16:30",
+            "fin": "17:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "miercoles",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SMD",
+    "nombre": "Sistemas Multidimensionales",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "15:30",
+            "fin": "16:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "16:30",
+            "fin": "17:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "lunes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "17:30",
+              "fin": "18:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "18:30",
+              "fin": "19:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "ACAP",
+    "nombre": "Arquitectura y Computación de Altas Prestaciones",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "AS",
+    "nombre": "Arquitectura de Sistemas",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "DHD",
+    "nombre": "Desarrollo de Hardware Digital",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "miercoles",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "miercoles",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SMP",
+    "nombre": "Sistemas con Microprocesadores",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "martes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "martes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "DSE",
+    "nombre": "Diseño de Sistemas Electrónicos",
+    "curso": 3,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "tarde",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "17:30",
+            "fin": "18:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "18:30",
+            "fin": "19:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "lunes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "lunes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "15:30",
+              "fin": "16:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "16:30",
+              "fin": "17:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "VC",
+    "nombre": "Visión por Computador",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "NPI",
+    "nombre": "Nuevos Paradigmas de Interacción",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "8:30",
+            "fin": "9:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PL",
+    "nombre": "Procesadores de Lenguajes",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TIC",
+    "nombre": "Teoría de la Información y la Codificación",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "10:30",
+            "fin": "11:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PTC",
+    "nombre": "Programación Técnica y Científica",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SS",
+    "nombre": "Simulación de Sistemas",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "DAI",
+    "nombre": "Desarrollo de Aplicaciones para Internet",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A3": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "IV",
+    "nombre": "Infraestructura Virtual",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "11:30",
+            "fin": "12:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SPSI",
+    "nombre": "Seguridad y Protección de Sistemas Informáticos",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "8:30",
+            "fin": "9:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TID",
+    "nombre": "Tratamiento de Imágenes Digitales",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "CRIM",
+    "nombre": "Compresión y Recuperación de Información Multimedia",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "IN",
+    "nombre": "Inteligencia de Negocio",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "BDD",
+    "nombre": "Bases de Datos Distribuidas",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "jueves",
+              "inicio": "10:30",
+              "fin": "11:30"
+            },
+            {
+              "dia": "jueves",
+              "inicio": "11:30",
+              "fin": "12:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "RI",
+    "nombre": "Recuperación de Información",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "8:30",
+            "fin": "9:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": [
+            "A1",
+            "A2"
+          ],
+          "A1": [
+            {
+              "dia": "viernes",
+              "inicio": "12:30",
+              "fin": "13:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "13:30",
+              "fin": "14:30"
+            }
+          ],
+          "A2": [
+            {
+              "dia": "viernes",
+              "inicio": "8:30",
+              "fin": "9:30"
+            },
+            {
+              "dia": "viernes",
+              "inicio": "9:30",
+              "fin": "10:30"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SIG",
+    "nombre": "Sistemas de Información Geográfica",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "RSC",
+    "nombre": "Redes y Sistemas Complejos",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "GRD",
+    "nombre": "Gestión de Recursos Digitales",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SE",
+    "nombre": "Sistemas Empotrados",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TR",
+    "nombre": "Tecnologías de Red",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "8:30",
+            "fin": "9:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "8:30",
+            "fin": "9:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "CPD",
+    "nombre": "Centros de Procesamiento de Datos",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "II",
+    "nombre": "Informática Industrial",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "martes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "martes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "TE",
+    "nombre": "Tecnologías Emergentes",
+    "curso": 4,
+    "cuatrimestre": 1,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "miercoles",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "miercoles",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PLD",
+    "nombre": "Programación Lúdica",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "CRIP",
+    "nombre": "Criptografía y Computación",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PDM",
+    "nombre": "Programación de Dispositivos Móviles",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PDS",
+    "nombre": "Procesamiento Digital de Señales",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "RMS",
+    "nombre": "Redes Multiservicio",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "SCGC",
+    "nombre": "Sistemas Cooperativos y Gestión de Contenidos",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "PDIH",
+    "nombre": "Periféricos y Dispositivos de Interfaz Humana",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "jueves",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "jueves",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "CII",
+    "nombre": "Circuitos Integrados e Impresos",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "viernes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          },
+          {
+            "dia": "viernes",
+            "inicio": "13:30",
+            "fin": "14:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
+  },
+  {
+    "codigo": "MEI",
+    "nombre": "Mantenimiento de Equipos Informáticos",
+    "curso": 4,
+    "cuatrimestre": 2,
+    "creditos": 6,
+    "grupos": [
+      {
+        "letra": "A",
+        "turno": "mañana",
+        "teoria": [
+          {
+            "dia": "lunes",
+            "inicio": "9:30",
+            "fin": "10:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "10:30",
+            "fin": "11:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "11:30",
+            "fin": "12:30"
+          },
+          {
+            "dia": "lunes",
+            "inicio": "12:30",
+            "fin": "13:30"
+          }
+        ],
+        "practicas": {
+          "subgrupos": []
+        }
+      }
+    ]
   }
 ];

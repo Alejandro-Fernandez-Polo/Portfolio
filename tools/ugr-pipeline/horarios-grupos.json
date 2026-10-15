@@ -1,0 +1,9029 @@
+{
+ "generadoDesde": "https://etsiit.ugr.es/sites/centros/etsiit/public/inline-files/Horarios%20GII%20%2826-27%29.pdf",
+ "curso": "2026/2027",
+ "asignaturas": {
+  "AA": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "ABD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "AC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C3": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "ACAP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "ALEM": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ]
+    }
+   }
+  },
+  "ALG": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "AO": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "AS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "BDD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ]
+    }
+   }
+  },
+  "CA": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "CEGE": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "CII": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "CPD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "CRIM": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "CRIP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "CUIA": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "DAI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ]
+    }
+   }
+  },
+  "DBA": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   }
+  },
+  "DDSI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "viernes",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ]
+    }
+   }
+  },
+  "DGP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A4": [
+      {
+       "dia": "jueves",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   }
+  },
+  "DHD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "DI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "DIU": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "DS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "DSD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "DSE": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "EC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "C3": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "ED": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "8:30",
+      "fin": "9:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "C3": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "19:30",
+      "fin": "20:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ]
+    }
+   }
+  },
+  "EISI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "ES": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "FBD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ]
+    }
+   }
+  },
+  "FFT": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "FIS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "FP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "FR": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "FS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "GRD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "IA": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "IC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "IES": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {}
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {}
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {}
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {}
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "IG": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "II": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "IN": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   }
+  },
+  "ISE": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "ISI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "IV": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ]
+    }
+   }
+  },
+  "LMD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      }
+     ]
+    }
+   }
+  },
+  "LP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "MAC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "MC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "MDA": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ]
+    }
+   }
+  },
+  "MEI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "MH": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "MP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "NPI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   }
+  },
+  "NTP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PDIH": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PDM": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PDOO": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "miercoles",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "C3": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "PDS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PGV": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PL": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   }
+  },
+  "PLD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PPR": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PTC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "PW": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "RI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ]
+    }
+   }
+  },
+  "RMS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "RSC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "SCD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C3": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "19:30",
+      "fin": "20:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "SCGC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "SE": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "SG": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "SIBW": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "SIE": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "SIG": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "SMD": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "SMM": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "SMP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "SO": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "miercoles",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C3": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "jueves",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "martes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   }
+  },
+  "SPSI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ]
+    }
+   }
+  },
+  "SS": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "SSO": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "SWAP": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "TDRC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "TE": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "TIC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "TID": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "TOC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "miercoles",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "lunes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "B3": [
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "C": {
+    "teoria": [
+     {
+      "dia": "martes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "martes",
+      "inicio": "10:30",
+      "fin": "11:30"
+     }
+    ],
+    "practicas": {
+     "C1": [
+      {
+       "dia": "lunes",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ],
+     "C2": [
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "12:30",
+       "fin": "13:30"
+      }
+     ]
+    }
+   },
+   "D": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "D1": [
+      {
+       "dia": "miercoles",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D2": [
+      {
+       "dia": "lunes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ],
+     "D3": [
+      {
+       "dia": "viernes",
+       "inicio": "17:30",
+       "fin": "18:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "18:30",
+       "fin": "19:30"
+      }
+     ]
+    }
+   },
+   "E": {
+    "teoria": [
+     {
+      "dia": "lunes",
+      "inicio": "15:30",
+      "fin": "16:30"
+     },
+     {
+      "dia": "lunes",
+      "inicio": "16:30",
+      "fin": "17:30"
+     }
+    ],
+    "practicas": {
+     "E1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "E3": [
+      {
+       "dia": "jueves",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   },
+   "F": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "F1": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "F2": [
+      {
+       "dia": "lunes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "lunes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "TR": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "9:30",
+      "fin": "10:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "8:30",
+      "fin": "9:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "9:30",
+      "fin": "10:30"
+     }
+    ],
+    "practicas": {}
+   }
+  },
+  "TSI": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "viernes",
+      "inicio": "11:30",
+      "fin": "12:30"
+     },
+     {
+      "dia": "viernes",
+      "inicio": "12:30",
+      "fin": "13:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "miercoles",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "martes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "jueves",
+       "inicio": "9:30",
+       "fin": "10:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      }
+     ]
+    }
+   },
+   "B": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "B1": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "B2": [
+      {
+       "dia": "martes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "martes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "TW": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "miercoles",
+      "inicio": "17:30",
+      "fin": "18:30"
+     },
+     {
+      "dia": "miercoles",
+      "inicio": "18:30",
+      "fin": "19:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "viernes",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "miercoles",
+       "inicio": "15:30",
+       "fin": "16:30"
+      },
+      {
+       "dia": "miercoles",
+       "inicio": "16:30",
+       "fin": "17:30"
+      }
+     ]
+    }
+   }
+  },
+  "VC": {
+   "A": {
+    "teoria": [
+     {
+      "dia": "jueves",
+      "inicio": "12:30",
+      "fin": "13:30"
+     },
+     {
+      "dia": "jueves",
+      "inicio": "13:30",
+      "fin": "14:30"
+     }
+    ],
+    "practicas": {
+     "A1": [
+      {
+       "dia": "jueves",
+       "inicio": "10:30",
+       "fin": "11:30"
+      },
+      {
+       "dia": "jueves",
+       "inicio": "11:30",
+       "fin": "12:30"
+      }
+     ],
+     "A2": [
+      {
+       "dia": "viernes",
+       "inicio": "8:30",
+       "fin": "9:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "9:30",
+       "fin": "10:30"
+      }
+     ],
+     "A3": [
+      {
+       "dia": "viernes",
+       "inicio": "12:30",
+       "fin": "13:30"
+      },
+      {
+       "dia": "viernes",
+       "inicio": "13:30",
+       "fin": "14:30"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -10,7 +10,7 @@ import {
   subjectMatchKey,
 } from "../../tools/ugr-pipeline/guias.js";
 import { guiaUrls } from "../../tools/ugr-pipeline/scrape-guias.mjs";
-import { subgruposPorAsignatura } from "../../tools/ugr-pipeline/horarios.js";
+import { practicasPorAsignatura, subgruposPorAsignatura } from "../../tools/ugr-pipeline/horarios.js";
 
 // Lectura de las guías docentes de la ETSIIT: de ahí salen las asignaciones de
 // grupo (qué profesor da la teoría de una letra y las prácticas de un
@@ -21,7 +21,7 @@ import { subgruposPorAsignatura } from "../../tools/ugr-pipeline/horarios.js";
 
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const GUIAS_FIXTURE = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
-const SUBGRUPOS_FIXTURE = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
+const SUBGRUPOS_FIXTURE = path.join(ROOT, "tools/ugr-pipeline/horarios-grupos.json");
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 
 /** Página mínima con la forma que tienen las guías de verdad. */
@@ -114,7 +114,7 @@ describe("buildAsignaciones", () => {
 
   // La numeración de las prácticas es la posición en esta lista, que es la que
   // publican los horarios.
-  const subgrupos = { SO: ["A1", "A2", "A3", "B1"] };
+  const subgrupos = { SO: { A1: [], A2: [], A3: [], B1: [] } };
 
   const guias = [
     {
@@ -147,7 +147,7 @@ describe("buildAsignaciones", () => {
     const { asignaciones, sinEtiqueta } = buildAsignaciones({
       guias,
       subjects,
-      subgrupos: { SO: ["A1", "A2", "A3"] },
+      subgrupos: { SO: { A1: [], A2: [], A3: [] } },
     });
     expect(sinEtiqueta).toEqual(["SO-nº4"]);
     expect(asignaciones.some((a) => a.name === "Marta Gil")).toBe(false);
@@ -209,6 +209,10 @@ describe("volcado de las guías", () => {
     // optativas que no tienen grupos en el horario (DGP, MDA, DI) no se cuentan.
     const horarios = JSON.parse(readFileSync(SUBGRUPOS_FIXTURE, "utf8"));
     expect(horarios.curso).toBe(fixture.curso);
+    const practicas = practicasPorAsignatura(horarios.asignaturas);
+    expect(Object.values(practicas).every((etiquetas) =>
+      Object.values(etiquetas).every((sesiones) => Array.isArray(sesiones) && sesiones.length > 0),
+    )).toBe(true);
     const catalogo = {};
     vm.runInNewContext(
       `${readFileSync(DATA_PATH, "utf8")}\nthis.__S__ = SUBJECTS;`,
@@ -222,7 +226,7 @@ describe("volcado de las guías", () => {
       const guia = porNombre.get(subjectMatchKey(subject.nombre));
       const numeros = new Set((guia?.practico || []).flatMap((p) => p.grupos.map(Number)));
       if (!numeros.size) continue;
-      const etiquetas = horarios.asignaturas[subject.codigo] || [];
+      const etiquetas = Object.keys(practicas[subject.codigo] || {});
       if (!etiquetas.length) {
         sinHorario += 1;
         continue;

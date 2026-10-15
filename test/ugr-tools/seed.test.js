@@ -11,6 +11,7 @@ import {
 } from "../../public/ugr/src/solver/catalog.js";
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
 import { buildAsignaciones } from "../../tools/ugr-pipeline/guias.js";
+import { practicasPorAsignatura } from "../../tools/ugr-pipeline/horarios.js";
 
 // Invariantes de los datos de EJEMPLO que siembra `tools/ugr-pipeline/emit-seed.mjs`
 // en su forma nueva. La app consulta dos copias de cada lista —el global
@@ -27,7 +28,7 @@ import { buildAsignaciones } from "../../tools/ugr-pipeline/guias.js";
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const FIXTURE_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
 const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
-const SUBGRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
+const GRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-grupos.json");
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 const DOCENTES_PATH = path.join(ROOT, "public/ugr/docentes.js");
 const DATASET_PATH = path.join(ROOT, "public/ugr/datasets/ugr/gi/2026-1.json");
@@ -37,7 +38,7 @@ const CATALOG_ID = "ugr/gi/2026-1";
 
 const fixture = JSON.parse(readFileSync(FIXTURE_PATH, "utf8"));
 const guiasFixture = JSON.parse(readFileSync(GUIAS_PATH, "utf8"));
-const subgruposFixture = JSON.parse(readFileSync(SUBGRUPOS_PATH, "utf8"));
+const gruposFixture = JSON.parse(readFileSync(GRUPOS_PATH, "utf8"));
 const dataset = JSON.parse(readFileSync(DATASET_PATH, "utf8"));
 const manifest = JSON.parse(readFileSync(MANIFEST_PATH, "utf8"));
 const hashes = JSON.parse(readFileSync(HASHES_PATH, "utf8"));
@@ -62,7 +63,7 @@ vm.runInNewContext(
 const { asignaciones, sinGuia } = buildAsignaciones({
   guias: guiasFixture.guias,
   subjects: subjectsSandbox.__S__,
-  subgrupos: subgruposFixture.asignaturas,
+  subgrupos: practicasPorAsignatura(gruposFixture.asignaturas),
 });
 
 /**
@@ -165,11 +166,12 @@ describe("datos de ejemplo sembrados", () => {
       expect(subject.mencion).toBe(delPlan.mencion);
     }
     expect(dataset.menciones.length).toBeGreaterThan(0);
-    expect(dataset.extraSubjects.length).toBeGreaterThan(0);
-    // Las del plan sin horario no pueden repetir una del catálogo: la lista de
-    // datos las distingue por eso.
-    const delCatalogo = new Set(dataset.subjects.map((s) => s.codigo));
-    expect(dataset.extraSubjects.filter((s) => delCatalogo.has(s.codigo))).toEqual([]);
+    // El plan trae dos asignaturas con el mismo código (`RI`), así que la lista
+    // de datos distingue las del catálogo por la pareja código + nombre.
+    const delCatalogo = new Set(dataset.subjects.map((s) => `${s.codigo}|${s.nombre}`));
+    expect(
+      dataset.extraSubjects.filter((s) => delCatalogo.has(`${s.codigo}|${s.nombre}`)),
+    ).toEqual([]);
   });
 
   it("los perfiles de la muestra no traen comentarios: el volcado es lo que los trae", () => {

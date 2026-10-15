@@ -1111,6 +1111,261 @@
    "codigo": "MC",
    "caracter": "Obligatoria",
    "mencion": "Común"
+  },
+  {
+   "codigo": "AA",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "IC",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "MAC",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "MH",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "TSI",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "CUIA",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "SWAP",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "SMM",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "TW",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "TDRC",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "ABD",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "ISI",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "PW",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "SIE",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "SMD",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "ACAP",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "AS",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "DHD",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "SMP",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "DSE",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "VC",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "NPI",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "PL",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "TIC",
+   "caracter": "Optativa",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "PTC",
+   "caracter": "Optativa",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "SS",
+   "caracter": "Optativa",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "DAI",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "IV",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "SPSI",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "TID",
+   "caracter": "Optativa",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "CRIM",
+   "caracter": "Optativa",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "IN",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "BDD",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "RI",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "SIG",
+   "caracter": "Optativa",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "RSC",
+   "caracter": "Optativa",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "GRD",
+   "caracter": "Optativa",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "SE",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "TR",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "CPD",
+   "caracter": "Obligatoria de Rama",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "II",
+   "caracter": "Optativa",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "TE",
+   "caracter": "Optativa",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "PLD",
+   "caracter": "Optativa",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "CRIP",
+   "caracter": "Optativa",
+   "mencion": "CSI"
+  },
+  {
+   "codigo": "PDM",
+   "caracter": "Optativa",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "PDS",
+   "caracter": "Optativa",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "RMS",
+   "caracter": "Optativa",
+   "mencion": "TI"
+  },
+  {
+   "codigo": "SCGC",
+   "caracter": "Optativa",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "PDIH",
+   "caracter": "Optativa",
+   "mencion": "SI"
+  },
+  {
+   "codigo": "CII",
+   "caracter": "Optativa",
+   "mencion": "IC"
+  },
+  {
+   "codigo": "MEI",
+   "caracter": "Optativa",
+   "mencion": "IC"
   }
  ],
  "menciones": [
@@ -1142,420 +1397,31 @@
  ],
  "extraSubjects": [
   {
-   "codigo": "AA",
-   "nombre": "Aprendizaje Automático",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "IC",
-   "nombre": "Ingeniería del Conocimiento",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "MAC",
-   "nombre": "Modelos Avanzados de Computación",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "MH",
-   "nombre": "Metaheurísticas",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "TSI",
-   "nombre": "Técnicas de los Sistemas Inteligentes",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "CUIA",
-   "nombre": "Computación Ubicua e Inteligencia Ambiental",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "SWAP",
-   "nombre": "Servidores Web de Altas Prestaciones",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "SMM",
-   "nombre": "Sistemas Multimedia",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "TW",
-   "nombre": "Tecnologías Web",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "TDRC",
-   "nombre": "Transmisión de Datos y Redes de Computadores",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "ABD",
-   "nombre": "Administración de Bases de Datos",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "ISI",
-   "nombre": "Ingeniería de Sistemas de Información",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "PW",
-   "nombre": "Programación Web",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "SIE",
-   "nombre": "Sistemas de Información para Empresas",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "SMD",
-   "nombre": "Sistemas Multidimensionales",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "ACAP",
-   "nombre": "Arquitectura y Computación de Altas Prestaciones",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "AS",
-   "nombre": "Arquitectura de Sistemas",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "DHD",
-   "nombre": "Desarrollo de Hardware Digital",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "SMP",
-   "nombre": "Sistemas con Microprocesadores",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "DSE",
-   "nombre": "Diseño de Sistemas Electrónicos",
-   "curso": 3,
-   "cuatrimestre": 2,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "VC",
-   "nombre": "Visión por Computador",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "NPI",
-   "nombre": "Nuevos Paradigmas de Interacción",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "PL",
-   "nombre": "Procesadores de Lenguajes",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "TIC",
-   "nombre": "Teoría de la Información y la Codificación",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "PTC",
-   "nombre": "Programación Técnica y Científica",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "SS",
-   "nombre": "Simulación de Sistemas",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "DAI",
-   "nombre": "Desarrollo de Aplicaciones para Internet",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "IV",
-   "nombre": "Infraestructura Virtual",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "SPSI",
-   "nombre": "Seguridad y Protección de Sistemas Informáticos",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "TID",
-   "nombre": "Tratamiento de Imágenes Digitales",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "CRIM",
-   "nombre": "Compresión y Recuperación de Información Multimedia",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "IN",
-   "nombre": "Inteligencia de Negocio",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "BDD",
-   "nombre": "Bases de Datos Distribuidas",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "RI",
-   "nombre": "Recuperación de Información",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "SIG",
-   "nombre": "Sistemas de Información Geográfica",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "RSC",
-   "nombre": "Redes y Sistemas Complejos",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "GRD",
-   "nombre": "Gestión de Recursos Digitales",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "SE",
-   "nombre": "Sistemas Empotrados",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "TR",
-   "nombre": "Tecnologías de Red",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "CPD",
-   "nombre": "Centros de Procesamiento de Datos",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Obligatoria de Rama",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "II",
-   "nombre": "Informática Industrial",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "TE",
-   "nombre": "Tecnologías Emergentes",
-   "curso": 4,
-   "cuatrimestre": 1,
-   "caracter": "Optativa",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "PLD",
-   "nombre": "Programación Lúdica",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "CSI"
-  },
-  {
-   "codigo": "CRIP",
-   "nombre": "Criptografía y Computación",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "CSI"
-  },
-  {
    "codigo": "RI",
    "nombre": "Robótica Industrial",
    "curso": 4,
    "cuatrimestre": 2,
+   "creditos": 6,
    "caracter": "Optativa",
    "mencion": "CSI"
   },
   {
-   "codigo": "PDM",
-   "nombre": "Programación de Dispositivos Móviles",
+   "codigo": "PFG",
+   "nombre": "Proyecto Fin de Grado",
    "curso": 4,
    "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "TI"
+   "creditos": 12,
+   "caracter": "Trabajo Fin de Grado",
+   "mencion": "Común"
   },
   {
-   "codigo": "PDS",
-   "nombre": "Procesamiento Digital de Señales",
+   "codigo": "PE",
+   "nombre": "Prácticas de Empresa",
    "curso": 4,
    "cuatrimestre": 2,
+   "creditos": 12,
    "caracter": "Optativa",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "RMS",
-   "nombre": "Redes Multiservicio",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "TI"
-  },
-  {
-   "codigo": "SCGC",
-   "nombre": "Sistemas Cooperativos y Gestión de Contenidos",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "PDIH",
-   "nombre": "Periféricos y Dispositivos de Interfaz Humana",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "SI"
-  },
-  {
-   "codigo": "CII",
-   "nombre": "Circuitos Integrados e Impresos",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "IC"
-  },
-  {
-   "codigo": "MEI",
-   "nombre": "Mantenimiento de Equipos Informáticos",
-   "curso": 4,
-   "cuatrimestre": 2,
-   "caracter": "Optativa",
-   "mencion": "IC"
+   "mencion": "Común"
   }
  ]
 }

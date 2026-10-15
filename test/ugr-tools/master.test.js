@@ -137,9 +137,16 @@ describe("buildMaster", () => {
   it("separa las asignaturas del plan que la app no planifica", () => {
     const { catalog } = buildMaster(dump([row()]), LEGACY);
     expect(catalog.subjects.map((s) => s.codigo)).toEqual(["SO"]);
-    expect(catalog.extraSubjects).toEqual([
-      { codigo: "RI", nombre: "Recuperación de Información", curso: 4, cuatrimestre: 1, caracter: "Obligatoria de Rama", mencion: "SI" },
-      { codigo: "RI", nombre: "Robótica Industrial", curso: 4, cuatrimestre: 2, caracter: "Optativa", mencion: "CSI" },
+    // Las dos `RI` comparten código pero no nombre, así que ninguna se pierde.
+    expect(catalog.extraSubjects.filter((s) => s.codigo === "RI")).toEqual([
+      { codigo: "RI", nombre: "Recuperación de Información", curso: 4, cuatrimestre: 1, creditos: 6, caracter: "Obligatoria de Rama", mencion: "SI" },
+      { codigo: "RI", nombre: "Robótica Industrial", curso: 4, cuatrimestre: 2, creditos: 6, caracter: "Optativa", mencion: "CSI" },
+    ]);
+    // Y siempre van el TFG y las prácticas de empresa: sin sus 12+12 ECTS los
+    // 240 del grado no cuadrarían.
+    expect(catalog.extraSubjects.filter((s) => ["PFG", "PE"].includes(s.codigo)).map((s) => [s.codigo, s.creditos])).toEqual([
+      ["PFG", 12],
+      ["PE", 12],
     ]);
   });
 
