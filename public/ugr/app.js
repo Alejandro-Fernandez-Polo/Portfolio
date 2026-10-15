@@ -11,6 +11,11 @@
   const START_HOUR = 8;
   const END_HOUR = 21;
   let compareIds = [];
+  // «Ignorar profesores» (I-11): la preferencia vive en el store
+  // (`ui.ignoreDocents`) y esta variable es la caché que lee el render, igual
+  // que `compareIds`. Con el modo activo los docentes no entran ni en la
+  // generación ni en la pantalla.
+  let ignoreDocents = false;
 
   let state = {
     selectedSubjects: {},  // { codigo: true }
@@ -220,6 +225,44 @@
     if (ui && Array.isArray(ui.compareIds)) compareIds = [...ui.compareIds];
   }
 
+  // Igual que `compareIds`, pero **fuera** de `hydrateAllFromStore`: la
+  // preferencia puede ser lo único que haya en el store (un usuario que solo
+  // encendió «Ignorar profesores»), y en ese caso `storeHasUserData` diría que
+  // el store está virgen y la preferencia se perdería al recargar.
+  function pushIgnoreDocentsToStore() {
+    if (!stateHydrated) return;
+    const store = __getStore();
+    if (!store) return;
+    dispatchStore({ type: 'ui/setIgnoreDocents', payload: { ignoreDocents: !!ignoreDocents } });
+  }
+
+  function hydrateIgnoreDocentsFromStore() {
+    const store = __getStore();
+    if (!store) return;
+    const ui = store.getState() && store.getState().ui;
+    if (ui && typeof ui.ignoreDocents === 'boolean') ignoreDocents = ui.ignoreDocents;
+  }
+
+  /**
+   * Enciende/apaga el modo profesores. Si al encenderlo estaba elegido el
+   * preset «Mejores profesores» se vuelve a «Equilibrado»: un preset cuyo peso
+   * depende de datos que ya no existen generaría horarios distintos bajo la
+   * misma etiqueta. El bloqueo (`blockGroups`) no se toca: se guarda igual y el
+   * solver lo ignora mientras el modo esté activo.
+   */
+  function setIgnoreDocents(on) {
+    ignoreDocents = !!on;
+    if (ignoreDocents && solverStrategy === 'professors') {
+      solverStrategy = 'balanced';
+      localStorage.setItem('ugr-solver-strategy', solverStrategy);
+    }
+    pushIgnoreDocentsToStore();
+    renderSolverFilters();
+    renderGroupConfig();
+    renderCalendar();
+    renderSavedConfigs();
+  }
+
   // Corte único entre "el store existe" y "el store tiene datos de usuario".
   // Un userState recién creado (o solo con defaults de Fase 5) no debe ganarle
   // a un `ugr-horario-state` legacy que aún no se ha migrado: en ese caso la
@@ -405,6 +448,7 @@
     // La caché ya refleja lo persistido: a partir de aquí se permiten los
     // pushes (fin de la ventana en la que un estado vacío podría pisar datos).
     stateHydrated = true;
+    hydrateIgnoreDocentsFromStore();
     // Migración propuestas
     if (!state.propuestas || !Array.isArray(state.propuestas) || state.propuestas.length === 0) {
       if (PROPUESTAS && PROPUESTAS.length > 0) {
@@ -652,9 +696,11 @@
   function calculateConfigMetrics(selectedSubjects, groupChoices) {
     // Delegación T02.4: la única implementación vive en ESM
     // (src/app/domain/metrics.js); aquí solo se inyectan los datos legacy.
+    // Con «Ignorar profesores» se inyecta un lookup vacío: la columna «Prof»
+    // desaparece del cálculo (queda a hueco) sin tocar la implementación pura.
     return getDomain().calculateConfigMetrics(selectedSubjects, groupChoices, {
       subjects: SUBJECTS,
-      dificultad: getDificultad,
+      dificultad: ignoreDocents ? () => null : getDificultad,
       difficultyScore: getDifficultyScore,
     });
   }
@@ -892,7 +938,9 @@
       eventDiv.style.height = height + '%';
       eventDiv.innerHTML = `<div class="event-label">${entry.codigo}</div><div class="event-type">${entry.tipo}</div>`;
       if (entry.letra) {
-        const diff = getDificultad(entry.codigo, entry.letra);
+        // Con «Ignorar profesores» tampoco se pinta el punto de dificultad en
+        // las miniaturas: el modo es «no influye» **y** «no se muestra».
+        const diff = ignoreDocents ? null : getDificultad(entry.codigo, entry.letra);
         if (diff) {
           const dot = document.createElement('span');
           dot.className = `event-diff-dot mini diff-${diff}`;
@@ -999,8 +1047,10 @@
 
   function getDifficultyScore(dificultad) {
     const api = typeof window !== 'undefined' && window.__ugrCatalog ? window.__ugrCatalog : null;
+    // Sin catálogo no se inventa un peso: «sin puntuación» (`null`) es un valor
+    // legítimo que el motor y las métricas entienden (I-11, 2026-10-15).
     if (api && typeof api.difficultyScore === 'function') return api.difficultyScore(dificultad);
-    return 3;
+    return null;
   }
 
   function getProfName(codigo, letra) {
@@ -1018,9 +1068,15 @@
     return info && info.profile && info.profile.dificultad ? info.profile.dificultad : null;
   }
 
-  function getOpinion(codigo, letra) {
+  /**
+   * Opiniones del profesor de un grupo (`profile.opinions[]`, I-11). Siempre un
+   * array: el llamante decide cómo apilarlas, y `[]` significa «sin
+   * opiniones», que es el caso normal.
+   */
+  function getOpinions(codigo, letra) {
     const info = getDocentInfo(getProfKey(codigo, letra));
-    return info && info.profile && info.profile.opinion ? info.profile.opinion : '';
+    const list = info && info.profile ? info.profile.opinions : null;
+    return Array.isArray(list) ? list : [];
   }
 
   function getDificultadLabel(d) {
@@ -1083,18 +1139,22 @@
           html += `<span class="session" style="color:#999;">-</span>`;
         }
         html += `</div>`;
-        if (profName) {
+        // Con «Ignorar profesores» el bloque del profesor no se pinta: el modo
+        // apaga también la parte informativa, no solo el peso en el coste.
+        if (profName && !ignoreDocents) {
           const diff = getDificultad(codigo, group.letra);
-          const opinion = getOpinion(codigo, group.letra);
+          const opinions = getOpinions(codigo, group.letra);
           html += `<div class="group-profesor">`;
           html += `<span class="prof-name">${profName}</span>`;
           if (diff) {
             html += `<span class="dificultad-badge" style="background:${getDificultadColor(diff)}">${getDificultadLabel(diff)}</span>`;
           }
           html += `<span class="prof-razon">${profRazon}</span>`;
-          if (opinion) {
-            html += `<span class="prof-opinion">${opinion}</span>`;
-          }
+          // Una línea por opinión: el modelo admite varias desde I-11 y
+          // apilarlas es más legible que concatenarlas en un texto largo.
+          opinions.forEach(text => {
+            html += `<span class="prof-opinion">${text}</span>`;
+          });
           html += `</div>`;
         }
         html += `</div></div>`;
@@ -1825,16 +1885,24 @@
     const earliestStart = findSolverFilter('earliestStart')?.value || '';
     const latestEnd = findSolverFilter('latestEnd')?.value || '';
     const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
-    const profOptions = getSolverProfessorOptions();
+    // Con «Ignorar profesores» no se construyen las opciones: ni se pinta el
+    // bloque ni se ofrece el preset «Mejores profesores».
+    const profOptions = ignoreDocents ? [] : getSolverProfessorOptions();
     const blockedCount = profOptions.filter(o => o.keys.every(k => blocked.has(k))).length;
 
     let html = '';
     html += '<div class="solver-filter-row">';
     html += '<label>Preferencia <select id="solver-strategy">';
     Object.entries(SOLVER_STRATEGIES).forEach(([key, s]) => {
+      if (ignoreDocents && key === 'professors') return;
       html += `<option value="${key}" ${solverStrategy === key ? 'selected' : ''}>${s.label}</option>`;
     });
     html += '</select></label>';
+    // «Ignorar profesores» (I-11): casilla provisional en el panel del
+    // generador —es donde hoy vive todo lo de docentes—; cuando exista la
+    // sección «Profesores» se mudará allí.
+    html += '<label class="solver-ignore-docents"><input type="checkbox" id="solver-ignore-docents"'
+      + `${ignoreDocents ? ' checked' : ''}> Ignorar profesores</label>`;
     html += '</div>';
     html += '<div class="solver-filter-row">';
     html += '<span class="solver-filter-label">Días libres:</span>';
@@ -1860,27 +1928,32 @@
     html += `<label>No acabar después de <input type="time" id="solver-latest-end" value="${latestEnd}"></label>`;
     html += '</div>';
 
-    html += '<div class="solver-prof-block">';
-    html += `<button type="button" class="btn btn-sm btn-secondary" id="btn-toggle-solver-profs">Bloquear profesores${blockedCount ? ` (${blockedCount})` : ''}</button>`;
-    html += '<div class="solver-prof-body" style="display:none">';
-    html += '<input type="search" id="solver-prof-search" placeholder="Buscar profesor o asignatura...">';
-    html += '<div class="solver-prof-list" id="solver-prof-list">';
-    if (profOptions.length === 0) {
-      html += '<p class="empty-state">No hay datos de profesores.</p>';
-    } else {
-      profOptions.forEach(o => {
-        const isBlocked = o.keys.every(k => blocked.has(k));
-        const subjects = [...o.subjects].sort().join(', ');
-        const diff = o.dificultad ? getDificultadColor(o.dificultad) : '';
-        html += `<label class="solver-prof-item" data-search="${o.name.toLowerCase()} ${subjects.toLowerCase()}">`;
-        html += `<input type="checkbox" data-prof-name="${o.name}" ${isBlocked ? 'checked' : ''}>`;
-        html += `<span class="solver-prof-diff" style="background:${diff}"></span>`;
-        html += `<span class="solver-prof-name">${o.name}</span>`;
-        html += `<span class="solver-prof-meta">${subjects}</span>`;
-        html += '</label>';
-      });
+    // El panel «Bloquear profesores» solo existe con los profesores activos:
+    // con el modo encendido el bloqueo no se aplica, y mostrar el botón
+    // invitaría a usar algo que el motor ignora.
+    if (!ignoreDocents) {
+      html += '<div class="solver-prof-block">';
+      html += `<button type="button" class="btn btn-sm btn-secondary" id="btn-toggle-solver-profs">Bloquear profesores${blockedCount ? ` (${blockedCount})` : ''}</button>`;
+      html += '<div class="solver-prof-body" style="display:none">';
+      html += '<input type="search" id="solver-prof-search" placeholder="Buscar profesor o asignatura...">';
+      html += '<div class="solver-prof-list" id="solver-prof-list">';
+      if (profOptions.length === 0) {
+        html += '<p class="empty-state">No hay datos de profesores.</p>';
+      } else {
+        profOptions.forEach(o => {
+          const isBlocked = o.keys.every(k => blocked.has(k));
+          const subjects = [...o.subjects].sort().join(', ');
+          const diff = o.dificultad ? getDificultadColor(o.dificultad) : '';
+          html += `<label class="solver-prof-item" data-search="${o.name.toLowerCase()} ${subjects.toLowerCase()}">`;
+          html += `<input type="checkbox" data-prof-name="${o.name}" ${isBlocked ? 'checked' : ''}>`;
+          html += `<span class="solver-prof-diff" style="background:${diff}"></span>`;
+          html += `<span class="solver-prof-name">${o.name}</span>`;
+          html += `<span class="solver-prof-meta">${subjects}</span>`;
+          html += '</label>';
+        });
+      }
+      html += '</div></div></div>';
     }
-    html += '</div></div></div>';
 
     panel.innerHTML = html;
 
@@ -1888,6 +1961,11 @@
     if (strategySelect) strategySelect.addEventListener('change', () => {
       solverStrategy = SOLVER_STRATEGIES[strategySelect.value] ? strategySelect.value : 'balanced';
       localStorage.setItem('ugr-solver-strategy', solverStrategy);
+    });
+
+    const ignoreDocentsInput = panel.querySelector('#solver-ignore-docents');
+    if (ignoreDocentsInput) ignoreDocentsInput.addEventListener('change', () => {
+      setIgnoreDocents(ignoreDocentsInput.checked);
     });
 
     panel.querySelectorAll('[data-solver-day]').forEach(cb => {
@@ -1949,6 +2027,10 @@
   }
 
   function blockedEmptySubjects(problem) {
+    // Con «Ignorar profesores» el bloqueo no se aplica (lo retira
+    // `buildProblem`), así que no puede dejar ninguna asignatura sin grupos: el
+    // aviso existiría por culpa de un filtro que el motor ya no mira.
+    if (ignoreDocents) return [];
     const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
     return problem.subjects.filter(code => {
       const s = SUBJECTS.find(x => x.codigo === code);
@@ -1957,42 +2039,23 @@
     });
   }
 
-  function buildSolverDocentScores(codes) {
-    const scores = {};
-    codes.forEach(code => {
-      const subject = SUBJECTS.find(x => x.codigo === code);
-      if (!subject) return;
-      subject.grupos.forEach(g => {
-        const d = getDificultad(code, g.letra);
-        if (d) scores[`${code}-${g.letra}`] = getDifficultyScore(d);
-      });
-    });
-    return scores;
-  }
-
   function buildSolverProblem() {
-    const codes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
-    const inTerm = codes.filter(c => {
-      const s = SUBJECTS.find(x => x.codigo === c);
-      return s && s.cuatrimestre === state.cuatrimestreActivo;
-    });
-    // Las asignaturas ya superadas (sup/pass) quedan fuera del dominio: el
-    // solver no debe planificar lo aprobado. Sin __ugrProgress (modo
-    // degradado) no se excluye nada. excludedPassed se informa en runSolver.
-    const passed = new Set(window.__ugrProgress?.getPassedCodes?.() || []);
-    const subjects = [];
-    const excludedPassed = [];
-    for (const c of inTerm) {
-      if (passed.has(c)) excludedPassed.push(c);
-      else subjects.push(c);
-    }
-    return {
-      subjects,
-      excludedPassed,
+    // Delegación I-11: la construcción vive en ESM (src/app/domain/problem.js);
+    // aquí solo se juntan los datos del cierre (estado, catálogo, superadas) y
+    // la preferencia del store. Antes de esta rebanada, las asignaturas
+    // superadas se dejaban fuera del dominio aquí mismo: el solver no debe
+    // planificar lo aprobado, y sin `__ugrProgress` (modo degradado) no se
+    // excluye nada.
+    return getDomain().buildProblem({
+      selectedSubjects: state.selectedSubjects,
+      catalog: SUBJECTS,
+      cuatrimestre: state.cuatrimestreActivo,
+      passedCodes: window.__ugrProgress?.getPassedCodes?.() || [],
       filters: solverFilters,
-      catalogVersion: 'legacy',
-      docentScores: buildSolverDocentScores(subjects),
-    };
+      ignoreDocents,
+      dificultad: getDificultad,
+      difficultyScore: getDifficultyScore,
+    });
   }
 
   function setSolverStatus(text) {
@@ -2202,7 +2265,7 @@
       maxTarde: configMaxTarde,
       blocks: getBlocks(),
       subjects: SUBJECTS,
-      dificultad: getDificultad,
+      dificultad: ignoreDocents ? () => null : getDificultad,
       difficultyScore: getDifficultyScore,
     });
     const toolbarHtml = '<div class="saved-configs-toolbar">' +
@@ -2252,7 +2315,10 @@
       html += `<td class="col-tarde">${d.tarde}</td>`;
       const dead = config.deadHours != null ? config.deadHours : calculateConfigDeadHours(config.selectedSubjects, config.groupChoices);
       html += `<td class="col-deadhours">${dead}</td>`;
-      html += `<td class="col-prof">${m.profScore}/${m.profCount * 6}</td>`;
+      // Sin nada que puntuar (`profCount === 0`) se pinta un hueco, no «0/0»:
+      // es el caso normal cuando no hay dificultades, cuando todas son
+      // «Desconocidas» y cuando el modo profesores está activo.
+      html += `<td class="col-prof">${m.profCount ? `${m.profScore}/${m.profCount * 6}` : '\u2014'}</td>`;
       html += `<td class="col-group ${m.sameGroupPerYear ? 'group-ok' : 'group-warn'}">${m.sameGroupPerYear ? '\u2713 Uniforme' : '\u2717 Mixtos'}</td>`;
       html += '<td class="col-actions">';
       html += `<button class="btn btn-sm btn-secondary" data-action="load" data-id="${config.id}">Cargar</button>`;
@@ -4149,10 +4215,14 @@
             dayLabels: DAY_LABELS,
             startHour: START_HOUR,
             endHour: END_HOUR,
-            getDificultad,
+            // «Ignorar profesores» (I-11): el modo también apaga lo que se ve,
+            // así que el calendario recibe lookups vacíos mientras esté activo
+            // (el punto de dificultad y la línea del profesor del tooltip
+            // desaparecen sin tocar el feature).
+            getDificultad: (codigo, letra) => (ignoreDocents ? null : getDificultad(codigo, letra)),
             getDificultadLabel,
             getDificultadColor,
-            getProfName,
+            getProfName: (codigo, letra) => (ignoreDocents ? '' : getProfName(codigo, letra)),
           });
           return ugrCalendarView;
         })

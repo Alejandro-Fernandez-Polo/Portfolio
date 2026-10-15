@@ -58,6 +58,7 @@ function selfTest() {
   assert(reducer(initialState, { type: "selection/setCuatrimestre", payload: { cuatrimestre: 2 } }).selection.cuatrimestreActivo === 2, "reducer: setCuatrimestre");
   assert(reducer(initialState, { type: "ui/setView", payload: { view: "asignaturas" } }).ui.view === "asignaturas", "reducer: setView");
   assert(reducer(initialState, { type: "ui/toggleFavorite", payload: { id: "test" } }).ui.favorites.includes("test"), "reducer: toggleFavorite add");
+  assert(reducer(initialState, { type: "ui/setIgnoreDocents", payload: { ignoreDocents: true } }).ui.ignoreDocents === true, "reducer: setIgnoreDocents");
   assert(reducer(initialState, { type: "unknown/command" }) === initialState, "reducer: unknown command no-op");
 
   // Migration tests - buildPlan generates selection/setAll (bulk), not per-item toggleSubject

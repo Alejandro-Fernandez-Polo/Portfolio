@@ -5,6 +5,7 @@ import {
   calculateConfigDays,
   findConflicts,
 } from '../../public/ugr/src/app/domain/metrics.js';
+import { difficultyScore as realDifficultyScore } from '../../public/ugr/src/solver/catalog.js';
 
 // Caracterización de métricas y conflictos (T02.4): fijan el comportamiento
 // legacy de app.js (`calculateConfig*` y `detectConflicts`) una vez que el
@@ -200,15 +201,42 @@ describe('calculateConfigMetrics', () => {
     expect(m.profCount).toBe(1);
   });
 
-  it('sin dificultad pero con puntito inyectado → peso por defecto 3 por profesor', () => {
+  it('sin `difficultyScore` inyectado no hay puntuación (el defecto no inventa un 3)', () => {
     const subjects = makeSubjects();
     const m = calculateConfigMetrics(
       { MAT: true, FIS: true },
       { MAT: { teoria: 'A', practica: null }, FIS: { teoria: 'A', practica: null } },
       { subjects, dificultad: () => 'verde' }
     );
-    expect(m.profScore).toBe(6);
-    expect(m.profCount).toBe(2);
+    expect(m.profScore).toBe(0);
+    expect(m.profCount).toBe(0);
+  });
+
+  it('«Desconocida» (`gris`) no puntúa ni entra en el denominador (I-11, 2026-10-15)', () => {
+    const subjects = makeSubjects();
+    const m = calculateConfigMetrics(
+      { MAT: true, FIS: true },
+      { MAT: { teoria: 'A', practica: null }, FIS: { teoria: 'A', practica: null } },
+      {
+        subjects,
+        dificultad: (codigo) => (codigo === 'MAT' ? 'naranja' : 'gris'),
+        difficultyScore: realDifficultyScore,
+      }
+    );
+    // MAT-A pesa 3 (naranja) y FIS-A se ignora: ni suma ni cuenta.
+    expect(m.profScore).toBe(3);
+    expect(m.profCount).toBe(1);
+  });
+
+  it('todo «Desconocido» deja la columna en hueco (`profCount === 0`)', () => {
+    const subjects = makeSubjects();
+    const m = calculateConfigMetrics(
+      { MAT: true, FIS: true },
+      { MAT: { teoria: 'A', practica: null }, FIS: { teoria: 'A', practica: null } },
+      { subjects, dificultad: () => 'gris', difficultyScore: realDifficultyScore }
+    );
+    expect(m.profScore).toBe(0);
+    expect(m.profCount).toBe(0);
   });
 
   it('redondea las horas a 1 decimal (1.25 h → 1.3)', () => {

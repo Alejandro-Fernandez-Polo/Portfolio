@@ -24,16 +24,19 @@ import { timeToMinutes, timesOverlap } from './schedule.js';
  * @param {Array} ctx.subjects catálogo de materias (`SUBJECTS` en producción).
  * @param {(codigo: string, letra: string) => string|null} [ctx.dificultad]
  *   lookup de dificultad del profesor; por defecto `null` (sin puntuación).
- * @param {(d: string) => number} [ctx.difficultyScore] peso de una dificultad;
- *   por defecto `3` (mismo fallback que `getDifficultyScore` sin catálogo).
+ * @param {(d: string) => number|null} [ctx.difficultyScore] peso de una
+ *   dificultad; por defecto `null` (sin puntuación). Un `null` —o una
+ *   dificultad «Desconocida», que es lo que devuelve el catálogo— no suma ni
+ *   cuenta: el profesor se ignora en lugar de puntuar como «Difícil».
  * @returns {{manana: number, tarde: number, profScore: number,
  *   profCount: number, sameGroupPerYear: boolean}} horas redondeadas a 1
- *   decimal; `profScore`/`profCount` enteros sin redondear.
+ *   decimal; `profScore`/`profCount` enteros sin redondear. `profCount === 0`
+ *   significa «no hay nada que puntuar» y el llamante lo pinta como hueco.
  */
 export function calculateConfigMetrics(
   selectedSubjects,
   groupChoices,
-  { subjects, dificultad = () => null, difficultyScore = () => 3 } = {}
+  { subjects, dificultad = () => null, difficultyScore = () => null } = {}
 ) {
   let manana = 0, tarde = 0;
   let profScore = 0, profCount = 0;
@@ -60,9 +63,14 @@ export function calculateConfigMetrics(
       sumHours(group.practicas[choice.practica]);
     }
 
+    // «Desconocido» no puntúa (decisión del 2026-10-15): sin puntuación no hay
+    // ni suma ni entrada en el denominador, de modo que la columna «Prof» no
+    // se ensucia con profesores de los que no se sabe nada. Si nada puntúa,
+    // `profCount` queda a 0 y el llamante pinta el hueco.
     const d = dificultad(codigo, group.letra);
-    if (d) {
-      profScore += difficultyScore(d);
+    const score = d ? difficultyScore(d) : null;
+    if (score != null) {
+      profScore += score;
       profCount++;
     }
 

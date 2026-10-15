@@ -78,7 +78,12 @@ function getDocentScores(codes) {
     for (const group of subject.grupos || []) {
       const docent = getDocentByKey(catalog, `${code}-${group.letra}`);
       const dificultad = docent?.profile?.dificultad;
-      if (dificultad) scores[`${code}-${group.letra}`] = difficultyScore(dificultad);
+      if (!dificultad) continue;
+      // «Desconocido» no puntúa (I-11): `difficultyScore` devuelve `null` y la
+      // clave se omite en vez de guardar un `null` que el motor leería igual
+      // pero que ensuciaría el mapa.
+      const score = difficultyScore(dificultad);
+      if (score != null) scores[`${code}-${group.letra}`] = score;
     }
   }
   return scores;

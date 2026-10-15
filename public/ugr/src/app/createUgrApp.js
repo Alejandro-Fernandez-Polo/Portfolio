@@ -15,6 +15,7 @@ import {
   applyApellidoSubgroups,
 } from "./domain/selection.js";
 import { buildActiveSchedule, buildConflictSet } from "./domain/calendar.js";
+import { buildDocentScores, buildProblem } from "./domain/problem.js";
 import {
   isConfigFavorited,
   findDuplicateConfig,
@@ -75,7 +76,9 @@ export function createUgrApp(dependencies) {
     // export/import; B4-c añade la evaluación de bloqueos y la construcción
     // del payload de `blocks/add` (el almacenamiento de los bloqueos sigue en
     // el store, que inyecta el llamante); B4-d añade el pipeline puro de
-    // listado (ordenar/filtrar y paginar) que usa `renderSavedConfigs`. Los
+    // listado (ordenar/filtrar y paginar) que usa `renderSavedConfigs`;
+    // `problem.js` (I-11) construye el problema del solver (cuatrimestre,
+    // superadas, puntuaciones de profesor y modo profesores). Los
     // `subjects`/lookups concretos los inyecta el llamante en cada
     // invocación.
     domain: {
@@ -92,6 +95,8 @@ export function createUgrApp(dependencies) {
       applyApellidoSubgroups,
       buildActiveSchedule,
       buildConflictSet,
+      buildDocentScores,
+      buildProblem,
       isConfigFavorited,
       findDuplicateConfig,
       buildConfigFromState,

@@ -1899,6 +1899,11 @@ footer {
 .solver-day-check {
   font-size: 0.85rem;
 }
+/* «Ignorar profesores» (I-11): casilla de modo, con algo más de peso visual
+   que el resto de filtros porque cambia qué se genera y qué se muestra. */
+.solver-ignore-docents {
+  font-weight: 600;
+}
 .solver-progress {
   height: 8px;
   width: 100%;

@@ -20,6 +20,10 @@ export const initialState = {
     view: "horario",
     compareIds: [],
     favorites: [],
+    // «Ignorar profesores» (I-11): apagado por defecto y sin puerta, como el
+    // resto de preferencias de la vista. Vive en el store —no en localStorage—
+    // para viajar con el usuarioState y sobrevivir al reload.
+    ignoreDocents: false,
   },
   propuestas: {
     items: [],
@@ -219,6 +223,10 @@ export function reduceUI(state, cmd) {
       else ns.ui.favorites.push(id);
       return nextRev(ns);
     }
+    case "ui/setIgnoreDocents": {
+      ns.ui.ignoreDocents = !!cmd.payload.ignoreDocents;
+      return nextRev(ns);
+    }
     default:
       return state;
   }
@@ -359,7 +367,7 @@ const KNOWN_COMMANDS = new Set([
   "selection/toggleSubject", "selection/setGroups", "selection/setCuatrimestre", "selection/setAll", "selection/clear",
   "filters/add", "filters/remove", "filters/setWeight", "filters/setAll",
   "blocks/add", "blocks/remove", "blocks/setAll",
-  "ui/setView", "ui/setCompareIds", "ui/toggleFavorite",
+  "ui/setView", "ui/setCompareIds", "ui/toggleFavorite", "ui/setIgnoreDocents",
   "propuestas/save", "propuestas/delete", "propuestas/setActive", "propuestas/setVista", "propuestas/setAll",
   "progress/setStatus", "progress/setCredit", "progress/setMapping", "progress/setEquivalenceEstados", "progress/setAll",
   "configs/save",
