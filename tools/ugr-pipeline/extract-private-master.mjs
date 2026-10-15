@@ -19,9 +19,12 @@
  *   - **El `autor` de cada comentario no se copia**: lo descarta
  *     `normalizeComentarios` (`src/solver/catalog.js`), que es el único punto
  *     por el que los comentarios entran al modelo.
- *   - **Las asignaciones no van aquí**: quién da cada grupo es del usuario, no
- *     del volcado (el volcado no tiene letras de grupo). El maestro sale con
- *     `docents: []`.
+ *   - **Las asignaciones no salen del volcado**: la hoja dice qué profesor da
+ *     cada (asignatura, modalidad), pero no las letras de grupo. Quién da cada
+ *     letra y cada subgrupo lo publican las guías docentes de la ETSIIT
+ *     (`guias-docentes.json`, cruzado con los subgrupos de los horarios en
+ *     `horarios-subgrupos.json`), así que el maestro las recibe de
+ *     `buildAsignaciones`, las mismas que siembra la muestra.
  *   - El sufijo `" (optativa)"` de `asignatura` **no** es decorativo ni
  *     sistemático: la hoja lo usa en unas optativas y no en otras, y es lo
  *     único que distingue las dos asignaturas que comparten código (`RI` =
@@ -45,6 +48,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import vm from "node:vm";
 
 import {
+  attachDocents,
   attachPlan,
   difficultyFromLabel,
   fromLegacySubjects,
@@ -53,11 +57,14 @@ import {
   validateCatalog,
 } from "../../public/ugr/src/solver/catalog.js";
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
+import { buildAsignaciones } from "./guias.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const PRIVATE_DIR = path.join(ROOT, "privado");
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 const DUMP_PATH = path.join(ROOT, "public/ugr/datasets/docentes_excel.json");
+const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
+const SUBGRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
 const CATALOG_PATH = path.join(PRIVATE_DIR, "catalogo.json");
 const DISCARDED_PATH = path.join(PRIVATE_DIR, "descartados.json");
 
@@ -104,7 +111,7 @@ const MODALITY_KEYS = { "Teoría": "teoria", "Prácticas": "practicas" };
  * @param {Array} legacySubjects asignaturas con horario de `data.js`.
  * @returns {{catalog: Object, stats: Object}} catálogo y cifras del proceso.
  */
-export function buildMaster(dump, legacySubjects) {
+export function buildMaster(dump, legacySubjects, guias = [], subgrupos = {}) {
   const rows = Array.isArray(dump.docentes) ? dump.docentes : [];
   const catalogCodes = new Set(legacySubjects.map((s) => s.codigo));
   const unknownLabels = new Set();
@@ -254,12 +261,18 @@ export function buildMaster(dump, legacySubjects) {
     // Sin hash: la integridad del maestro la da el cifrado (AES-GCM) del
     // paquete, no un hash de contenido que nadie verifica.
     hash: "",
-    sources: ["volcado"],
+    sources: ["volcado", "guías"],
     // El maestro es el dato real del autor, no la muestra pública del repo.
     sampleDocents: false,
   };
 
   const catalog = fromLegacySubjects(enrichedSubjects, meta);
+  // Las asignaciones son las de las guías docentes, no las del volcado: el
+  // maestro y la muestra llevan las mismas (son públicas y sin opiniones).
+  attachDocents(
+    catalog,
+    buildAsignaciones({ guias, subjects: enrichedSubjects, subgrupos }).asignaciones,
+  );
   attachPlan(catalog, {
     profesores,
     menciones: dump.menciones,
@@ -307,7 +320,14 @@ export function buildMaster(dump, legacySubjects) {
 async function main() {
   const legacySubjects = loadLegacyGlobal(DATA_PATH, "SUBJECTS");
   const dump = JSON.parse(readFileSync(DUMP_PATH, "utf8"));
-  const { catalog, stats } = buildMaster(dump, legacySubjects);
+  const guiasFixture = JSON.parse(readFileSync(GUIAS_PATH, "utf8"));
+  const subgruposFixture = JSON.parse(readFileSync(SUBGRUPOS_PATH, "utf8"));
+  const { catalog, stats } = buildMaster(
+    dump,
+    legacySubjects,
+    guiasFixture.guias || [],
+    subgruposFixture.asignaturas || {},
+  );
 
   // Puerta de calidad: si el catálogo no pasa el mismo esquema y las mismas
   // comprobaciones que exige el cliente al descargarlo, no se escribe.

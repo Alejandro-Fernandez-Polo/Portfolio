@@ -7,8 +7,8 @@
       "plan": "2022",
       "version": "2026-1",
       "url": "/ugr/datasets/ugr/gi/2026-1.json",
-      "hash": "sha256-2c03b0139a96d76e14411eb0cf98e6cde5feab4a64008c446e45cce7d433d1e5",
-      "updatedAt": "2026-10-15T17:07:29.836Z",
+      "hash": "sha256-763d0cfba18b21d05372868c561be855267b40e681bb7e4c31b8872584587ed6",
+      "updatedAt": "2026-10-15T18:27:58.709Z",
       "sources": [
         "legacy",
         "muestra"

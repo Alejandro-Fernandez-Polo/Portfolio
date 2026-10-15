@@ -10,6 +10,7 @@ import {
   validateCatalog,
 } from "../../public/ugr/src/solver/catalog.js";
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
+import { buildAsignaciones } from "../../tools/ugr-pipeline/guias.js";
 
 // Invariantes de los datos de EJEMPLO que siembra `tools/ugr-pipeline/emit-seed.mjs`
 // en su forma nueva. La app consulta dos copias de cada lista —el global
@@ -18,11 +19,16 @@ import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
 // fixture, que el hash del dataset cuadre con el que verifica el cliente al
 // descargarlo, y que las asignaciones apunten a grupos que existen.
 //
-// La muestra son los docentes por letra del autor traducidos a la forma del
-// volcado; el texto completo de la hoja vive cifrado en el paquete.
+// Las **asignaciones** no salen del fixture: las publica la ETSIIT en sus guías
+// docentes y el test las deriva igual que el emisor. Los **perfiles** —con sus
+// dificultades— son la muestra del autor; el texto completo de la hoja vive
+// cifrado en el paquete.
 
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const FIXTURE_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
+const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
+const SUBGRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
+const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 const DOCENTES_PATH = path.join(ROOT, "public/ugr/docentes.js");
 const DATASET_PATH = path.join(ROOT, "public/ugr/datasets/ugr/gi/2026-1.json");
 const MANIFEST_PATH = path.join(ROOT, "public/ugr/datasets/manifest.json");
@@ -30,6 +36,8 @@ const HASHES_PATH = path.join(ROOT, "public/ugr/datasets/_hashes.json");
 const CATALOG_ID = "ugr/gi/2026-1";
 
 const fixture = JSON.parse(readFileSync(FIXTURE_PATH, "utf8"));
+const guiasFixture = JSON.parse(readFileSync(GUIAS_PATH, "utf8"));
+const subgruposFixture = JSON.parse(readFileSync(SUBGRUPOS_PATH, "utf8"));
 const dataset = JSON.parse(readFileSync(DATASET_PATH, "utf8"));
 const manifest = JSON.parse(readFileSync(MANIFEST_PATH, "utf8"));
 const hashes = JSON.parse(readFileSync(HASHES_PATH, "utf8"));
@@ -42,6 +50,20 @@ vm.runInNewContext(
 );
 const legacyDocentes = sandbox.__D__;
 const legacyProfesores = sandbox.__P__;
+
+// Las asignaciones que debe haber: las guías docentes cruzadas con el catálogo,
+// con la misma función que usa el emisor.
+const subjectsSandbox = {};
+vm.runInNewContext(
+  `${readFileSync(DATA_PATH, "utf8")}\nthis.__S__ = SUBJECTS;`,
+  subjectsSandbox,
+  { filename: DATA_PATH },
+);
+const { asignaciones, sinGuia } = buildAsignaciones({
+  guias: guiasFixture.guias,
+  subjects: subjectsSandbox.__S__,
+  subgrupos: subgruposFixture.asignaturas,
+});
 
 /**
  * Mismo algoritmo que el cliente (`catalog-remote.js` `contentHash`) y que el
@@ -67,15 +89,17 @@ function hashOf(subjects, docents, profesores, menciones, extraSubjects) {
 }
 
 describe("datos de ejemplo sembrados", () => {
-  it("asignaciones y perfiles dicen lo mismo en el fixture y en las dos copias", () => {
-    expect(legacyDocentes).toEqual(fixture.docents);
-    expect(dataset.docents).toEqual(fixture.docents);
+  it("las asignaciones son las de las guías y los perfiles los del fixture, en las dos copias", () => {
+    expect(sinGuia).toEqual([]);
+    expect(asignaciones.length).toBeGreaterThan(0);
+    expect(legacyDocentes).toEqual(asignaciones);
+    expect(dataset.docents).toEqual(asignaciones);
     expect(legacyProfesores).toEqual(fixture.profesores);
     expect(dataset.profesores).toEqual(fixture.profesores);
   });
 
-  it("el fixture está en la forma canónica (normalizar no cambia nada)", () => {
-    expect(fixture.docents.map(normalizeDocent)).toEqual(fixture.docents);
+  it("todo está en la forma canónica (normalizar no cambia nada)", () => {
+    expect(asignaciones.map(normalizeDocent)).toEqual(asignaciones);
     expect(fixture.profesores.map(normalizeProfesor)).toEqual(fixture.profesores);
   });
 
@@ -120,13 +144,16 @@ describe("datos de ejemplo sembrados", () => {
     expect(huerfanas).toEqual([]);
   });
 
-  it("cada perfil de la muestra tiene su terna y ninguna asignación queda sin perfil", () => {
-    const perfiles = new Set(dataset.profesores.map((p) => p.key));
-    const sinPerfil = dataset.docents
-      .map((d) => `${d.subjectCode}|${d.modalidad}|${d.name}`)
-      .filter((key) => !perfiles.has(key));
-    expect(sinPerfil).toEqual([]);
+  it("las claves de asignaciones y perfiles son las canónicas de su terna", () => {
+    const codigos = new Set(dataset.subjects.map((s) => s.codigo));
     expect(dataset.profesores.every((p) => p.key === `${p.subjectCode}|${p.modalidad}|${p.name}`)).toBe(true);
+    expect(dataset.profesores.every((p) => codigos.has(p.subjectCode))).toBe(true);
+    expect(dataset.docents.every((d) => d.key === `${d.subjectCode}-${d.groupLetter}`)).toBe(true);
+    // Los perfiles de la muestra son suyos y no tienen por qué cubrir todas las
+    // asignaciones: un profesor sin perfil aparece en el horario sin valoración.
+    const perfiles = new Set(dataset.profesores.map((p) => p.key));
+    expect(dataset.docents.filter((d) => perfiles.has(`${d.subjectCode}|${d.modalidad}|${d.name}`)).length)
+      .toBeGreaterThan(0);
   });
 
   it("la muestra lleva el plan: cada asignatura con su carácter y su mención", () => {

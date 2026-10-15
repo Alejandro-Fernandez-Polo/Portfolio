@@ -1,8 +1,10 @@
 /**
- * Siembra los datos de EJEMPLO de `/ugr`.
+ * Siembra la muestra pública de `/ugr`.
  *
- * Genera, desde una sola fuente de verdad (`tools/ugr-pipeline/sample-docents.json`),
- * las dos copias que la app consulta:
+ * Genera, desde tres fuentes —`sample-docents.json` (los perfiles de profesor y
+ * el plan), `guias-docentes.json` (qué profesor lleva cada grupo) y
+ * `horarios-subgrupos.json` (a qué etiqueta del horario corresponde cada número
+ * de grupo de prácticas)—, las dos copias que la app consulta:
  *   - `public/ugr/docentes.js` — el global `DOCENTES` con las **asignaciones**
  *     (qué profesor da la teoría de una letra o las prácticas de un subgrupo),
  *     que es lo que leen los scripts clásicos, el monolito y el kernel (un
@@ -18,16 +20,24 @@
  * filtro por mención funcionan sin contraseña. Lo que sí viaja cifrado son las
  * valoraciones: los perfiles de profesor y, con ellos, opiniones y comentarios.
  *
- * Qué es «muestra» (decisión del autor): los 46 docentes
- * que había en `privado/` —los suyos, por letra— traducidos a la forma nueva.
- * Hacen de red sin contraseña; el volcado completo de la hoja viaja cifrado en
- * el paquete que genera `build-package.mjs`. Por eso el dataset se marca con
+ * Las **asignaciones** no se escriben aquí: salen de las guías docentes de la
+ * ETSIIT (`guias-docentes.json`), que es donde la escuela publica qué profesor
+ * da la teoría de cada letra y las prácticas de cada subgrupo, cruzadas con los
+ * subgrupos de los horarios (`horarios-subgrupos.json`), que dicen a qué
+ * etiqueta corresponde cada número. Son currículo público y sin opiniones, así
+ * que la muestra las lleva tal cual y sin contraseña el horario ya enseña los
+ * profesores reales de cada grupo.
+ *
+ * Qué es «muestra» (decisión del autor): los perfiles de profesor del fixture
+ * —con sus dificultades— son la red de la app sin contraseña; el volcado
+ * completo de la hoja viaja cifrado en el paquete que genera
+ * `build-package.mjs`. Por eso el dataset se marca con
  * `meta.sampleDocents: true`: significa «los docentes de este catálogo son la
  * muestra pública», no «son inventados».
  *
- * El hash del dataset cubre `{subjects, docents, profesores}` y lo verifica el
- * cliente al descargarlo, así que este script es el único sitio donde se
- * regeneran los tres ficheros a la vez.
+ * El hash del dataset cubre `{subjects, docents, profesores, menciones,
+ * extraSubjects}` y lo verifica el cliente al descargarlo, así que este script es
+ * el único sitio donde se regeneran los cuatro ficheros a la vez.
  *
  * Uso: `node tools/ugr-pipeline/emit-seed.mjs`
  */
@@ -39,24 +49,31 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
 import { attachDocents, attachPlan, fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
+import { buildAsignaciones } from "./guias.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
 const SAMPLE_DOCENTS_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
+const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
+const SUBGRUPOS_PATH = path.join(ROOT, "tools/ugr-pipeline/horarios-subgrupos.json");
 const DOCENTES_PATH = path.join(ROOT, "public/ugr/docentes.js");
 const DATASETS_DIR = path.join(ROOT, "public/ugr/datasets");
 const CATALOG_ID = "ugr/gi/2026-1";
 const DATASET_RELATIVE_URL = `/ugr/datasets/${CATALOG_ID}.json`;
 
-const DOCENTES_HEADER = `/* UGR Horario - Docentes de EJEMPLO (capa de datos)
+const DOCENTES_HEADER = `/* UGR Horario - Docentes (capa de datos)
  *
  * Declara los dos globales de la capa de docentes: "DOCENTES" son las
  * asignaciones (qué profesor da la teoría de una letra de grupo —groupLetter
- * "A"— o las prácticas de un subgrupo —"A1"-) y "PROFESORES" son los perfiles
- * del volcado, uno por (asignatura, modalidad, nombre). El volcado
- * completo de la hoja viaja cifrado en datasets/ugr/gi/package.enc.json y se
- * superpone al escribir la contraseña. Fichero generado: no lo edites a
- * mano, cambia tools/ugr-pipeline/sample-docents.json y ejecuta emit-seed.mjs.
+ * "A"— o las prácticas de un subgrupo —"A1"-) y "PROFESORES" son los perfiles,
+ * uno por (asignatura, modalidad, nombre).
+ *
+ * Las asignaciones son las que publica la ETSIIT en sus guías docentes: las
+ * deriva tools/ugr-pipeline/guias.js de guias-docentes.json. Los perfiles son la
+ * muestra del autor (sample-docents.json); el volcado completo de la hoja viaja
+ * cifrado en datasets/ugr/gi/package.enc.json y se superpone al escribir la
+ * contraseña. Fichero generado: no lo edites a mano; cambia los fixtures y
+ * ejecuta tools/ugr-pipeline/emit-seed.mjs.
  */`;
 
 function loadLegacyGlobal(filePath, name) {
@@ -100,6 +117,8 @@ function writeJson(filePath, value) {
 
 const legacySubjects = loadLegacyGlobal(DATA_PATH, "SUBJECTS");
 const fixture = JSON.parse(readFileSync(SAMPLE_DOCENTS_PATH, "utf8"));
+const guiasFixture = JSON.parse(readFileSync(GUIAS_PATH, "utf8"));
+const subgruposFixture = JSON.parse(readFileSync(SUBGRUPOS_PATH, "utf8"));
 
 const catalog = fromLegacySubjects(legacySubjects);
 
@@ -120,18 +139,36 @@ if (sinPlanAplicado.length) {
   throw new Error(`asignaturas con plan que no están en el catálogo: ${sinPlanAplicado.join(", ")}`);
 }
 
-attachDocents(catalog, fixture.docents);
+// ─── Asignaciones: las que publican las guías docentes de la ETSIIT ─────────
+// Sin guía no hay asignación: si una asignatura del catálogo no cruza con
+// ninguna guía, lo que ha cambiado es el nombre de una o de otra y hay que
+// verlo, no sembrar un horario sin profesores.
+const guias = Array.isArray(guiasFixture.guias) ? guiasFixture.guias : [];
+const subgrupos = subgruposFixture.asignaturas || {};
+const {
+  asignaciones: docents,
+  sinGuia,
+  conflictos,
+  sinEtiqueta,
+} = buildAsignaciones({ guias, subjects: legacySubjects, subgrupos });
+if (sinGuia.length) {
+  throw new Error(`asignaturas del catálogo sin guía docente: ${sinGuia.join(", ")}`);
+}
+
+attachDocents(catalog, docents);
 attachPlan(catalog, {
   profesores: fixture.profesores,
   menciones: fixture.menciones,
   extraSubjects: fixture.extraSubjects,
 });
 
-// El fixture es la entrada, así que tiene que estar ya en la forma canónica:
-// si normalizar cambia algo, fixture y modelo se han desincronizado y el error
-// evita que ese desajuste llegue al dataset.
-if (canonicalJson(catalog.docents) !== canonicalJson(fixture.docents)) {
-  throw new Error("las asignaciones de ejemplo no están en la forma canónica");
+// El fixture es la entrada, así que tiene que estar ya en la forma canónica: si
+// normalizar cambia algo, fixture y modelo se han desincronizado y el error
+// evita que ese desajuste llegue al dataset. Las asignaciones no vienen del
+// fixture sino de las guías, así que lo que se comprueba es que `attachDocents`
+// las dejara tal cual.
+if (canonicalJson(catalog.docents) !== canonicalJson(docents)) {
+  throw new Error("las asignaciones de las guías no están en la forma canónica");
 }
 if (canonicalJson(catalog.profesores) !== canonicalJson(fixture.profesores)) {
   throw new Error("los profesores de ejemplo no están en la forma canónica");
@@ -198,7 +235,7 @@ writeFileSync(
 
 const summary = [
   `subjects: ${dataset.subjects.length}`,
-  `docents: ${dataset.docents.length}`,
+  `docents: ${dataset.docents.length} (guías: ${guias.length}, conflictos: ${conflictos.length}, sin destino en el horario: ${sinEtiqueta.length})`,
   `profesores: ${dataset.profesores.length}`,
   `menciones: ${dataset.menciones.length}, plan sin horario: ${dataset.extraSubjects.length}`,
   `hash: ${hash}`,

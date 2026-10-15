@@ -149,10 +149,26 @@ describe("buildMaster", () => {
     expect(catalog.subjects[0].mencion).toBe("Común");
   });
 
-  it("no se trae las asignaciones: eso es del usuario, no del volcado", () => {
+  it("recibe las asignaciones de las guías docentes, no del volcado", () => {
+    // El volcado no trae letras de grupo; las guías sí, y el punto final de la
+    // guía no puede colarse en el nombre (la app cruza profesor por nombre).
+    const { catalog } = buildMaster(dump([row()]), LEGACY, [
+      {
+        nombre: "Sistemas Operativos",
+        curso: "2026/2027",
+        teorico: [{ nombre: "Ana Ruiz.", grupos: ["A"] }],
+        practico: [{ nombre: "Luis Pérez", grupos: ["1", "2"] }],
+      },
+    ]);
+    expect(catalog.docents).toEqual([
+      { key: "SO-A", name: "Ana Ruiz", subjectCode: "SO", groupLetter: "A", modalidad: "Teoría" },
+    ]);
+    expect(catalog.meta.sampleDocents).toBe(false);
+  });
+
+  it("sin guías no inventa asignaciones", () => {
     const { catalog } = buildMaster(dump([row()]), LEGACY);
     expect(catalog.docents).toEqual([]);
-    expect(catalog.meta.sampleDocents).toBe(false);
   });
 
   it("falla en voz alta con una etiqueta de dificultad que no conoce", () => {

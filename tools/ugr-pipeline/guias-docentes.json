@@ -1,0 +1,2969 @@
+{
+ "generadoDesde": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica",
+ "curso": "2026/2027",
+ "guias": [
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/administracion-bases-datos-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Administración de Bases de Datos (Especialidad Sistemas de Información) (296113T)",
+   "nombre": "Administración de Bases de Datos (Especialidad Sistemas de Información) (296113T)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Ignacio José Blanco Medina",
+     "grupos": [
+      "2"
+     ]
+    },
+    {
+     "nombre": "David Criado Ramón",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/algebra-lineal-y-estructuras-matematicas/11/guia-docente",
+   "titulo": "Guía docente de Álgebra Lineal y Estructuras Matemáticas (2961111)",
+   "nombre": "Álgebra Lineal y Estructuras Matemáticas (2961111)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Jesús García Miranda",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "José Antonio Jiménez Madrid",
+     "grupos": [
+      "F"
+     ]
+    },
+    {
+     "nombre": "José Carlos Rosales González",
+     "grupos": [
+      "A",
+      "D"
+     ]
+    },
+    {
+     "nombre": "Juan Manuel Urbano Blanco",
+     "grupos": [
+      "B",
+      "C"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Celia Cordovilla Sánchez",
+     "grupos": [
+      "10",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Jesús García Miranda",
+     "grupos": [
+      "12",
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "José Antonio Jiménez Madrid",
+     "grupos": [
+      "11",
+      "15",
+      "16"
+     ]
+    },
+    {
+     "nombre": "José Carlos Rosales González",
+     "grupos": [
+      "1",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Juan Manuel Urbano Blanco",
+     "grupos": [
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/algoritmica/11/guia-docente",
+   "titulo": "Guía docente de Algorítmica (2961126)",
+   "nombre": "Algorítmica (2961126)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Francisco Javier Abad Ortega",
+     "grupos": [
+      "C",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Miguel García Silvente",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Juan Francisco Huete Guadix",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Miguel López Pérez",
+     "grupos": [
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "María Isabel Abellán Benítez",
+     "grupos": [
+      "3",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Antonio Bautista Bailón Morillas",
+     "grupos": [
+      "7"
+     ]
+    },
+    {
+     "nombre": "Salvador López Joya",
+     "grupos": [
+      "10",
+      "11",
+      "12",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Miguel López Pérez",
+     "grupos": [
+      "1",
+      "4",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Antonio Manjavacas Lucas",
+     "grupos": [
+      "13"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/animacion-ordenador-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Animación por Ordenador (Especialidad Ingeniería del Software) (29611BE)",
+   "nombre": "Animación por Ordenador (Especialidad Ingeniería del Software) (29611BE)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/aprendizaje-automatico-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Aprendizaje Automático (Especialidad Computación y Sistemas Inteligentes) (296113C)",
+   "nombre": "Aprendizaje Automático (Especialidad Computación y Sistemas Inteligentes) (296113C)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Salvador García López",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Francisco Herrera Triguero",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Salvador López Joya",
+     "grupos": [
+      "1",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Manuel Pegalajar Cuéllar",
+     "grupos": [
+      "2",
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/arquitectura-computadores/11/guia-docente",
+   "titulo": "Guía docente de Arquitectura de Computadores (296112A)",
+   "nombre": "Arquitectura de Computadores (296112A)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Mancia Anguita López",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "María Isabel García Arenas",
+     "grupos": [
+      "C",
+      "D",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Christian Agustín Morillas Gutiérrez",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Mancia Anguita López",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Álvaro González Redondo",
+     "grupos": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Míriam Mengíbar Rodríguez",
+     "grupos": [
+      "10",
+      "8",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Francisco Manuel Ortuño Guzmán",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Aurora Polo Rodríguez",
+     "grupos": [
+      "11",
+      "12"
+     ]
+    },
+    {
+     "nombre": "Javier Ubago Rodríguez",
+     "grupos": [
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "Víctor Vázquez Rodríguez",
+     "grupos": [
+      "6",
+      "7"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/arquitectura-sistemas-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Arquitectura de Sistemas (Especialidad Ingeniería de Computadores) (296113K)",
+   "nombre": "Arquitectura de Sistemas (Especialidad Ingeniería de Computadores) (296113K)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/arquitectura-y-computacion-altas-prestaciones-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Arquitectura y Computación de Altas Prestaciones (Especialidad Ingeniería de Computadores) (296113L)",
+   "nombre": "Arquitectura y Computación de Altas Prestaciones (Especialidad Ingeniería de Computadores) (296113L)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/bases-datos-distribuidas-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Bases de Datos Distribuidas (Especialidad Sistemas de Información) (296114L)",
+   "nombre": "Bases de Datos Distribuidas (Especialidad Sistemas de Información) (296114L)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/calculo/11/guia-docente",
+   "titulo": "Guía docente de Cálculo (2961112)",
+   "nombre": "Cálculo (2961112)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Jerónimo Alaminos Prats",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Gerardo Martín Escolano",
+     "grupos": [
+      "B",
+      "D"
+     ]
+    },
+    {
+     "nombre": "Miguel Martínez Teruel",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Abraham Rueda Zoca",
+     "grupos": [
+      "C"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Jerónimo Alaminos Prats",
+     "grupos": [
+      "1",
+      "15",
+      "2"
+     ]
+    },
+    {
+     "nombre": "Gerardo Martín Escolano",
+     "grupos": [
+      "10",
+      "11",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Miguel Martínez Teruel",
+     "grupos": [
+      "12",
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "Esteban Martínez Vañó",
+     "grupos": [
+      "16",
+      "3",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Abraham Rueda Zoca",
+     "grupos": [
+      "4",
+      "5",
+      "7",
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/centros-procesamiento-datos-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Centros de Procesamiento de Datos (Especialidad Ingeniería de Computadores) (296114H)",
+   "nombre": "Centros de Procesamiento de Datos (Especialidad Ingeniería de Computadores) (296114H)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Antonio Francisco Díaz García",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Víctor Vázquez Rodríguez",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/circuitos-integrados-e-impresos-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Circuitos Integrados e Impresos (Especialidad Ingeniería de Computadores) (29611CC)",
+   "nombre": "Circuitos Integrados e Impresos (Especialidad Ingeniería de Computadores) (29611CC)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/compresion-y-recuperacion-informacion-multimedia-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Compresión y Recuperación de Información Multimedia (Especialidad Tecnologías de la Información) (29611FC)",
+   "nombre": "Compresión y Recuperación de Información Multimedia (Especialidad Tecnologías de la Información) (29611FC)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/computacion-ubicua-e-inteligencia-ambiental-especialidadtecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Computación Ubicua e Inteligencia Ambiental (Especialidadtecnologías de la Información) (296113W)",
+   "nombre": "Computación Ubicua e Inteligencia Ambiental (Especialidadtecnologías de la Información) (296113W)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/creacion-empresas-y-gestion-emprendedora/11/guia-docente",
+   "titulo": "Guía docente de Creación de Empresas y Gestión Emprendedora (29611A5)",
+   "nombre": "Creación de Empresas y Gestión Emprendedora (29611A5)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Francisco Juan López Martín",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "María del Carmen Pérez López",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/criptografia-y-computacion-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Criptografía y Computación (Especialidad Computación y Sistemas Inteligentes) (29611AF)",
+   "nombre": "Criptografía y Computación (Especialidad Computación y Sistemas Inteligentes) (29611AF)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/derecho-informatico/11/guia-docente",
+   "titulo": "Guía docente de Derecho Informático (29611A6)",
+   "nombre": "Derecho Informático (29611A6)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "José Antonio Castillo Parrilla",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Natalia Elizabeth Vigano Martínez",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/desarrollo-aplicaciones-internet-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Desarrollo de Aplicaciones para Internet (Especialidad Tecnologías de la Información) (296114M)",
+   "nombre": "Desarrollo de Aplicaciones para Internet (Especialidad Tecnologías de la Información) (296114M)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/desarrollo-basado-agentes-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Desarrollo Basado en Agentes (Especialidad Ingeniería del Software) (296114F)",
+   "nombre": "Desarrollo Basado en Agentes (Especialidad Ingeniería del Software) (296114F)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/desarrollo-hardware-digital-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Desarrollo de Hardware Digital (Especialidad Ingeniería de Computadores) (296113N)",
+   "nombre": "Desarrollo de Hardware Digital (Especialidad Ingeniería de Computadores) (296113N)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/desarrollo-sistemas-distribuidos-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Desarrollo de Sistemas Distribuidos (Especialidad Ingeniería del Software) (296113I)",
+   "nombre": "Desarrollo de Sistemas Distribuidos (Especialidad Ingeniería del Software) (296113I)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "José Luis Garrido Bullejos",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "José Ángel Segura Muros",
+     "grupos": [
+      "B"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Luis López Escudero",
+     "grupos": [
+      "1",
+      "2"
+     ]
+    },
+    {
+     "nombre": "José Ángel Segura Muros",
+     "grupos": [
+      "3",
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/desarrollo-software-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Desarrollo de Software (Especialidad Ingeniería del Software) (296113F)",
+   "nombre": "Desarrollo de Software (Especialidad Ingeniería del Software) (296113F)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "María del Mar Abad Grau",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Alberto Jesús Durán López",
+     "grupos": [
+      "B"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "María del Mar Abad Grau",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Alberto Jesús Durán López",
+     "grupos": [
+      "2",
+      "3",
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/direccion-y-gestion-proyectos-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Dirección y Gestión de Proyectos (Especialidad Ingeniería del Software) (296113G)",
+   "nombre": "Dirección y Gestión de Proyectos (Especialidad Ingeniería del Software) (296113G)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Juan José Escobar Pérez",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "María Belén Prados Suárez",
+     "grupos": [
+      "2",
+      "3",
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/diseno-interfaces-usuario-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Diseño de Interfaces de Usuario (Especialidad Ingeniería del Software) (296114E)",
+   "nombre": "Diseño de Interfaces de Usuario (Especialidad Ingeniería del Software) (296114E)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Miguel Gea Mejías",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Rosa Ana Montes Soldado",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Antonio Javier Fernández Ares",
+     "grupos": [
+      "3"
+     ]
+    },
+    {
+     "nombre": "Miguel Gea Mejías",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "Brunil Dalila Romero Mariño",
+     "grupos": [
+      "2"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/diseno-sistemas-electronicos-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Diseño de Sistemas Electrónicos (Especialidad Ingeniería de Computadores) (296113M)",
+   "nombre": "Diseño de Sistemas Electrónicos (Especialidad Ingeniería de Computadores) (296113M)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/diseno-y-desarrollo-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Diseño y Desarrollo de Sistemas de Información (2961132)",
+   "nombre": "Diseño y Desarrollo de Sistemas de Información (2961132)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Ignacio Aguilera Martos",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Ignacio José Blanco Medina",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "David Criado Ramón",
+     "grupos": [
+      "D"
+     ]
+    },
+    {
+     "nombre": "Carlos Alberto Cruz Corona",
+     "grupos": [
+      "C"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Ignacio Aguilera Martos",
+     "grupos": [
+      "3"
+     ]
+    },
+    {
+     "nombre": "Francisco Javier Baldán Lozano",
+     "grupos": [
+      "2",
+      "6",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Ignacio José Blanco Medina",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "David Criado Ramón",
+     "grupos": [
+      "10"
+     ]
+    },
+    {
+     "nombre": "Carlos Alberto Cruz Corona",
+     "grupos": [
+      "7",
+      "8"
+     ]
+    },
+    {
+     "nombre": "María José Martín Bautista",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Daniel Peralta Cámara",
+     "grupos": [
+      "5"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/estadistica/11/guia-docente",
+   "titulo": "Guía docente de Estadística (296111A)",
+   "nombre": "Estadística (296111A)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Manuela Expósito Ruiz",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Antonio Jesús López Montoya",
+     "grupos": [
+      "D",
+      "E",
+      "F"
+     ]
+    },
+    {
+     "nombre": "Nuria Rico Castro",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "María del Carmen Segovia García",
+     "grupos": [
+      "A",
+      "C"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Sanae Fauzi",
+     "grupos": [
+      "12",
+      "16",
+      "2"
+     ]
+    },
+    {
+     "nombre": "Antonio Jesús López Montoya",
+     "grupos": [
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "Fernando Martínez Álvarez",
+     "grupos": [
+      "1",
+      "2",
+      "4",
+      "6",
+      "7"
+     ]
+    },
+    {
+     "nombre": "Pablo Morales Álvarez",
+     "grupos": [
+      "10",
+      "3",
+      "5",
+      "8",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Raquel Ortiz Martín",
+     "grupos": [
+      "11",
+      "15"
+     ]
+    },
+    {
+     "nombre": "Nuria Rico Castro",
+     "grupos": [
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/estructura-computadores/11/guia-docente",
+   "titulo": "Guía docente de Estructura de Computadores (2961125)",
+   "nombre": "Estructura de Computadores (2961125)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Antonio Cañas Vargas",
+     "grupos": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Francisco J. Fernández Baldomero",
+     "grupos": [
+      "A",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Antonio Cañas Vargas",
+     "grupos": [
+      "13",
+      "14",
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Francisco J. Fernández Baldomero",
+     "grupos": [
+      "10",
+      "11",
+      "12",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Álvaro González Redondo",
+     "grupos": [
+      "2",
+      "3",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Niceto Rafael Luque Sola",
+     "grupos": [
+      "1",
+      "7"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/estructura-datos/11/guia-docente",
+   "titulo": "Guía docente de Estructura de Datos (2961122)",
+   "nombre": "Estructura de Datos (2961122)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Joaquín Fernández Valdivia",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Miguel García Silvente",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Francisco Javier Rodríguez Díaz",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Rosa María Rodríguez Sánchez",
+     "grupos": [
+      "D",
+      "E"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Salvador López Joya",
+     "grupos": [
+      "12",
+      "3",
+      "7",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Antonio Manjavacas Lucas",
+     "grupos": [
+      "14",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Andrea Morales Garzón",
+     "grupos": [
+      "1",
+      "2",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Rosa María Rodríguez Sánchez",
+     "grupos": [
+      "10",
+      "11",
+      "13"
+     ]
+    },
+    {
+     "nombre": "María Cristina Zuheros Montes",
+     "grupos": [
+      "4",
+      "5"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/etica-informatica-y-sociedad-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Ética Informática y Sociedad de la Información (29611A2)",
+   "nombre": "Ética Informática y Sociedad de la Información (29611A2)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/fundamentos-bases-datos/11/guia-docente",
+   "titulo": "Guía docente de Fundamentos de Bases de Datos (2961128)",
+   "nombre": "Fundamentos de Bases de Datos (2961128)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Christoph Norbert Bergmeir",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Ignacio José Blanco Medina",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Antonio Gabriel López Herrera",
+     "grupos": [
+      "A",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Christoph Norbert Bergmeir",
+     "grupos": [
+      "11",
+      "12"
+     ]
+    },
+    {
+     "nombre": "Natalia Ana Díaz Rodríguez",
+     "grupos": [
+      "10",
+      "13",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Juan Miguel Medina Rodríguez",
+     "grupos": [
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Olga Pons Capote",
+     "grupos": [
+      "1",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Carlos Gustavo Porcel Gallego",
+     "grupos": [
+      "7",
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/fundamentos-del-software/11/guia-docente",
+   "titulo": "Guía docente de Fundamentos del Software (2961114)",
+   "nombre": "Fundamentos del Software (2961114)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "María del Mar Abad Grau",
+     "grupos": [
+      "B",
+      "F"
+     ]
+    },
+    {
+     "nombre": "Juan José Escobar Pérez",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Pedro Manuel Martínez Jiménez",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Rosa Ana Montes Soldado",
+     "grupos": [
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "María del Mar Abad Grau",
+     "grupos": [
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "Francisco de P. Araque Cuenca",
+     "grupos": [
+      "1",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Kawtar Benghazi Akhlaki Sekkate",
+     "grupos": [
+      "2",
+      "7",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Santiago Carbó García",
+     "grupos": [
+      "11"
+     ]
+    },
+    {
+     "nombre": "Juan José Escobar Pérez",
+     "grupos": [
+      "16",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Diego Jesús García Gil",
+     "grupos": [
+      "10",
+      "12",
+      "6"
+     ]
+    },
+    {
+     "nombre": "María Victoria Luzón García",
+     "grupos": [
+      "15",
+      "4"
+     ]
+    },
+    {
+     "nombre": "Janet Pigueiras Del Real",
+     "grupos": [
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/fundamentos-fisicos-y-tecnologicos/11/guia-docente",
+   "titulo": "Guía docente de Fundamentos Físicos y Tecnológicos (2961113)",
+   "nombre": "Fundamentos Físicos y Tecnológicos (2961113)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Pedro Cartujo Cassinello",
+     "grupos": [
+      "A",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Pedro García Fernández",
+     "grupos": [
+      "F"
+     ]
+    },
+    {
+     "nombre": "Ignacio Melchor Ferrer",
+     "grupos": [
+      "C",
+      "D"
+     ]
+    },
+    {
+     "nombre": "Carmen Lucía Moraila Martínez",
+     "grupos": [
+      "F"
+     ]
+    },
+    {
+     "nombre": "José Luis Padilla De la Torre",
+     "grupos": [
+      "B"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Pedro Cartujo Cassinello",
+     "grupos": [
+      "1",
+      "12",
+      "13",
+      "14",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Pablo Escobedo Araque",
+     "grupos": [
+      "4",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Pedro García Fernández",
+     "grupos": [
+      "15",
+      "16"
+     ]
+    },
+    {
+     "nombre": "Ignacio Melchor Ferrer",
+     "grupos": [
+      "10",
+      "11",
+      "7",
+      "8",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Carmen Lucía Moraila Martínez",
+     "grupos": [
+      "15",
+      "16"
+     ]
+    },
+    {
+     "nombre": "José Luis Padilla De la Torre",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "Marco Antonio Villena Sanchez",
+     "grupos": [
+      "12",
+      "5"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/fundamentos-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Fundamentos de Ingeniería del Software (2961127)",
+   "nombre": "Fundamentos de Ingeniería del Software (2961127)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "María del Mar Abad Grau",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Pedro Manuel Martínez Jiménez",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Nuria Medina Medina",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Francisco Velasco Anguita",
+     "grupos": [
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "María del Mar Abad Grau",
+     "grupos": [
+      "11"
+     ]
+    },
+    {
+     "nombre": "Daniel Bolaños Martínez",
+     "grupos": [
+      "3",
+      "6",
+      "7"
+     ]
+    },
+    {
+     "nombre": "Diego Jesús García Gil",
+     "grupos": [
+      "2",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Pedro Manuel Martínez Jiménez",
+     "grupos": [
+      "1",
+      "10"
+     ]
+    },
+    {
+     "nombre": "Nuria Medina Medina",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "María Luisa Rodríguez Almendros",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "José Ángel Segura Muros",
+     "grupos": [
+      "9"
+     ]
+    },
+    {
+     "nombre": "Francisco Velasco Anguita",
+     "grupos": [
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/fundamentos-programacion/11/guia-docente",
+   "titulo": "Guía docente de Fundamentos de Programación (2961115)",
+   "nombre": "Fundamentos de Programación (2961115)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Manuel Jesús Cobo Martín",
+     "grupos": [
+      "F"
+     ]
+    },
+    {
+     "nombre": "Juan Carlos Cubero Talavera",
+     "grupos": [
+      "A",
+      "C"
+     ]
+    },
+    {
+     "nombre": "Manuel Lozano Márquez",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Francisco Javier Rodríguez Díaz",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "María Cristina Zuheros Montes",
+     "grupos": [
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Juan Carlos Cubero Talavera",
+     "grupos": [
+      "1",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Salvador López Joya",
+     "grupos": [
+      "12"
+     ]
+    },
+    {
+     "nombre": "Manuel Lozano Márquez",
+     "grupos": [
+      "13",
+      "4",
+      "5",
+      "6",
+      "7"
+     ]
+    },
+    {
+     "nombre": "Javier Martínez Baena",
+     "grupos": [
+      "10",
+      "11",
+      "16",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Francisco Javier Rodríguez Díaz",
+     "grupos": [
+      "14"
+     ]
+    },
+    {
+     "nombre": "María Cristina Zuheros Montes",
+     "grupos": [
+      "15",
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/fundamentos-redes/11/guia-docente",
+   "titulo": "Guía docente de Fundamentos de Redes (2961134)",
+   "nombre": "Fundamentos de Redes (2961134)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Juan Manuel López Soler",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Antonio Miguel Mora García",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Jorge Navarro Ortiz",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Jonathan Prados Garzón",
+     "grupos": [
+      "D",
+      "E"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Andrés Biedma Pérez",
+     "grupos": [
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Natalia Chinchilla Romero",
+     "grupos": [
+      "10",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Irene Gosálvez White",
+     "grupos": [
+      "11"
+     ]
+    },
+    {
+     "nombre": "Jonathan Prados Garzón",
+     "grupos": [
+      "1",
+      "2"
+     ]
+    },
+    {
+     "nombre": "Antonio Ruiz Moya",
+     "grupos": [
+      "3",
+      "4"
+     ]
+    },
+    {
+     "nombre": "Cleofás Segura Gómez",
+     "grupos": [
+      "7",
+      "8",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Daniel Vallejo España",
+     "grupos": [
+      "12"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/gestion-recursos-digitales-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Gestión de Recursos Digitales (Especialidad Sistemas de Información) (29611DC)",
+   "nombre": "Gestión de Recursos Digitales (Especialidad Sistemas de Información) (29611DC)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/informatica-grafica/11/guia-docente",
+   "titulo": "Guía docente de Informática Gráfica (2961133)",
+   "nombre": "Informática Gráfica (2961133)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Germán Arroyo Moreno",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Antonio López Fernández",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Domingo Martín Perandrés",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Juan Carlos Torres Cantero",
+     "grupos": [
+      "B",
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Santiago Carbó García",
+     "grupos": [
+      "3"
+     ]
+    },
+    {
+     "nombre": "Alberto Jesús Durán López",
+     "grupos": [
+      "11",
+      "12",
+      "4",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Luis López Escudero",
+     "grupos": [
+      "1",
+      "2",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Antonio López Fernández",
+     "grupos": [
+      "7",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Guillermo Medialdea Burgos",
+     "grupos": [
+      "10",
+      "9"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/informatica-industrial-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Informática Industrial (Especialidad Ingeniería de Computadores) (29611CB)",
+   "nombre": "Informática Industrial (Especialidad Ingeniería de Computadores) (29611CB)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Miguel Damas Hermoso",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Gonzalo Olivares Ruiz",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Miguel Damas Hermoso",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Gonzalo Olivares Ruiz",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/infraestructura-virtual-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Infraestructura Virtual (Especialidad Tecnologías de la Información) (296114N)",
+   "nombre": "Infraestructura Virtual (Especialidad Tecnologías de la Información) (296114N)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/ingenieria-del-conocimiento-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Ingeniería del Conocimiento (Especialidad Computación y Sistemas Inteligentes) (296113A)",
+   "nombre": "Ingeniería del Conocimiento (Especialidad Computación y Sistemas Inteligentes) (296113A)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Juan Luis Castro Peña",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "Andrea Morales Garzón",
+     "grupos": [
+      "1",
+      "2",
+      "3",
+      "5"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/ingenieria-empresa-y-sociedad/11/guia-docente",
+   "titulo": "Guía docente de Ingeniería, Empresa y Sociedad (2961119)",
+   "nombre": "Ingeniería, Empresa y Sociedad (2961119)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Javier Delgado Ceballos",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Encarnación García Sánchez",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "David Alejandro Jiménez Jordán",
+     "grupos": [
+      "A",
+      "F"
+     ]
+    },
+    {
+     "nombre": "María Esmeralda Lardón López",
+     "grupos": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Francisco Juan López Martín",
+     "grupos": [
+      "D",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Rodrigo Martín Rojas",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Rubén Ordóñez Borrallo",
+     "grupos": [
+      "B"
+     ]
+    }
+   ],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/ingenieria-servidores/11/guia-docente",
+   "titulo": "Guía docente de Ingeniería de Servidores (2961135)",
+   "nombre": "Ingeniería de Servidores (2961135)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Pablo García Sánchez",
+     "grupos": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Héctor Emilio Pomares Cintas",
+     "grupos": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Eusebio Naif Al-Soliman Fuentes",
+     "grupos": [
+      "8"
+     ]
+    },
+    {
+     "nombre": "Oresti Baños Legrán",
+     "grupos": [
+      "5"
+     ]
+    },
+    {
+     "nombre": "Juan Helios García Guzmán",
+     "grupos": [
+      "13",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Pablo García Sánchez",
+     "grupos": [
+      "7"
+     ]
+    },
+    {
+     "nombre": "Alberto Guillén Perales",
+     "grupos": [
+      "1",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Diego Navarro Cabrera",
+     "grupos": [
+      "10",
+      "12"
+     ]
+    },
+    {
+     "nombre": "Alberto Ortega Ruiz",
+     "grupos": [
+      "2",
+      "4"
+     ]
+    },
+    {
+     "nombre": "Ciro Rodríguez León",
+     "grupos": [
+      "11",
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/ingenieria-sistemas-informacion-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Ingeniería de Sistemas de Información (Especialidad Sistemas de Información) (296113S)",
+   "nombre": "Ingeniería de Sistemas de Información (Especialidad Sistemas de Información) (296113S)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Fernando Berzal Galiano",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Miguel López Pérez",
+     "grupos": [
+      "2"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/inteligencia-artificial/11/guia-docente",
+   "titulo": "Guía docente de Inteligencia Artificial (2961129)",
+   "nombre": "Inteligencia Artificial (2961129)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Juan Fernández Olivares",
+     "grupos": [
+      "B",
+      "D",
+      "E"
+     ]
+    },
+    {
+     "nombre": "Antonio González Muñoz",
+     "grupos": [
+      "A",
+      "C"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "María Isabel Abellán Benítez",
+     "grupos": [
+      "5"
+     ]
+    },
+    {
+     "nombre": "Juan Fernández Olivares",
+     "grupos": [
+      "12",
+      "13"
+     ]
+    },
+    {
+     "nombre": "Rubén Garralón López",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "Francisco G.Raúl Pérez Rodríguez",
+     "grupos": [
+      "10",
+      "11",
+      "7",
+      "8",
+      "9"
+     ]
+    },
+    {
+     "nombre": "María Cristina Zuheros Montes",
+     "grupos": [
+      "1",
+      "2",
+      "3",
+      "6"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/inteligencia-negocio-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Inteligencia de Negocio (Especialidad Sistemas Información) (296114K)",
+   "nombre": "Inteligencia de Negocio (Especialidad Sistemas Información) (296114K)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/logica-y-metodos-discretos/11/guia-docente",
+   "titulo": "Guía docente de Lógica y Métodos Discretos (2961116)",
+   "nombre": "Lógica y Métodos Discretos (2961116)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Celia Cordovilla Sánchez",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Jesús García Miranda",
+     "grupos": [
+      "D"
+     ]
+    },
+    {
+     "nombre": "Andrés Herrera Poyatos",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "José Antonio Jiménez Madrid",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Juan Manuel Urbano Blanco",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Carlos Vela Cabello",
+     "grupos": [
+      "F"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Celia Cordovilla Sánchez",
+     "grupos": [
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Jesús García Miranda",
+     "grupos": [
+      "11",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Andrés Herrera Poyatos",
+     "grupos": [
+      "10",
+      "12",
+      "13",
+      "14",
+      "16"
+     ]
+    },
+    {
+     "nombre": "José Antonio Jiménez Madrid",
+     "grupos": [
+      "1",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Juan Manuel Urbano Blanco",
+     "grupos": [
+      "7",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Carlos Vela Cabello",
+     "grupos": [
+      "15"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/logica-y-programacion-especialidad-ingenieria-software/11/guia-docente",
+   "titulo": "Guía docente de Lógica y Programación (Especialidad Ingeniería Software) (29611BA)",
+   "nombre": "Lógica y Programación (Especialidad Ingeniería Software) (29611BA)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/mantenimiento-equipos-informaticos-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Mantenimiento de Equipos Informáticos (Especialidad Ingeniería de Computadores) (29611CF)",
+   "nombre": "Mantenimiento de Equipos Informáticos (Especialidad Ingeniería de Computadores) (29611CF)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/metaheuristicas-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Metaheurísticas (Especialidad Computación y Sistemas Inteligentes) (296113E)",
+   "nombre": "Metaheurísticas (Especialidad Computación y Sistemas Inteligentes) (296113E)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Óscar Cordón García",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Francisco Herrera Triguero",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/metodologia-la-programacion/11/guia-docente",
+   "titulo": "Guía docente de Metodología de la Programación (2961118)",
+   "nombre": "Metodología de la Programación (2961118)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Francisco José Cortijo Bon",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Javier Martínez Baena",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Juan Antonio Morente Molinera",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "David Alejandro Pelta Mochcovsky",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Daniel Peralta Cámara",
+     "grupos": [
+      "D"
+     ]
+    },
+    {
+     "nombre": "Francisco Javier Rodríguez Díaz",
+     "grupos": [
+      "F"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Francisco José Cortijo Bon",
+     "grupos": [
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Antonio Manjavacas Lucas",
+     "grupos": [
+      "9"
+     ]
+    },
+    {
+     "nombre": "Javier Martínez Baena",
+     "grupos": [
+      "1",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Juan Antonio Morente Molinera",
+     "grupos": [
+      "12",
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "David Alejandro Pelta Mochcovsky",
+     "grupos": [
+      "7",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Daniel Peralta Cámara",
+     "grupos": [
+      "10",
+      "11"
+     ]
+    },
+    {
+     "nombre": "Francisco Javier Rodríguez Díaz",
+     "grupos": [
+      "15",
+      "16"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/metodologias-desarrollo-agil-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Metodologías de Desarrollo Ágil (Especialidad Ingeniería del Software) (296114D)",
+   "nombre": "Metodologías de Desarrollo Ágil (Especialidad Ingeniería del Software) (296114D)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Juan José Escobar Pérez",
+     "grupos": [
+      "1",
+      "3"
+     ]
+    },
+    {
+     "nombre": "María José Rodríguez Fortiz",
+     "grupos": [
+      "2"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/modelos-avanzados-computacion-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Modelos Avanzados de Computación (Especialidad Computación y Sistemas Inteligentes) (296113D)",
+   "nombre": "Modelos Avanzados de Computación (Especialidad Computación y Sistemas Inteligentes) (296113D)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/modelos-computacion/11/guia-docente",
+   "titulo": "Guía docente de Modelos de Computación (2961131)",
+   "nombre": "Modelos de Computación (2961131)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "José Antonio García Soria",
+     "grupos": [
+      "C",
+      "D"
+     ]
+    },
+    {
+     "nombre": "Serafín Moral García",
+     "grupos": [
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "María Isabel Abellán Benítez",
+     "grupos": [
+      "11"
+     ]
+    },
+    {
+     "nombre": "José Antonio García Soria",
+     "grupos": [
+      "10",
+      "7",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Serafín Moral García",
+     "grupos": [
+      "4",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Nuria Rodríguez Barroso",
+     "grupos": [
+      "1",
+      "2"
+     ]
+    },
+    {
+     "nombre": "Nicolás Segura Kunsagi",
+     "grupos": [
+      "3"
+     ]
+    },
+    {
+     "nombre": "Juan Luis Suárez Díaz",
+     "grupos": [
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/nuevas-tecnologias-la-programacion-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Nuevas Tecnologías de la Programación (Especialidad Ingeniería del Software) (29611BD)",
+   "nombre": "Nuevas Tecnologías de la Programación (Especialidad Ingeniería del Software) (29611BD)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/nuevos-paradigmas-interaccion-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Nuevos Paradigmas de Interacción (Especialidad Computación y Sistemas Inteligentes) (296114C)",
+   "nombre": "Nuevos Paradigmas de Interacción (Especialidad Computación y Sistemas Inteligentes) (296114C)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/perifericos-y-dispositivos-interfaz-humana-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Periféricos y Dispositivos de Interfaz Humana (Especialidad Sistemas de Información) (29611DB)",
+   "nombre": "Periféricos y Dispositivos de Interfaz Humana (Especialidad Sistemas de Información) (29611DB)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/practicas-empresa/11/guia-docente",
+   "titulo": "Guía docente de Prácticas de Empresa (29611P8)",
+   "nombre": "Prácticas de Empresa (29611P8)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/procesadores-lenguajes-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Procesadores de Lenguajes (Especialidad Computación y Sistemas Inteligentes) (296114A)",
+   "nombre": "Procesadores de Lenguajes (Especialidad Computación y Sistemas Inteligentes) (296114A)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Ramón López-Cózar Delgado",
+     "grupos": [
+      "2"
+     ]
+    },
+    {
+     "nombre": "Jorge Revelles Moreno",
+     "grupos": [
+      "1",
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/procesamiento-digital-senales-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Procesamiento Digital de Señales (Especialidad Tecnologías de la Información) (29611FB)",
+   "nombre": "Procesamiento Digital de Señales (Especialidad Tecnologías de la Información) (29611FB)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-dispositivos-moviles-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Programación de Dispositivos Móviles (Especialidad Tecnologías de la Información) (29611FD)",
+   "nombre": "Programación de Dispositivos Móviles (Especialidad Tecnologías de la Información) (29611FD)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-grafica-videojuegos-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Programación Gráfica de Videojuegos (Especialidad Ingeniería del Software) (29611BB)",
+   "nombre": "Programación Gráfica de Videojuegos (Especialidad Ingeniería del Software) (29611BB)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-ludica-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Programación Lúdica (Especialidad Computación y Sistemas Inteligentes) (29611AB)",
+   "nombre": "Programación Lúdica (Especialidad Computación y Sistemas Inteligentes) (29611AB)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-paralela-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Programación Paralela (Especialidad Ingeniería del Software) (29611BC)",
+   "nombre": "Programación Paralela (Especialidad Ingeniería del Software) (29611BC)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-tecnica-y-cientifica-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Programación Técnica y Científica (Especialidad Computación y Sistemas Inteligentes) (29611AD)",
+   "nombre": "Programación Técnica y Científica (Especialidad Computación y Sistemas Inteligentes) (29611AD)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-web-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Programación Web (Especialidad Sistemas de Información) (296113Q)",
+   "nombre": "Programación Web (Especialidad Sistemas de Información) (296113Q)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/programacion-y-diseno-orientado-objetos/11/guia-docente",
+   "titulo": "Guía docente de Programación y Diseño Orientado a Objetos (2961121)",
+   "nombre": "Programación y Diseño Orientado a Objetos (2961121)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Zoraida Callejas Carrión",
+     "grupos": [
+      "D"
+     ]
+    },
+    {
+     "nombre": "Carmen Josefa Martínez Cruz",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Nuria Medina Medina",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Andrés Silva Pérez",
+     "grupos": [
+      "A",
+      "C"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Sergio Alonso Burgos",
+     "grupos": [
+      "1",
+      "7",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Germán Arroyo Moreno",
+     "grupos": [
+      "9"
+     ]
+    },
+    {
+     "nombre": "María del Campo Bermúdez Edo",
+     "grupos": [
+      "10",
+      "11",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Carmen Josefa Martínez Cruz",
+     "grupos": [
+      "4"
+     ]
+    },
+    {
+     "nombre": "Bartolomé Ortiz Viso",
+     "grupos": [
+      "14"
+     ]
+    },
+    {
+     "nombre": "Janet Pigueiras Del Real",
+     "grupos": [
+      "12"
+     ]
+    },
+    {
+     "nombre": "Juan Ruiz De Miras",
+     "grupos": [
+      "13",
+      "2",
+      "3",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Ángel Ruiz Zafra",
+     "grupos": [
+      "12"
+     ]
+    },
+    {
+     "nombre": "Andrés Silva Pérez",
+     "grupos": [
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/proyecto-fin-grado/11/guia-docente",
+   "titulo": "Guía docente de Proyecto Fin de Grado (2961199)",
+   "nombre": "Proyecto Fin de Grado (2961199)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/recuperacion-informacion-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Recuperación de Información (Especialidad Sistemas de Información) (296114J)",
+   "nombre": "Recuperación de Información (Especialidad Sistemas de Información) (296114J)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/redes-multiservicio-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Redes Multiservicio (Especialidad Tecnologías de la Información) (29611FE)",
+   "nombre": "Redes Multiservicio (Especialidad Tecnologías de la Información) (29611FE)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/redes-y-sistemas-complejos-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Redes y Sistemas Complejos (Especialidad Sistemas de Información) (29611DE)",
+   "nombre": "Redes y Sistemas Complejos (Especialidad Sistemas de Información) (29611DE)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/robotica-industrial-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Robótica Industrial (Especialidad Computación y Sistemas Inteligentes) (29611AC)",
+   "nombre": "Robótica Industrial (Especialidad Computación y Sistemas Inteligentes) (29611AC)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/seguridad-sistemas-operativos-especialidad-ingenieria-software/11/guia-docente",
+   "titulo": "Guía docente de Seguridad en Sistemas Operativos (Especialidad Ingeniería de Software) (29611BF)",
+   "nombre": "Seguridad en Sistemas Operativos (Especialidad Ingeniería de Software) (29611BF)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/seguridad-y-proteccion-sistemas-informaticos-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Seguridad y Protección de Sistemas Informáticos (Especialidad Tecnologías de la Información) (296114P)",
+   "nombre": "Seguridad y Protección de Sistemas Informáticos (Especialidad Tecnologías de la Información) (296114P)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/servidores-web-altas-prestaciones-especialidadtecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Servidores Web de Altas Prestaciones (Especialidadtecnologías de la Información) (296113Y)",
+   "nombre": "Servidores Web de Altas Prestaciones (Especialidadtecnologías de la Información) (296113Y)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Míriam Mengíbar Rodríguez",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "José Manuel Soto Hidalgo",
+     "grupos": [
+      "A"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Míriam Mengíbar Rodríguez",
+     "grupos": [
+      "2"
+     ]
+    },
+    {
+     "nombre": "José Manuel Soto Hidalgo",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/simulacion-sistemas-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Simulación de Sistemas (Especialidad Computación y Sistemas Inteligentes) (29611AE)",
+   "nombre": "Simulación de Sistemas (Especialidad Computación y Sistemas Inteligentes) (29611AE)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-concurrentes-y-distribuidos/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Concurrentes y Distribuidos (2961124)",
+   "nombre": "Sistemas Concurrentes y Distribuidos (2961124)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "José Miguel Mantas Ruiz",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "José Ángel Segura Muros",
+     "grupos": [
+      "C",
+      "D"
+     ]
+    },
+    {
+     "nombre": "Carlos Ureña Almagro",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Pedro Villar Castro",
+     "grupos": [
+      "E"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Miguel Lastra Leidinger",
+     "grupos": [
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "José Miguel Mantas Ruiz",
+     "grupos": [
+      "5",
+      "6"
+     ]
+    },
+    {
+     "nombre": "Ana María Sánchez López",
+     "grupos": [
+      "1",
+      "14",
+      "4",
+      "9"
+     ]
+    },
+    {
+     "nombre": "José Ángel Segura Muros",
+     "grupos": [
+      "10",
+      "11"
+     ]
+    },
+    {
+     "nombre": "Andrés Silva Pérez",
+     "grupos": [
+      "13"
+     ]
+    },
+    {
+     "nombre": "Pedro Villar Castro",
+     "grupos": [
+      "12",
+      "7",
+      "8"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-cooperativos-y-gestion-contenidos-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Cooperativos y Gestión de Contenidos (Especialidad Sistemas de Información) (29611DD)",
+   "nombre": "Sistemas Cooperativos y Gestión de Contenidos (Especialidad Sistemas de Información) (29611DD)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-empotrados-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Empotrados (Especialidad Ingeniería de Computadores) (296114I)",
+   "nombre": "Sistemas Empotrados (Especialidad Ingeniería de Computadores) (296114I)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-graficos-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Gráficos (Especialidad Ingeniería del Software) (296113H)",
+   "nombre": "Sistemas Gráficos (Especialidad Ingeniería del Software) (296113H)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-informacion-basados-web-especialidad-ingenieria-del-software/11/guia-docente",
+   "titulo": "Guía docente de Sistemas de Información Basados en Web (Especialidad Ingeniería del Software) (296113J)",
+   "nombre": "Sistemas de Información Basados en Web (Especialidad Ingeniería del Software) (296113J)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "José María Guirao Miras",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Carmen Josefa Martínez Cruz",
+     "grupos": [
+      "2",
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-informacion-empresas-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Sistemas de Información para Empresas (Especialidad Sistemas de Información) (296113R)",
+   "nombre": "Sistemas de Información para Empresas (Especialidad Sistemas de Información) (296113R)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-informacion-geografica-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Sistemas de Información Geográfica (Especialidad Sistemas de Información) (29611DA)",
+   "nombre": "Sistemas de Información Geográfica (Especialidad Sistemas de Información) (29611DA)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-microprocesadores-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Sistemas con Microprocesadores (Especialidad Ingeniería de Computadores) (296113P)",
+   "nombre": "Sistemas con Microprocesadores (Especialidad Ingeniería de Computadores) (296113P)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-multidimensionales-especialidad-sistemas-informacion/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Multidimensionales (Especialidad Sistemas de Información) (296113U)",
+   "nombre": "Sistemas Multidimensionales (Especialidad Sistemas de Información) (296113U)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Antonio Javier Fernández Ares",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "José Samos Jiménez",
+     "grupos": [
+      "2"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-multimedia-especialidadtecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Multimedia (Especialidadtecnologías de la Información) (296113V)",
+   "nombre": "Sistemas Multimedia (Especialidadtecnologías de la Información) (296113V)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/sistemas-operativos/11/guia-docente",
+   "titulo": "Guía docente de Sistemas Operativos (2961123)",
+   "nombre": "Sistemas Operativos (2961123)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "José Luis Garrido Bullejos",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Miguel Lastra Leidinger",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Alejandro José León Salas",
+     "grupos": [
+      "D"
+     ]
+    },
+    {
+     "nombre": "Patricia Paderewski Rodríguez",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Pablo Antonio Pico Valencia",
+     "grupos": [
+      "B"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Germán Arroyo Moreno",
+     "grupos": [
+      "3"
+     ]
+    },
+    {
+     "nombre": "Daniel Bolaños Martínez",
+     "grupos": [
+      "12",
+      "4",
+      "6"
+     ]
+    },
+    {
+     "nombre": "María José Gacto Colorado",
+     "grupos": [
+      "14",
+      "5",
+      "7"
+     ]
+    },
+    {
+     "nombre": "José Luis Garrido Bullejos",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Alejandro José León Salas",
+     "grupos": [
+      "10",
+      "11",
+      "15"
+     ]
+    },
+    {
+     "nombre": "Carlos Molina Fernández",
+     "grupos": [
+      "2"
+     ]
+    },
+    {
+     "nombre": "Manuel Noguera García",
+     "grupos": [
+      "14",
+      "7"
+     ]
+    },
+    {
+     "nombre": "Patricia Paderewski Rodríguez",
+     "grupos": [
+      "8",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Ángel Ruiz Zafra",
+     "grupos": [
+      "13",
+      "6"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/tecnicas-los-sistemas-inteligentes-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Técnicas de los Sistemas Inteligentes (Especialidad Computación y Sistemas Inteligentes) (296113B)",
+   "nombre": "Técnicas de los Sistemas Inteligentes (Especialidad Computación y Sistemas Inteligentes) (296113B)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "David Criado Ramón",
+     "grupos": [
+      "2",
+      "4",
+      "5"
+     ]
+    },
+    {
+     "nombre": "Pablo Mesejo Santiago",
+     "grupos": [
+      "1",
+      "3"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/tecnologia-y-organizacion-computadores/11/guia-docente",
+   "titulo": "Guía docente de Tecnología y Organización de Computadores (2961117)",
+   "nombre": "Tecnología y Organización de Computadores (2961117)",
+   "curso": "2026/2027",
+   "teorico": [
+    {
+     "nombre": "Richard Rafael Carrillo Sánchez",
+     "grupos": [
+      "F"
+     ]
+    },
+    {
+     "nombre": "Jesús Alberto Garrido Alcázar",
+     "grupos": [
+      "A"
+     ]
+    },
+    {
+     "nombre": "Jesús González Peñalver",
+     "grupos": [
+      "E"
+     ]
+    },
+    {
+     "nombre": "Eva Martínez Ortigosa",
+     "grupos": [
+      "B"
+     ]
+    },
+    {
+     "nombre": "Beatriz Prieto Campos",
+     "grupos": [
+      "C"
+     ]
+    },
+    {
+     "nombre": "Manuel Rodríguez Álvarez",
+     "grupos": [
+      "D"
+     ]
+    }
+   ],
+   "practico": [
+    {
+     "nombre": "Richard Rafael Carrillo Sánchez",
+     "grupos": [
+      "15",
+      "16"
+     ]
+    },
+    {
+     "nombre": "Jesús Alberto Garrido Alcázar",
+     "grupos": [
+      "1",
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Jesús González Peñalver",
+     "grupos": [
+      "12",
+      "13",
+      "14"
+     ]
+    },
+    {
+     "nombre": "Eva Martínez Ortigosa",
+     "grupos": [
+      "11",
+      "4",
+      "5",
+      "6",
+      "9"
+     ]
+    },
+    {
+     "nombre": "Beatriz Prieto Campos",
+     "grupos": [
+      "12",
+      "13",
+      "14",
+      "7",
+      "8"
+     ]
+    },
+    {
+     "nombre": "Manuel Rodríguez Álvarez",
+     "grupos": [
+      "10",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Eduardo Ros Vidal",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/tecnologias-emergentes-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Tecnologías Emergentes (Especialidad Ingeniería de Computadores) (29611CD)",
+   "nombre": "Tecnologías Emergentes (Especialidad Ingeniería de Computadores) (29611CD)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/tecnologias-red-especialidad-ingenieria-computadores/11/guia-docente",
+   "titulo": "Guía docente de Tecnologías de Red (Especialidad Ingeniería de Computadores) (296114G)",
+   "nombre": "Tecnologías de Red (Especialidad Ingeniería de Computadores) (296114G)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/tecnologias-web-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Tecnologías Web (Especialidad Tecnologías de la Información) (296113X)",
+   "nombre": "Tecnologías Web (Especialidad Tecnologías de la Información) (296113X)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/teoria-la-informacion-y-la-codificacion-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Teoría de la Información y la Codificación (Especialidad Computación y Sistemas Inteligentes) (29611AA)",
+   "nombre": "Teoría de la Información y la Codificación (Especialidad Computación y Sistemas Inteligentes) (29611AA)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/transmision-datos-y-redes-computadores-especialidadtecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Transmisión de Datos y Redes de Computadores (Especialidadtecnologías de la Información) (296113Z)",
+   "nombre": "Transmisión de Datos y Redes de Computadores (Especialidadtecnologías de la Información) (296113Z)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Andrés Biedma Pérez",
+     "grupos": [
+      "1"
+     ]
+    },
+    {
+     "nombre": "Cleofás Segura Gómez",
+     "grupos": [
+      "2"
+     ]
+    }
+   ]
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/tratamiento-imagenes-digitales-especialidad-tecnologias-la-informacion/11/guia-docente",
+   "titulo": "Guía docente de Tratamiento de Imágenes Digitales (Especialidad Tecnologías de la Información) (29611FA)",
+   "nombre": "Tratamiento de Imágenes Digitales (Especialidad Tecnologías de la Información) (29611FA)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": []
+  },
+  {
+   "url": "https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica/vision-computador-especialidad-computacion-y-sistemas-inteligentes/11/guia-docente",
+   "titulo": "Guía docente de Visión por Computador (Especialidad Computación y Sistemas Inteligentes) (296114B)",
+   "nombre": "Visión por Computador (Especialidad Computación y Sistemas Inteligentes) (296114B)",
+   "curso": "2026/2027",
+   "teorico": [],
+   "practico": [
+    {
+     "nombre": "Pablo Mesejo Santiago",
+     "grupos": [
+      "2",
+      "3"
+     ]
+    },
+    {
+     "nombre": "Siham Tabik Ouled Hrour",
+     "grupos": [
+      "1"
+     ]
+    }
+   ]
+  }
+ ]
+}
