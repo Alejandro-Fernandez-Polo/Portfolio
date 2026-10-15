@@ -20,7 +20,7 @@ export const initialState = {
     view: "horario",
     compareIds: [],
     favorites: [],
-    // «Ignorar profesores» (I-11): apagado por defecto y sin puerta, como el
+    // «Ignorar profesores»: apagado por defecto y sin puerta, como el
     // resto de preferencias de la vista. Vive en el store —no en localStorage—
     // para viajar con el usuarioState y sobrevivir al reload.
     ignoreDocents: false,
@@ -94,7 +94,7 @@ export function reduceSelection(state, cmd) {
       return nextRev(ns);
     }
     case "selection/setAll": {
-      // Bulk-replace de la rebanada selection: la usa la migración legacy
+      // Bulk-replace de la selección: la usa la migración legacy
       // (payload parcial) y el push de app.js (payload completo desde la caché
       // local). Solo se tocan campos presentes y válidos; ausentes/inválidos
       // se ignoran para no destruir datos por un payload parcial.
@@ -205,11 +205,19 @@ export function reduceBlocks(state, cmd) {
   }
 }
 
+/**
+ * Nombres de vista aceptados por el store. La pestaña de datos se llamó
+ * `asignaturas`; un estado guardado con ese nombre se lee como `datos` en vez
+ * de dejar la vista en blanco. Solo se traduce el alias: cualquier otro valor
+ * pasa tal cual, como antes.
+ */
+const VIEW_ALIASES = { asignaturas: "datos" };
+
 export function reduceUI(state, cmd) {
   const ns = clone(state);
   switch (cmd.type) {
     case "ui/setView": {
-      ns.ui.view = cmd.payload.view;
+      ns.ui.view = VIEW_ALIASES[cmd.payload.view] || cmd.payload.view;
       return nextRev(ns);
     }
     case "ui/setCompareIds": {
