@@ -1,10 +1,10 @@
 /**
- * Construcción del problema que recibe el solver (rebanada I-11 de S06).
+ * Construcción del problema que recibe el solver.
  *
  * Extraído del monolito `public/ugr/app.js` sin cambio de comportamiento y
- * ampliado con dos decisiones de producto del 2026-10-15: la dificultad
- * «Desconocido» no puntúa (`difficultyScore` devuelve `null`) y el **modo
- * profesores** deja a los docentes fuera de la generación.
+ * ampliado con dos decisiones de producto: la dificultad «Desconocido» no
+ * puntúa (`difficultyScore` devuelve `null`) y el **modo profesores** deja a los
+ * docentes fuera de la generación.
  *
  * Funciones puras —sin DOM, sin globals, sin estado—: el catálogo, el estado
  * de selección y los lookups de dificultad llegan por parámetro. El monolito
@@ -71,7 +71,7 @@ export function buildDocentScores(codes, catalog, dificultadOf, scoreOf) {
  * @returns {{subjects: string[], excludedPassed: string[], filters: Array,
  *   catalogVersion: string, docentScores: Record<string, number>}}
  *   `catalogVersion` sigue siendo `"legacy"`: el problema viaja al solver con
- *   esa etiqueta desde la Fase 1 y cambiarla alteraría la clave de la caché.
+ *   esa etiqueta y cambiarla alteraría la clave de la caché.
  */
 export function buildProblem({
   selectedSubjects = {},

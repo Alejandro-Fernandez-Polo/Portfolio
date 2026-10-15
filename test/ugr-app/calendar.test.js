@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { buildActiveSchedule, buildConflictSet } from '../../public/ugr/src/app/domain/calendar.js';
 
-// Caracterización del calendario (B3-a): fijan la forma exacta de las entradas
+// Caracterización del calendario: fijan la forma exacta de las entradas
 // de horario y de las claves de conflicto que `app.js` pintaba antes de
 // delegar. Datos puros: fixtures propias, sin DOM ni globals, entorno node.
 

@@ -17,8 +17,8 @@ export async function buildPayload(sections = ["userState", "configs", "progress
   }
   if (sections.includes("progress")) {
     // El progreso canónico vive en userState.progress (single-writer). La
-    // tabla `progress` solo se consulta como fallback de backups anteriores
-    // a la Fase 5, cuando el progreso se guardaba en esa tabla suelta.
+    // tabla `progress` solo se consulta como fallback de backups
+    // anteriores, cuando el progreso se guardaba en esa tabla suelta.
     if (!userState) userState = await get("userState", "current");
     const canonical = userState?.progress;
     payload.progress = canonical || (await get("progress", "main"));

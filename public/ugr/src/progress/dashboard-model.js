@@ -12,7 +12,7 @@ import {
 } from "./summary.js";
 
 /**
- * View-model puro del dashboard de progreso (Fase 5.2).
+ * View-model puro del dashboard de progreso.
  *
  * Sin DOM y sin store: todo llega por parámetro, así el módulo es testeable en
  * node y la única capa que toca elementos es src/ui/progress-dashboard.js.

@@ -35,7 +35,7 @@ function notify() {
 
 /**
  * Normaliza la porción de progreso a plena forma (credits/equivalences/plan).
- * Dos motivos: un userState anterior a la Fase 5 no trae `progress` o lo trae
+ * Dos motivos: un userState anterior no trae `progress` o lo trae
  * parcial/corrupto, y el estado base no debe compartir referencias con
  * `initialState.progress` (una mutación in-place lo corrompería para toda la
  * sesión). `...raw` conserva campos extra ya guardados, p. ej. updatedAt.

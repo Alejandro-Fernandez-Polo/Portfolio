@@ -1,5 +1,5 @@
 /**
- * Vista/controlador de materias (Bloque 3, rebanada B3-b).
+ * Vista/controlador de materias.
  *
  * Réplica sin cambio de comportamiento de `renderSubjects`, `toggleSubject`,
  * `initGroupChoice` y `applyGroupPreference` del monolito `public/ugr/app.js`,

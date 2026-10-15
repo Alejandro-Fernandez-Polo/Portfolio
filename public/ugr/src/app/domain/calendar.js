@@ -1,5 +1,5 @@
 /**
- * Reglas puras de calendario (Bloque 3, rebanada B3-a).
+ * Reglas puras de calendario.
  *
  * Extraídas del monolito `public/ugr/app.js` sin cambio de comportamiento:
  * aquí vive la única implementación y el IIFE clásico delega vía

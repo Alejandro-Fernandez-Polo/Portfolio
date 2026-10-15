@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import { buildPackage } from "../../tools/ugr-pipeline/build-package.mjs";
 import { decrypt } from "../../public/ugr/src/backup/crypto.js";
 
-// El paquete cifrado (I-11) se prueba con una contraseña de mentira: cifra
+// El paquete cifrado se prueba con una contraseña de mentira: cifra
 // `buildPackage`, descifra el MISMO módulo que usa el navegador
 // (`src/backup/crypto.js`), y se comprueba que el criptograma no lleva nada en
 // claro. La contraseña real del autor no pasa por aquí ni se guarda en ningún

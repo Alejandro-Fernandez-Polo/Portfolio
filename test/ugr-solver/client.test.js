@@ -103,7 +103,7 @@ describe("solveTopK", () => {
     expect(writes[0].payload.k).toBe(3);
   });
 
-  // Regresión del cableado Fase 5: app.js pasa `excludedPassed` dentro del
+  // Regresión del cableado: app.js pasa `excludedPassed` dentro del
   // problem. Si el hash lo contamina, cada ejecución tendría clave propia y
   // la caché nunca daría acierto.
   it("problemHash is unchanged when the problem carries extra fields", async () => {

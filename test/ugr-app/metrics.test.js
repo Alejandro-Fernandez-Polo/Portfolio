@@ -7,7 +7,7 @@ import {
 } from '../../public/ugr/src/app/domain/metrics.js';
 import { difficultyScore as realDifficultyScore } from '../../public/ugr/src/solver/catalog.js';
 
-// Caracterización de métricas y conflictos (T02.4): fijan el comportamiento
+// Caracterización de métricas y conflictos: fijan el comportamiento
 // legacy de app.js (`calculateConfig*` y `detectConflicts`) una vez que el
 // monolito delega en el dominio ESM. Funciones puras: fixtures propias, sin
 // DOM ni globals de datos, en el entorno node de Vitest.
@@ -212,7 +212,7 @@ describe('calculateConfigMetrics', () => {
     expect(m.profCount).toBe(0);
   });
 
-  it('«Desconocida» (`gris`) no puntúa ni entra en el denominador (I-11, 2026-10-15)', () => {
+  it('«Desconocida» (`gris`) no puntúa ni entra en el denominador', () => {
     const subjects = makeSubjects();
     const m = calculateConfigMetrics(
       { MAT: true, FIS: true },

@@ -1,6 +1,5 @@
 /**
- * Vista del calendario: render de semana/lista, tooltip y controles de vista
- * (Bloque 3, rebanadas B3-c y B3-d).
+ * Vista del calendario: render de semana/lista, tooltip y controles de vista.
  *
  * Réplica sin cambio de comportamiento de `renderCalendar`,
  * `renderCalendarList`, `getEntryTurno`, `getEntryDificultadLabel`,
@@ -16,7 +15,7 @@
  * otras vistas las usan) y los helpers de dificultad/profesor llegan por
  * parámetro; los conflictos se leen del estado corriente vía `getConflicts`.
  * `buildConflictSet` y `timeToMinutes` NO se duplican: se importan del
- * dominio ESM (B3-a/T02.x), que es su única implementación.
+ * dominio ESM, que es su única implementación.
  *
  * A diferencia de otros renders, los listeners de los toggles se enganchan a
  * botones estáticos del HTML (no reconstruidos por `innerHTML`), así que
@@ -190,7 +189,7 @@ export function createCalendarView({
     mounted = false;
   }
 
-  // ─── Etiquetas y ocupación (B3-d) ───────────────────────────
+  // ─── Etiquetas y ocupación ──────────────────────────────────
 
   /** Turno de la teoría elegida ('Mañana'/'Tarde'); '—' sin grupo o sujeto. */
   function getEntryTurno(entry) {

@@ -5,9 +5,9 @@ import {
 } from '../../public/ugr/src/app/domain/problem.js';
 import { difficultyScore } from '../../public/ugr/src/solver/catalog.js';
 
-// Caracterización de la construcción del problema del solver (rebanada I-11).
+// Caracterización de la construcción del problema del solver.
 // Fija dos cosas: el filtrado que ya hacía `app.js` (existe, cuatrimestre,
-// superadas) y las decisiones de producto del 2026-10-15 —«Desconocido» no
+// superadas) y las decisiones de producto —«Desconocido» no
 // puntúa y el modo profesores vacía las puntuaciones y retira el bloqueo—.
 // Funciones puras: fixtures propias, sin DOM ni globals.
 

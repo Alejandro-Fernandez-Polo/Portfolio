@@ -1,5 +1,5 @@
 /**
- * Reglas puras de horario (T02.1/T02.2).
+ * Reglas puras de horario.
  *
  * Extraídas del monolito `public/ugr/app.js` sin cambio de comportamiento para
  * que el IIFE clásico las consuma vía la composición (`deps.domain`) en lugar

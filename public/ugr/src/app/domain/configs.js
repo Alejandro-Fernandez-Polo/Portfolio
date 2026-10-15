@@ -1,5 +1,5 @@
 /**
- * Reglas puras de configuraciones guardadas (Bloque 4, rebanadas B4-a a B4-d).
+ * Reglas puras de configuraciones guardadas.
  *
  * Extraídas del monolito `public/ugr/app.js` sin cambio de comportamiento:
  * aquí vive la única implementación y el IIFE clásico delega vía
@@ -7,12 +7,12 @@
  * de configuraciones, el estado actual y los datos de materias/dificultad
  * llegan por parámetro, de modo que puedan probarse con fixtures propias.
  *
- * B4-a cubre búsqueda/orden/objeto persistible; B4-b añade la aplicación de
- * una config al estado, el borrado por id y la serialización/parseo de
- * export/import. Los formatos de fichero (claves `version`/`type`/
- * `exportedAt`) son contrato con ficheros ya exportados por personas
- * usuarias: no se tocan. B4-c aporta los bloqueos y B4-d el pipeline puro
- * de listado (filtrar → ordenar → paginar) que consume `renderSavedConfigs`.
+ * Cubre la búsqueda, el orden y el objeto persistible; la aplicación de una
+ * config al estado; el borrado por id y la serialización/parseo de
+ * export/import; la evaluación de bloqueos; y el pipeline puro de listado
+ * (filtrar → ordenar → paginar) que consume `renderSavedConfigs`. Los formatos
+ * de fichero (claves `version`/`type`/`exportedAt`) son contrato con ficheros
+ * ya exportados por personas usuarias: no se tocan.
  */
 
 import { calculateConfigDays, calculateConfigDeadHours, calculateConfigMetrics } from './metrics.js';
@@ -295,7 +295,7 @@ export function configFilename(name) {
   return `config-${name.replace(/\s+/g, '-').toLowerCase()}.json`;
 }
 
-// ─── B4-c: bloqueos de configuraciones ───────────────────────
+// ─── Bloqueos de configuraciones ─────────────────────────────
 
 /**
  * ¿Excluye algún bloqueo activo a una configuración guardada?
@@ -378,7 +378,7 @@ export function buildBlockPayload(type, values) {
   return null;
 }
 
-// ─── B4-d: pipeline de listado (filtrar → ordenar → paginar) ─
+// ─── Pipeline de listado (filtrar → ordenar → paginar) ───────
 
 /**
  * Selecciona las configuraciones visibles de la tabla de guardadas.

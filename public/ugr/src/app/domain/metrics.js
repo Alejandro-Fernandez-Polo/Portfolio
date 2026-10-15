@@ -1,5 +1,5 @@
 /**
- * Métricas de configuración y detección de conflictos (T02.4).
+ * Métricas de configuración y detección de conflictos.
  *
  * Extraídas del monolito `public/ugr/app.js` sin cambio de comportamiento:
  * aquí vive la única implementación y el IIFE clásico delega vía
@@ -63,7 +63,7 @@ export function calculateConfigMetrics(
       sumHours(group.practicas[choice.practica]);
     }
 
-    // «Desconocido» no puntúa (decisión del 2026-10-15): sin puntuación no hay
+    // «Desconocido» no puntúa: sin puntuación no hay
     // ni suma ni entrada en el denominador, de modo que la columna «Prof» no
     // se ensucia con profesores de los que no se sabe nada. Si nada puntúa,
     // `profCount` queda a 0 y el llamante pinta el hueco.

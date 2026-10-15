@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { timeToMinutes, timesOverlap } from '../../public/ugr/src/app/domain/schedule.js';
 import { calcPropuestaCreditos } from '../../public/ugr/src/app/domain/proposals.js';
 
-// Caracterización de las reglas puras extraídas de public/ugr/app.js (T02.x):
+// Caracterización de las reglas puras extraídas de public/ugr/app.js:
 // fijan el comportamiento legacy exacto (minutos, solapes estrictos, créditos)
 // antes de que el monolito delegue en ellas vía `deps.domain`.
 // Sin DOM ni globals: corren en el entorno node de Vitest.

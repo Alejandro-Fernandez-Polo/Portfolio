@@ -11,7 +11,7 @@
  */
 
 /**
- * Dependencias que recibe la composición (`createUgrApp(deps)`, T01.4). Todo se
+ * Dependencias que recibe la composición (`createUgrApp(deps)`). Todo se
  * inyecta desde la fachada de arranque: ningún feature resuelve globals por
  * nombre ni toca `localStorage` directamente.
  *

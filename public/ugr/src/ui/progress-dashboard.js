@@ -105,7 +105,7 @@ function statusSelect(row, canWrite) {
 }
 
 /**
- * Bloque de backup/restore (Fase 5.4). `bundle.js` se importa en diferido:
+ * Bloque de backup/restore. `bundle.js` se importa en diferido:
  * solo quien exporta o importa paga el coste del módulo (y de su crypto).
  * Si algún elemento del bloque no existe (HTML antiguo), no se engancha nada.
  */

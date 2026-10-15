@@ -1,5 +1,5 @@
 /**
- * Reglas puras de propuestas de convalidación (T02.5).
+ * Reglas puras de propuestas de convalidación.
  *
  * Extraída de `public/ugr/app.js` sin cambio de comportamiento: es la única
  * implementación y el IIFE clásico la consume vía `deps.domain`.

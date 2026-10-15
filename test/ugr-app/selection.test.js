@@ -6,7 +6,7 @@ import {
   applyApellidoSubgroups,
 } from '../../public/ugr/src/app/domain/selection.js';
 
-// Caracterización de la selección y las reglas de grupo (B3-a): fijan el
+// Caracterización de la selección y las reglas de grupo: fijan el
 // comportamiento legacy de `app.js` (`getSubgrupoForApellido`,
 // `initGroupChoice`, `applyGroupPreference` y `applyApellidoRule`) una vez que
 // el monolito delega en el dominio ESM. Funciones puras: fixtures propias, sin

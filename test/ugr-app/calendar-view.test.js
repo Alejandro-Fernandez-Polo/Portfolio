@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createCalendarView } from '../../public/ugr/src/app/features/calendar.js';
 
-// Caracterización de la vista del calendario (B3-c controles + B3-d renders):
+// Caracterización de la vista del calendario (controles + renders):
 // fijan el comportamiento legacy (claves de storage, aria-pressed, guard de
 // nodos ausentes, etiquetas accesibles y horas ocupadas) y, sobre todo, la
 // idempotencia de mount()/destroy() — sin ella un `init()` repetido
@@ -263,7 +263,7 @@ describe('createCalendarView — mount/destroy', () => {
   });
 });
 
-// ─── B3-d: etiqueta accesible y horas ocupadas ───────────────
+// ─── Etiqueta accesible y horas ocupadas ────────────────────
 
 describe('createCalendarView — buildEventLabel', () => {
   const entry = {

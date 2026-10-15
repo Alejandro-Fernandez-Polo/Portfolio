@@ -16,11 +16,11 @@ import {
   paginateConfigs,
 } from '../../public/ugr/src/app/domain/configs.js';
 
-// Caracterización de las reglas de configuraciones guardadas (B4-a, B4-b,
-// B4-c y B4-d): fijan el comportamiento legacy de `app.js`
+// Caracterización de las reglas de configuraciones guardadas: fijan el
+// comportamiento legacy de `app.js`
 // (`isConfigFavorited`, `findDuplicateConfig`, el objeto de `saveConfig`, el
-// comparador de `sortSavedConfigs`, desde B4-b cargar/borrar/exportar/importar,
-// desde B4-c los bloqueos de configuraciones y desde B4-d el pipeline de
+// comparador de `sortSavedConfigs`; cargar/borrar/exportar/importar,
+// los bloqueos de configuraciones y el pipeline de
 // listado que consume `renderSavedConfigs`) una vez que el monolito delega en
 // el dominio ESM. Funciones puras: fixtures propias, sin DOM ni globals, en el
 // entorno node de Vitest.
@@ -318,7 +318,7 @@ describe('sortSavedConfigs', () => {
   });
 });
 
-// ─── B4-b: cargar, borrar, exportar e importar ───────────────
+// ─── Cargar, borrar, exportar e importar ────────────────────
 
 describe('applyConfigToState', () => {
   it('copia los 4 campos al estado y devuelve el MISMO objeto (mutación in situ)', () => {
@@ -509,7 +509,7 @@ describe('configFilename', () => {
   });
 });
 
-// ─── B4-c: bloqueos de configuraciones ───────────────────────
+// ─── Bloqueos de configuraciones ─────────────────────────────
 
 describe('isConfigBlocked', () => {
   const subjects = makeSubjects(); // MAT y FIS, ambas de curso 1
@@ -685,7 +685,7 @@ describe('buildBlockPayload', () => {
   });
 });
 
-// ─── B4-d: pipeline de listado (filtrar → ordenar → paginar) ─
+// ─── Pipeline de listado (filtrar → ordenar → paginar) ───────
 
 describe('selectVisibleConfigs', () => {
   /** Segunda materia de tarde en DOS días distintos (para techos de días). */
