@@ -1206,7 +1206,27 @@
             if (sessions.length === 0) {
               html += `<span class="session practice" style="color:#999;">-</span>`;
             }
-            html += `</div></div></div>`;
+            html += `</div>`;
+            // La columna de prácticas dice también quién la da: la dificultad es
+            // por modalidad, así que la de prácticas no tiene por qué coincidir
+            // con la de teoría del mismo grupo.
+            const profPracticas = getProfName(codigo, sub);
+            if (profPracticas && !ignoreDocents) {
+              const diffPracticas = getDificultad(codigo, sub);
+              const nombrePracticas = escapeCatalogText(profPracticas);
+              html += `<div class="group-profesor">`;
+              if (getProfesorInfo(codigo, sub)) {
+                html += `<button type="button" class="prof-name-btn" data-prof-name="${nombrePracticas}"`
+                  + ` data-prof-codigo="${codigo}" data-prof-modalidad="Prácticas">${nombrePracticas}</button>`;
+              } else {
+                html += `<span class="prof-name">${nombrePracticas}</span>`;
+              }
+              if (diffPracticas) {
+                html += `<span class="dificultad-badge" style="background:${getDificultadColor(diffPracticas)}">${getDificultadLabel(diffPracticas)}</span>`;
+              }
+              html += `</div>`;
+            }
+            html += `</div></div>`;
           });
           html += `</div>`;
         }
