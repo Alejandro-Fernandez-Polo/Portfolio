@@ -43,8 +43,9 @@ skills-lock.json
 public/ugr/.git/
 public/ugr/agents.md
 public/ugr/conclusion_final_profesores_ugr.txt
-# Volcado local de docentes de ejemplo en texto plano; el repo solo lleva el
-# dataset (`datasets/ugr/gi/2026-1.json`) y el paquete cifrado.
+# Volcados locales de docentes en texto plano; el repo solo lleva el dataset
+# (`datasets/ugr/gi/2026-1.json`) y el paquete cifrado.
+public/ugr/docentes_excel.js
 public/ugr/datasets/docentes_excel.json
 public/ugr/convalidaciones.html
 public/ugr/generar_horarios_fft.py
