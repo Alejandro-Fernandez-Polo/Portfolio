@@ -11,6 +11,9 @@ import {
   timeToMinutes,
   minutesToTime,
   isValidTime,
+  difficultyScore,
+  DIFFICULTY_SCORES,
+  normalizeDocent,
 } from "../../public/ugr/src/solver/catalog.js";
 
 const FFT = {
@@ -174,5 +177,76 @@ describe("validateCatalog", () => {
   it("VALID_DAYS excludes weekend", () => {
     expect(VALID_DAYS).not.toContain("sabado");
     expect(VALID_DAYS).not.toContain("domingo");
+  });
+});
+
+describe("difficultyScore", () => {
+  it("puntúa toda la escala conocida", () => {
+    expect(difficultyScore("cyan")).toBe(6);
+    expect(difficultyScore("verde")).toBe(5);
+    expect(difficultyScore("amarillo")).toBe(4);
+    expect(difficultyScore("naranja")).toBe(3);
+    expect(difficultyScore("rojo")).toBe(2);
+    expect(difficultyScore("negro")).toBe(1);
+  });
+
+  it("«Desconocido» (`gris`) no puntúa: null, no un 3 por defecto (I-11, 2026-10-15)", () => {
+    expect(DIFFICULTY_SCORES).not.toHaveProperty("gris");
+    expect(difficultyScore("gris")).toBeNull();
+  });
+
+  it("un valor fuera de la escala tampoco puntúa", () => {
+    expect(difficultyScore("turquesa")).toBeNull();
+    expect(difficultyScore(null)).toBeNull();
+    expect(difficultyScore(undefined)).toBeNull();
+  });
+});
+
+describe("normalizeDocent", () => {
+  it("conserva las opiniones múltiples y descarta las vacías (I-11)", () => {
+    const d = normalizeDocent({
+      key: "FFT-A",
+      name: "Alba Delgado",
+      subjectCode: "FFT",
+      groupLetter: "A",
+      profile: { dificultad: "cyan", razon: "", opinions: ["Primera", "  ", "Segunda"] },
+    });
+    expect(d.profile.opinions).toEqual(["Primera", "Segunda"]);
+  });
+
+  it("convierte el `opinion` singular heredado en una lista de uno", () => {
+    const d = normalizeDocent({
+      key: "FFT-A",
+      name: "Ana",
+      profile: { dificultad: null, razon: "", opinion: "Explica desde cero" },
+    });
+    expect(d.profile.opinions).toEqual(["Explica desde cero"]);
+    expect(d.profile).not.toHaveProperty("opinion");
+  });
+
+  it("sin opiniones devuelve lista vacía, nunca undefined", () => {
+    const d = normalizeDocent({ key: "FFT-A", name: "Ana", profile: {} });
+    expect(d.profile.opinions).toEqual([]);
+    expect(d.profile.dificultad).toBeNull();
+  });
+
+  it("si vienen las dos formas, manda `opinions[]`", () => {
+    const d = normalizeDocent({
+      key: "FFT-A",
+      name: "Ana",
+      profile: { opinion: "vieja", opinions: ["nueva"] },
+    });
+    expect(d.profile.opinions).toEqual(["nueva"]);
+  });
+
+  it("deriva la clave de asignatura y grupo cuando falta `key`", () => {
+    const d = normalizeDocent({ name: "Ana", subjectCode: "FFT", groupLetter: "B" });
+    expect(d.key).toBe("FFT-B");
+    expect(d.profile.opinions).toEqual([]);
+  });
+
+  it("sin clave no hay docente", () => {
+    expect(normalizeDocent({ name: "Ana" })).toBeNull();
+    expect(normalizeDocent(null)).toBeNull();
   });
 });

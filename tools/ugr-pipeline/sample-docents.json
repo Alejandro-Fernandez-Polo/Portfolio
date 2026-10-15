@@ -1,0 +1,528 @@
+[
+  {
+    "key": "SO-A",
+    "name": "Alba Delgado",
+    "subjectCode": "SO",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SO-B",
+    "name": "Bruno Iglesias",
+    "subjectCode": "SO",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SO-C",
+    "name": "Carla Ferrer",
+    "subjectCode": "SO",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SO-D",
+    "name": "Diego Cano",
+    "subjectCode": "SO",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": [
+        "Responde dudas por correo. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "SO-E",
+    "name": "Elena Vidal",
+    "subjectCode": "SO",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "rojo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "IG-A",
+    "name": "Fabián Prieto",
+    "subjectCode": "IG",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "negro",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "IG-B",
+    "name": "Gloria Salas",
+    "subjectCode": "IG",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "gris",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "IG-C",
+    "name": "Hugo Mena",
+    "subjectCode": "IG",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": [
+        "Exige, pero se aprende. Datos de ejemplo.",
+        "Va rápido y conviene repasar antes. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "IG-D",
+    "name": "Irene Otero",
+    "subjectCode": "IG",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "IG-E",
+    "name": "Javier Rivas",
+    "subjectCode": "IG",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ISE-A",
+    "name": "Karina Lozano",
+    "subjectCode": "ISE",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ISE-B",
+    "name": "Lucía Pardo",
+    "subjectCode": "ISE",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "rojo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ISE-C",
+    "name": "Mario Quintero",
+    "subjectCode": "ISE",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "negro",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ISE-D",
+    "name": "Nerea Rueda",
+    "subjectCode": "ISE",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "gris",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ISE-E",
+    "name": "Óscar Suárez",
+    "subjectCode": "ISE",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": [
+        "Va rápido y conviene repasar antes. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "DDSI-A",
+    "name": "Paula Tejada",
+    "subjectCode": "DDSI",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "DDSI-B",
+    "name": "Quique Valle",
+    "subjectCode": "DDSI",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "DDSI-C",
+    "name": "Rocío Zamora",
+    "subjectCode": "DDSI",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "DDSI-D",
+    "name": "Sergio Bermúdez",
+    "subjectCode": "DDSI",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "rojo",
+      "razon": "",
+      "opinions": [
+        "Responde dudas por correo. Datos de ejemplo.",
+        "Explica con calma y trae ejemplos resueltos. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "ALEM-A",
+    "name": "Teresa Cuesta",
+    "subjectCode": "ALEM",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "negro",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ALEM-B",
+    "name": "Úrsula Domínguez",
+    "subjectCode": "ALEM",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "gris",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ALEM-C",
+    "name": "Víctor Estévez",
+    "subjectCode": "ALEM",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ALEM-D",
+    "name": "Xenia Fuentes",
+    "subjectCode": "ALEM",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ALEM-E",
+    "name": "Yago Gallego",
+    "subjectCode": "ALEM",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ALEM-F",
+    "name": "Alicia Herrera",
+    "subjectCode": "ALEM",
+    "groupLetter": "F",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SCD-A",
+    "name": "Bernardo Izquierdo",
+    "subjectCode": "SCD",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "rojo",
+      "razon": "",
+      "opinions": [
+        "Explica con calma y trae ejemplos resueltos. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "SCD-B",
+    "name": "Celia Jimeno",
+    "subjectCode": "SCD",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "negro",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SCD-C",
+    "name": "Damián Lara",
+    "subjectCode": "SCD",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "gris",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SCD-D",
+    "name": "Estela Montes",
+    "subjectCode": "SCD",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "SCD-E",
+    "name": "Félix Nieto",
+    "subjectCode": "SCD",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": [
+        "Va rápido y conviene repasar antes. Datos de ejemplo.",
+        "Los apuntes se siguen solos. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "FFT-A",
+    "name": "Gabriela Olivares",
+    "subjectCode": "FFT",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "FFT-B",
+    "name": "Héctor Peña",
+    "subjectCode": "FFT",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "FFT-C",
+    "name": "Inés Quintana",
+    "subjectCode": "FFT",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "rojo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "FFT-D",
+    "name": "Joaquín Robles",
+    "subjectCode": "FFT",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "negro",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "FFT-E",
+    "name": "Lorena Serrano",
+    "subjectCode": "FFT",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "gris",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "FFT-F",
+    "name": "Marcos Trujillo",
+    "subjectCode": "FFT",
+    "groupLetter": "F",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "EC-A",
+    "name": "Nadia Ureña",
+    "subjectCode": "EC",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": [
+        "Los apuntes se siguen solos. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "EC-B",
+    "name": "Pablo Vega",
+    "subjectCode": "EC",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "EC-C",
+    "name": "Raquel Zúñiga",
+    "subjectCode": "EC",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "EC-D",
+    "name": "Simón Aguilar",
+    "subjectCode": "EC",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "rojo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "EC-E",
+    "name": "Tamara Bustos",
+    "subjectCode": "EC",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "negro",
+      "razon": "",
+      "opinions": [
+        "Explica con calma y trae ejemplos resueltos. Datos de ejemplo.",
+        "Exige, pero se aprende. Datos de ejemplo."
+      ]
+    }
+  },
+  {
+    "key": "ED-A",
+    "name": "Unai Carrasco",
+    "subjectCode": "ED",
+    "groupLetter": "A",
+    "profile": {
+      "dificultad": "gris",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ED-B",
+    "name": "Vera Duarte",
+    "subjectCode": "ED",
+    "groupLetter": "B",
+    "profile": {
+      "dificultad": "cyan",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ED-C",
+    "name": "Yolanda Escobar",
+    "subjectCode": "ED",
+    "groupLetter": "C",
+    "profile": {
+      "dificultad": "verde",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ED-D",
+    "name": "Adrián Franco",
+    "subjectCode": "ED",
+    "groupLetter": "D",
+    "profile": {
+      "dificultad": "amarillo",
+      "razon": "",
+      "opinions": []
+    }
+  },
+  {
+    "key": "ED-E",
+    "name": "Beatriz Godoy",
+    "subjectCode": "ED",
+    "groupLetter": "E",
+    "profile": {
+      "dificultad": "naranja",
+      "razon": "",
+      "opinions": []
+    }
+  }
+]

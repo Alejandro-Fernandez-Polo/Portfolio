@@ -25,6 +25,11 @@ pruebas/
 # Planes de trabajo (local only)
 planes/
 
+# Maestro privado de /ugr (local only): docentes y catálogo en texto plano, y
+# los paquetes personales. El repo solo lleva el artefacto cifrado que genera
+# tools/ugr-pipeline/build-package.mjs, nunca estos ficheros.
+privado/
+
 # Maestros de imagen sin comprimir (local only). La app usa los WebP de
 # src/assets/images/; estos originales solo sirven para re-generarlos.
 originales/
@@ -38,6 +43,9 @@ skills-lock.json
 public/ugr/.git/
 public/ugr/agents.md
 public/ugr/conclusion_final_profesores_ugr.txt
+# Volcado local de docentes de ejemplo en texto plano; el repo solo lleva el
+# dataset (`datasets/ugr/gi/2026-1.json`) y el paquete cifrado.
+public/ugr/datasets/docentes_excel.json
 public/ugr/convalidaciones.html
 public/ugr/generar_horarios_fft.py
 public/ugr/generar_horarios.py

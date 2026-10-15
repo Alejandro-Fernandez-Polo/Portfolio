@@ -183,4 +183,37 @@ describe("CATALOG_SCHEMA / validateCatalogJSON", () => {
     ];
     expect(validateCatalogJSON(catalog).ok).toBe(true);
   });
+
+  it("acepta opiniones múltiples (`opinions[]`, I-11) y la marca de docentes de ejemplo", () => {
+    const catalog = validCatalog();
+    catalog.meta.sampleDocents = true;
+    catalog.docents = [
+      {
+        key: "FFT-A",
+        name: "Alba Delgado",
+        subjectCode: "FFT",
+        groupLetter: "A",
+        profile: {
+          dificultad: "cyan",
+          razon: "",
+          opinions: ["Explica con calma", "Los apuntes se siguen solos"],
+        },
+      },
+    ];
+    expect(validateCatalogJSON(catalog).ok).toBe(true);
+  });
+
+  it("rechaza una opinión que no sea texto", () => {
+    const catalog = validCatalog();
+    catalog.docents = [
+      {
+        key: "FFT-A",
+        name: "Ana",
+        subjectCode: "FFT",
+        groupLetter: "A",
+        profile: { dificultad: null, razon: "", opinions: [42] },
+      },
+    ];
+    expect(validateCatalogJSON(catalog).ok).toBe(false);
+  });
 });

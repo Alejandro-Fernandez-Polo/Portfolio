@@ -133,6 +133,11 @@ export const CATALOG_SCHEMA = {
         version: { type: "string" },
         hash: { type: "string" },
         sources: { type: "array", items: { type: "string" } },
+        // Marca del catálogo de ejemplo del repo (I-11): sus docentes son
+        // inventados. El maestro privado del autor lo lleva a `false` y el
+        // paquete cifrado conserva el suyo.
+        sampleDocents: { type: "boolean" },
+        updatedAt: { type: "string" },
       },
       additionalProperties: false,
     },
@@ -152,6 +157,10 @@ export const CATALOG_SCHEMA = {
             properties: {
               dificultad: { type: ["string", "null"] },
               razon: { type: "string" },
+              // Forma canónica desde I-11: varias opiniones por profesor. Se
+              // acepta también el `opinion` singular heredado para no rechazar
+              // un catálogo exportado antes del cambio.
+              opinions: { type: "array", items: { type: "string" } },
               opinion: { type: "string" },
             },
             additionalProperties: false,

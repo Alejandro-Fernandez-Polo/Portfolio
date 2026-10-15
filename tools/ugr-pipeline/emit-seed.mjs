@@ -1,20 +1,50 @@
+/**
+ * Siembra los datos de EJEMPLO de `/ugr` (I-11).
+ *
+ * Genera, desde una sola fuente de verdad (`tools/ugr-pipeline/sample-docents.json`),
+ * las dos copias que la app consulta:
+ *   - `public/ugr/docentes.js` — el global `DOCENTES` que leen los scripts
+ *     clásicos, el monolito y el kernel (un navegador recién estrenado monta el
+ *     catálogo desde aquí, no desde el dataset).
+ *   - `public/ugr/datasets/ugr/gi/2026-1.json` — el dataset público que se
+ *     descarga al importar/actualizar el catálogo remoto, más `manifest.json` y
+ *     `_hashes.json`.
+ *
+ * Los docentes reales **no** pasan por aquí: viven en `privado/` (ignorado por
+ * git) y viajan cifrados en el paquete que genera `build-package.mjs`. Por eso
+ * el dataset se marca con `meta.sampleDocents: true`.
+ *
+ * El hash del dataset cubre `{ subjects, docents }` y lo verifica el cliente al
+ * descargarlo, así que este script es el único sitio donde se regeneran los
+ * tres ficheros a la vez.
+ *
+ * Uso: `node tools/ugr-pipeline/emit-seed.mjs`
+ */
+
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
-import {
-  attachDocents,
-  fromLegacySubjects,
-} from "../../public/ugr/src/solver/catalog.js";
+import { attachDocents, fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const DATA_PATH = path.join(ROOT, "public/ugr/data.js");
+const SAMPLE_DOCENTS_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
 const DOCENTES_PATH = path.join(ROOT, "public/ugr/docentes.js");
 const DATASETS_DIR = path.join(ROOT, "public/ugr/datasets");
 const CATALOG_ID = "ugr/gi/2026-1";
 const DATASET_RELATIVE_URL = `/ugr/datasets/${CATALOG_ID}.json`;
+
+const DOCENTES_HEADER = `/* UGR Horario - Docentes de EJEMPLO por grupo (capa de datos)
+ *
+ * Estos docentes son inventados: están para que la app funcione sin datos de
+ * nadie. Los reales del autor viajan cifrados en
+ * datasets/ugr/gi/package.enc.json y se superponen en memoria al escribir la
+ * contraseña (I-11). Fichero generado: no lo edites a mano, cambia
+ * tools/ugr-pipeline/sample-docents.json y ejecuta emit-seed.mjs.
+ */`;
 
 function loadLegacyGlobal(filePath, name) {
   const source = readFileSync(filePath, "utf8");
@@ -56,15 +86,19 @@ function writeJson(filePath, value) {
 }
 
 const legacySubjects = loadLegacyGlobal(DATA_PATH, "SUBJECTS");
-const legacyDocents = loadLegacyGlobal(DOCENTES_PATH, "DOCENTES");
+const sampleDocents = JSON.parse(readFileSync(SAMPLE_DOCENTS_PATH, "utf8"));
 
-const catalog = attachDocents(fromLegacySubjects(legacySubjects), legacyDocents);
+const catalog = attachDocents(fromLegacySubjects(legacySubjects), sampleDocents);
 
-if (JSON.stringify(catalog.docents) !== JSON.stringify(legacyDocents)) {
-  throw new Error("normalized docents differ from legacy DOCENTES");
+// El fixture es la entrada, así que tiene que estar ya en la forma canónica:
+// si normalizar cambia algo, fixture y modelo se han desincronizado y el error
+// evita que ese desajuste llegue al dataset.
+if (canonicalJson(catalog.docents) !== canonicalJson(sampleDocents)) {
+  throw new Error("los docentes de ejemplo no están en la forma canónica");
 }
 
 const hash = hashOf(catalog.subjects, catalog.docents);
+const sources = ["legacy", "ejemplo"];
 
 const dataset = {
   meta: {
@@ -73,13 +107,13 @@ const dataset = {
     plan: "2022",
     version: "2026-1",
     hash,
-    sources: ["legacy"],
+    sources,
+    sampleDocents: true,
   },
   subjects: catalog.subjects,
   docents: catalog.docents,
 };
 
-const datasetPath = path.join(DATASETS_DIR, `${CATALOG_ID}.json`);
 const manifestPath = path.join(DATASETS_DIR, "manifest.json");
 const hashesPath = path.join(DATASETS_DIR, "_hashes.json");
 
@@ -94,21 +128,26 @@ const manifest = {
       url: DATASET_RELATIVE_URL,
       hash,
       updatedAt: new Date().toISOString(),
-      sources: dataset.meta.sources,
+      sources,
+      sampleDocents: true,
     },
   ],
 };
 
 const hashes = { [CATALOG_ID]: hash };
 
+const datasetPath = path.join(DATASETS_DIR, `${CATALOG_ID}.json`);
+
 writeJson(datasetPath, dataset);
 writeJson(manifestPath, manifest);
 writeJson(hashesPath, hashes);
+writeFileSync(DOCENTES_PATH, `${DOCENTES_HEADER}\nconst DOCENTES = ${JSON.stringify(catalog.docents, null, 2)};\n`, "utf8");
 
 const summary = [
   `subjects: ${dataset.subjects.length}`,
   `docents: ${dataset.docents.length}`,
   `hash: ${hash}`,
+  `wrote: ${path.relative(ROOT, DOCENTES_PATH)}`,
   `wrote: ${path.relative(ROOT, datasetPath)}`,
   `wrote: ${path.relative(ROOT, manifestPath)}`,
   `wrote: ${path.relative(ROOT, hashesPath)}`,

@@ -102,6 +102,12 @@ export function getSubgroups(group) {
   return group.practicas.subgrupos;
 }
 
+/**
+ * Peso de cada dificultad conocida para el término de profesor del coste.
+ * `gris` («Desconocido») NO está aquí a propósito: antes caía al `?? 3` y
+ * pesaba lo mismo que «Difícil», que es justo lo contrario de lo que significa
+ * no saber nada de un profesor (decisión de producto del 2026-10-15).
+ */
 export const DIFFICULTY_SCORES = {
   cyan: 6,
   verde: 5,
@@ -109,17 +115,46 @@ export const DIFFICULTY_SCORES = {
   naranja: 3,
   rojo: 2,
   negro: 1,
-  gris: 3,
 };
 
+/**
+ * Peso de una dificultad. Devuelve `null` cuando no hay puntuación —`gris`,
+ * cadena desconocida o valor ausente—, y `null` es «sin puntuación» en todo el
+ * camino: `engine.js` lo interpreta como penalización 0 (el grupo no se ve
+ * empujado ni premiado) y `metrics.js` lo ignora en lugar de contarlo. El
+ * llamante decide qué hacer con el hueco; nunca se inventa un 3 por defecto.
+ *
+ * @param {string|null|undefined} dificultad clave de dificultad.
+ * @returns {number|null} entero 1–6 o `null` si no hay puntuación.
+ */
 export function difficultyScore(dificultad) {
-  return DIFFICULTY_SCORES[dificultad] ?? 3;
+  return DIFFICULTY_SCORES[dificultad] ?? null;
 }
 
 function docentKey(docent) {
   if (docent?.key) return docent.key;
   if (docent?.subjectCode && docent?.groupLetter) return `${docent.subjectCode}-${docent.groupLetter}`;
   return "";
+}
+
+/**
+ * Opiniones de un docente en la forma canónica `profile.opinions[]` (desde
+ * I-11: varias por profesor, cadenas sueltas, sin metadatos). Se sigue
+ * aceptando el `profile.opinion` singular que usaban los datos anteriores para
+ * no romper un catálogo exportado antes del cambio; se normaliza a un array de
+ * uno. Las cadenas vacías no son opiniones y se descartan.
+ *
+ * @param {Object} profile perfil crudo del docente.
+ * @returns {string[]} opiniones no vacías.
+ */
+function normalizeOpinions(profile) {
+  if (Array.isArray(profile.opinions)) {
+    return profile.opinions.filter((o) => typeof o === "string" && o.trim() !== "");
+  }
+  if (typeof profile.opinion === "string" && profile.opinion.trim() !== "") {
+    return [profile.opinion];
+  }
+  return [];
 }
 
 export function normalizeDocent(docent) {
@@ -136,7 +171,7 @@ export function normalizeDocent(docent) {
     profile: {
       dificultad: profile.dificultad || null,
       razon: profile.razon || "",
-      opinion: profile.opinion || "",
+      opinions: normalizeOpinions(profile),
     },
   };
 }

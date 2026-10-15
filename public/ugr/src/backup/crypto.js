@@ -4,6 +4,29 @@ const PBKDF2_ITERATIONS = 600000;
 const KEY_LENGTH = 256;
 const IV_LENGTH = 12;
 const SALT_LENGTH = 16;
+const BASE64_CHUNK = 0x8000;
+
+/**
+ * Bytes → base64 sin reventar la pila. `String.fromCharCode(...bytes)` pasa cada
+ * byte como argumento, y con un payload grande (el paquete cifrado de /ugr ronda
+ * los 300 KB) eso desborda el límite de argumentos del motor: de ahí que se
+ * construya la cadena binaria por trozos.
+ */
+export function bytesToBase64(bytes) {
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += BASE64_CHUNK) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + BASE64_CHUNK));
+  }
+  return btoa(binary);
+}
+
+/** base64 → bytes, sin `split("").map(...)` (evita un array de un char por byte). */
+export function base64ToBytes(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
 
 export async function sha256hex(str) {
   const buf = await crypto.subtle.digest("SHA-256", ENC.encode(str));
@@ -30,7 +53,7 @@ export async function encrypt(plaintext, passphrase) {
     v: 1,
     salt: Array.from(salt).map((b) => b.toString(16).padStart(2, "0")).join(""),
     iv: Array.from(iv).map((b) => b.toString(16).padStart(2, "0")).join(""),
-    data: btoa(String.fromCharCode(...new Uint8Array(data))),
+    data: bytesToBase64(new Uint8Array(data)),
   };
 }
 
@@ -38,7 +61,7 @@ export async function decrypt(cipherObj, passphrase) {
   if (!cipherObj || cipherObj.v !== 1) throw new Error("BAD_FORMAT");
   const salt = new Uint8Array(cipherObj.salt.match(/.{2}/g).map((b) => parseInt(b, 16)));
   const iv = new Uint8Array(cipherObj.iv.match(/.{2}/g).map((b) => parseInt(b, 16)));
-  const data = new Uint8Array(atob(cipherObj.data).split("").map((c) => c.charCodeAt(0)));
+  const data = base64ToBytes(cipherObj.data);
   const key = await deriveKey(passphrase, salt);
   try {
     const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
