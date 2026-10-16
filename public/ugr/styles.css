@@ -895,6 +895,9 @@ main {
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 500;
+  /* Los colores venían en un `style` inline en cada etiqueta; viven aquí. */
+  background: #e8f4fd;
+  color: #003366;
 }
 .turno-badge {
   display: inline-block;

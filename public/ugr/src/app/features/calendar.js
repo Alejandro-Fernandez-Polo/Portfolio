@@ -45,7 +45,8 @@ import { timeToMinutes } from '../domain/schedule.js';
  * @param {number} deps.endHour hora final exclusiva de la rejilla.
  * @param {(codigo: string, letra: string) => ?} deps.getDificultad dificultad.
  * @param {(d: ?) => string} deps.getDificultadLabel etiqueta de dificultad.
- * @param {(d: ?) => string} deps.getDificultadColor color de dificultad.
+ * @param {(d: ?) => string} deps.getDificultadColor token del color de la
+ *   dificultad (`var(--diff-…)`): el valor lo tiene la hoja de estilos.
  * @param {(codigo: string, letra: string) => string} deps.getProfName profesor.
  * @returns {{mount: () => void, destroy: () => void, getView: () => string,
  *   setView: (view: string) => void, applyView: () => void,

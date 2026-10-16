@@ -1175,16 +1175,20 @@
     return info && info.dificultad ? info.dificultad : null;
   }
 
+  // La escala (etiquetas y color) la decide el dominio: aquí solo se pregunta.
+  // El color viaja como **token CSS** (`var(--diff-cyan)`), no como valor: la
+  // hoja de estilos es su dueña y así no puede desviarse entre los dos.
   function getDificultadLabel(d) {
-    const map = { cyan:'Muy fácil', verde:'Fácil', amarillo:'Normal',
-                  naranja:'Difícil', rojo:'Muy difícil', negro:'Extremo', gris:'Desconocido' };
-    return map[d] || 'Desconocido';
+    return getDomain().difficultyLabel(d);
   }
 
   function getDificultadColor(d) {
-    const map = { cyan:'#00e5ff', verde:'#28a745', amarillo:'#ffc107',
-                  naranja:'#fd7e14', rojo:'#dc3545', negro:'#1a1a1a', gris:'#6c757d' };
-    return map[d] || '#6c757d';
+    return getDomain().difficultyToken(d);
+  }
+
+  /** Clase CSS del color de la escala, para las insignias (fondo). */
+  function dificultadClase(d) {
+    return getDomain().DIFFICULTY_UI_LABELS[d] ? `diff-${d}` : 'diff-gris';
   }
 
   // ─── Render Group Config ────────────────────────────────────
@@ -1257,7 +1261,7 @@
             html += `<span class="prof-name">${nombre}</span>`;
           }
           if (diff) {
-            html += `<span class="dificultad-badge" style="background:${getDificultadColor(diff)}">${getDificultadLabel(diff)}</span>`;
+            html += `<span class="dificultad-badge ${dificultadClase(diff)}">${getDificultadLabel(diff)}</span>`;
           }
           html += `</div>`;
         }
@@ -1308,7 +1312,7 @@
                 html += `<span class="prof-name">${nombrePracticas}</span>`;
               }
               if (diffPracticas) {
-                html += `<span class="dificultad-badge" style="background:${getDificultadColor(diffPracticas)}">${getDificultadLabel(diffPracticas)}</span>`;
+                html += `<span class="dificultad-badge ${dificultadClase(diffPracticas)}">${getDificultadLabel(diffPracticas)}</span>`;
               }
               html += `</div>`;
             }
@@ -1386,7 +1390,7 @@
 
   function dificultadBadgeHtml(dificultad) {
     if (!dificultad) return '';
-    return `<span class="dificultad-badge" style="background:${getDificultadColor(dificultad)}">${getDificultadLabel(dificultad)}</span>`;
+    return `<span class="dificultad-badge ${dificultadClase(dificultad)}">${getDificultadLabel(dificultad)}</span>`;
   }
 
   /** Una entrada de la ficha: el profesor en una asignatura y una modalidad. */

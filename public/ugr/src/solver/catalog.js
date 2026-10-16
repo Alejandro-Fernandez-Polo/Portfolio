@@ -136,6 +136,46 @@ export const DIFFICULTY_SCORES = {
 };
 
 /**
+ * Techo de la escala: la puntuación máxima que puede sumar una entrada. Lo usan
+ * las vistas que enseñan la puntuación de profesor como «suma / máximo»
+ * (p. ej. `12/18`), y se **deriva** de la escala para que no pueda desviarse si
+ * algún día cambia un peso.
+ */
+export const MAX_DIFFICULTY_SCORE = Math.max(...Object.values(DIFFICULTY_SCORES));
+
+/**
+ * Etiquetas con las que la app **enseña** la dificultad. Son distintas de las de
+ * la hoja (`DIFFICULTY_BY_LABEL`, que es la que se parsea al importar): el
+ * «Extremo» de la pantalla es «Extremo (3% aprobados)» en la hoja, y el color
+ * `gris` se llama «Se desconoce» allí y «Desconocido» aquí. Ambas voces viven en
+ * el mismo sitio para que se vea que son dos y no una mal copiada.
+ */
+export const DIFFICULTY_UI_LABELS = {
+  cyan: "Muy fácil",
+  verde: "Fácil",
+  amarillo: "Normal",
+  naranja: "Difícil",
+  rojo: "Muy difícil",
+  negro: "Extremo",
+  gris: "Desconocido",
+};
+
+/** Etiqueta de pantalla de una dificultad; «Desconocido» si no se reconoce. */
+export function difficultyLabel(dificultad) {
+  return DIFFICULTY_UI_LABELS[dificultad] || DIFFICULTY_UI_LABELS.gris;
+}
+
+/**
+ * Referencia al token CSS donde **vive el color** de esa dificultad. El JS no
+ * conoce el valor (la hoja de estilos es su dueña): así el mismo dato no puede
+ * desviarse entre el CSS y el código. Una dificultad no reconocida cae al gris,
+ * igual que `difficultyLabel`.
+ */
+export function difficultyToken(dificultad) {
+  return `var(--diff-${DIFFICULTY_UI_LABELS[dificultad] ? dificultad : "gris"})`;
+}
+
+/**
  * Peso de una dificultad. Devuelve `null` cuando no hay puntuación —`gris`,
  * cadena desconocida o valor ausente—, y `null` es «sin puntuación» en todo el
  * camino: `engine.js` lo interpreta como penalización 0 (el grupo no se ve

@@ -28,6 +28,7 @@ import {
   parseOwnReviewsJSON,
 } from "./domain/profesores-propios.js";
 import { buildAsignaturaFicha } from "./domain/asignatura.js";
+import { DIFFICULTY_UI_LABELS, difficultyLabel, difficultyToken } from "../solver/catalog.js";
 import { escapeHtml } from "./domain/text.js";
 import {
   filterSubjectsByMention,
@@ -117,6 +118,9 @@ export function createUgrApp(dependencies) {
       buildProblem,
       buildProfesorFicha,
       listProfesores,
+      DIFFICULTY_UI_LABELS,
+      difficultyLabel,
+      difficultyToken,
       escapeHtml,
       DIFICULTAD_OPCIONES,
       normalizeOwnReview,
