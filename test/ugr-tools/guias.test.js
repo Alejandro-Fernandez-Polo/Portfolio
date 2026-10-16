@@ -251,3 +251,54 @@ describe("volcado de las guías", () => {
     expect(practicas.every((p) => p.grupos.length && p.grupos.every((x) => /^\d+$/.test(x)))).toBe(true);
   });
 });
+
+// El relleno con las páginas de la UGR llega **por parámetro**: la función no lee
+// ningún fichero por dentro, así que aquí se le pasa uno de mentira. Lo que se
+// fija es que rellena **destino a destino** —la letra o el número que la guía no
+// nombra— y que **nunca** pisa lo que la guía sí nombra.
+describe("buildAsignaciones con relleno de la UGR", () => {
+  const subjects = [
+    {
+      codigo: "XX",
+      nombre: "Asignatura de prueba",
+      grupos: [
+        { letra: "A", practicas: { subgrupos: ["A1", "A2"] } },
+        { letra: "B", practicas: { subgrupos: ["B1", "B2"] } },
+      ],
+    },
+  ];
+  const guias = [
+    {
+      nombre: "Asignatura de prueba (1234)",
+      teorico: [{ nombre: "Ana Ruiz", grupos: ["A"] }],
+      practico: [],
+    },
+  ];
+  const relleno = new Map([
+    [
+      "asignatura de prueba",
+      {
+        teorico: [{ nombre: "Bea Sol", grupos: ["A", "B"] }],
+        practico: [{ nombre: "Caro Gil", grupos: ["1", "2"] }],
+      },
+    ],
+  ]);
+  const subgrupos = { XX: { A1: [], A2: [], B1: [], B2: [] } };
+
+  it("rellena lo que la guía no nombra y no pisa lo que sí", () => {
+    const { asignaciones } = buildAsignaciones({ guias, subjects, subgrupos, relleno });
+
+    expect(asignaciones.map((a) => `${a.key}=${a.name}`)).toEqual([
+      "XX-A=Ana Ruiz", // la guía manda donde nombra (la UGR también daba la A)
+      "XX-B=Bea Sol", // la letra B no la nombraba nadie
+      "XX-A1=Caro Gil", // el número 1 estaba libre: lo pone la UGR
+      "XX-A2=Caro Gil",
+    ]);
+  });
+
+  it("sin relleno las guías salen tal cual: no lee nada por dentro", () => {
+    const { asignaciones } = buildAsignaciones({ guias, subjects, subgrupos });
+
+    expect(asignaciones.map((a) => a.key)).toEqual(["XX-A"]);
+  });
+});

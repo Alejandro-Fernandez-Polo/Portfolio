@@ -49,7 +49,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
 import { attachDocents, attachPlan, fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
-import { buildAsignaciones } from "./guias.js";
+import { buildAsignaciones, rellenoDeLaUGR } from "./guias.js";
 import { practicasPorAsignatura } from "./horarios.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
@@ -151,7 +151,7 @@ const {
   sinGuia,
   conflictos,
   sinEtiqueta,
-} = buildAsignaciones({ guias, subjects: legacySubjects, subgrupos });
+} = buildAsignaciones({ guias, subjects: legacySubjects, subgrupos, relleno: rellenoDeLaUGR() });
 if (sinGuia.length) {
   throw new Error(`asignaturas del catálogo sin guía docente: ${sinGuia.join(", ")}`);
 }

@@ -10,7 +10,7 @@ import {
   validateCatalog,
 } from "../../public/ugr/src/solver/catalog.js";
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
-import { buildAsignaciones } from "../../tools/ugr-pipeline/guias.js";
+import { buildAsignaciones, rellenoDeLaUGR } from "../../tools/ugr-pipeline/guias.js";
 import { practicasPorAsignatura } from "../../tools/ugr-pipeline/horarios.js";
 
 // Invariantes de los datos de EJEMPLO que siembra `tools/ugr-pipeline/emit-seed.mjs`
@@ -64,6 +64,8 @@ const { asignaciones, sinGuia } = buildAsignaciones({
   guias: guiasFixture.guias,
   subjects: subjectsSandbox.__S__,
   subgrupos: practicasPorAsignatura(gruposFixture.asignaturas),
+  // El mismo relleno que usa el emisor, para derivar lo mismo que se emite.
+  relleno: rellenoDeLaUGR(),
 });
 
 /**

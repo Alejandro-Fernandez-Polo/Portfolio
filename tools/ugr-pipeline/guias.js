@@ -239,12 +239,13 @@ const sinCodigo = (t) => String(t || "").replace(/^\s*Guía docente de\s*/i, "")
  *
  * Decisión del autor (2026-10-16): **donde la UGR contradice a la ETSIIT, manda la
  * ETSIIT**; la UGR solo **rellena** lo que la guía de la ETSIIT no publica (las
- * asignaturas de mención salen sin profesorado en sus guías). Por eso se rellena
- * **solo lo que falta** —teoría o prácticas por separado— y **nunca** se pisa un
- * dato que ya esté: un conflicto de verdad se queda con lo de la ETSIIT. El cotejo
- * de las 96 asignaturas, fila a fila y ya resuelto, está en `planes/discrepancias-ugr.md`.
+ * asignaturas de mención salen sin profesorado en sus guías). El relleno es
+ * **destino a destino** —una modalidad entera o una letra o un número sueltos— y
+ * **nunca** pisa un dato que ya esté: un conflicto de verdad se queda con lo de la
+ * ETSIIT. El cotejo de las 96 asignaturas, fila a fila y ya resuelto, está en
+ * `planes/discrepancias-ugr.md`.
  */
-function rellenoDeLaUGR() {
+export function rellenoDeLaUGR() {
   if (!existsSync(UGR_ASIGNATURAS)) return new Map();
   const volcado = JSON.parse(readFileSync(UGR_ASIGNATURAS, "utf8"));
   const porTitulo = new Map();
@@ -257,21 +258,57 @@ function rellenoDeLaUGR() {
   return porTitulo;
 }
 
-/** Las guías, con el profesorado que la UGR publica y la ETSIIT no. */
-export function guiasConRelleno(guias) {
-  const relleno = rellenoDeLaUGR();
+/**
+ * Nuestras entradas de una modalidad, más la parte que la UGR cubre y nosotros no.
+ *
+ * Se fusiona **destino a destino** (letra de teoría o número de prácticas) y no por
+ * modalidad entera: que la guía nombre tres de cinco letras no es motivo para tirar
+ * las otras dos que sí publica la UGR. Nunca pisa: de la entrada de la UGR solo se
+ * añaden los destinos que no estén ya cubiertos.
+ *
+ * @param {Array} nuestras entradas de la guía (`teorico` o `practico`).
+ * @param {Array} suyas entradas equivalentes del volcado de la UGR.
+ * @returns {Array} la lista fusionada.
+ */
+function fusionarDestinos(nuestras, suyas) {
+  const lista = Array.isArray(nuestras) ? nuestras : [];
+  const cubiertos = new Set(lista.flatMap((e) => e.grupos || []));
+  const añadidas = [];
+  for (const entrada of Array.isArray(suyas) ? suyas : []) {
+    const grupos = (entrada.grupos || []).filter((destino) => !cubiertos.has(destino));
+    if (!grupos.length) continue;
+    grupos.forEach((destino) => cubiertos.add(destino));
+    añadidas.push({ ...entrada, grupos });
+  }
+  return añadidas.length ? [...lista, ...añadidas] : lista;
+}
+
+/**
+ * Las guías, con el profesorado que la UGR publica y la ETSIIT no.
+ *
+ * El relleno llega **por parámetro** y no se lee aquí dentro: es dato, no un
+ * efecto oculto, así que quien lo quiera usa `rellenoDeLaUGR()` y quien pruebe la
+ * función pasa el suyo (o ninguno, y las guías salen tal cual).
+ *
+ * @param {Array} guias guías de la ETSIIT.
+ * @param {Map<string, {teorico: Array, practico: Array}>} [relleno] volcado de la UGR.
+ * @returns {Array} las guías con el relleno fusionado.
+ */
+export function guiasConRelleno(guias, relleno = new Map()) {
   return (Array.isArray(guias) ? guias : []).map((guia) => {
     const u = relleno.get(sinCodigo(guia.nombre || guia.titulo));
     if (!u) return guia;
-    const teorico = (guia.teorico || []).length ? guia.teorico : u.teorico;
-    const practico = (guia.practico || []).length ? guia.practico : u.practico;
-    return { ...guia, teorico, practico };
+    return {
+      ...guia,
+      teorico: fusionarDestinos(guia.teorico, u.teorico),
+      practico: fusionarDestinos(guia.practico, u.practico),
+    };
   });
 }
 
-export function buildAsignaciones({ guias, subjects, subgrupos }) {
+export function buildAsignaciones({ guias, subjects, subgrupos, relleno }) {
   const porNombre = new Map();
-  for (const guia of guiasConRelleno(guias)) {
+  for (const guia of guiasConRelleno(guias, relleno)) {
     const clave = subjectMatchKey(guia.nombre || guia.titulo);
     if (clave && !porNombre.has(clave)) porNombre.set(clave, guia);
   }
