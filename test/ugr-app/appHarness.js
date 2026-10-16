@@ -73,6 +73,9 @@ function indexBody() {
  * @param {Array} options.subjects asignaturas (`SUBJECTS`).
  * @param {Array} [options.docentes] asignaciones (`DOCENTES`).
  * @param {Array} [options.profesores] perfiles (`PROFESORES`).
+ * @param {Array} [options.convalidaciones] tabla oficial (`CONVALIDACIONES`).
+ * @param {Array} [options.propuestasIniciales] propuestas semilla
+ *   (`PROPUESTAS_INICIALES`, el `propuestas.js` clásico).
  * @param {Object} [options.store] store propio; si no, uno vacío.
  * @returns {Promise<{legacy: Object, store: Object, storage: Storage}>}
  *   `legacy` es `window.__ugrLegacy` (el contrato que expone el monolito).
@@ -85,15 +88,28 @@ export async function bootUgrApp(options = {}) {
   globalThis.SUBJECTS = JSON.parse(JSON.stringify(options.subjects || []));
   globalThis.DOCENTES = options.docentes || [];
   globalThis.PROFESORES = options.profesores || [];
-  globalThis.CONVALIDACIONES = [];
+  globalThis.CONVALIDACIONES = options.convalidaciones || [];
   globalThis.PROPUESTAS = [];
-  globalThis.PROPUESTAS_INICIALES = [];
+  globalThis.PROPUESTAS_INICIALES = JSON.parse(JSON.stringify(options.propuestasIniciales || []));
 
   document.body.innerHTML = indexBody();
   globalThis.localStorage.clear();
 
   const store = options.store || makeStore();
   globalThis.window.__ugrStore = store;
+  // Puente del solver: sin él el monolito avisa de que «el motor no está
+  // disponible»; con un doble se puede caracterizar todo el camino de generar.
+  // Se limpia siempre porque el `window` de jsdom se comparte entre arranques
+  // del mismo fichero: si no, el motor de un test se le colaría al siguiente.
+  if (options.solver) globalThis.window.__ugrSolver = options.solver;
+  else delete globalThis.window.__ugrSolver;
+  // Puentes del catálogo y del paquete cifrado: son las fronteras que el
+  // monolito conoce por `window`, así que se doblan aquí para poder
+  // caracterizarlas (cambiar de catálogo e importar el volcado).
+  if (options.catalog) globalThis.window.__ugrCatalog = options.catalog;
+  else delete globalThis.window.__ugrCatalog;
+  if (options.package) globalThis.window.__ugrPackage = options.package;
+  else delete globalThis.window.__ugrPackage;
 
   await import(APP_PATH);
   const legacy = globalThis.window.__ugrLegacy;

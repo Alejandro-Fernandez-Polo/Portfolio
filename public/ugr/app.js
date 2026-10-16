@@ -187,15 +187,21 @@
   // ─── Propuestas en el store ─────────────────────────────────
   // `state.propuestas`/`state.propuestaActivaId`/`state.vistaConvalidaciones`
   // siguen siendo la caché que lee el render: el store es la persistencia.
-  // El orden importa: `propuestas/setAll` resetea `activeId` al primer item,
-  // así que `setActive` tiene que emitirse después.
+  // Ojo con el orden: `propuestas/setAll` deja `activeId` en el primer item y
+  // **cada dispatch notifica al suscriptor**, que rehidrata la caché desde el
+  // store. Por eso los tres valores se leen **antes** de despachar: leerlos
+  // entre dispatch y dispatch hacía que el push se pisara a sí mismo y la
+  // propuesta elegida nunca llegara al store.
   function pushPropuestasToStore() {
     if (!stateHydrated) return;
     const store = __getStore ? __getStore() : null;
     if (!store) return;
-    dispatchStore({ type: 'propuestas/setAll', payload: { items: state.propuestas || [] } });
-    dispatchStore({ type: 'propuestas/setActive', payload: { id: state.propuestaActivaId || null } });
-    dispatchStore({ type: 'propuestas/setVista', payload: { vista: state.vistaConvalidaciones || 'oficial' } });
+    const items = state.propuestas || [];
+    const activeId = state.propuestaActivaId || null;
+    const vista = state.vistaConvalidaciones || 'oficial';
+    dispatchStore({ type: 'propuestas/setAll', payload: { items } });
+    dispatchStore({ type: 'propuestas/setActive', payload: { id: activeId } });
+    dispatchStore({ type: 'propuestas/setVista', payload: { vista } });
   }
 
   function hydratePropuestasFromStore() {
