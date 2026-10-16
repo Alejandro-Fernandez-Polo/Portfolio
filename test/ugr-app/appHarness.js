@@ -40,6 +40,10 @@ export function makeStore(seed = {}) {
   let state = { ...initialState, ...seed };
   const subscribers = new Set();
   const dispatched = [];
+  // Tabla `reviews` en memoria, con la misma forma que `store/reviews.js`: el
+  // monolito la lee con `listReviews` (su caché es `ownReviews`) y escribe con
+  // `saveReviews`/`deleteReview`.
+  const reviews = new Map();
   return {
     getState: () => state,
     subscribe(handler) {
@@ -55,6 +59,19 @@ export function makeStore(seed = {}) {
       }
     },
     dispatched,
+    listReviews: async () => [...reviews.values()],
+    saveReviews: async (lista) => {
+      const validas = (Array.isArray(lista) ? lista : []).filter((r) => r && r.docentKey);
+      if (validas.length === 0) return { ok: false, error: "empty" };
+      validas.forEach((r) => reviews.set(r.docentKey, r));
+      return { ok: true, count: validas.length };
+    },
+    deleteReview: async (docentKey) => {
+      if (!docentKey) return { ok: false, error: "missing_key" };
+      reviews.delete(docentKey);
+      return { ok: true };
+    },
+    reviews,
   };
 }
 
