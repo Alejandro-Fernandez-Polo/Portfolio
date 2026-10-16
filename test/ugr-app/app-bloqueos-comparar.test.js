@@ -39,7 +39,7 @@ const CA = {
     {
       letra: "A",
       turno: "mañana",
-      teoria: [{ dia: "miércoles", inicio: "09:30", fin: "10:30" }],
+      teoria: [{ dia: "miercoles", inicio: "09:30", fin: "10:30" }],
       practicas: { subgrupos: ["A1"], A1: [{ dia: "viernes", inicio: "09:30", fin: "10:30" }] },
     },
   ],
