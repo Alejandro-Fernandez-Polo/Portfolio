@@ -3200,7 +3200,7 @@
         renderPropuestasGuardadas();
         updateAll();
         renderSubjects();
-        if (typeof renderConvalidaciones === 'function') renderConvalidaciones();
+        renderPropuestasBar();
         showToast('Configuración importada correctamente', 'success');
       } catch (err) {
         showToast('Error al leer el archivo', 'error');
@@ -3362,24 +3362,12 @@
           renderProfesores();
         }
         if (view === 'convalidaciones') {
-          renderConvalidaciones();
+          renderPropuestasBar();
         }
       });
     });
 
-    // Filtros convalidaciones
-    const filterContainer = document.querySelector('.convalidaciones-filters');
-    if (filterContainer) {
-      filterContainer.querySelectorAll('[data-filter]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterContainer.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderConvalidaciones();
-        });
-      });
-      const estadoSel = document.getElementById('filter-estado');
-      if (estadoSel) estadoSel.addEventListener('change', renderConvalidaciones);
-    }
+
   }
 
   // ─── Manage Subjects ────────────────────────────────────────
@@ -4183,7 +4171,7 @@
     sel.addEventListener('change', () => {
       state.propuestaActivaId = sel.value;
       saveState(); savePropuestas();
-      renderPropuestasBar(); renderConvalidaciones();
+      renderPropuestasBar();
     });
     if (btnNueva) btnNueva.addEventListener('click', crearPropuesta);
     if (btnVacia) btnVacia.addEventListener('click', crearPropuestaVacia);
@@ -4194,15 +4182,6 @@
     if (btnExp) btnExp.addEventListener('click', exportPropuestaActiva);
     if (btnImp) btnImp.addEventListener('click', () => impInput.click());
     if (impInput) impInput.addEventListener('change', importPropuesta);
-    document.querySelectorAll('.convalidaciones-vista-toggle [data-vista]').forEach(b => {
-      b.addEventListener('click', () => {
-        document.querySelectorAll('.convalidaciones-vista-toggle [data-vista]').forEach(x=>x.classList.remove('active'));
-        b.classList.add('active');
-        state.vistaConvalidaciones = b.dataset.vista;
-        saveState();
-        renderConvalidaciones();
-      });
-    });
     // modal propuesta
     const modal = document.getElementById('propuesta-modal');
     const close = () => { if (modal) modal.style.display='none'; };
@@ -4263,10 +4242,6 @@
     if (btnImportGuardada) btnImportGuardada.addEventListener('click', ()=> importGuardadaInput.click());
     if (importGuardadaInput) importGuardadaInput.addEventListener('change', importPropuestaGuardada);
     renderPropuestasGuardadas();
-    // activa vista guardada
-    document.querySelectorAll('.convalidaciones-vista-toggle [data-vista]').forEach(b=>{
-      b.classList.toggle('active', b.dataset.vista===state.vistaConvalidaciones);
-    });
   }
 
   // ─── Mapeos CRUD ────────────────────────────────────────────
@@ -4400,7 +4375,7 @@
     activa.totalCreditos = calcPropuestaCreditos(activa);
     saveState(); savePropuestas();
     document.getElementById('propuesta-mapeo-modal').style.display='none';
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast(isEdit?'Mapeo actualizado':'Mapeo añadido','success');
   }
   function eliminarMapeo(idx) {
@@ -4410,7 +4385,7 @@
     activa.mappings.splice(idx,1);
     activa.totalCreditos=calcPropuestaCreditos(activa);
     saveState(); savePropuestas();
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast('Mapeo eliminado','info');
   }
   function crearPropuestaVacia() {
@@ -4421,7 +4396,7 @@
     state.propuestas.push(nueva);
     state.propuestaActivaId=nueva.id;
     saveState(); savePropuestas();
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast('Propuesta vacía creada — añade mapeos','success');
     setTimeout(()=>abrirMapeoModal(), 200);
   }
@@ -4451,7 +4426,7 @@
     state.propuestas.push(copia);
     state.propuestaActivaId = copia.id;
     saveState(); savePropuestas();
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast(`Propuesta "${saved.nombre}" cargada`,'success');
   }
   function eliminarPropuestaGuardada(id) {
@@ -4578,7 +4553,7 @@
         if (addInd) addInd.addEventListener('click', ()=> { document.getElementById('mapeo-tipo').value='individual'; abrirMapeoModal(); });
         if (addBlo) addBlo.addEventListener('click', ()=> { document.getElementById('mapeo-tipo').value='bloque'; abrirMapeoModal(); });
         const thSort = detalle.querySelector('#th-orden-curso');
-        if (thSort) thSort.addEventListener('click', ()=>{ propuestasSortCurso = propuestasSortCurso==='asc' ? 'desc' : propuestasSortCurso==='desc' ? null : 'asc'; renderPropuestasBar(); renderConvalidaciones(); });
+        if (thSort) thSort.addEventListener('click', ()=>{ propuestasSortCurso = propuestasSortCurso==='asc' ? 'desc' : propuestasSortCurso==='desc' ? null : 'asc'; renderPropuestasBar(); });
       }
     } else {
       if (badge) badge.textContent = '';
@@ -4605,7 +4580,7 @@
     state.propuestas.push(copia);
     state.propuestaActivaId = copia.id;
     saveState(); savePropuestas();
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast('Propuesta duplicada','success');
   }
 
@@ -4639,7 +4614,7 @@
     }
     saveState(); savePropuestas();
     document.getElementById('propuesta-modal').style.display='none';
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast('Propuesta guardada','success');
   }
 
@@ -4650,7 +4625,7 @@
     state.propuestas = state.propuestas.filter(p=>p.id!==activa.id);
     state.propuestaActivaId = state.propuestas[0]?state.propuestas[0].id:null;
     saveState(); savePropuestas();
-    renderPropuestasBar(); renderConvalidaciones();
+    renderPropuestasBar();
     showToast('Propuesta eliminada','info');
   }
 
@@ -4679,7 +4654,7 @@
         state.propuestas.push(prop);
         state.propuestaActivaId = prop.id;
         saveState(); savePropuestas();
-        renderPropuestasBar(); renderConvalidaciones();
+        renderPropuestasBar();
         showToast('Propuesta importada','success');
       } catch(err){ showToast('Error al leer archivo','error'); }
     };
@@ -4717,263 +4692,9 @@
           state.vistaConvalidaciones='propuesta';
           saveState();
         }
-        document.querySelectorAll('.convalidaciones-vista-toggle [data-vista]').forEach(b=>b.classList.toggle('active', b.dataset.vista===state.vistaConvalidaciones));
-        renderPropuestasBar(); renderConvalidaciones();
+        renderPropuestasBar();
       }
     } catch(e){ /* ignore */ }
-  }
-
-  function getComparativa() {
-    const activa = getPropuestaActiva();
-    if (!activa) return [];
-    const oficialMap = {};
-    CONVALIDACIONES.filter(c=>!c.sinCorrespondencia).forEach(c=>{
-      const key = c.ugr.codigo;
-      oficialMap[key] = c;
-    });
-    return activa.mappings.map(m=>{
-      if (m.tipo==='bloque') {
-        // Bloque 4↔4 nunca coincide 1-a-1 con oficial; se marca como divergente explicando que es agrupación
-        const todosExisten = m.reconocidas.every(r=> !!oficialMap[r.codigo]);
-        // Si todas existen pero dispersas, es divergente por agrupación
-        const estado = todosExisten ? 'divergente' : 'solo-propuesta';
-        return { propuesta:m, oficial: null, estado };
-      }
-      const oficial = oficialMap[m.reconocidaCodigo] || CONVALIDACIONES.find(c=> c.ugr && c.ugr.codigo===m.reconocidaCodigo);
-      const oficialByCursada = CONVALIDACIONES.find(c=> c.uned && c.uned.codigo===m.cursadaCodigo);
-      let estado='solo-propuesta';
-      if (oficial) {
-        if (oficialByCursada && oficialByCursada.ugr.codigo===m.reconocidaCodigo) estado='coincide';
-        else estado='divergente';
-      }
-      return { propuesta:m, oficial, estado };
-    });
-  }
-
-  // ─── Convalidaciones ────────────────────────────────────────
-  function saveConvalidaciones() {
-    localStorage.setItem('ugr-convalidaciones', JSON.stringify(convalidacionesEstados));
-  }
-
-  function getConvalidacionEstado(id) {
-    return (convalidacionesEstados[id] && convalidacionesEstados[id].estado) || 'pendiente';
-  }
-
-  function setConvalidacionEstado(id, estado) {
-    if (!convalidacionesEstados[id]) convalidacionesEstados[id] = {};
-    convalidacionesEstados[id].estado = estado;
-    saveConvalidaciones();
-    renderConvalidaciones();
-    const conv = CONVALIDACIONES.find(c => c.id === id);
-    showToast(conv ? `${conv.ugr.nombre}: ${estado}` : `Estado: ${estado}`, estado === 'concedida' ? 'success' : 'info');
-  }
-
-  function renderConvalidaciones() {
-    renderPropuestasBar();
-    const container = document.getElementById('convalidaciones-container');
-    const summary = document.getElementById('convalidaciones-summary');
-    const creditosEl = document.getElementById('convalidaciones-creditos');
-    if (!container || typeof CONVALIDACIONES === 'undefined') return;
-
-    // Vistas propuesta / comparativa
-    const vista = state.vistaConvalidaciones || 'oficial';
-    const activa = getPropuestaActiva();
-    if (vista === 'propuesta' && activa) {
-      const total = calcPropuestaCreditos(activa);
-      if (summary) summary.textContent = `${activa.nombre} · ${activa.mappings.length} entradas · ${total} ECTS ${activa.enBloque?'(en bloque)':''}`;
-      if (creditosEl) creditosEl.innerHTML = `<div class="creditos-card ugr"><span class="creditos-label">Propuesta activa</span><span class="creditos-value">${total} ECTS</span><small>${activa.nota||''}</small></div>`;
-      const sortIcon2 = propuestasSortCurso==='asc' ? '↑' : propuestasSortCurso==='desc' ? '↓' : '↕';
-      let html = '<div class="propuesta-legend"><span class="legend-item"><span class="legend-dot" style="background:#1976d2"></span>1º</span><span class="legend-item"><span class="legend-dot" style="background:#388e3c"></span>2º</span><span class="legend-item"><span class="legend-dot" style="background:#f57c00"></span>3º</span><span class="legend-item"><span class="legend-dot" style="background:#7b1fa2"></span>4º</span><span class="legend-item"><span class="legend-dot" style="background:#757575"></span>Opt</span><span class="legend-item" style="margin-left:0.6rem;">Cuatri: <span class="cuatri-badge c1">1ºC</span> <span class="cuatri-badge c2">2ºC</span></span></div>';
-      html += '<div class="manage-table-wrapper"><table class="manage-table"><thead><tr><th>Cursada</th><th id="th-orden-curso2" style="cursor:pointer;user-select:none;" title="Ordenar por curso">Reconocida (UGR) '+sortIcon2+'</th><th>Cód.</th><th>Calif.</th><th>Créd.</th></tr></thead><tbody>';
-      const toRender2 = propuestasSortCurso ? sortMappingsByCurso(activa.mappings) : activa.mappings;
-      toRender2.forEach(m=>{
-        if (m.tipo==='bloque') {
-          const cursadasTxt = m.cursadas.map(c=>`${c.nombre} (${c.codigo})`).join('<br>');
-          const reconTxt = m.reconocidas.map(r=>{
-            const meta=getUgrMeta(r.codigo);
-            const cursoCls = meta ? (meta.curso==='Opt'?'copt':'c'+meta.curso) : '';
-            const cursoBadge = meta ? `<span class="curso-badge ${cursoCls}">${meta.curso==='Opt'?'OPT':meta.curso+'º'}</span>` : '<span class="curso-badge copt">?</span>';
-            const cuatriBadge = meta && meta.cuatrimestre!=='-' ? `<span class="cuatri-badge c${meta.cuatrimestre}">${meta.cuatrimestre}ºC</span>` : '';
-            return `${cursoBadge}${cuatriBadge} ${r.nombre} (${r.codigo})`;
-          }).join('<br>');
-          const codigos = m.reconocidas.map(r=>{
-            const meta=getUgrMeta(r.codigo);
-            const cursoCls = meta ? (meta.curso==='Opt'?'copt':'c'+meta.curso) : 'copt';
-            const cursoBadge = meta ? `<span class="curso-badge ${cursoCls}">${meta.curso==='Opt'?'OPT':meta.curso+'º'}</span>` : '';
-            return `${cursoBadge} ${r.codigo}`;
-          }).join('<br>');
-          html += `<tr class="propuesta-bloque-row"><td style="text-align:left;"><strong>Bloque 4↔4</strong><br><small style="color:var(--text-light)">${cursadasTxt}</small></td><td style="text-align:left;"><small>${reconTxt}</small></td><td><small>${codigos}</small></td><td><span class="badge-bloque">${m.calificacion}</span></td><td>${m.creditos}</td></tr>`;
-        } else {
-          const meta=getUgrMeta(m.reconocidaCodigo);
-          const cursoCls = meta ? (meta.curso==='Opt'?'copt':'c'+meta.curso) : 'copt';
-          const cursoBadge = meta ? `<span class="curso-badge ${cursoCls}">${meta.curso==='Opt'?'OPT':meta.curso+'º'}</span>` : '<span class="curso-badge copt">?</span>';
-          const cuatriBadge = meta && meta.cuatrimestre!=='-' ? `<span class="cuatri-badge c${meta.cuatrimestre}">${meta.cuatrimestre}ºC</span>` : '';
-          const rowCls = meta ? `propuesta-row curso-${String(meta.curso).toLowerCase()}` : 'propuesta-row curso-opt';
-          html += `<tr class="${rowCls}"><td>${m.cursada} <small style="color:var(--text-light)">(${m.cursadaCodigo})</small></td><td>${cursoBadge}${cuatriBadge} ${m.reconocida}<br><small style="color:var(--text-light)">${m.reconocidaCodigo} · ${formatCursoCuatri(meta)||'sin curso'}</small></td><td>${cursoBadge} ${m.reconocidaCodigo}</td><td>${m.calificacion}</td><td>6</td></tr>`;
-        }
-      });
-      html += `<tr style="font-weight:700;background:var(--bg);"><td colspan="4">Total de créditos reconocidos</td><td>${total} (*)</td></tr>`;
-      html += '</tbody></table></div><p style="margin-top:0.6rem;"><small style="color:var(--text-light)">Bloque 4↔4 = 24 ECTS con 7.5 única — concesión conjunta no 1-a-1. Usa <em>Comparativa</em> para ver encaje vs oficial.</small></p>';
-      container.innerHTML = html;
-      const th2 = container.querySelector('#th-orden-curso2');
-      if (th2) th2.addEventListener('click', ()=>{ propuestasSortCurso = propuestasSortCurso==='asc' ? 'desc' : propuestasSortCurso==='desc' ? null : 'asc'; renderPropuestasBar(); renderConvalidaciones(); });
-      return;
-    }
-    if (vista === 'comparativa' && activa) {
-      const comp = getComparativa();
-      const divergentes = comp.filter(c=>c.estado==='divergente').length;
-      const coinciden = comp.filter(c=>c.estado==='coincide').length;
-      const total = calcPropuestaCreditos(activa);
-      if (summary) summary.textContent = `Comparativa: ${coinciden} coinciden · ${divergentes} divergentes · ${comp.length} entradas en propuesta`;
-      if (creditosEl) creditosEl.innerHTML = `<div class="creditos-card uned"><span class="creditos-label">Divergencias</span><span class="creditos-value" style="color:${divergentes?'#e74c3c':'#27ae60'}">${divergentes}</span><small>vs oficial ${CONVALIDACIONES.filter(c=>!c.sinCorrespondencia).length} convalidables</small></div><div class="creditos-card ugr"><span class="creditos-label">Propuesta</span><span class="creditos-value">${total} ECTS</span></div>`;
-      let html = '<div class="manage-table-wrapper"><table class="manage-table"><thead><tr><th>Propuesta</th><th>Oficial</th><th>Estado</th></tr></thead><tbody>';
-      comp.forEach(r=>{
-        const badge = r.estado==='coincide'?'<span class="badge-estado concedida">Coincide</span>': r.estado==='divergente'?'<span class="badge-estado denegada">Divergente</span>':'<span class="badge-estado sin">Solo propuesta</span>';
-        let propTxt = '';
-        let oficialTxt = '';
-        if (r.propuesta.tipo==='bloque') {
-          propTxt = `<strong>Bloque 4↔4</strong> (${r.propuesta.creditos} ECTS · ${r.propuesta.calificacion})<br><small>${r.propuesta.cursadas.map(c=>c.codigo).join(', ')} → ${r.propuesta.reconocidas.map(c=>c.codigo).join(', ')}</small>`;
-          // Para bloque, verifica si las 4 reconocidas existen en oficial como conjunto
-          const bloqueReconCodigos = r.propuesta.reconocidas.map(c=>c.codigo);
-          const oficialesBloque = bloqueReconCodigos.map(code=> CONVALIDACIONES.find(c=>c.ugr && c.ugr.codigo===code || c.corresponde===code));
-          oficialTxt = oficialesBloque.map(o=> o? `${o.ugr.codigo} (${o.origen})` : '—').join('<br>');
-          if (r.estado==='divergente') oficialTxt += '<br><small style="color:#e74c3c">Oficial no agrupa en bloque (mapeos 1-a-1 individuales)</small>';
-        } else {
-          propTxt = `${r.propuesta.cursada||r.propuesta.cursadas?.[0]?.nombre||''} → ${r.propuesta.reconocida} (${r.propuesta.reconocidaCodigo})`;
-          oficialTxt = r.oficial ? `${r.oficial.ugr.codigo} - ${r.oficial.ugr.nombre}${r.oficial.uned?` <small>(${r.oficial.uned.codigo})</small>`:''}` : '<em>Sin oficial</em>';
-        }
-        html += `<tr class="diff-${r.estado}"><td>${propTxt}</td><td>${oficialTxt}</td><td>${badge}</td></tr>`;
-      });
-      html += '</tbody></table></div>';
-      if (divergentes>0) {
-        html += '<div style="margin-top:0.8rem;" class="conv-detail"><strong style="color:#e74c3c">Nota bloque:</strong> <small style="color:var(--text-light)">El bloque 4↔4 de la propuesta convalida conjuntamente FS(14)+FP(15)+TOC(17)+MP(18) con 7.5 única; la oficial los trata 1-a-1 (FSD→TOC, IC I→EC, etc.), de ahí la divergencia es esperada y no implica error.</small></div>';
-      }
-      container.innerHTML = html;
-      return;
-    }
-
-    const activeFilter = document.querySelector('.convalidaciones-filters [data-filter].active');
-    const origenFilter = activeFilter ? activeFilter.dataset.filter : 'all';
-    const estadoFilter = document.getElementById('filter-estado') ? document.getElementById('filter-estado').value : 'all';
-
-    let filtered = CONVALIDACIONES.slice();
-    if (origenFilter !== 'all') {
-      if (origenFilter === 'UNED') filtered = filtered.filter(c => c.origen === 'UNED' || c.origen === 'UNED+GS');
-      else if (origenFilter === 'GRADO_SUPERIOR') filtered = filtered.filter(c => c.origen === 'GRADO_SUPERIOR' || c.origen === 'UNED+GS');
-      else filtered = filtered.filter(c => c.origen === origenFilter);
-    }
-    if (estadoFilter !== 'all') {
-      if (estadoFilter === 'sin') {
-        filtered = filtered.filter(c => c.sinCorrespondencia);
-      } else {
-        filtered = filtered.filter(c => !c.sinCorrespondencia && getConvalidacionEstado(c.id) === estadoFilter);
-      }
-    }
-
-    // Créditos contadores
-    const totalUNED = CONVALIDACIONES.filter(c => c.origen === 'UNED' || c.origen === 'UNED+GS').reduce((s,c)=>s+(c.creditos||6),0);
-    const concedidaUNED = CONVALIDACIONES.filter(c => (c.origen === 'UNED' || c.origen === 'UNED+GS') && getConvalidacionEstado(c.id)==='concedida').reduce((s,c)=>s+(c.creditos||6),0);
-    const totalUNEDCount = CONVALIDACIONES.filter(c => c.origen === 'UNED' || c.origen === 'UNED+GS').length;
-    const concedidaUNEDCount = CONVALIDACIONES.filter(c => (c.origen === 'UNED' || c.origen === 'UNED+GS') && getConvalidacionEstado(c.id)==='concedida').length;
-    const convalidables = CONVALIDACIONES.filter(c => !c.sinCorrespondencia);
-    const totalUGR = convalidables.reduce((s,c)=>s+(c.creditos||6),0);
-    const concedidaUGR = convalidables.filter(c => getConvalidacionEstado(c.id)==='concedida').reduce((s,c)=>s+(c.creditos||6),0);
-
-    const total = CONVALIDACIONES.length;
-    const concedidas = CONVALIDACIONES.filter(c => !c.sinCorrespondencia && getConvalidacionEstado(c.id) === 'concedida').length;
-    const sinCount = CONVALIDACIONES.filter(c=>c.sinCorrespondencia).length;
-    const totalConvalidables = total - sinCount;
-    if (summary) summary.textContent = `${concedidas}/${totalConvalidables} concedidas · ${filtered.length} mostradas · ${sinCount} sin correspondencia`;
-
-    if (creditosEl) {
-      creditosEl.innerHTML = `
-        <div class="creditos-card uned"><span class="creditos-label">Créditos UNED</span><span class="creditos-value">${concedidaUNED} / ${totalUNED} ECTS</span><small>${concedidaUNEDCount}/${totalUNEDCount} concedidas</small></div>
-        <div class="creditos-card ugr"><span class="creditos-label">Créditos UGR convalidables</span><span class="creditos-value">${concedidaUGR} / ${totalUGR} ECTS</span><small>${concedidas}/${totalConvalidables} concedidas</small></div>
-      `;
-    }
-
-    if (filtered.length === 0) {
-      container.innerHTML = '<p class="empty-state">No hay convalidaciones con ese filtro.</p>';
-      return;
-    }
-
-    let html = '<div class="manage-table-wrapper"><table class="manage-table">';
-    html += '<thead><tr><th></th><th>Origen</th><th>UNED</th><th>Guía UNED</th><th>UGR</th><th>Guía UGR</th><th>Convalida</th><th>Estado</th></tr></thead><tbody>';
-    filtered.forEach(c => {
-      const isSin = !!c.sinCorrespondencia;
-      const estado = isSin ? 'sin' : getConvalidacionEstado(c.id);
-      const unedPdf = c.uned ? c.uned.guiaPdf : null;
-      const ugrPdf = c.ugr ? c.ugr.guiaPdf : null;
-      let unedName = '-';
-      if (c.uned) unedName = `${c.uned.codigo} - ${c.uned.nombre}`;
-      else if (isSin && c.ugr) unedName = '-';
-      else if (!isSin) unedName = '<em>Grado Superior DAW</em>';
-      let ugrName = '-';
-      if (c.ugr) ugrName = `<span class="td-codigo">${c.ugr.codigo}</span><br><small>${c.ugr.nombre}</small>`;
-      let origenBadge = '';
-      if (c.origen === 'UNED') origenBadge = '<span class="badge-origen uned">UNED</span>';
-      else if (c.origen === 'GRADO_SUPERIOR') origenBadge = '<span class="badge-origen gs">GS</span>';
-      else if (c.origen === 'UNED+GS') origenBadge = '<span class="badge-origen combinada">UNED+GS</span>';
-      else origenBadge = '<span class="badge-origen sin">SIN</span>';
-      html += `<tr class="conv-row ${estado} ${isSin?'sin':''}" data-id="${c.id}">`;
-      html += `<td><button class="btn-toggle-detail" data-id="${c.id}" title="Ver detalle">▸</button></td>`;
-      html += `<td>${origenBadge}</td>`;
-      html += `<td>${unedName}</td>`;
-      html += `<td>${unedPdf ? `<a href="${unedPdf}" target="_blank" class="guia-link">PDF</a>` : '-'}</td>`;
-      html += `<td>${ugrName}</td>`;
-      html += `<td>${ugrPdf ? `<a href="${ugrPdf}" target="_blank" class="guia-link">PDF</a>` : '-'}</td>`;
-      if (isSin) {
-        html += `<td><span class="badge-estado sin">Sin correspondencia directa</span></td>`;
-        html += `<td><span class="badge-estado sin">—</span></td>`;
-      } else {
-        html += `<td>${c.corresponde}${c.nota?`<br><small style="color:var(--text-light)">${c.nota}</small>`:''}</td>`;
-        html += `<td><select class="conv-estado-select" data-id="${c.id}">`;
-        ['pendiente','solicitada','concedida','denegada'].forEach(opt => {
-          html += `<option value="${opt}" ${estado===opt?'selected':''}>${opt.charAt(0).toUpperCase()+opt.slice(1)}</option>`;
-        });
-        html += `</select><br><span class="badge-estado ${estado}">${estado}</span></td>`;
-      }
-      html += `</tr>`;
-      // Desplegable detalle
-      html += `<tr class="conv-detail-row" id="detail-${c.id}" style="display:none;"><td colspan="8"><div class="conv-detail">`;
-      html += `<div class="conv-detail-grid">`;
-      html += `<div><strong>Origen:</strong> ${c.origen === 'UNED' ? 'UNED → UGR' : c.origen === 'GRADO_SUPERIOR' ? 'Grado Superior DAW → UGR' : c.origen === 'UNED+GS' ? 'UNED + Grado Superior → UGR' : 'Sin convalidación directa'}<br>`;
-      html += `<strong>Créditos:</strong> ${c.creditos || 6} ECTS<br>`;
-      if (c.uned) html += `<strong>UNED:</strong> ${c.uned.codigo} - ${c.uned.nombre} <a href="${c.uned.guiaPdf}" target="_blank" class="guia-link">Ver guía UNED</a><br>`;
-      if (c.ugr) html += `<strong>UGR:</strong> ${c.ugr.codigo} - ${c.ugr.nombre} <a href="${c.ugr.guiaPdf}" target="_blank" class="guia-link">Ver guía UGR</a><br>`;
-      html += `<strong>Correspondencia:</strong> ${c.corresponde || '-'}${c.nota?` <em>(${c.nota})</em>`:''}<br>`;
-      if (c.calificacion) html += `<strong>Calificación UNED:</strong> <span class="cal ${c.calificacion.includes('SB')?'cal-sb':c.calificacion.includes('NT')?'cal-nt':c.calificacion.includes('AP')?'cal-ap':'cal-p'}">${c.calificacion}</span><br>`;
-      if (c.justificacion) html += `<strong>Justificación:</strong> <span class="justificacion">${c.justificacion}</span><br>`;
-      html += `<strong>Requisito UGR (RD 822/2021 art.10):</strong> <small style="color:var(--text-light)">≥75% créditos, contenidos y competencias simultáneos según guías docentes ETSIIT. Solicitud por Sede Electrónica.</small></div>`;
-      html += `<div><strong>Estado actual:</strong> <span class="badge-estado ${estado}">${estado}</span><br>`;
-      if (!isSin) {
-        html += `<small style="color:var(--text-light)">Cambia el estado con el desplegable superior. Independiente del horario (no auto-marca como aprobada).</small>`;
-      } else {
-        html += `<small style="color:var(--text-light)">Esta guía no tiene correspondencia directa en la tabla oficial aportada. Si consideras que sí debería convalidar, aporta ambas guías en secretaría para estudio personalizado.</small>`;
-      }
-      html += `</div>`;
-      html += `</div>`;
-      html += `<div class="conv-detail-footer"><small style="color:var(--text-light)"><b>Trámite UGR:</b> Solicitud por Sede Electrónica UGR (ETSIIT) en plazos Nov/Feb/May, con certificado académico UNED y guías. Tasas y Sede: <a href="https://sede.ugr.es/portal/procedimientos/Gestion-Academica-Solicitud-de-reconocimiento-de-creditos-en-Grado/" target="_blank">sede.ugr.es</a>. Plazo reclamación 5 días.</small></div>`;
-      html += `</div></td></tr>`;
-    });
-    html += '</tbody></table></div>';
-    container.innerHTML = html;
-
-    container.querySelectorAll('.conv-estado-select').forEach(sel => {
-      sel.addEventListener('change', () => setConvalidacionEstado(sel.dataset.id, sel.value));
-    });
-    container.querySelectorAll('.btn-toggle-detail').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        const row = document.getElementById('detail-' + id);
-        if (!row) return;
-        const isOpen = row.style.display !== 'none';
-        row.style.display = isOpen ? 'none' : 'table-row';
-        btn.textContent = isOpen ? '▸' : '▾';
-        btn.classList.toggle('open', !isOpen);
-      });
-    });
   }
 
   // ─── Composición ESM ───────────────────────────────────────
