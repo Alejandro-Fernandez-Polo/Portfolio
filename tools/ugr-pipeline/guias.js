@@ -237,10 +237,12 @@ const sinCodigo = (t) => String(t || "").replace(/^\s*Guía docente de\s*/i, "")
 /**
  * Relleno del profesorado con las páginas de la **UGR** (`ugr-asignaturas.json`).
  *
- * Decisión del autor: la UGR manda donde la guía de la ETSIIT **no publica**
- * profesorado (las asignaturas de mención salen sin él en sus guías). Se rellena
- * solo lo que falta —teoría o prácticas por separado— y lo que **difiere** no se
- * toca: queda en `planes/discrepancias-ugr.md` para revisión a mano.
+ * Decisión del autor (2026-10-16): **donde la UGR contradice a la ETSIIT, manda la
+ * ETSIIT**; la UGR solo **rellena** lo que la guía de la ETSIIT no publica (las
+ * asignaturas de mención salen sin profesorado en sus guías). Por eso se rellena
+ * **solo lo que falta** —teoría o prácticas por separado— y **nunca** se pisa un
+ * dato que ya esté: un conflicto de verdad se queda con lo de la ETSIIT. El cotejo
+ * de las 96 asignaturas, fila a fila y ya resuelto, está en `planes/discrepancias-ugr.md`.
  */
 function rellenoDeLaUGR() {
   if (!existsSync(UGR_ASIGNATURAS)) return new Map();

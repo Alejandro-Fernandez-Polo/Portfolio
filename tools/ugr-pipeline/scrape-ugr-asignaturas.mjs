@@ -11,10 +11,12 @@
  *
  * Salidas:
  *   - `tools/ugr-pipeline/ugr-asignaturas.json` — el volcado de la UGR.
- *   - `planes/discrepancias-ugr.md` — dónde no cuadra con lo nuestro, para
- *     revisar a mano.
+ *   - `planes/discrepancias-ugr.md` — el cotejo con lo nuestro, ya **resuelto**:
+ *     decisión del autor, donde la UGR contradice a la ETSIIT **manda la ETSIIT**
+ *     y la UGR solo **rellena** lo que la guía de la ETSIIT no publica. El informe
+ *     dice, fila a fila, qué manda en cada diferencia.
  *
- * Uso: `node tools/ugr-pipeline/scrape-ugr-asignaturas.mjs [--limit N]`
+ * Uso: `node tools/ugr-pipeline/scrape-ugr-asignaturas.mjs [--limit N] [--solo-informe]`
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -154,6 +156,17 @@ async function main() {
   /** Nuestro nombre lleva el código («… (296113T)») y el título, el prefijo. */
   const limpiarTitulo = (t) => String(t || "").replace(/^\s*Guía docente de\s*/i, "").replace(/\s*\(\d+[A-Z0-9]*\)\s*$/, "").trim();
   const porTitulo = new Map(guias.map((g) => [norm(limpiarTitulo(g.nombre || g.titulo)), g]));
+  // **Lo que tiene la app.** Las letras y los subgrupos de prácticas de `data.js`
+  // salen del horario de la ETSIIT y son los que mandan sobre qué grupos existen; la
+  // guía no sirve para eso (en las asignaturas de mención no publica nada, y de ahí
+  // el falso «ETSIIT 0»). Su bloque `SUBJECTS` es JSON: se lee sin `eval`.
+  const sinEspecialidad = (t) => limpiarTitulo(t).replace(/\s*\([^)]*\)\s*$/, "").trim();
+  const fuenteData = readFileSync(path.join(ROOT, "public/ugr/data.js"), "utf8");
+  const inicioData = fuenteData.indexOf("const SUBJECTS = [");
+  const finData = fuenteData.indexOf("\n]", inicioData);
+  if (inicioData === -1 || finData === -1) throw new Error("data.js no tiene el bloque de SUBJECTS con la forma esperada");
+  const subjectsData = JSON.parse(fuenteData.slice(fuenteData.indexOf("[", inicioData), finData + 2));
+  const porData = new Map(subjectsData.map((s) => [norm(sinEspecialidad(s.nombre)), s]));
   const gruposDe = (lista) => [...new Set(lista.flatMap((e) => e.grupos))].sort();
   const gente = (lista) => [...new Set(lista.map((e) => norm(e.nombre)))].sort();
 
@@ -181,25 +194,49 @@ async function main() {
     // teoría) y la guía dice cuántos y cuáles.
     const letras = (lista) => [...new Set(lista.filter((g) => !/^\d+$/.test(g)))].sort();
     const numeros = (lista) => [...new Set(lista.filter((g) => /^\d+$/.test(g)))].sort((x, y) => Number(x) - Number(y));
+    // Las letras y los subgrupos se comparan con **lo que tiene la app** (`data.js`,
+    // del horario de la ETSIIT), no con la guía: comparar con la guía marcaba como
+    // contradicción lo que ya coincidía (Cálculo tiene A–F en los dos) y sacaba
+    // falsos «ETSIIT 0» en las asignaturas de mención.
+    const nuestra = porData.get(norm(sinEspecialidad(a.titulo)));
     const letrasUgr = letras(a.gruposHorario);
-    const letrasGuia = letras((guia.teorico || []).flatMap((e) => e.grupos));
-    if (letrasUgr.length && JSON.stringify(letrasUgr) !== JSON.stringify(letrasGuia)) {
-      problemas.push(`letras de teoría: UGR [${letrasUgr.join(", ")}] vs ETSIIT [${letrasGuia.join(", ") || "ninguna"}]`);
+    const letrasNuestras = letras((nuestra?.grupos || []).map((g) => g.letra));
+    if (letrasUgr.length && letrasNuestras.length && JSON.stringify(letrasUgr) !== JSON.stringify(letrasNuestras)) {
+      problemas.push(`letras de teoría: UGR [${letrasUgr.join(", ")}] vs ETSIIT [${letrasNuestras.join(", ")}]`);
     }
     const numUgr = numeros(a.gruposHorario).length || numeros(a.practicas.flatMap((e) => e.grupos)).length;
-    const numGuia = numeros((guia.practico || []).flatMap((e) => e.grupos)).length;
-    if (numUgr && numUgr !== numGuia) {
-      problemas.push(`subgrupos de prácticas: UGR ${numUgr} vs ETSIIT ${numGuia}`);
+    const numNuestro = (nuestra?.grupos || []).reduce((n, g) => n + (g.practicas?.subgrupos || []).length, 0);
+    if (numUgr && numNuestro && numUgr !== numNuestro) {
+      problemas.push(`subgrupos de prácticas: UGR ${numUgr} vs ETSIIT ${numNuestro}`);
     }
     if (problemas.length) filas.push({ nombre: a.titulo, problemas });
   });
 
+  // Cada diferencia es de uno de dos tipos, y la decisión del autor fija qué manda
+  // en cada uno: si **la ETSIIT no lo publica** (su guía sale sin profesorado en las
+  // asignaturas de mención, y de ahí el `nadie`, el `ninguna` y el `0` de prácticas),
+  // lo rellena la **UGR**; si **las dos dicen cosas distintas**, manda la **ETSIIT**.
+  const callaEtsiit = (p) => /vs ETSIIT \[(nadie|ninguna)\]$/.test(p) || /vs ETSIIT 0$/.test(p);
+  const veredicto = (problemas) => {
+    const rellenos = problemas.filter(callaEtsiit).length;
+    const conflictos = problemas.length - rellenos;
+    if (!conflictos) return "**manda la UGR** (relleno: la ETSIIT no lo publicaba)";
+    if (!rellenos) return "**manda la ETSIIT** (no se cambia nada)";
+    return `**manda la ETSIIT** en ${conflictos} · lo que callaba, lo rellena la UGR (${rellenos})`;
+  };
+  const conConflicto = filas.filter((f) => f.problemas.some((p) => !callaEtsiit(p))).length;
+
   let md = `# Discrepancias UGR ↔ ETSIIT\n\n`;
   md += `Comparación de las páginas de la UGR (${asignaturas.length} asignaturas, volcadas el ${new Date().toISOString().slice(0, 10)}) con las guías de la ETSIIT.\n\n`;
-  md += `**${filas.length} asignaturas con diferencias** de ${asignaturas.length}. Marca la última columna con lo que es cierto.\n\n`;
-  md += `| # | Asignatura | Diferencia | ¿Cuál es cierto? |\n|---|---|---|---|\n`;
+  md += `**${filas.length} asignaturas con diferencias** de ${asignaturas.length}: **${conConflicto} traen una contradicción real** con la ETSIIT (las dos fuentes dicen cosas distintas) y las demás son solo profesorado que la guía de la ETSIIT no publica.\n\n`;
+  md += `**Decisión del autor (2026-10-16): donde la UGR contradice a la ETSIIT, manda la ETSIIT.** La UGR solo **rellena** lo que la ETSIIT no publica, así que la última columna no es una pregunta: es lo que manda, y por eso no hay nada pendiente de revisar aquí.\n\n`;
+  md += `Qué se compara con qué:\n\n`;
+  md += `- **Profesorado** (quién da cada grupo): con la **guía de la ETSIIT**, que es donde está.\n`;
+  md += `- **Letras y subgrupos de prácticas**: con **lo que tiene la app** (\`data.js\`, del horario de la ETSIIT), que es lo que manda sobre qué grupos existen.\n\n`;
+  md += `Y en cada diferencia: «vs ETSIIT [nadie]» o «[ninguna]» → **la ETSIIT no lo publica**: lo pone la UGR. Cualquier otro valor → **las dos fuentes dicen cosas distintas**: se queda lo de la ETSIIT.\n\n`;
+  md += `| # | Asignatura | Diferencia | Qué manda |\n|---|---|---|---|\n`;
   filas.forEach((f, i) => {
-    md += `| ${i + 1} | ${f.nombre} | ${f.problemas.join(" · ")} | |\n`;
+    md += `| ${i + 1} | ${f.nombre} | ${f.problemas.join(" · ")} | ${veredicto(f.problemas)} |\n`;
   });
   md += `\n## En la UGR pero no emparejadas con una guía nuestra (${sinPareja.length})\n\n`;
   md += `| # | Asignatura | Curso | Tipo |\n|---|---|---|---|\n`;
