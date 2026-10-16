@@ -33,22 +33,20 @@ async function bootstrap() {
   const migrateResult = await migrateLegacy();
   recordBootTiming("migrate_legacy");
 
-  if (migrateResult.ok && !migrateResult.skipped) {
-    console.log("[bootstrap] Legacy migration completed:", migrateResult.migrated);
-  } else if (migrateResult.skipped) {
-    console.log("[bootstrap] Legacy migration already done");
-  } else if (migrateResult.degraded) {
-    console.warn("[bootstrap] Migration skipped due to IDB unavailability");
-  } else {
-    console.error("[bootstrap] Migration failed:", migrateResult.error);
+  // Solo se avisa cuando algo va mal: la migración que sale bien es silenciosa,
+  // que es lo que la regla del repo pide (nada de `console.log` de adorno).
+  if (!migrateResult.ok && !migrateResult.skipped) {
+    if (migrateResult.degraded) {
+      console.warn("[bootstrap] Migration skipped due to IDB unavailability");
+    } else {
+      console.error("[bootstrap] Migration failed:", migrateResult.error);
+    }
   }
 
   // Los estados de convalidación viven en el store (progress.equivalences), no
   // en localStorage: la ingesta los vuelca una vez y el dashboard ya lee de ahí.
   const ingestResult = await ingestConvalidacionesEstados();
-  if (ingestResult.ok && ingestResult.ingested > 0) {
-    console.log("[bootstrap] Convalidaciones legacy ingestadas al store:", ingestResult.ingested);
-  } else if (!ingestResult.ok) {
+  if (!ingestResult.ok) {
     console.warn("[bootstrap] Ingesta de convalidaciones falló:", ingestResult.error);
   }
 
