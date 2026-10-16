@@ -21,6 +21,13 @@
  * hay transformación pura, para poder probarla sin salir a internet.
  */
 
+import { readFileSync, existsSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = fileURLToPath(new URL("../..", import.meta.url));
+const pathJoin = path.join;
+
 /**
  * Quita el punto final que la guía añade tras el nombre y colapsa los espacios:
  * «María del Mar Abad Grau.» y «María del Mar Abad Grau» son la misma persona.
@@ -222,9 +229,47 @@ export function corregirNombre(nombre) {
   return CORRECCIONES_NOMBRES[limpio] || limpio;
 }
 
+const UGR_ASIGNATURAS = pathJoin(ROOT, "tools/ugr-pipeline/ugr-asignaturas.json");
+
+/** Nuestro `nombre` lleva el código («… (296113T)») y la UGR no. */
+const sinCodigo = (t) => String(t || "").replace(/^\s*Guía docente de\s*/i, "").replace(/\s*\(\d+[A-Z0-9]*\)\s*$/, "").trim().toLowerCase();
+
+/**
+ * Relleno del profesorado con las páginas de la **UGR** (`ugr-asignaturas.json`).
+ *
+ * Decisión del autor: la UGR manda donde la guía de la ETSIIT **no publica**
+ * profesorado (las asignaturas de mención salen sin él en sus guías). Se rellena
+ * solo lo que falta —teoría o prácticas por separado— y lo que **difiere** no se
+ * toca: queda en `planes/discrepancias-ugr.md` para revisión a mano.
+ */
+function rellenoDeLaUGR() {
+  if (!existsSync(UGR_ASIGNATURAS)) return new Map();
+  const volcado = JSON.parse(readFileSync(UGR_ASIGNATURAS, "utf8"));
+  const porTitulo = new Map();
+  (volcado.asignaturas || []).forEach((a) => {
+    porTitulo.set(sinCodigo(a.titulo), {
+      teorico: (a.teoria || []).map((e) => ({ nombre: e.nombre, grupos: e.grupos })),
+      practico: (a.practicas || []).map((e) => ({ nombre: e.nombre, grupos: e.grupos })),
+    });
+  });
+  return porTitulo;
+}
+
+/** Las guías, con el profesorado que la UGR publica y la ETSIIT no. */
+export function guiasConRelleno(guias) {
+  const relleno = rellenoDeLaUGR();
+  return (Array.isArray(guias) ? guias : []).map((guia) => {
+    const u = relleno.get(sinCodigo(guia.nombre || guia.titulo));
+    if (!u) return guia;
+    const teorico = (guia.teorico || []).length ? guia.teorico : u.teorico;
+    const practico = (guia.practico || []).length ? guia.practico : u.practico;
+    return { ...guia, teorico, practico };
+  });
+}
+
 export function buildAsignaciones({ guias, subjects, subgrupos }) {
   const porNombre = new Map();
-  for (const guia of Array.isArray(guias) ? guias : []) {
+  for (const guia of guiasConRelleno(guias)) {
     const clave = subjectMatchKey(guia.nombre || guia.titulo);
     if (clave && !porNombre.has(clave)) porNombre.set(clave, guia);
   }

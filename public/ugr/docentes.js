@@ -938,6 +938,41 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "DBA-A",
+    "name": "Manuel Jesús Cobo Martín",
+    "subjectCode": "DBA",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "DBA-A1",
+    "name": "Manuel Jesús Cobo Martín",
+    "subjectCode": "DBA",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DBA-A2",
+    "name": "Manuel Jesús Cobo Martín",
+    "subjectCode": "DBA",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DBA-A3",
+    "name": "Manuel Jesús Cobo Martín",
+    "subjectCode": "DBA",
+    "groupLetter": "A3",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DGP-A",
+    "name": "María José Rodríguez Fortiz",
+    "subjectCode": "DGP",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "DGP-A1",
     "name": "Juan José Escobar Pérez",
     "subjectCode": "DGP",
@@ -966,6 +1001,20 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "LP-A",
+    "name": "Francisco Miguel García Olmedo",
+    "subjectCode": "LP",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "MDA-A",
+    "name": "María Luisa Rodríguez Almendros",
+    "subjectCode": "MDA",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "MDA-A1",
     "name": "Juan José Escobar Pérez",
     "subjectCode": "MDA",
@@ -985,6 +1034,20 @@ const DOCENTES = [
     "subjectCode": "MDA",
     "groupLetter": "A2",
     "modalidad": "Prácticas"
+  },
+  {
+    "key": "PGV-A",
+    "name": "Luis López Escudero",
+    "subjectCode": "PGV",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SSO-A",
+    "name": "José Antonio Gómez Hernández",
+    "subjectCode": "SSO",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
   },
   {
     "key": "IA-B",
@@ -1232,6 +1295,41 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "SG-A",
+    "name": "Francisco Velasco Anguita",
+    "subjectCode": "SG",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SG-A1",
+    "name": "Francisco Velasco Anguita",
+    "subjectCode": "SG",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SG-A2",
+    "name": "Francisco Velasco Anguita",
+    "subjectCode": "SG",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SIBW-A",
+    "name": "Carmen Josefa Martínez Cruz",
+    "subjectCode": "SIBW",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SIBW-B",
+    "name": "Carmen Josefa Martínez Cruz",
+    "subjectCode": "SIBW",
+    "groupLetter": "B",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "SIBW-A1",
     "name": "José María Guirao Miras",
     "subjectCode": "SIBW",
@@ -1256,6 +1354,41 @@ const DOCENTES = [
     "key": "CEGE-A",
     "name": "Francisco Juan López Martín",
     "subjectCode": "CEGE",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "DI-A",
+    "name": "José Antonio Castillo Parrilla",
+    "subjectCode": "DI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "EISI-A",
+    "name": "Carlos Molina Fernández",
+    "subjectCode": "EISI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "AO-A",
+    "name": "Santiago Carbó García",
+    "subjectCode": "AO",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "NTP-A",
+    "name": "Manuel Gómez Olmedo",
+    "subjectCode": "NTP",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PPR-A",
+    "name": "José Miguel Mantas Ruiz",
+    "subjectCode": "PPR",
     "groupLetter": "A",
     "modalidad": "Teoría"
   },
@@ -3507,6 +3640,20 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "IC-A",
+    "name": "Juan Luis Castro Peña",
+    "subjectCode": "IC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "IC-B",
+    "name": "Juan Luis Castro Peña",
+    "subjectCode": "IC",
+    "groupLetter": "B",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "IC-B1",
     "name": "Juan Luis Castro Peña",
     "subjectCode": "IC",
@@ -3542,6 +3689,34 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "MAC-A",
+    "name": "Serafín Moral Callejón",
+    "subjectCode": "MAC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "MAC-B",
+    "name": "Serafín Moral Callejón",
+    "subjectCode": "MAC",
+    "groupLetter": "B",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "MAC-A1",
+    "name": "Fernando Berzal Galiano",
+    "subjectCode": "MAC",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "MAC-A2",
+    "name": "Fernando Berzal Galiano",
+    "subjectCode": "MAC",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
     "key": "MH-B",
     "name": "Óscar Cordón García",
     "subjectCode": "MH",
@@ -3553,6 +3728,41 @@ const DOCENTES = [
     "name": "Francisco Herrera Triguero",
     "subjectCode": "MH",
     "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "MH-A1",
+    "name": "Daniel Molina Cabrera",
+    "subjectCode": "MH",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "MH-A2",
+    "name": "Daniel Molina Cabrera",
+    "subjectCode": "MH",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "MH-A3",
+    "name": "Daniel Molina Cabrera",
+    "subjectCode": "MH",
+    "groupLetter": "A3",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "TSI-A",
+    "name": "Antonio González Muñoz",
+    "subjectCode": "TSI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "TSI-B",
+    "name": "Antonio González Muñoz",
+    "subjectCode": "TSI",
+    "groupLetter": "B",
     "modalidad": "Teoría"
   },
   {
@@ -3591,6 +3801,27 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "CUIA-A",
+    "name": "Antonio Bautista Bailón Morillas",
+    "subjectCode": "CUIA",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "CUIA-A1",
+    "name": "Antonio Bautista Bailón Morillas",
+    "subjectCode": "CUIA",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "CUIA-A2",
+    "name": "Antonio Bautista Bailón Morillas",
+    "subjectCode": "CUIA",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
     "key": "SWAP-A",
     "name": "Míriam Mengíbar Rodríguez",
     "subjectCode": "SWAP",
@@ -3612,6 +3843,41 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "SMM-A",
+    "name": "Jesús Chamorro Martínez",
+    "subjectCode": "SMM",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SMM-A1",
+    "name": "Jesús Chamorro Martínez",
+    "subjectCode": "SMM",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SMM-A2",
+    "name": "Jesús Chamorro Martínez",
+    "subjectCode": "SMM",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "TW-A",
+    "name": "Daniel Molina Cabrera",
+    "subjectCode": "TW",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "TDRC-A",
+    "name": "Natalia Chinchilla Romero",
+    "subjectCode": "TDRC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "TDRC-A1",
     "name": "Andrés Biedma Pérez",
     "subjectCode": "TDRC",
@@ -3624,6 +3890,13 @@ const DOCENTES = [
     "subjectCode": "TDRC",
     "groupLetter": "A2",
     "modalidad": "Prácticas"
+  },
+  {
+    "key": "ABD-A",
+    "name": "Ignacio José Blanco Medina",
+    "subjectCode": "ABD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
   },
   {
     "key": "ABD-A2",
@@ -3640,6 +3913,13 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "ISI-A",
+    "name": "Fernando Berzal Galiano",
+    "subjectCode": "ISI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "ISI-A1",
     "name": "Fernando Berzal Galiano",
     "subjectCode": "ISI",
@@ -3654,6 +3934,48 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "PW-A",
+    "name": "José Manuel Benítez Sánchez",
+    "subjectCode": "PW",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PW-A1",
+    "name": "Juan Manuel Fernández Luna",
+    "subjectCode": "PW",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SIE-A",
+    "name": "Brunil Dalila Romero Mariño",
+    "subjectCode": "SIE",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SIE-A1",
+    "name": "Brunil Dalila Romero Mariño",
+    "subjectCode": "SIE",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SIE-A2",
+    "name": "Brunil Dalila Romero Mariño",
+    "subjectCode": "SIE",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SMD-A",
+    "name": "José Samos Jiménez",
+    "subjectCode": "SMD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "SMD-A1",
     "name": "Antonio Javier Fernández Ares",
     "subjectCode": "SMD",
@@ -3666,6 +3988,118 @@ const DOCENTES = [
     "subjectCode": "SMD",
     "groupLetter": "A2",
     "modalidad": "Prácticas"
+  },
+  {
+    "key": "ACAP-A",
+    "name": "Víctor Vázquez Rodríguez",
+    "subjectCode": "ACAP",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "ACAP-A1",
+    "name": "Víctor Vázquez Rodríguez",
+    "subjectCode": "ACAP",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "ACAP-A2",
+    "name": "Víctor Vázquez Rodríguez",
+    "subjectCode": "ACAP",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "AS-A",
+    "name": "Gustavo Romero López",
+    "subjectCode": "AS",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "AS-A1",
+    "name": "Gustavo Romero López",
+    "subjectCode": "AS",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "AS-A2",
+    "name": "Gustavo Romero López",
+    "subjectCode": "AS",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DHD-A",
+    "name": "María Begoña del Pino Prieto",
+    "subjectCode": "DHD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "DHD-A1",
+    "name": "María Begoña del Pino Prieto",
+    "subjectCode": "DHD",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DHD-A2",
+    "name": "María Begoña del Pino Prieto",
+    "subjectCode": "DHD",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SMP-A",
+    "name": "Richard Rafael Carrillo Sánchez",
+    "subjectCode": "SMP",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SMP-A1",
+    "name": "Richard Rafael Carrillo Sánchez",
+    "subjectCode": "SMP",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SMP-A2",
+    "name": "Richard Rafael Carrillo Sánchez",
+    "subjectCode": "SMP",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DSE-A",
+    "name": "Francisco Javier Romero Maldonado",
+    "subjectCode": "DSE",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "DSE-A1",
+    "name": "Francisco Javier Romero Maldonado",
+    "subjectCode": "DSE",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DSE-A2",
+    "name": "Francisco Javier Romero Maldonado",
+    "subjectCode": "DSE",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "VC-A",
+    "name": "Pablo Mesejo Santiago",
+    "subjectCode": "VC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
   },
   {
     "key": "VC-A2",
@@ -3689,6 +4123,41 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "NPI-A",
+    "name": "Marcelino José Cabrera Cuevas",
+    "subjectCode": "NPI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "NPI-A1",
+    "name": "Marcelino José Cabrera Cuevas",
+    "subjectCode": "NPI",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "NPI-A2",
+    "name": "Marcelino José Cabrera Cuevas",
+    "subjectCode": "NPI",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "NPI-A3",
+    "name": "Marcelino José Cabrera Cuevas",
+    "subjectCode": "NPI",
+    "groupLetter": "A3",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "PL-A",
+    "name": "Ramón López-Cózar Delgado",
+    "subjectCode": "PL",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "PL-A2",
     "name": "Ramón López-Cózar Delgado",
     "subjectCode": "PL",
@@ -3710,9 +4179,289 @@ const DOCENTES = [
     "modalidad": "Prácticas"
   },
   {
+    "key": "TIC-A",
+    "name": "Manuel Pegalajar Cuéllar",
+    "subjectCode": "TIC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PTC-A",
+    "name": "José Enrique Cano Ocaña",
+    "subjectCode": "PTC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SS-A",
+    "name": "Luis Miguel Campos Ibáñez",
+    "subjectCode": "SS",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "DAI-A",
+    "name": "José María Guirao Miras",
+    "subjectCode": "DAI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "DAI-A1",
+    "name": "José María Guirao Miras",
+    "subjectCode": "DAI",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DAI-A2",
+    "name": "José María Guirao Miras",
+    "subjectCode": "DAI",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "DAI-A3",
+    "name": "José María Guirao Miras",
+    "subjectCode": "DAI",
+    "groupLetter": "A3",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "IV-A",
+    "name": "Juan Julián Merelo Guervos",
+    "subjectCode": "IV",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "IV-A1",
+    "name": "Juan Julián Merelo Guervos",
+    "subjectCode": "IV",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "IV-A2",
+    "name": "Juan Julián Merelo Guervos",
+    "subjectCode": "IV",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SPSI-A",
+    "name": "Francisco Miguel García Olmedo",
+    "subjectCode": "SPSI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SPSI-A1",
+    "name": "Francisco Miguel García Olmedo",
+    "subjectCode": "SPSI",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SPSI-A2",
+    "name": "Francisco Miguel García Olmedo",
+    "subjectCode": "SPSI",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "TID-A",
+    "name": "Rafael Molina Soriano",
+    "subjectCode": "TID",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "CRIM-A",
+    "name": "Rafael Molina Soriano",
+    "subjectCode": "CRIM",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "IN-A",
+    "name": "Jorge Casillas Barranquero",
+    "subjectCode": "IN",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "IN-A1",
+    "name": "Antonio Manjavacas Lucas",
+    "subjectCode": "IN",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "IN-A2",
+    "name": "Antonio Manjavacas Lucas",
+    "subjectCode": "IN",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "BDD-A",
+    "name": "Cecilia Delgado Negrete",
+    "subjectCode": "BDD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "BDD-A1",
+    "name": "Cecilia Delgado Negrete",
+    "subjectCode": "BDD",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "BDD-A2",
+    "name": "Cecilia Delgado Negrete",
+    "subjectCode": "BDD",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "RI-A",
+    "name": "Juan Francisco Huete Guadix",
+    "subjectCode": "RI",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "RI-A1",
+    "name": "Juan Francisco Huete Guadix",
+    "subjectCode": "RI",
+    "groupLetter": "A1",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "RI-A2",
+    "name": "Juan Francisco Huete Guadix",
+    "subjectCode": "RI",
+    "groupLetter": "A2",
+    "modalidad": "Prácticas"
+  },
+  {
+    "key": "SIG-A",
+    "name": "José Samos Jiménez",
+    "subjectCode": "SIG",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "RSC-A",
+    "name": "Óscar Cordón García",
+    "subjectCode": "RSC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "GRD-A",
+    "name": "Carlos Cano Gutiérrez",
+    "subjectCode": "GRD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SE-A",
+    "name": "Jesús González Peñalver",
+    "subjectCode": "SE",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "TR-A",
+    "name": "Jesús Esteban Díaz Verdejo",
+    "subjectCode": "TR",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "CPD-A",
+    "name": "Antonio Francisco Díaz García",
+    "subjectCode": "CPD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
     "key": "II-A",
     "name": "Miguel Damas Hermoso",
     "subjectCode": "II",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "TE-A",
+    "name": "Samuel Francisco Romero García",
+    "subjectCode": "TE",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PLD-A",
+    "name": "Antonio Bautista Bailón Morillas",
+    "subjectCode": "PLD",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "CRIP-A",
+    "name": "Gabriel Navarro Garulo",
+    "subjectCode": "CRIP",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PDM-A",
+    "name": "Marcelino José Cabrera Cuevas",
+    "subjectCode": "PDM",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PDS-A",
+    "name": "José Andrés González López",
+    "subjectCode": "PDS",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "RMS-A",
+    "name": "Juan José Ramos Muñoz",
+    "subjectCode": "RMS",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "SCGC-A",
+    "name": "Jorge Revelles Moreno",
+    "subjectCode": "SCGC",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "PDIH-A",
+    "name": "Pedro Ángel Castillo Valdivieso",
+    "subjectCode": "PDIH",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "CII-A",
+    "name": "Manuel Caño García",
+    "subjectCode": "CII",
+    "groupLetter": "A",
+    "modalidad": "Teoría"
+  },
+  {
+    "key": "MEI-A",
+    "name": "Cristina Medina Bailón",
+    "subjectCode": "MEI",
     "groupLetter": "A",
     "modalidad": "Teoría"
   }

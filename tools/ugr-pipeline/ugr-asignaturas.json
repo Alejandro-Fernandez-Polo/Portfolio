@@ -1,0 +1,4921 @@
+{
+  "fuente": "https://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica",
+  "generado": "2026-10-16",
+  "asignaturas": [
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/administracion-bases-datos-esistinformac",
+      "slug": "administracion-bases-datos-esistinformac",
+      "titulo": "Administración de Bases de Datos (Especialidad Sistemas de Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Ignacio José Blanco Medina",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Ignacio José Blanco Medina",
+          "grupos": [
+            "2"
+          ]
+        },
+        {
+          "nombre": "David Criado Ramón",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/algebra-lineal-estructuras-matematicas",
+      "slug": "algebra-lineal-estructuras-matematicas",
+      "titulo": "Álgebra Lineal y Estructuras Matemáticas",
+      "curso": "Primero",
+      "semestre": "Primero",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Álgebra",
+      "teoria": [
+        {
+          "nombre": "Jesús García Miranda",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "José Antonio Jiménez Madrid",
+          "grupos": [
+            "F"
+          ]
+        },
+        {
+          "nombre": "José Carlos Rosales González",
+          "grupos": [
+            "A",
+            "D"
+          ]
+        },
+        {
+          "nombre": "Juan Manuel Urbano Blanco",
+          "grupos": [
+            "B",
+            "C"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Celia Cordovilla Sánchez",
+          "grupos": [
+            "10",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Jesús García Miranda",
+          "grupos": [
+            "12",
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "José Antonio Jiménez Madrid",
+          "grupos": [
+            "11",
+            "15",
+            "16"
+          ]
+        },
+        {
+          "nombre": "José Carlos Rosales González",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Juan Manuel Urbano Blanco",
+          "grupos": [
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/algoritmica",
+      "slug": "algoritmica",
+      "titulo": "Algorítmica",
+      "curso": "Segundo",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Francisco Javier Abad Ortega",
+          "grupos": [
+            "C",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Miguel García Silvente",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Juan Francisco Huete Guadix",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Miguel López Pérez",
+          "grupos": [
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María Isabel Abellán Benítez",
+          "grupos": [
+            "3",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Antonio Bautista Bailón Morillas",
+          "grupos": [
+            "7"
+          ]
+        },
+        {
+          "nombre": "Salvador López Joya",
+          "grupos": [
+            "10",
+            "11",
+            "12",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Miguel López Pérez",
+          "grupos": [
+            "1",
+            "4",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Antonio Manjavacas Lucas",
+          "grupos": [
+            "13"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/animacion-ordenador-ing-software",
+      "slug": "animacion-ordenador-ing-software",
+      "titulo": "Animación por Ordenador (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Santiago Carbó García",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Santiago Carbó García",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/aprendizaje-automaticoecomputacy-sistintelig",
+      "slug": "aprendizaje-automaticoecomputacy-sistintelig",
+      "titulo": "Aprendizaje Automático (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Salvador García López",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Francisco Herrera Triguero",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Salvador López Joya",
+          "grupos": [
+            "1",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Manuel Pegalajar Cuéllar",
+          "grupos": [
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/arquitectura-computadores",
+      "slug": "arquitectura-computadores",
+      "titulo": "Arquitectura de Computadores",
+      "curso": "Segundo",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Mancia Anguita López",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "María Isabel García Arenas",
+          "grupos": [
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Christian Agustín Morillas Gutiérrez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Mancia Anguita López",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Álvaro González Redondo",
+          "grupos": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Míriam Mengíbar Rodríguez",
+          "grupos": [
+            "10",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Francisco Manuel Ortuño Guzmán",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Aurora Polo Rodríguez",
+          "grupos": [
+            "11",
+            "12"
+          ]
+        },
+        {
+          "nombre": "Javier Ubago Rodríguez",
+          "grupos": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "Víctor Vázquez Rodríguez",
+          "grupos": [
+            "6",
+            "7"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/arquitectura-sistemas-einga-computadores",
+      "slug": "arquitectura-sistemas-einga-computadores",
+      "titulo": "Arquitectura de Sistemas (Especialidad Ingeniería de Computadores)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Gustavo Romero López",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Gustavo Romero López",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/arquity-computacde-altas-prestacioneseingcom",
+      "slug": "arquity-computacde-altas-prestacioneseingcom",
+      "titulo": "Arquitectura y Computación de Altas Prestaciones (Especialidad Ingeniería de Computadores)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Víctor Vázquez Rodríguez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Víctor Vázquez Rodríguez",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/bases-datos-distribuidas-sistemas-informac",
+      "slug": "bases-datos-distribuidas-sistemas-informac",
+      "titulo": "Bases de Datos Distribuidas (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Cecilia Delgado Negrete",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Cecilia Delgado Negrete",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/calculo",
+      "slug": "calculo",
+      "titulo": "Cálculo",
+      "curso": "Primero",
+      "semestre": "Primero",
+      "tipo": "Troncal",
+      "departamento": "",
+      "teoria": [
+        {
+          "nombre": "Jerónimo Alaminos Prats",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Gerardo Martín Escolano",
+          "grupos": [
+            "B",
+            "D"
+          ]
+        },
+        {
+          "nombre": "Miguel Martínez Teruel",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Abraham Rueda Zoca",
+          "grupos": [
+            "C"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Jerónimo Alaminos Prats",
+          "grupos": [
+            "1",
+            "15",
+            "2"
+          ]
+        },
+        {
+          "nombre": "Gerardo Martín Escolano",
+          "grupos": [
+            "10",
+            "11",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Miguel Martínez Teruel",
+          "grupos": [
+            "12",
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "Esteban Martínez Vañó",
+          "grupos": [
+            "16",
+            "3",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Abraham Rueda Zoca",
+          "grupos": [
+            "4",
+            "5",
+            "7",
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/centros-procesamiento-datos-eingcomput",
+      "slug": "centros-procesamiento-datos-eingcomput",
+      "titulo": "Centros de Procesamiento de Datos (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Antonio Francisco Díaz García",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Francisco Díaz García",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Víctor Vázquez Rodríguez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/circuitos-integrados-impresos-ing-computad",
+      "slug": "circuitos-integrados-impresos-ing-computad",
+      "titulo": "Circuitos Integrados e Impresos (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Electrónica y Tecnología de Computadores",
+      "teoria": [
+        {
+          "nombre": "Manuel Caño García",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Manuel Caño García",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/compresion-recuperacde-informmultimedietec",
+      "slug": "compresion-recuperacde-informmultimedietec",
+      "titulo": "Compresión y Recuperación de Información Multimedia (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Rafael Molina Soriano",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Manuel Gómez Olmedo",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/computacubicua-inteligambiental-etecnolinf",
+      "slug": "computacubicua-inteligambiental-etecnolinf",
+      "titulo": "Computación Ubicua e Inteligencia Ambiental (Especialidadtecnologías de la Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Antonio Bautista Bailón Morillas",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Bautista Bailón Morillas",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/creacion-empresas-gestion-emprendedora",
+      "slug": "creacion-empresas-gestion-emprendedora",
+      "titulo": "Creación de Empresas y Gestión Emprendedora",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "",
+      "teoria": [
+        {
+          "nombre": "Francisco Juan López Martín",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "María del Carmen Pérez López",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [],
+      "gruposHorario": [
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/criptografia-computacion-ecomput-sist-intel",
+      "slug": "criptografia-computacion-ecomput-sist-intel",
+      "titulo": "Criptografía y Computación (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Álgebra",
+      "teoria": [
+        {
+          "nombre": "Gabriel Navarro Garulo",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Gabriel Navarro Garulo",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/derecho-informatico",
+      "slug": "derecho-informatico",
+      "titulo": "Derecho Informático",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "",
+      "teoria": [
+        {
+          "nombre": "José Antonio Castillo Parrilla",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José Antonio Castillo Parrilla",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Natalia Elizabeth Vigano Martínez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/desarrollo-aplicaciones-internetetecin",
+      "slug": "desarrollo-aplicaciones-internetetecin",
+      "titulo": "Desarrollo de Aplicaciones para Internet (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José María Guirao Miras",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José María Guirao Miras",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/desarrollo-basado-agentes-ing-software",
+      "slug": "desarrollo-basado-agentes-ing-software",
+      "titulo": "Desarrollo Basado en Agentes (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Manuel Jesús Cobo Martín",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Manuel Jesús Cobo Martín",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/desarrollo-hardware-digitaleingcomputador",
+      "slug": "desarrollo-hardware-digitaleingcomputador",
+      "titulo": "Desarrollo de Hardware Digital (Especialidad Ingeniería de Computadores)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "María Begoña del Pino Prieto",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María Begoña del Pino Prieto",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/desarrollo-sistemas-distribuidos-eing-soft",
+      "slug": "desarrollo-sistemas-distribuidos-eing-soft",
+      "titulo": "Desarrollo de Sistemas Distribuidos (Especialidad Ingeniería del Software)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Luis Garrido Bullejos",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "José Ángel Segura Muros",
+          "grupos": [
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Luis López Escudero",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nombre": "José Ángel Segura Muros",
+          "grupos": [
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/desarrollo-software-eingenieria-software",
+      "slug": "desarrollo-software-eingenieria-software",
+      "titulo": "Desarrollo de Software (Especialidad Ingeniería del Software)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "María del Mar Abad Grau",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Alberto Jesús Durán López",
+          "grupos": [
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María del Mar Abad Grau",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Alberto Jesús Durán López",
+          "grupos": [
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/direccion-gestion-proyectos-eingasoftware",
+      "slug": "direccion-gestion-proyectos-eingasoftware",
+      "titulo": "Dirección y Gestión de Proyectos (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "María José Rodríguez Fortiz",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan José Escobar Pérez",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "María Belén Prados Suárez",
+          "grupos": [
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/diseno-desarrollo-sistemas-informacion",
+      "slug": "diseno-desarrollo-sistemas-informacion",
+      "titulo": "Diseño y Desarrollo de Sistemas de Información",
+      "curso": "Tercer",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Ignacio Aguilera Martos",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Ignacio José Blanco Medina",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "David Criado Ramón",
+          "grupos": [
+            "D"
+          ]
+        },
+        {
+          "nombre": "Carlos Alberto Cruz Corona",
+          "grupos": [
+            "C"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Ignacio Aguilera Martos",
+          "grupos": [
+            "3"
+          ]
+        },
+        {
+          "nombre": "Francisco Javier Baldán Lozano",
+          "grupos": [
+            "2",
+            "6",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Ignacio José Blanco Medina",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "David Criado Ramón",
+          "grupos": [
+            "10"
+          ]
+        },
+        {
+          "nombre": "Carlos Alberto Cruz Corona",
+          "grupos": [
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nombre": "María José Martín Bautista",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Daniel Peralta Cámara",
+          "grupos": [
+            "5"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/diseno-interfaces-usuario-ing-software",
+      "slug": "diseno-interfaces-usuario-ing-software",
+      "titulo": "Diseño de Interfaces de Usuario (Especialidad Ingeniería del Software)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Miguel Gea Mejías",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Rosa Ana Montes Soldado",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Javier Fernández Ares",
+          "grupos": [
+            "3"
+          ]
+        },
+        {
+          "nombre": "Miguel Gea Mejías",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "Brunil Dalila Romero Mariño",
+          "grupos": [
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/diseno-sistemas-electronicos-eingcomputador",
+      "slug": "diseno-sistemas-electronicos-eingcomputador",
+      "titulo": "Diseño de Sistemas Electrónicos (Especialidad Ingeniería de Computadores)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Electrónica y Tecnología de Computadores",
+      "teoria": [
+        {
+          "nombre": "Francisco Javier Romero Maldonado",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Francisco Javier Romero Maldonado",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/estadistica",
+      "slug": "estadistica",
+      "titulo": "Estadística",
+      "curso": "Primero",
+      "semestre": "Segundo",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Estadística e Investigación Operativa",
+      "teoria": [
+        {
+          "nombre": "Manuela Expósito Ruiz",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Antonio Jesús López Montoya",
+          "grupos": [
+            "D",
+            "E",
+            "F"
+          ]
+        },
+        {
+          "nombre": "Nuria Rico Castro",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "María del Carmen Segovia García",
+          "grupos": [
+            "A",
+            "C"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Sanae Fauzi",
+          "grupos": [
+            "12",
+            "16",
+            "2"
+          ]
+        },
+        {
+          "nombre": "Antonio Jesús López Montoya",
+          "grupos": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "Fernando Martínez Álvarez",
+          "grupos": [
+            "1",
+            "2",
+            "4",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "nombre": "Pablo Morales Álvarez",
+          "grupos": [
+            "10",
+            "3",
+            "5",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Raquel Ortiz Martín",
+          "grupos": [
+            "11",
+            "15"
+          ]
+        },
+        {
+          "nombre": "Nuria Rico Castro",
+          "grupos": [
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/estructura-datos",
+      "slug": "estructura-datos",
+      "titulo": "Estructura de Datos",
+      "curso": "Segundo",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Joaquín Fernández Valdivia",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Miguel García Silvente",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Francisco Javier Rodríguez Díaz",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Rosa María Rodríguez Sánchez",
+          "grupos": [
+            "D",
+            "E"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Salvador López Joya",
+          "grupos": [
+            "12",
+            "3",
+            "7",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Antonio Manjavacas Lucas",
+          "grupos": [
+            "14",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Andrea Morales Garzón",
+          "grupos": [
+            "1",
+            "2",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Rosa María Rodríguez Sánchez",
+          "grupos": [
+            "10",
+            "11",
+            "13"
+          ]
+        },
+        {
+          "nombre": "María Cristina Zuheros Montes",
+          "grupos": [
+            "4",
+            "5"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/estructuras-computadores",
+      "slug": "estructuras-computadores",
+      "titulo": "Estructura de Computadores",
+      "curso": "Segundo",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Antonio Cañas Vargas",
+          "grupos": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Francisco J. Fernández Baldomero",
+          "grupos": [
+            "A",
+            "C",
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Cañas Vargas",
+          "grupos": [
+            "13",
+            "14",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Francisco J. Fernández Baldomero",
+          "grupos": [
+            "10",
+            "11",
+            "12",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Álvaro González Redondo",
+          "grupos": [
+            "2",
+            "3",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Niceto Rafael Luque Sola",
+          "grupos": [
+            "1",
+            "7"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/etica-informatica-sociedad-informacion",
+      "slug": "etica-informatica-sociedad-informacion",
+      "titulo": "Ética Informática y Sociedad de la Información",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Carlos Molina Fernández",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María Belén Prados Suárez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/fundamentos-bases-datos",
+      "slug": "fundamentos-bases-datos",
+      "titulo": "Fundamentos de Bases de Datos",
+      "curso": "Segundo",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Christoph Norbert Bergmeir",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Ignacio José Blanco Medina",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Antonio Gabriel López Herrera",
+          "grupos": [
+            "A",
+            "C",
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Christoph Norbert Bergmeir",
+          "grupos": [
+            "11",
+            "12"
+          ]
+        },
+        {
+          "nombre": "Natalia Ana Díaz Rodríguez",
+          "grupos": [
+            "10",
+            "13",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Juan Miguel Medina Rodríguez",
+          "grupos": [
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Olga Pons Capote",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Carlos Gustavo Porcel Gallego",
+          "grupos": [
+            "7",
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/fundamentos-fisicos-tecnologicos",
+      "slug": "fundamentos-fisicos-tecnologicos",
+      "titulo": "Fundamentos Físicos y Tecnológicos",
+      "curso": "Primero",
+      "semestre": "Primero",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Electrónica y Tecnología de Computadores",
+      "teoria": [
+        {
+          "nombre": "Pedro Cartujo Cassinello",
+          "grupos": [
+            "A",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Pedro García Fernández",
+          "grupos": [
+            "F"
+          ]
+        },
+        {
+          "nombre": "Ignacio Melchor Ferrer",
+          "grupos": [
+            "C",
+            "D"
+          ]
+        },
+        {
+          "nombre": "Carmen Lucía Moraila Martínez",
+          "grupos": [
+            "F"
+          ]
+        },
+        {
+          "nombre": "José Luis Padilla De la Torre",
+          "grupos": [
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Pedro Cartujo Cassinello",
+          "grupos": [
+            "1",
+            "12",
+            "13",
+            "14",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Pablo Escobedo Araque",
+          "grupos": [
+            "4",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Pedro García Fernández",
+          "grupos": [
+            "15",
+            "16"
+          ]
+        },
+        {
+          "nombre": "Ignacio Melchor Ferrer",
+          "grupos": [
+            "10",
+            "11",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Carmen Lucía Moraila Martínez",
+          "grupos": [
+            "15",
+            "16"
+          ]
+        },
+        {
+          "nombre": "José Luis Padilla De la Torre",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "Marco Antonio Villena Sanchez",
+          "grupos": [
+            "12",
+            "5"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/fundamentos-ingenieria-software",
+      "slug": "fundamentos-ingenieria-software",
+      "titulo": "Fundamentos de Ingeniería del Software",
+      "curso": "Segundo",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "María del Mar Abad Grau",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Pedro Manuel Martínez Jiménez",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Nuria Medina Medina",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Francisco Velasco Anguita",
+          "grupos": [
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María del Mar Abad Grau",
+          "grupos": [
+            "11"
+          ]
+        },
+        {
+          "nombre": "Daniel Bolaños Martínez",
+          "grupos": [
+            "3",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "nombre": "Diego Jesús García Gil",
+          "grupos": [
+            "2",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Pedro Manuel Martínez Jiménez",
+          "grupos": [
+            "1",
+            "10"
+          ]
+        },
+        {
+          "nombre": "Nuria Medina Medina",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "María Luisa Rodríguez Almendros",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "José Ángel Segura Muros",
+          "grupos": [
+            "9"
+          ]
+        },
+        {
+          "nombre": "Francisco Velasco Anguita",
+          "grupos": [
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/fundamentos-programacion",
+      "slug": "fundamentos-programacion",
+      "titulo": "Fundamentos de Programación",
+      "curso": "Primero",
+      "semestre": "Primero",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Manuel Jesús Cobo Martín",
+          "grupos": [
+            "F"
+          ]
+        },
+        {
+          "nombre": "Juan Carlos Cubero Talavera",
+          "grupos": [
+            "A",
+            "C"
+          ]
+        },
+        {
+          "nombre": "Manuel Lozano Márquez",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Francisco Javier Rodríguez Díaz",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "María Cristina Zuheros Montes",
+          "grupos": [
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan Carlos Cubero Talavera",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Salvador López Joya",
+          "grupos": [
+            "12"
+          ]
+        },
+        {
+          "nombre": "Manuel Lozano Márquez",
+          "grupos": [
+            "13",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "nombre": "Javier Martínez Baena",
+          "grupos": [
+            "10",
+            "11",
+            "16",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Francisco Javier Rodríguez Díaz",
+          "grupos": [
+            "14"
+          ]
+        },
+        {
+          "nombre": "María Cristina Zuheros Montes",
+          "grupos": [
+            "15",
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/fundamentos-redes",
+      "slug": "fundamentos-redes",
+      "titulo": "Fundamentos de Redes",
+      "curso": "Tercer",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Teoría de la Señal, Telemática y Comunicaciones",
+      "teoria": [
+        {
+          "nombre": "Juan Manuel López Soler",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Antonio Miguel Mora García",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Jorge Navarro Ortiz",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Jonathan Prados Garzón",
+          "grupos": [
+            "D",
+            "E"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Andrés Biedma Pérez",
+          "grupos": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Natalia Chinchilla Romero",
+          "grupos": [
+            "10",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Irene Gosálvez White",
+          "grupos": [
+            "11"
+          ]
+        },
+        {
+          "nombre": "Jonathan Prados Garzón",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nombre": "Antonio Ruiz Moya",
+          "grupos": [
+            "3",
+            "4"
+          ]
+        },
+        {
+          "nombre": "Cleofás Segura Gómez",
+          "grupos": [
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Daniel Vallejo España",
+          "grupos": [
+            "12"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/fundamentos-software",
+      "slug": "fundamentos-software",
+      "titulo": "Fundamentos del Software",
+      "curso": "Primero",
+      "semestre": "Primero",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "María del Mar Abad Grau",
+          "grupos": [
+            "B",
+            "F"
+          ]
+        },
+        {
+          "nombre": "Juan José Escobar Pérez",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Pedro Manuel Martínez Jiménez",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Rosa Ana Montes Soldado",
+          "grupos": [
+            "C",
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María del Mar Abad Grau",
+          "grupos": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "Francisco de P. Araque Cuenca",
+          "grupos": [
+            "1",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Kawtar Benghazi Akhlaki Sekkate",
+          "grupos": [
+            "2",
+            "7",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Santiago Carbó García",
+          "grupos": [
+            "11"
+          ]
+        },
+        {
+          "nombre": "Juan José Escobar Pérez",
+          "grupos": [
+            "16",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Diego Jesús García Gil",
+          "grupos": [
+            "10",
+            "12",
+            "6"
+          ]
+        },
+        {
+          "nombre": "María Victoria Luzón García",
+          "grupos": [
+            "15",
+            "4"
+          ]
+        },
+        {
+          "nombre": "Janet Pigueiras Del Real",
+          "grupos": [
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/gestion-recursos-digitales-sistinformac",
+      "slug": "gestion-recursos-digitales-sistinformac",
+      "titulo": "Gestión de Recursos Digitales (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Carlos Cano Gutiérrez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Carlos Cano Gutiérrez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/informatica-grafica",
+      "slug": "informatica-grafica",
+      "titulo": "Informática Gráfica",
+      "curso": "Tercer",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Germán Arroyo Moreno",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Antonio López Fernández",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Domingo Martín Perandrés",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Juan Carlos Torres Cantero",
+          "grupos": [
+            "B",
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Santiago Carbó García",
+          "grupos": [
+            "3"
+          ]
+        },
+        {
+          "nombre": "Alberto Jesús Durán López",
+          "grupos": [
+            "11",
+            "12",
+            "4",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Luis López Escudero",
+          "grupos": [
+            "1",
+            "2",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Antonio López Fernández",
+          "grupos": [
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Guillermo Medialdea Burgos",
+          "grupos": [
+            "10",
+            "9"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/informatica-industrial-ingen-computadores",
+      "slug": "informatica-industrial-ingen-computadores",
+      "titulo": "Informática Industrial (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Miguel Damas Hermoso",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Gonzalo Olivares Ruiz",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Miguel Damas Hermoso",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Gonzalo Olivares Ruiz",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/infraestructura-virtual-tecnolog-informac",
+      "slug": "infraestructura-virtual-tecnolog-informac",
+      "titulo": "Infraestructura Virtual (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Juan Julián Merelo Guervos",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan Julián Merelo Guervos",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/ingenieria-conocimientoecomputy-sistint",
+      "slug": "ingenieria-conocimientoecomputy-sistint",
+      "titulo": "Ingeniería del Conocimiento (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Juan Luis Castro Peña",
+          "grupos": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan Luis Castro Peña",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "Andrea Morales Garzón",
+          "grupos": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/ingenieria-empresa-sociedad",
+      "slug": "ingenieria-empresa-sociedad",
+      "titulo": "Ingeniería, Empresa y Sociedad",
+      "curso": "Primero",
+      "semestre": "Segundo",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Organización de Empresas II",
+      "teoria": [
+        {
+          "nombre": "Javier Delgado Ceballos",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Encarnación García Sánchez",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "David Alejandro Jiménez Jordán",
+          "grupos": [
+            "A",
+            "F"
+          ]
+        },
+        {
+          "nombre": "María Esmeralda Lardón López",
+          "grupos": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Francisco Juan López Martín",
+          "grupos": [
+            "D",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Rodrigo Martín Rojas",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Rubén Ordóñez Borrallo",
+          "grupos": [
+            "B"
+          ]
+        }
+      ],
+      "practicas": [],
+      "gruposHorario": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/ingenieria-servidores",
+      "slug": "ingenieria-servidores",
+      "titulo": "Ingeniería de Servidores",
+      "curso": "Tercer",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Pablo García Sánchez",
+          "grupos": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Héctor Emilio Pomares Cintas",
+          "grupos": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Eusebio Naif Al-Soliman Fuentes",
+          "grupos": [
+            "8"
+          ]
+        },
+        {
+          "nombre": "Oresti Baños Legrán",
+          "grupos": [
+            "5"
+          ]
+        },
+        {
+          "nombre": "Juan Helios García Guzmán",
+          "grupos": [
+            "13",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Pablo García Sánchez",
+          "grupos": [
+            "7"
+          ]
+        },
+        {
+          "nombre": "Alberto Guillén Perales",
+          "grupos": [
+            "1",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Diego Navarro Cabrera",
+          "grupos": [
+            "10",
+            "12"
+          ]
+        },
+        {
+          "nombre": "Alberto Ortega Ruiz",
+          "grupos": [
+            "2",
+            "4"
+          ]
+        },
+        {
+          "nombre": "Ciro Rodríguez León",
+          "grupos": [
+            "11",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/ingenieria-sistemas-informacionesistinf",
+      "slug": "ingenieria-sistemas-informacionesistinf",
+      "titulo": "Ingeniería de Sistemas de Información (Especialidad Sistemas de Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Fernando Berzal Galiano",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Fernando Berzal Galiano",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Miguel López Pérez",
+          "grupos": [
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/inteligencia-artificial",
+      "slug": "inteligencia-artificial",
+      "titulo": "Inteligencia Artificial",
+      "curso": "Segundo",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Juan Fernández Olivares",
+          "grupos": [
+            "B",
+            "D",
+            "E"
+          ]
+        },
+        {
+          "nombre": "Antonio González Muñoz",
+          "grupos": [
+            "A",
+            "C"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María Isabel Abellán Benítez",
+          "grupos": [
+            "5"
+          ]
+        },
+        {
+          "nombre": "Juan Fernández Olivares",
+          "grupos": [
+            "12",
+            "13"
+          ]
+        },
+        {
+          "nombre": "Rubén Garralón López",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "Francisco G.Raúl Pérez Rodríguez",
+          "grupos": [
+            "10",
+            "11",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "nombre": "María Cristina Zuheros Montes",
+          "grupos": [
+            "1",
+            "2",
+            "3",
+            "6"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/inteligencia-negocio-sistemas-informacion",
+      "slug": "inteligencia-negocio-sistemas-informacion",
+      "titulo": "Inteligencia de Negocio (Especialidad Sistemas Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Jorge Casillas Barranquero",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Manjavacas Lucas",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/logica-metodos-discretos",
+      "slug": "logica-metodos-discretos",
+      "titulo": "Lógica y Métodos Discretos",
+      "curso": "Primero",
+      "semestre": "Segundo",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Álgebra",
+      "teoria": [
+        {
+          "nombre": "Celia Cordovilla Sánchez",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Jesús García Miranda",
+          "grupos": [
+            "D"
+          ]
+        },
+        {
+          "nombre": "Andrés Herrera Poyatos",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "José Antonio Jiménez Madrid",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Juan Manuel Urbano Blanco",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Carlos Vela Cabello",
+          "grupos": [
+            "F"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Celia Cordovilla Sánchez",
+          "grupos": [
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Jesús García Miranda",
+          "grupos": [
+            "11",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Andrés Herrera Poyatos",
+          "grupos": [
+            "10",
+            "12",
+            "13",
+            "14",
+            "16"
+          ]
+        },
+        {
+          "nombre": "José Antonio Jiménez Madrid",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Juan Manuel Urbano Blanco",
+          "grupos": [
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Carlos Vela Cabello",
+          "grupos": [
+            "15"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/logica-programacion-ing-software",
+      "slug": "logica-programacion-ing-software",
+      "titulo": "Lógica y Programación (Especialidad Ingeniería Software)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Álgebra",
+      "teoria": [
+        {
+          "nombre": "Francisco Miguel García Olmedo",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Francisco Miguel García Olmedo",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/mantenimiento-equipos-informaticoseingcomp",
+      "slug": "mantenimiento-equipos-informaticoseingcomp",
+      "titulo": "Mantenimiento de Equipos Informáticos (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Electrónica y Tecnología de Computadores",
+      "teoria": [
+        {
+          "nombre": "Cristina Medina Bailón",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Cristina Medina Bailón",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/metaheuristicas-ecomputacy-sistinteligentes",
+      "slug": "metaheuristicas-ecomputacy-sistinteligentes",
+      "titulo": "Metaheurísticas (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Óscar Cordón García",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Francisco Herrera Triguero",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Daniel Molina Cabrera",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/metodologia-programacion",
+      "slug": "metodologia-programacion",
+      "titulo": "Metodología de la Programación",
+      "curso": "Primero",
+      "semestre": "Segundo",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Francisco José Cortijo Bon",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Javier Martínez Baena",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Juan Antonio Morente Molinera",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "David Alejandro Pelta Mochcovsky",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Daniel Peralta Cámara",
+          "grupos": [
+            "D"
+          ]
+        },
+        {
+          "nombre": "Francisco Javier Rodríguez Díaz",
+          "grupos": [
+            "F"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Francisco José Cortijo Bon",
+          "grupos": [
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Antonio Manjavacas Lucas",
+          "grupos": [
+            "9"
+          ]
+        },
+        {
+          "nombre": "Javier Martínez Baena",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Juan Antonio Morente Molinera",
+          "grupos": [
+            "12",
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "David Alejandro Pelta Mochcovsky",
+          "grupos": [
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Daniel Peralta Cámara",
+          "grupos": [
+            "10",
+            "11"
+          ]
+        },
+        {
+          "nombre": "Francisco Javier Rodríguez Díaz",
+          "grupos": [
+            "15",
+            "16"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/metodologias-desarrollo-agil-eingsoft",
+      "slug": "metodologias-desarrollo-agil-eingsoft",
+      "titulo": "Metodologías de Desarrollo Ágil (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "María Luisa Rodríguez Almendros",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan José Escobar Pérez",
+          "grupos": [
+            "1",
+            "3"
+          ]
+        },
+        {
+          "nombre": "María José Rodríguez Fortiz",
+          "grupos": [
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/modelos-avanzados-computacionecompsist",
+      "slug": "modelos-avanzados-computacionecompsist",
+      "titulo": "Modelos Avanzados de Computación (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Serafín Moral Callejón",
+          "grupos": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Fernando Berzal Galiano",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/modelos-computacion",
+      "slug": "modelos-computacion",
+      "titulo": "Modelos de Computación",
+      "curso": "Tercer",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "José Antonio García Soria",
+          "grupos": [
+            "C",
+            "D"
+          ]
+        },
+        {
+          "nombre": "Serafín Moral García",
+          "grupos": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "María Isabel Abellán Benítez",
+          "grupos": [
+            "11"
+          ]
+        },
+        {
+          "nombre": "José Antonio García Soria",
+          "grupos": [
+            "10",
+            "7",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Serafín Moral García",
+          "grupos": [
+            "4",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Nuria Rodríguez Barroso",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nombre": "Nicolás Segura Kunsagi",
+          "grupos": [
+            "3"
+          ]
+        },
+        {
+          "nombre": "Juan Luis Suárez Díaz",
+          "grupos": [
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/nuevas-tecnologias-programacion-eingsoft",
+      "slug": "nuevas-tecnologias-programacion-eingsoft",
+      "titulo": "Nuevas Tecnologías de la Programación (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Manuel Gómez Olmedo",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Manuel Gómez Olmedo",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/nuevos-paradigmas-interaccion-ecompsist",
+      "slug": "nuevos-paradigmas-interaccion-ecompsist",
+      "titulo": "Nuevos Paradigmas de Interacción (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Marcelino José Cabrera Cuevas",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Marcelino José Cabrera Cuevas",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/perifericos-dispositde-interfaz-humanaesisi",
+      "slug": "perifericos-dispositde-interfaz-humanaesisi",
+      "titulo": "Periféricos y Dispositivos de Interfaz Humana (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Pedro Ángel Castillo Valdivieso",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Pedro Ángel Castillo Valdivieso",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/practicas-empresa",
+      "slug": "practicas-empresa",
+      "titulo": "Prácticas de Empresa",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "",
+      "teoria": [],
+      "practicas": [],
+      "gruposHorario": []
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/procesadores-lenguajes-ecomput-sist-int",
+      "slug": "procesadores-lenguajes-ecomput-sist-int",
+      "titulo": "Procesadores de Lenguajes (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Ramón López-Cózar Delgado",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Ramón López-Cózar Delgado",
+          "grupos": [
+            "2"
+          ]
+        },
+        {
+          "nombre": "Jorge Revelles Moreno",
+          "grupos": [
+            "1",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/procesamiento-digital-senalesetecinform",
+      "slug": "procesamiento-digital-senalesetecinform",
+      "titulo": "Procesamiento Digital de Señales (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Teoría de la Señal, Telemática y Comunicaciones",
+      "teoria": [
+        {
+          "nombre": "José Andrés González López",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José Andrés González López",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-diseno-orientado-objetos",
+      "slug": "programacion-diseno-orientado-objetos",
+      "titulo": "Programación y Diseño Orientado a Objetos",
+      "curso": "Segundo",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Zoraida Callejas Carrión",
+          "grupos": [
+            "D"
+          ]
+        },
+        {
+          "nombre": "Carmen Josefa Martínez Cruz",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Nuria Medina Medina",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Andrés Silva Pérez",
+          "grupos": [
+            "A",
+            "C"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Sergio Alonso Burgos",
+          "grupos": [
+            "1",
+            "7",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Germán Arroyo Moreno",
+          "grupos": [
+            "9"
+          ]
+        },
+        {
+          "nombre": "María del Campo Bermúdez Edo",
+          "grupos": [
+            "10",
+            "11",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Carmen Josefa Martínez Cruz",
+          "grupos": [
+            "4"
+          ]
+        },
+        {
+          "nombre": "Bartolomé Ortiz Viso",
+          "grupos": [
+            "14"
+          ]
+        },
+        {
+          "nombre": "Janet Pigueiras Del Real",
+          "grupos": [
+            "12"
+          ]
+        },
+        {
+          "nombre": "Juan Ruiz De Miras",
+          "grupos": [
+            "13",
+            "2",
+            "3",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Ángel Ruiz Zafra",
+          "grupos": [
+            "12"
+          ]
+        },
+        {
+          "nombre": "Andrés Silva Pérez",
+          "grupos": [
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-dispositivos-movilesetecinform",
+      "slug": "programacion-dispositivos-movilesetecinform",
+      "titulo": "Programación de Dispositivos Móviles (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Marcelino José Cabrera Cuevas",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Marcelino José Cabrera Cuevas",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-grafica-videojuegos-eingsoft",
+      "slug": "programacion-grafica-videojuegos-eingsoft",
+      "titulo": "Programación Gráfica de Videojuegos (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Luis López Escudero",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Luis López Escudero",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-ludica-computac-sistint",
+      "slug": "programacion-ludica-computac-sistint",
+      "titulo": "Programación Lúdica (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Antonio Bautista Bailón Morillas",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Bautista Bailón Morillas",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-paralela-eing-software",
+      "slug": "programacion-paralela-eing-software",
+      "titulo": "Programación Paralela (Especialidad Ingeniería del Software)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Miguel Mantas Ruiz",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José Miguel Mantas Ruiz",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-tecnica-cientifica-ecomputsist",
+      "slug": "programacion-tecnica-cientifica-ecomputsist",
+      "titulo": "Programación Técnica y Científica (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "José Enrique Cano Ocaña",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José Enrique Cano Ocaña",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/programacion-web-esistemas-informacion",
+      "slug": "programacion-web-esistemas-informacion",
+      "titulo": "Programación Web (Especialidad Sistemas de Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "José Manuel Benítez Sánchez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan Manuel Fernández Luna",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/proyecto-fin-grado",
+      "slug": "proyecto-fin-grado",
+      "titulo": "Proyecto Fin de Grado",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "",
+      "teoria": [],
+      "practicas": [],
+      "gruposHorario": []
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/recuperacion-informacion-sist-informac",
+      "slug": "recuperacion-informacion-sist-informac",
+      "titulo": "Recuperación de Información (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Juan Francisco Huete Guadix",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Juan Francisco Huete Guadix",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/redes-multiservicio-etecnologias-informacion",
+      "slug": "redes-multiservicio-etecnologias-informacion",
+      "titulo": "Redes Multiservicio (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Teoría de la Señal, Telemática y Comunicaciones",
+      "teoria": [
+        {
+          "nombre": "Juan José Ramos Muñoz",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Cleofás Segura Gómez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/redes-sistemas-complejos-sistinformac",
+      "slug": "redes-sistemas-complejos-sistinformac",
+      "titulo": "Redes y Sistemas Complejos (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Óscar Cordón García",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Óscar Cordón García",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/robotica-industrial-computy-sist-intel",
+      "slug": "robotica-industrial-computy-sist-intel",
+      "titulo": "Robótica Industrial (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Teoría de la Señal, Telemática y Comunicaciones",
+      "teoria": [
+        {
+          "nombre": "José Andrés González López",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Fermín Segovia Román",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/seguridad-proteccde-sistinformaticosetecnol",
+      "slug": "seguridad-proteccde-sistinformaticosetecnol",
+      "titulo": "Seguridad y Protección de Sistemas Informáticos (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Álgebra",
+      "teoria": [
+        {
+          "nombre": "Francisco Miguel García Olmedo",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Francisco Miguel García Olmedo",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/seguridad-sistemas-operativos-eingsoft",
+      "slug": "seguridad-sistemas-operativos-eingsoft",
+      "titulo": "Seguridad en Sistemas Operativos (Especialidad Ingeniería de Software)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Antonio Gómez Hernández",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José Antonio Gómez Hernández",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/servidores-web-altas-prestaciones-etecinf",
+      "slug": "servidores-web-altas-prestaciones-etecinf",
+      "titulo": "Servidores Web de Altas Prestaciones (Especialidadtecnologías de la Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Míriam Mengíbar Rodríguez",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "José Manuel Soto Hidalgo",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Míriam Mengíbar Rodríguez",
+          "grupos": [
+            "2"
+          ]
+        },
+        {
+          "nombre": "José Manuel Soto Hidalgo",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/simulacion-sistemas-computac-sistintelig",
+      "slug": "simulacion-sistemas-computac-sistintelig",
+      "titulo": "Simulación de Sistemas (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Luis Miguel Campos Ibáñez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Luis Miguel Campos Ibáñez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistcooperativos-gestion-contenidosesisi",
+      "slug": "sistcooperativos-gestion-contenidosesisi",
+      "titulo": "Sistemas Cooperativos y Gestión de Contenidos (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Segundo",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Jorge Revelles Moreno",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Jorge Revelles Moreno",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-concurrentes-distribuidos",
+      "slug": "sistemas-concurrentes-distribuidos",
+      "titulo": "Sistemas Concurrentes y Distribuidos",
+      "curso": "Segundo",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Miguel Mantas Ruiz",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "José Ángel Segura Muros",
+          "grupos": [
+            "C",
+            "D"
+          ]
+        },
+        {
+          "nombre": "Carlos Ureña Almagro",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Pedro Villar Castro",
+          "grupos": [
+            "E"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Miguel Lastra Leidinger",
+          "grupos": [
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "José Miguel Mantas Ruiz",
+          "grupos": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nombre": "Ana María Sánchez López",
+          "grupos": [
+            "1",
+            "14",
+            "4",
+            "9"
+          ]
+        },
+        {
+          "nombre": "José Ángel Segura Muros",
+          "grupos": [
+            "10",
+            "11"
+          ]
+        },
+        {
+          "nombre": "Andrés Silva Pérez",
+          "grupos": [
+            "13"
+          ]
+        },
+        {
+          "nombre": "Pedro Villar Castro",
+          "grupos": [
+            "12",
+            "7",
+            "8"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-empotrados-ing-computadores",
+      "slug": "sistemas-empotrados-ing-computadores",
+      "titulo": "Sistemas Empotrados (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Jesús González Peñalver",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Jesús González Peñalver",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-graficos-ingenieria-software",
+      "slug": "sistemas-graficos-ingenieria-software",
+      "titulo": "Sistemas Gráficos (Especialidad Ingeniería del Software)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Francisco Velasco Anguita",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Francisco Velasco Anguita",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-informacion-basados-webeingsoft",
+      "slug": "sistemas-informacion-basados-webeingsoft",
+      "titulo": "Sistemas de Información Basados en Web (Especialidad Ingeniería del Software)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Carmen Josefa Martínez Cruz",
+          "grupos": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José María Guirao Miras",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Carmen Josefa Martínez Cruz",
+          "grupos": [
+            "2",
+            "4"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-informacion-empresasesistinf",
+      "slug": "sistemas-informacion-empresasesistinf",
+      "titulo": "Sistemas de Información para Empresas (Especialidad Sistemas de Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "Brunil Dalila Romero Mariño",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Brunil Dalila Romero Mariño",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-informacion-geograficos-esistinfor",
+      "slug": "sistemas-informacion-geograficos-esistinfor",
+      "titulo": "Sistemas de Información Geográfica (Especialidad Sistemas de Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Samos Jiménez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "José Samos Jiménez",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-microprocesadores-eingcomputador",
+      "slug": "sistemas-microprocesadores-eingcomputador",
+      "titulo": "Sistemas con Microprocesadores (Especialidad Ingeniería de Computadores)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Richard Rafael Carrillo Sánchez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Richard Rafael Carrillo Sánchez",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-multidimensionales-espsistinformacion",
+      "slug": "sistemas-multidimensionales-espsistinformacion",
+      "titulo": "Sistemas Multidimensionales (Especialidad Sistemas de Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Samos Jiménez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Antonio Javier Fernández Ares",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "José Samos Jiménez",
+          "grupos": [
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-multimedia-etecnologias-informac",
+      "slug": "sistemas-multimedia-etecnologias-informac",
+      "titulo": "Sistemas Multimedia (Especialidadtecnologías de la Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Jesús Chamorro Martínez",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Jesús Chamorro Martínez",
+          "grupos": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/sistemas-operativos",
+      "slug": "sistemas-operativos",
+      "titulo": "Sistemas Operativos",
+      "curso": "Segundo",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "teoria": [
+        {
+          "nombre": "José Luis Garrido Bullejos",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Miguel Lastra Leidinger",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Alejandro José León Salas",
+          "grupos": [
+            "D"
+          ]
+        },
+        {
+          "nombre": "Patricia Paderewski Rodríguez",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Pablo Antonio Pico Valencia",
+          "grupos": [
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Germán Arroyo Moreno",
+          "grupos": [
+            "3"
+          ]
+        },
+        {
+          "nombre": "Daniel Bolaños Martínez",
+          "grupos": [
+            "12",
+            "4",
+            "6"
+          ]
+        },
+        {
+          "nombre": "María José Gacto Colorado",
+          "grupos": [
+            "14",
+            "5",
+            "7"
+          ]
+        },
+        {
+          "nombre": "José Luis Garrido Bullejos",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Alejandro José León Salas",
+          "grupos": [
+            "10",
+            "11",
+            "15"
+          ]
+        },
+        {
+          "nombre": "Carlos Molina Fernández",
+          "grupos": [
+            "2"
+          ]
+        },
+        {
+          "nombre": "Manuel Noguera García",
+          "grupos": [
+            "14",
+            "7"
+          ]
+        },
+        {
+          "nombre": "Patricia Paderewski Rodríguez",
+          "grupos": [
+            "8",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Ángel Ruiz Zafra",
+          "grupos": [
+            "13",
+            "6"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/tecnicas-sistemas-inteligentesecompsist",
+      "slug": "tecnicas-sistemas-inteligentesecompsist",
+      "titulo": "Técnicas de los Sistemas Inteligentes (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Antonio González Muñoz",
+          "grupos": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "David Criado Ramón",
+          "grupos": [
+            "2",
+            "4",
+            "5"
+          ]
+        },
+        {
+          "nombre": "Pablo Mesejo Santiago",
+          "grupos": [
+            "1",
+            "3"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/tecnologia-organizacion-computadores",
+      "slug": "tecnologia-organizacion-computadores",
+      "titulo": "Tecnología y Organización de Computadores",
+      "curso": "Primero",
+      "semestre": "Segundo",
+      "tipo": "Troncal",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Richard Rafael Carrillo Sánchez",
+          "grupos": [
+            "F"
+          ]
+        },
+        {
+          "nombre": "Jesús Alberto Garrido Alcázar",
+          "grupos": [
+            "A"
+          ]
+        },
+        {
+          "nombre": "Jesús González Peñalver",
+          "grupos": [
+            "E"
+          ]
+        },
+        {
+          "nombre": "Eva Martínez Ortigosa",
+          "grupos": [
+            "B"
+          ]
+        },
+        {
+          "nombre": "Beatriz Prieto Campos",
+          "grupos": [
+            "C"
+          ]
+        },
+        {
+          "nombre": "Manuel Rodríguez Álvarez",
+          "grupos": [
+            "D"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Richard Rafael Carrillo Sánchez",
+          "grupos": [
+            "15",
+            "16"
+          ]
+        },
+        {
+          "nombre": "Jesús Alberto Garrido Alcázar",
+          "grupos": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Jesús González Peñalver",
+          "grupos": [
+            "12",
+            "13",
+            "14"
+          ]
+        },
+        {
+          "nombre": "Eva Martínez Ortigosa",
+          "grupos": [
+            "11",
+            "4",
+            "5",
+            "6",
+            "9"
+          ]
+        },
+        {
+          "nombre": "Beatriz Prieto Campos",
+          "grupos": [
+            "12",
+            "13",
+            "14",
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nombre": "Manuel Rodríguez Álvarez",
+          "grupos": [
+            "10",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Eduardo Ros Vidal",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/tecnologias-emergentes-ing-computadores",
+      "slug": "tecnologias-emergentes-ing-computadores",
+      "titulo": "Tecnologías Emergentes (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ingeniería de Computadores, Automática y Robótica",
+      "teoria": [
+        {
+          "nombre": "Samuel Francisco Romero García",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Samuel Francisco Romero García",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/tecnologias-red-ing-computadores",
+      "slug": "tecnologias-red-ing-computadores",
+      "titulo": "Tecnologías de Red (Especialidad Ingeniería de Computadores)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Teoría de la Señal, Telemática y Comunicaciones",
+      "teoria": [
+        {
+          "nombre": "Jesús Esteban Díaz Verdejo",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Jesús Esteban Díaz Verdejo",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/tecnologias-web-esp-tecnologias-informacion",
+      "slug": "tecnologias-web-esp-tecnologias-informacion",
+      "titulo": "Tecnologías Web (Especialidad Tecnologías de la Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Daniel Molina Cabrera",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/teoria-informacion-codificacion-csi",
+      "slug": "teoria-informacion-codificacion-csi",
+      "titulo": "Teoría de la Información y la Codificación (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Manuel Pegalajar Cuéllar",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Manuel Pegalajar Cuéllar",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/transmisde-datos-redes-computadetecinf",
+      "slug": "transmisde-datos-redes-computadetecinf",
+      "titulo": "Transmisión de Datos y Redes de Computadores (Especialidadtecnologías de la Información)",
+      "curso": "Tercer",
+      "semestre": "Segundo",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Teoría de la Señal, Telemática y Comunicaciones",
+      "teoria": [
+        {
+          "nombre": "Natalia Chinchilla Romero",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Andrés Biedma Pérez",
+          "grupos": [
+            "1"
+          ]
+        },
+        {
+          "nombre": "Cleofás Segura Gómez",
+          "grupos": [
+            "2"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/tratamiento-imagenes-digitalesetecnolinform",
+      "slug": "tratamiento-imagenes-digitalesetecnolinform",
+      "titulo": "Tratamiento de Imágenes Digitales (Especialidad Tecnologías de la Información)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Optativa",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Rafael Molina Soriano",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Rafael Molina Soriano",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "A"
+      ]
+    },
+    {
+      "url": "http://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/vision-computador-computac-sistintel",
+      "slug": "vision-computador-computac-sistintel",
+      "titulo": "Visión por Computador (Especialidad Computación y Sistemas Inteligentes)",
+      "curso": "Cuarto",
+      "semestre": "Primero",
+      "tipo": "Obligatoria",
+      "departamento": "Departamento de Ciencias de la Computación e Inteligencia Artificial",
+      "teoria": [
+        {
+          "nombre": "Pablo Mesejo Santiago",
+          "grupos": [
+            "A"
+          ]
+        }
+      ],
+      "practicas": [
+        {
+          "nombre": "Pablo Mesejo Santiago",
+          "grupos": [
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nombre": "Siham Tabik Ouled Hrour",
+          "grupos": [
+            "1"
+          ]
+        }
+      ],
+      "gruposHorario": [
+        "1",
+        "2",
+        "3",
+        "A"
+      ]
+    }
+  ],
+  "fallos": []
+}
