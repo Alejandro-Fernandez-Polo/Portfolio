@@ -134,6 +134,24 @@ const MODALITY_KEYS = { "Teoría": "teoria", "Prácticas": "practicas" };
  * @param {Array} legacySubjects asignaturas con horario de `data.js`.
  * @returns {{catalog: Object, stats: Object}} catálogo y cifras del proceso.
  */
+/**
+ * Cómo se han obtenido los datos, línea a línea. Viaja dentro del maestro y, con
+ * él, **dentro del paquete cifrado**: quien lo abra con la contraseña ve de dónde
+ * sale cada cosa.
+ */
+const PROCEDENCIA = [
+  "Fuente 1 · Guías docentes de la ETSIIT: `scrape-guias.mjs` sobre https://etsiit.ugr.es/informacion-academica/grados/graduadoa-ingenieria-informatica → `tools/ugr-pipeline/guias-docentes.json`. Da el profesorado por asignatura: teoría por LETRA de grupo («Grupo: A») y prácticas por NÚMERO de grupo («Grupos: 1, 3»).",
+  "Fuente 2 · Horarios de la ETSIIT: `scrape-horarios.mjs` sobre https://etsiit.ugr.es/docencia/grados/horarios (PDF «Horarios GII») → `horarios-grupos.json`. Da QUÉ subgrupos de prácticas existen y en qué franja; el número de la guía es la POSICIÓN en esa lista.",
+  "Fuente 3 · Páginas de asignatura de la UGR: `scrape-ugr-asignaturas.mjs` sobre https://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica y sus 96 páginas → `ugr-asignaturas.json`. Da la ficha (curso, semestre, tipo, departamento), el profesorado (teoría por letra, prácticas por número) y los grupos que declara su horario.",
+  "Autoridad entre las fuentes 1 y 3 (decisión del autor): la UGR MANDA donde la guía de la ETSIIT no publica profesorado (las asignaturas de mención salen sin él). El relleno se aplica solo donde FALTA —teoría o prácticas por separado— y nunca pisa lo que ya hay; lo que DIFIERE queda en `planes/discrepancias-ugr.md` para revisión a mano.",
+  "Fuente 4 · Volcado de la hoja de cálculo del autor: `public/ugr/datasets/docentes_excel.json` (426 filas) → `extract-private-master.mjs` → este catálogo. Da los PERFILES: dificultad por modalidad, opiniones y comentarios. El autor de cada comentario no se copia (`normalizeComentarios`): entran sin atribución.",
+  "Muestra pública: `tools/ugr-pipeline/sample-docents.json` (perfiles del autor) + las guías y los horarios → `emit-seed.mjs` → `public/ugr/docentes.js` y `datasets/ugr/gi/2026-1.json`. Es lo que sirve la app sin contraseña.",
+  "Paquete cifrado: `build-package.mjs` cifra este catálogo (AES-GCM con PBKDF2 de 600 000 iteraciones) → `public/ugr/datasets/ugr/gi/package.enc.json`. La contraseña no se guarda en ningún sitio.",
+  "Correcciones de nombres aplicadas al cruzar fuentes (tabla en `guias.js`, con su motivo): «Miguel Gea Mejías» → «Miguel Gea Megías» (errata de la guía; «Megías» en la hoja); «Rosa Ana Montes Soldado» → «Rosana Montes Soldado»; «José Luis Padilla De la Torre» → «…de la Torre»; «Jose Luis Garrido Bullejos» → «José…»; «Luis Lopez Escudero» → «…López…»; «María José Rodriguez Fortiz» → «…Rodríguez…»; «Antonio Javier Fernandez Ares» → «…Fernández…» (tildes que la hoja perdió); «José Antonio Jiménez Madrid*» → «…Madrid» (asterisco pegado). La clave de un perfil es (asignatura, modalidad, nombre): sin esto el perfil no se encontraba y el grupo se quedaba sin insignia, sin ficha y sin comentarios.",
+  "Huecos conocidos y no corregidos: «Juan Miguel» / «Juan Manuel» Medina Rodríguez (FBD|Prácticas) podría ser otra persona; la auditoría (`privado/auditoria-huecos.mjs` → `privado/huecos-datos.md`) los lista todos con una columna para revisar a mano.",
+  "Qué es privado y qué es público: el volcado completo (perfiles con comentarios y opiniones) solo viaja cifrado; la muestra publica las asignaciones reales de las guías, el plan y unos pocos perfiles. El historial de git y los `docentes_excel.*` locales conservan el texto plano antiguo por decisión expresa del autor: no se reescribe la historia.",
+];
+
 export function buildMaster(dump, legacySubjects, guias = [], subgrupos = {}) {
   const rows = Array.isArray(dump.docentes) ? dump.docentes : [];
   const catalogCodes = new Set(legacySubjects.map((s) => s.codigo));
@@ -301,6 +319,7 @@ export function buildMaster(dump, legacySubjects, guias = [], subgrupos = {}) {
     }));
 
   const meta = {
+    procedencia: PROCEDENCIA,
     university: "UGR",
     degree: "GI",
     plan: "2022",

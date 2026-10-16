@@ -235,6 +235,10 @@ export const CATALOG_SCHEMA = {
         // real del autor lo lleva a `false` y viaja cifrado en el paquete.
         sampleDocents: { type: "boolean" },
         updatedAt: { type: "string" },
+        // Cómo se obtuvieron los datos, línea a línea: fuentes, scripts,
+        // correcciones aplicadas y huecos conocidos. Lo lleva el maestro del
+        // autor (y viaja dentro del paquete cifrado); la muestra no lo usa.
+        procedencia: { type: "array", items: { type: "string" } },
       },
       additionalProperties: false,
     },
