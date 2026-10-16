@@ -106,23 +106,6 @@ describe("módulo progress: api", () => {
     expect(p.remainingECTS).toBe(228);
     expect(p.termsRemaining).toBe(Math.ceil(228 / 30));
   });
-
-  it('mapEquivalences normaliza y detecta huérfanas', () => {
-    dispatch({
-      type: 'progress/setMapping',
-      payload: {
-        mappings: [
-          { uned: { codigo: '011013' }, ugr: { codigo: 'FFT' }, creditos: 6, origen: 'UNED' },
-          { cursadaCodigo: '901072', reconocidaCodigo: '21', creditos: 6 },
-        ],
-      },
-    });
-    const { mappings, orphans } = api.mapEquivalences(SUBJECTS);
-    expect(mappings).toHaveLength(1);
-    expect(mappings[0]).toMatchObject({ from: { code: '011013' }, to: { code: 'FFT' }, ects: 6 });
-    expect(orphans).toHaveLength(1);
-    expect(orphans[0].to.code).toBe('21');
-  });
 });
 
 describe("módulo progress: eventos", () => {

@@ -26,9 +26,6 @@
     apellido: '',
     turnoPreferente: 'indiferente',
     cuatrimestreActivo: 1,
-    propuestas: [],
-    propuestaActivaId: null,
-    vistaConvalidaciones: 'oficial',
   };
 
   // La carga real se hace en `init()` (vía `getPersistence().loadSavedConfigs()`),
@@ -173,40 +170,6 @@
     store.subscribe(() => hydrateSelectionFromStore());
   }
 
-  // ─── Propuestas en el store ─────────────────────────────────
-  // `state.propuestas`/`state.propuestaActivaId`/`state.vistaConvalidaciones`
-  // siguen siendo la caché que lee el render: el store es la persistencia.
-  // Ojo con el orden: `propuestas/setAll` deja `activeId` en el primer item y
-  // **cada dispatch notifica al suscriptor**, que rehidrata la caché desde el
-  // store. Por eso los tres valores se leen **antes** de despachar: leerlos
-  // entre dispatch y dispatch hacía que el push se pisara a sí mismo y la
-  // propuesta elegida nunca llegara al store.
-  function pushPropuestasToStore() {
-    if (!stateHydrated) return;
-    const store = __getStore ? __getStore() : null;
-    if (!store) return;
-    const items = state.propuestas || [];
-    const activeId = state.propuestaActivaId || null;
-    const vista = state.vistaConvalidaciones || 'oficial';
-    dispatchStore({ type: 'propuestas/setAll', payload: { items } });
-    dispatchStore({ type: 'propuestas/setActive', payload: { id: activeId } });
-    dispatchStore({ type: 'propuestas/setVista', payload: { vista } });
-  }
-
-  function hydratePropuestasFromStore() {
-    const store = __getStore ? __getStore() : null;
-    if (!store) return;
-    const s = store.getState();
-    if (!s || !s.propuestas) return;
-    // Store vacío (arranque pre-migración): no pisar la caché local, que es
-    // la que acaba de cargar localStorage. Con datos, el store manda.
-    if (Array.isArray(s.propuestas.items) && s.propuestas.items.length) {
-      state.propuestas = JSON.parse(JSON.stringify(s.propuestas.items));
-      state.propuestaActivaId = s.propuestas.activeId || (state.propuestas[0] ? state.propuestas[0].id : null);
-    }
-    if (s.propuestas.vista) state.vistaConvalidaciones = s.propuestas.vista;
-  }
-
   // `compareIds` no se guarda en localStorage (es efímero), pero sí vive en el
   // store para sobrevivir a un reload: `loadState()` lo hidrata al arrancar y
   // los toggle lo reenvían.
@@ -288,7 +251,6 @@
     const sel = s.selection || {};
     if (Object.keys(sel.selectedSubjects || {}).length) return true;
     if (Object.keys(sel.groupChoices || {}).length) return true;
-    if (s.propuestas && Array.isArray(s.propuestas.items) && s.propuestas.items.length) return true;
     if (s.ui && Array.isArray(s.ui.compareIds) && s.ui.compareIds.length) return true;
     if (s.blocks && s.blocks.length) return true;
     const progress = s.progress || {};
@@ -308,17 +270,8 @@
     if (!storeHasUserData(s)) return false;
     hydrateProfileFromStore();
     hydrateSelectionFromStore();
-    hydratePropuestasFromStore();
     hydrateCompareIdsFromStore();
     return true;
-  }
-
-  function ensurePropuestasStoreSubscription() {
-    const store = __getStore ? __getStore() : null;
-    if (!store || typeof store.subscribe !== 'function') return;
-    // Solo hidratación: nunca dispatch desde aquí, o el store re-notificaría
-    // en bucle infinito.
-    store.subscribe(() => hydratePropuestasFromStore());
   }
 
 
@@ -334,10 +287,6 @@
   ];
 
   const DEFAULT_SUBJECTS = JSON.parse(JSON.stringify(SUBJECTS));
-
-  let convalidacionesEstados = JSON.parse(localStorage.getItem('ugr-convalidaciones') || '{}');
-
-  let PROPUESTAS = JSON.parse(localStorage.getItem('ugr-propuestas') || 'null');
 
   let conflicts = [];
 
@@ -375,8 +324,6 @@
     await ensureProfesoresView();
     // La de compartir: monta el diálogo y mira si la URL trae un enlace.
     await ensureShareView();
-    // Y la de propuestas: barra, detalle, mapeos e instantáneas.
-    await ensurePropuestasView();
     const savedConfigsView = getSavedConfigsView();
     if (savedConfigsView) savedConfigsView.loadFromStorage();
     // La vista de materias vive en ESM (features/subjects.js). Se monta
@@ -393,7 +340,6 @@
     // construya el índice.
     await loadOwnReviews();
     const catalogCodesChanged = await bootstrapCatalogState();
-    loadPropuestas();
     // Orden de arranque (C3): HIDRATAR → SUSCRIBIR → PUSH.
     // 1) `loadState()` trae lo ya persistido (store si tiene datos de usuario,
     //    si no el espejo legacy) y solo entonces levanta `stateHydrated`, la
@@ -405,10 +351,8 @@
     loadState();
     ensureProfileStoreSubscription();
     ensureSelectionStoreSubscription();
-    ensurePropuestasStoreSubscription();
     pushProfileToStore();
     pushSelectionToStore();
-    pushPropuestasToStore();
     pushCompareIdsToStore();
     if (catalogCodesChanged && pruneSelectionsToActiveCatalog()) saveState();
     renderSubjects();
@@ -419,7 +363,6 @@
     setupCatalogView();
     updateAll();
     checkUrlShare();
-    checkUrlPropuesta();
     renderBlockFilters();
     ensureBlockStoreSubscription();
   }
@@ -435,25 +378,18 @@
     if (isStoreAuthoritative()) {
       // Modo normal: el store (IDB) es la única persistencia y el espejo
       // `ugr-horario-state` queda retirado (no se mantiene una segunda verdad
-      // que además quedaría congelada desde C3). `vistaConvalidaciones` solo
-      // cambia por aquí, de ahí que lo cubra pushPropuestas; compareIds por si
-      // algún camino mutó la caché sin pasar por toggleCompareId. El perfil se
-      // envía también porque hay rutas (p. ej. importar configuración) que
-      // cambian `state.apellido` sin pasar por su input handler.
+      // que además quedaría congelada desde C3). compareIds por si algún camino
+      // mutó la caché sin pasar por toggleCompareId. El perfil se envía también
+      // porque hay rutas (p. ej. importar configuración) que cambian
+      // `state.apellido` sin pasar por su input handler.
       pushProfileToStore();
       pushSelectionToStore();
-      pushPropuestasToStore();
       pushCompareIdsToStore();
       return;
     }
     // Modo degradado (sin IndexedDB): el store en memoria no sobrevive al
     // reload, así que localStorage vuelve a ser la única garantía.
     localStorage.setItem('ugr-horario-state', JSON.stringify(state));
-  }
-
-  function calcPropuestaCreditos(p) {
-    // Delegación: la única implementación vive en ESM (src/app/domain).
-    return getDomain().calcPropuestaCreditos(p);
   }
 
   function loadState() {
@@ -475,58 +411,12 @@
     // pushes (fin de la ventana en la que un estado vacío podría pisar datos).
     stateHydrated = true;
     hydrateIgnoreDocentsFromStore();
-    // Migración propuestas
-    if (!state.propuestas || !Array.isArray(state.propuestas) || state.propuestas.length === 0) {
-      if (PROPUESTAS && PROPUESTAS.length > 0) {
-        state.propuestas = PROPUESTAS;
-      } else if (typeof PROPUESTAS_INICIALES !== 'undefined') {
-        state.propuestas = JSON.parse(JSON.stringify(PROPUESTAS_INICIALES));
-      }
-      state.propuestaActivaId = state.propuestas[0] ? state.propuestas[0].id : null;
-      state.vistaConvalidaciones = 'oficial';
-      saveState();
-      savePropuestas();
-    }
-    // Migrar vieja prop-foto con 9 filas 1-a-1 a bloque 4↔4
-    state.propuestas.forEach(p=>{
-      if (p.id==='prop-foto-54' && p.mappings.length===9 && !p.mappings.some(m=>m.tipo==='bloque')) {
-        const first4 = p.mappings.slice(0,4);
-        const rest = p.mappings.slice(4);
-        p.mappings = [{ tipo:'bloque', id:'bloque-1-4', cursadas: first4.map(m=>({codigo:m.cursadaCodigo,nombre:m.cursada})), reconocidas: first4.map(m=>({codigo:m.reconocidaCodigo,nombre:m.reconocida})), creditos:24, calificacion:7.5, nota:'Bloque 4↔4 — concesión conjunta' }, ...rest];
-        p.totalCreditos = calcPropuestaCreditos(p);
-      }
-      // Recalcular total por si desfasado
-      p.totalCreditos = calcPropuestaCreditos(p);
-    });
-    if (!state.vistaConvalidaciones) state.vistaConvalidaciones = 'oficial';
     // Restore UI from state
     const apellidoInput = document.getElementById('apellido');
     const turnoSelect = document.getElementById('turno-preferente');
     if (apellidoInput) apellidoInput.value = state.apellido || '';
     if (turnoSelect) turnoSelect.value = state.turnoPreferente || 'indiferente';
   }
-
-  function loadPropuestas() {
-    try {
-      if (PROPUESTAS === null) {
-        if (typeof PROPUESTAS_INICIALES !== 'undefined') {
-          PROPUESTAS = JSON.parse(JSON.stringify(PROPUESTAS_INICIALES));
-          localStorage.setItem('ugr-propuestas', JSON.stringify(PROPUESTAS));
-        } else {
-          PROPUESTAS = [];
-        }
-      }
-    } catch (e) { PROPUESTAS = []; }
-  }
-
-  function savePropuestas() {
-    PROPUESTAS = state.propuestas;
-    localStorage.setItem('ugr-propuestas', JSON.stringify(PROPUESTAS));
-    pushPropuestasToStore();
-  }
-
-  // La ficha de un código UGR, el orden por curso y las opciones de los
-  // desplegables de mapeo viven en el dominio (`src/app/domain/proposals.js`).
 
   // ─── Tabs ───────────────────────────────────────────────────
   function setupTabs() {
@@ -1056,9 +946,6 @@
       subjects: SUBJECTS,
       state: { ...state },
       savedConfigs: getSavedConfigs(),
-      convalidaciones: convalidacionesEstados,
-      propuestas: state.propuestas,
-      propuestasGuardadas: getPropuestasView() ? getPropuestasView().getSaved() : [],
     };
     downloadJSON(data, 'ugr-horario-completo.json');
     showToast('Configuración exportada', 'success');
@@ -1097,29 +984,12 @@
           if (view) view.replaceAll(data.savedConfigs);
         }
 
-        if (data.convalidaciones) {
-          convalidacionesEstados = data.convalidaciones;
-          localStorage.setItem('ugr-convalidaciones', JSON.stringify(convalidacionesEstados));
-        }
-
-        if (data.propuestas) {
-          state.propuestas = data.propuestas;
-          savePropuestas(); saveState();
-        }
-
-        if (data.propuestasGuardadas && Array.isArray(data.propuestasGuardadas)) {
-          const propuestasView = getPropuestasView();
-          if (propuestasView) propuestasView.replaceSaved(data.propuestasGuardadas);
-        }
-
         document.getElementById('apellido').value = state.apellido || '';
         document.getElementById('turno-preferente').value = state.turnoPreferente || 'indiferente';
 
         renderSavedConfigs();
-        renderPropuestasGuardadas();
         updateAll();
         renderSubjects();
-        renderPropuestasBar();
         showToast('Configuración importada correctamente', 'success');
       } catch (err) {
         showToast('Error al leer el archivo', 'error');
@@ -1135,9 +1005,6 @@
     localStorage.removeItem('ugr-horario-subjects');
     // Las ranuras del formato antiguo las conoce y las vacía el adaptador.
     getPersistence().clearSavedConfigs();
-    localStorage.removeItem('ugr-convalidaciones');
-    localStorage.removeItem('ugr-propuestas');
-    localStorage.removeItem('ugr-propuestas-guardadas');
 
     state = {
       selectedSubjects: {},
@@ -1145,18 +1012,10 @@
       apellido: '',
       turnoPreferente: 'indiferente',
       cuatrimestreActivo: 1,
-      propuestas: typeof PROPUESTAS_INICIALES !== 'undefined' ? JSON.parse(JSON.stringify(PROPUESTAS_INICIALES)) : [],
-      propuestaActivaId: typeof PROPUESTAS_INICIALES !== 'undefined' && PROPUESTAS_INICIALES[0] ? PROPUESTAS_INICIALES[0].id : null,
-      vistaConvalidaciones: 'oficial',
     };
-    PROPUESTAS = JSON.parse(JSON.stringify(state.propuestas));
-    localStorage.setItem('ugr-propuestas', JSON.stringify(PROPUESTAS));
     const savedConfigsView = getSavedConfigsView();
     if (savedConfigsView) savedConfigsView.replaceAll([]);
-    const propuestasView = getPropuestasView();
-    if (propuestasView) propuestasView.clearSaved();
 
-    convalidacionesEstados = {};
     conflicts = [];
 
     SUBJECTS.length = 0;
@@ -1176,14 +1035,11 @@
     // (hubo un init previo), así que estos pushes sí se emiten.
     pushProfileToStore();
     pushSelectionToStore();
-    pushPropuestasToStore();
     pushCompareIdsToStore();
     saveState();
 
     resetConfigsPage();
     renderSavedConfigs();
-    renderPropuestasGuardadas();
-    renderPropuestasBar();
     updateAll();
     renderSubjects();
     showToast('Configuración restaurada por defecto', 'info');
@@ -1264,9 +1120,6 @@
         if (view === 'datos') {
           renderManageSubjects();
           renderProfesores();
-        }
-        if (view === 'convalidaciones') {
-          renderPropuestasBar();
         }
       });
     });
@@ -1513,35 +1366,13 @@
     return import('/ugr/src/package/unlockPackage.js').then(() => window.__ugrPackage);
   }
 
-  // ─── Propuestas ─────────────────────────────────────────────
-  // La barra con sus acciones, el detalle de mapeos, las instantáneas guardadas
-  // y el enlace de compartir viven en la vista ESM. Aquí quedan los tres
-  // disparadores que el monolito sigue necesitando: pintar el panel al entrar
-  // en la vista, repintar la lista de guardadas al importar un respaldo, y leer
-  // un enlace ?propuesta= de la URL al arrancar.
-  function renderPropuestasBar() {
-    const view = getPropuestasView();
-    if (view) view.renderBar();
-  }
-
-  function renderPropuestasGuardadas() {
-    const view = getPropuestasView();
-    if (view) view.renderSaved();
-  }
-
-  function checkUrlPropuesta() {
-    const view = getPropuestasView();
-    if (view) view.checkUrl();
-  }
-
   // ─── Composición ESM ───────────────────────────────────────
   // Único puente hacia `src/app/createUgrApp.js`. `import()` dinámico porque
   // este fichero sigue siendo un script clásico sin imports. Dos guardas de
   // idempotencia: la instancia se crea una sola vez y la promesa se cachea,
   // así `init()` repetido (devtools/consola) reutiliza la misma composición en
   // lugar de duplicarla; si el import falla se limpia la promesa para poder
-  // reintentar. Los datos clásicos viajan SIEMPRE como thunks: `PROPUESTAS` es
-  // `let` que `loadPropuestas` reasigna, y `SUBJECTS`/`CONVALIDACIONES`/
+  // reintentar. Los datos clásicos viajan SIEMPRE como thunks: `SUBJECTS` y
   // `DOCENTES` son `const` del global lexical (no propiedades de `window`), al
   // alcance de este cierre.
   let ugrAppInstance = null;
@@ -1597,8 +1428,6 @@
             legacyData: {
               subjects: () => SUBJECTS,
               defaultSubjects: () => (typeof DEFAULT_SUBJECTS !== 'undefined' ? DEFAULT_SUBJECTS : null),
-              convalidaciones: () => CONVALIDACIONES,
-              propuestas: () => PROPUESTAS,
               docentes: () => DOCENTES,
             },
             persistence: { storage: window.localStorage },
@@ -2160,51 +1989,6 @@
         });
     }
     return ugrSolverInitPromise;
-  }
-
-  // ─── Features ESM: propuestas de convalidación ─────────────
-  // Mismo patrón: import dinámico con instancia y promesa cacheadas. El estado
-  // (la lista, cuál está activa y la vista) es del monolito y se le cede por
-  // getter para que lo mute en sitio; el catálogo, la tabla oficial y las
-  // equivalencias entran por getter porque cambian en caliente.
-  let ugrPropuestasView = null;
-  let ugrPropuestasInitPromise = null;
-
-  function getPropuestasView() {
-    return ugrPropuestasView;
-  }
-
-  function ensurePropuestasView() {
-    if (ugrPropuestasView) return Promise.resolve(ugrPropuestasView);
-    if (!ugrPropuestasInitPromise) {
-      ugrPropuestasInitPromise = import('./src/app/features/propuestas.js')
-        .then(({ createPropuestasView }) => {
-          ugrPropuestasView = createPropuestasView({
-            document,
-            window,
-            storage: localStorage,
-            getState: () => state,
-            getSubjects: () => SUBJECTS,
-            getConvalidaciones: () => (typeof CONVALIDACIONES !== 'undefined' ? CONVALIDACIONES : []),
-            getPropuestasIniciales: () => (typeof PROPUESTAS_INICIALES !== 'undefined' ? PROPUESTAS_INICIALES : []),
-            getEquivalencias: () => (typeof EQUIVALENCIA_CODIGOS !== 'undefined' ? EQUIVALENCIA_CODIGOS : {}),
-            saveState,
-            savePropuestas,
-            download: downloadJSON,
-            notify: showToast,
-            confirmFn: (mensaje) => confirm(mensaje),
-            promptFn: (mensaje, inicial) => prompt(mensaje, inicial),
-          });
-          ugrPropuestasView.setup();
-          return ugrPropuestasView;
-        })
-        .catch((err) => {
-          console.error('[ugr] propuestas view no pudo iniciarse', err);
-          ugrPropuestasInitPromise = null;
-          return null;
-        });
-    }
-    return ugrPropuestasInitPromise;
   }
 
   // ─── Features ESM: compartir por enlace ────────────────────

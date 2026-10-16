@@ -3,22 +3,11 @@ import { CONFIG_SLOT_KEYS } from "../store/configSlots.js";
 export const LEGACY_KEYS = [
   { key: "ugr-horario-state", type: "json", dest: "userState", transform: "state" },
   ...CONFIG_SLOT_KEYS.map((key, slot) => ({ key, type: "json", dest: "configs", transform: "configs", slot })),
-  { key: "ugr-propuestas", type: "json", dest: "userState", transform: "propuestas" },
   { key: "ugr-propuestas-guardadas", type: "json", dest: "configs", transform: "propuestasInternas" },
-  { key: "ugr-convalidaciones", type: "json", dest: "progress", transform: "convalidaciones" },
   { key: "ugr-horario-subjects", type: "json", dest: "legacy", transform: "subjectSnapshot" },
 ];
 
 export const DESTINIES = ["userState", "configs", "progress", "legacy", "meta"];
-
-// La UI legacy guarda ugr-convalidaciones como { [id]: { estado } } donde id es
-// el id de la entrada en CONVALIDACIONES (p. ej. "011013-FFT"), no el código
-// UGR. El código UGR se resuelve contra el array CONVALIDACIONES (global del
-// browser) que se pasa como ctx.convalidaciones.
-const LEGACY_STATUS_MAP = {
-  concedida: "pass",
-  pendiente: "pending",
-};
 
 function dedupeConfigs(configs) {
   const seen = new Map();
@@ -33,7 +22,7 @@ function dedupeConfigs(configs) {
 
 export function buildPlan(legacy, ctx = {}) {
   const commands = [];
-  const stats = { configs: 0, propuestas: 0, convalidaciones: 0 };
+  const stats = { configs: 0 };
 
   if (legacy["ugr-horario-state"]) {
     const s = legacy["ugr-horario-state"];
@@ -54,16 +43,6 @@ export function buildPlan(legacy, ctx = {}) {
     if (s.cuatrimestreActivo) {
       commands.push({ type: "selection/setCuatrimestre", payload: { cuatrimestre: s.cuatrimestreActivo } });
     }
-    if (s.propuestas && s.propuestas.length) {
-      commands.push({ type: "propuestas/setAll", payload: { items: s.propuestas } });
-      stats.propuestas = s.propuestas.length;
-    }
-    if (s.propuestaActivaId) {
-      commands.push({ type: "propuestas/setActive", payload: { id: s.propuestaActivaId } });
-    }
-    if (s.vistaConvalidaciones) {
-      commands.push({ type: "propuestas/setVista", payload: { vista: s.vistaConvalidaciones } });
-    }
   }
 
   const allConfigs = [];
@@ -80,34 +59,6 @@ export function buildPlan(legacy, ctx = {}) {
     commands.push({ type: "configs/save", payload: { config: c } });
   }
   stats.configs = uniqueConfigs.length;
-
-  if (legacy["ugr-propuestas"] && Array.isArray(legacy["ugr-propuestas"])) {
-    commands.push({ type: "propuestas/setAll", payload: { items: legacy["ugr-propuestas"] } });
-    stats.propuestas = legacy["ugr-propuestas"].length;
-  }
-
-  if (legacy["ugr-convalidaciones"]) {
-    // Formato legacy: { [id]: { estado } } con el id de CONVALIDACIONES.
-    // Sin ctx.convalidaciones no hay forma fiable de resolver el código UGR
-    // (ids como "FP-COMBINADA" no derivan del código), así que se omite la
-    // entrada en vez de sembrar credits con la clave equivocada.
-    const byId = new Map(
-      (Array.isArray(ctx.convalidaciones) ? ctx.convalidaciones : [])
-        .map((c) => [c.id, c.ugr?.codigo])
-        .filter(([id, code]) => id && code),
-    );
-    const credits = {};
-    for (const [id, entry] of Object.entries(legacy["ugr-convalidaciones"])) {
-      const raw = typeof entry === "string" ? entry : entry?.estado;
-      const status = LEGACY_STATUS_MAP[raw];
-      const code = byId.get(id);
-      if (status && code) credits[code] = status;
-    }
-    if (Object.keys(credits).length > 0) {
-      commands.push({ type: "progress/setAll", payload: { credits } });
-      stats.convalidaciones = Object.keys(credits).length;
-    }
-  }
 
   return { commands, stats };
 }

@@ -96,7 +96,7 @@ describe("camino selección → calendario → configuración (monolito real)", 
     // Caracterizado: el arranque empuja la selección al store dos veces —el
     // push explícito del arranque y el que hace `saveState()` durante la
     // sincronización del catálogo—. Es la siembra del store, no un fallo.
-    expect(app.initPushes).toHaveLength(2);
+    expect(app.initPushes).toHaveLength(1);
   });
 
   it("seleccionar una tarjeta: elige el primer grupo, llega al store y repinta resumen y calendario", async () => {

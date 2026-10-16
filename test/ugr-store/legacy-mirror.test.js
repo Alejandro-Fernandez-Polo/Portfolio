@@ -51,7 +51,6 @@ const LEGACY_STATE = {
   apellido: "García",
   turnoPreferente: "mañana",
   cuatrimestreActivo: 2,
-  propuestas: [{ id: "p-legacy", mappings: [], totalCreditos: 0 }],
   propuestaActivaId: "p-legacy",
   vistaConvalidaciones: "oficial",
 };
@@ -64,7 +63,6 @@ const ESPEJO_SIN_SELECCION = {
   apellido: "García",
   turnoPreferente: "mañana",
   cuatrimestreActivo: 1,
-  propuestas: [{ id: "p-legacy", mappings: [], totalCreditos: 0 }],
   propuestaActivaId: "p-legacy",
   vistaConvalidaciones: "oficial",
 };
@@ -73,7 +71,6 @@ beforeEach(() => {
   globalThis.__ugrTestMeta = new Map();
   globalThis.localStorage = makeLocalStorage({
     "ugr-horario-state": JSON.stringify(ESPEJO_SIN_SELECCION),
-    "ugr-propuestas": JSON.stringify(LEGACY_STATE.propuestas),
   });
   globalThis.window = {
     __ugrLegacy: { dispatch: vi.fn(), getState: () => ({ marker: "rewritten" }) },
@@ -88,7 +85,6 @@ describe("migración one-time ugr-horario-state → store (sin doble escritura)"
     expect(types).toContain("profile/setTurno");
     expect(types).toContain("selection/setAll");
     expect(types).toContain("selection/setGroups");
-    expect(types).toContain("propuestas/setAll");
     expect(plan.commands.find((c) => c.type === "profile/setApellido").payload.apellido).toBe("García");
     expect(plan.commands.find((c) => c.type === "selection/setAll").payload.selectedSubjects).toEqual({
       FFT: true,
@@ -103,7 +99,6 @@ describe("migración one-time ugr-horario-state → store (sin doble escritura)"
     const result = await run();
 
     expect(result.ok).toBe(true);
-    expect(result.migrated.propuestas).toBe(1);
     // La transacción completó y dejó la marca de migración aplicada.
     expect(globalThis.__ugrTestMeta.has("migration:legacy-v1")).toBe(true);
 

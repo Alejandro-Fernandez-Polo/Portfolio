@@ -65,11 +65,8 @@ function selfTest() {
   // Migration tests - buildPlan generates selection/setAll (bulk), not per-item toggleSubject
   // Fixture uses parsed objects (not strings) because buildPlan expects parsed data
   const legacyFixture = {
-    "ugr-horario-state": { selectedSubjects: { FFT: true, ED: true }, groupChoices: { FFT: { teoria: "A", practica: "A1" } }, apellido: "Garcia", turnoPreferente: "mañana", cuatrimestreActivo: 1, propuestas: [], propuestaActivaId: null, vistaConvalidaciones: "oficial" },
+    "ugr-horario-state": { selectedSubjects: { FFT: true, ED: true }, groupChoices: { FFT: { teoria: "A", practica: "A1" } }, apellido: "Garcia", turnoPreferente: "mañana", cuatrimestreActivo: 1 },
     [configSlotKey(0)]: [{ id: 1, name: "Test", subjects: ["FFT"] }],
-    "ugr-propuestas": [],
-    "ugr-propuestas-guardadas": [],
-    "ugr-convalidaciones": { FFT: "sup" },
   };
   const plan = buildPlan(legacyFixture);
   assert(plan.commands.some((c) => c.type === "profile/setApellido"), "migrate: builds profile cmd");

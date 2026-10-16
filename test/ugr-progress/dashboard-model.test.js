@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { STATUS } from '../../public/ugr/src/progress/status.js';
+import { STATUS, ESTADO } from '../../public/ugr/src/progress/status.js';
 import {
   buildSubjectRows,
   buildCourseBars,
@@ -7,7 +7,7 @@ import {
   buildMenciones,
   buildSummary,
   buildProjection,
-  buildEquivalenceRows,
+  buildConvalidaciones,
 } from '../../public/ugr/src/progress/index.js';
 
 // Formato legacy (data.js): codigo/nombre/creditos/curso/cuatrimestre.
@@ -23,7 +23,7 @@ const CATALOG = [
   { codigo: 'FP', nombre: 'Fundamentos de Programación', creditos: 6, curso: 1, cuatrimestre: 1 },
 ];
 
-// Entradas con la forma de CONVALIDACIONES (convalidaciones.js).
+// Entradas con la forma vieja de la tabla del autor (la que NO debe pasar el filtro).
 const ENTRIES = [
   {
     id: '011013-FFT',
@@ -231,91 +231,6 @@ describe('buildProjection', () => {
   });
 });
 
-describe('buildEquivalenceRows', () => {
-  it('normaliza CONVALIDACIONES y marca la reconocida como superada', () => {
-    const rows = buildEquivalenceRows(ENTRIES, null, CATALOG, { FFT: 'sup' });
-    expect(rows).toHaveLength(3);
-    expect(rows[0]).toMatchObject({
-      id: '011013-FFT',
-      from: { code: '011013', name: 'Fundamentos Físicos de la Informática' },
-      to: { code: 'FFT' },
-      ects: 6,
-      source: 'uned',
-      estado: null,
-      recognizedPassed: true,
-      orphan: false,
-      reason: '',
-    });
-    expect(rows[1]).toMatchObject({ source: 'gs', recognizedPassed: false });
-  });
-
-  it('detecta huérfanas y explica el motivo', () => {
-    const rows = buildEquivalenceRows(ENTRIES, null, CATALOG, {});
-    const orphan = rows.find((row) => row.to.code === 'NOEXISTE');
-    expect(orphan.orphan).toBe(true);
-    expect(orphan.recognizedPassed).toBe(false);
-    expect(orphan.reason).toContain('NOEXISTE');
-    expect(rows.filter((row) => row.orphan)).toHaveLength(1);
-  });
-
-  it('lee los estados del mapa legacy ugr-convalidaciones', () => {
-    const rows = buildEquivalenceRows(
-      ENTRIES,
-      { '011013-FFT': { estado: 'concedida' }, 'FP-COMBINADA': { estado: 'pendiente' } },
-      CATALOG,
-      {},
-    );
-    expect(rows.map((row) => row.estado)).toEqual(['concedida', 'pendiente', null]);
-  });
-
-  it('acepta el array legacy con el estado ya colgado y aporta sus entradas', () => {
-    const legacy = ENTRIES.map((entry) => ({ ...entry, estado: ' CONCEDIDA ' }));
-    const rows = buildEquivalenceRows([], legacy, CATALOG, {});
-    expect(rows).toHaveLength(3);
-    // Normaliza mayúsculas y espacios; el estado inválido no llega aquí.
-    expect(rows.every((row) => row.estado === 'concedida')).toBe(true);
-    expect(rows.find((row) => row.to.code === 'FP').orphan).toBe(false);
-  });
-
-  it('deduplica por id (store + legacy) y por par origen/destino sin id', () => {
-    const byId = buildEquivalenceRows(ENTRIES, ENTRIES, CATALOG, {});
-    expect(byId).toHaveLength(3);
-
-    const pair = { cursadaCodigo: '901020', reconocidaCodigo: 'FP', creditos: 6 };
-    const byPair = buildEquivalenceRows([pair], [{ ...pair }], CATALOG, {});
-    expect(byPair).toHaveLength(1);
-    expect(byPair[0]).toMatchObject({ id: '', to: { code: 'FP' }, ects: 6 });
-  });
-
-  it('acepta el formato canónico from/to', () => {
-    const rows = buildEquivalenceRows(
-      [{ from: { code: '011013', name: 'Origen' }, to: { code: 'FFT', name: 'Destino' }, ects: 3 }],
-      null,
-      CATALOG,
-      {},
-    );
-    expect(rows[0]).toMatchObject({
-      from: { code: '011013', name: 'Origen' },
-      to: { code: 'FFT', name: 'Destino' },
-      ects: 3,
-      source: 'uned',
-    });
-  });
-
-  it('estados inválidos, entradas rotas y datos ausentes no lanzan', () => {
-    const rows = buildEquivalenceRows(
-      [null, 'texto', {}, { id: 'rota', estado: 42 }],
-      { '011013-FFT': { estado: 'loquesea' }, sinEstado: {} },
-      CATALOG,
-      { FFT: 'aprobada' },
-    );
-    // Nada interpretable: las entradas sin extremos se descartan.
-    expect(rows).toEqual([]);
-    expect(buildEquivalenceRows(undefined, undefined, undefined, undefined)).toEqual([]);
-    expect(buildEquivalenceRows(ENTRIES, 'roto', null, null)).toHaveLength(3);
-  });
-});
-
 // Plan con las piezas del grado: básicas, obligatorias, el módulo de una mención,
 // una optativa libre y el TFG. Los créditos de mención son los de **una**
 // mención, no los de las cinco: cada alumno cursa una.
@@ -400,5 +315,78 @@ describe('buildSubjectRows: orden curso → cuatrimestre → tipo → nombre', (
       {},
     );
     expect(rows.map((r) => r.code)).toEqual(['AA', 'ZZ', 'MM']);
+  });
+});
+
+// Lo que ve la sección de convalidaciones: cada destino con el nombre y los ECTS
+// que le da el catálogo activo, los tres grupos y los créditos reconocidos.
+describe('buildConvalidaciones', () => {
+  const LIBRE = { codigo: 'LIBRES', nombre: 'Créditos libres' };
+
+  it('reparte en los tres grupos y resuelve nombre y ECTS de cada destino', () => {
+    const grupos = buildConvalidaciones(
+      [
+        {
+          id: 'a',
+          origenes: [{ nombre: 'Cálculo I (UNED)' }],
+          destinos: [{ codigo: 'FFT' }, { codigo: 'ALEM', nombre: 'Álgebra Lineal' }],
+          creditos: 12,
+          estado: ESTADO.APROBADA,
+        },
+        { id: 'b', origenes: [{ nombre: 'Física (UNED)' }], destinos: [{ codigo: 'SO' }], creditos: 6 },
+        { id: 'c', origenes: [{ nombre: 'Química (UNED)' }], destinos: [{ codigo: 'FP' }], creditos: 6, estado: ESTADO.RECHAZADA },
+      ],
+      CATALOG,
+    );
+
+    expect(grupos.total).toBe(3);
+    expect(grupos.aprobadas.map((c) => c.id)).toEqual(['a']);
+    expect(grupos.pendientes.map((c) => c.id)).toEqual(['b']);
+    expect(grupos.rechazadas.map((c) => c.id)).toEqual(['c']);
+
+    const destinos = grupos.aprobadas[0].destinos;
+    expect(destinos.map((d) => [d.code, d.name, d.ects])).toEqual([
+      ['FFT', 'Fundamentos Físicos', 6],
+      ['ALEM', 'Álgebra Lineal', 6],
+    ]);
+    expect(destinos.every((d) => d.fueraDelCatalogo === false)).toBe(true);
+    // Solo las aprobadas cuentan como créditos reconocidos.
+    expect(grupos.creditosReconocidos).toBe(12);
+  });
+
+  it('un destino que el catálogo no tiene se marca, y no se esconde', () => {
+    const grupos = buildConvalidaciones(
+      [{ id: 'x', origenes: [{ nombre: 'Otra carrera' }], destinos: [{ codigo: 'ZZ', nombre: 'Asignatura de fuera' }], creditos: 6 }],
+      CATALOG,
+    );
+    expect(grupos.pendientes[0].destinos[0]).toMatchObject({
+      code: 'ZZ',
+      name: 'Asignatura de fuera',
+      ects: 0,
+      fueraDelCatalogo: true,
+    });
+  });
+
+  it('los créditos libres no son una asignatura: ni ECTS ni marca de fuera', () => {
+    const grupos = buildConvalidaciones(
+      [{ id: 'l', origenes: [{ nombre: 'Curso de la UNED' }], destinos: [LIBRE], creditos: 9, estado: ESTADO.APROBADA }],
+      CATALOG,
+    );
+    expect(grupos.aprobadas[0].destinos[0]).toEqual({
+      code: 'LIBRES',
+      name: 'Créditos libres',
+      ects: 0,
+      libre: true,
+      fueraDelCatalogo: false,
+    });
+    // Y sus créditos sí cuentan: son créditos reconocidos.
+    expect(grupos.creditosReconocidos).toBe(9);
+  });
+
+  it('sin convalidaciones no hay grupos ni créditos reconocidos', () => {
+    const grupos = buildConvalidaciones([], CATALOG);
+    expect(grupos.total).toBe(0);
+    expect(grupos.creditosReconocidos).toBe(0);
+    expect(grupos.pendientes).toEqual([]);
   });
 });

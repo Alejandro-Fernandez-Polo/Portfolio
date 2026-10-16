@@ -1,10 +1,11 @@
 import { compararAsignaturas, rangoDeCurso } from "../app/domain/plan.js";
-import { STATUS, PASSED_STATUSES, isValidStatus, normalizeEstado } from "./status.js";
+import { STATUS, PASSED_STATUSES, isValidStatus } from "./status.js";
+import { destinosAprobados, gruposDeConvalidaciones, resolverDestino, esDestinoLibre, DESTINO_LIBRE } from "./convalidaciones.js";
 import { isPassed } from "./filter.js";
 import {
   summarize,
   projectDegree,
-  mapEquivalences,
+  countFails,
   subjectCode,
   subjectEcts,
   subjectCourse,
@@ -56,8 +57,20 @@ function pct(part, total) {
  * El orden (curso → cuatrimestre → nombre) es el que reutilizan las barras y
  * la agrupación por curso de la UI.
  */
-export function buildSubjectRows(subjects, credits) {
+/**
+ * Filas de la tabla de asignaturas del progreso, con la etiqueta de **convalidada**
+ * (calculada desde las convalidaciones aprobadas) y los suspensos que el usuario
+ * haya anotado.
+ *
+ * @param {Array} subjects catálogo activo.
+ * @param {Object} credits `{ [code]: status }`.
+ * @param {{convalidaciones?: Array, fails?: Object}} [opciones]
+ */
+export function buildSubjectRows(subjects, credits, opciones = {}) {
   const map = asCredits(credits);
+  // Con el catálogo delante: un destino se resuelve también por nombre.
+  const aprobados = destinosAprobados(opciones.convalidaciones, subjects);
+  const fails = opciones.fails && typeof opciones.fails === "object" ? opciones.fails : {};
   const rows = [];
   for (const subject of asList(subjects)) {
     const code = subjectCode(subject);
@@ -71,10 +84,17 @@ export function buildSubjectRows(subjects, credits) {
       ects: subjectEcts(subject),
       caracter: subject?.caracter || "",
       mencion: subject?.mencion || "",
-      status: effectiveStatus(map, code),
+      // Una convalidación aprobada marca la asignatura sin que nadie la toque; un
+      // estado superado a mano manda (también lo está).
+      status:
+        aprobados.has(code) && !PASSED_STATUSES.includes(map[code])
+          ? STATUS.CONVALIDADA
+          : effectiveStatus(map, code),
       // Sin estado propio la asignatura no está «pendiente»: está sin marcar.
       // Lo que está pendiente son los créditos.
       marked: isValidStatus(map[code]),
+      convalidada: aprobados.has(code),
+      fails: Number(fails[code]) || 0,
     });
   }
   // Mismo orden que la lista de datos: curso, cuatrimestre, tipo y nombre.
@@ -256,8 +276,8 @@ export function buildCourseBars(subjects, credits, plan) {
  * Resumen de la cabecera: ECTS superados / en curso / pendientes y porcentaje
  * sobre el total del plan (240 por defecto), con el recuento de asignaturas.
  */
-export function buildSummary(subjects, credits, plan) {
-  const summary = summarize(asList(subjects), asCredits(credits));
+export function buildSummary(subjects, credits, plan, opciones = {}) {
+  const summary = summarize(asList(subjects), asCredits(credits), opciones.convalidaciones);
   const totalECTS = Number(plan?.totalECTS) || DEFAULT_TOTAL_ECTS;
   return {
     ectsPassed: summary.ectsPassed,
@@ -268,6 +288,8 @@ export function buildSummary(subjects, credits, plan) {
     ectsPending: Math.max(0, totalECTS - summary.ectsPassed - summary.ectsEnrolled),
     ectsTotal: summary.ectsTotal,
     counts: { passed: summary.passed, enrolled: summary.enrolled, pending: summary.pending },
+    // Suspensos anotados: informativos, no tocan los ECTS.
+    fails: countFails(opciones.fails),
     totalECTS,
     pct: pct(summary.ectsPassed, totalECTS),
   };
@@ -277,8 +299,8 @@ export function buildSummary(subjects, credits, plan) {
  * Proyección de cierre (envuelve projectDegree) más el porcentaje de avance,
  * que es lo que pinta la UI del bloque de proyección.
  */
-export function buildProjection(subjects, credits, plan) {
-  const projection = projectDegree(asList(subjects), asCredits(credits), plan);
+export function buildProjection(subjects, credits, plan, opciones = {}) {
+  const projection = projectDegree(asList(subjects), asCredits(credits), plan, opciones.convalidaciones);
   return {
     passedECTS: projection.passedECTS,
     remainingECTS: projection.remainingECTS,
@@ -287,90 +309,47 @@ export function buildProjection(subjects, credits, plan) {
   };
 }
 
-function entryEstado(entry) {
-  return normalizeEstado(entry?.estado);
-}
-
-function endpointCode(endpoint) {
-  if (!endpoint) return "";
-  if (typeof endpoint === "string") return endpoint;
-  return endpoint.codigo || endpoint.code || "";
-}
-
-function entryKey(entry) {
-  // Dedupe por id cuando existe (CONVALIDACIONES lo trae) y de ultima por el
-  // par origen/destino normalizado a mano: no se puede normalizar con
-  // mapEquivalences antes de decidir, porque ese filtro descarta entradas.
-  if (entry.id) return `id:${String(entry.id)}`;
-  const from = endpointCode(entry.uned || entry.from || entry.cursadaCodigo);
-  const to = endpointCode(entry.ugr || entry.to || entry.reconocidaCodigo);
-  return to ? `pair:${from}|${to}` : "";
-}
-
 /**
- * Filas de la tabla de equivalencias UNED / Grado Superior → UGR.
+ * Las convalidaciones repartidas en los tres grupos que enseña la sección, con
+ * el nombre y los ECTS de cada destino resueltos desde el catálogo y una marca
+ * para los destinos que ese catálogo no tiene.
  *
- * Acepta dos formas del segundo parámetro:
- * - mapa `{ [id]: { estado } }` (clave legacy `ugr-convalidaciones`);
- * - array legacy de CONVALIDACIONES, opcionalmente con `estado` ya colgado
- *   por la UI, que además aporta las propias entradas de equivalencia.
- *
- * Cada fila lleva `recognizedPassed` (la asignatura UGR reconocida está
- * superada según credits) y `orphan` (el código UGR no existe en el catálogo
- * activo), más `reason` cuando es huérfana.
+ * @param {Array} convalidaciones lista del store (`progress.equivalences`).
+ * @param {Array} subjects catálogo activo.
+ * @returns {{pendientes: Array, rechazadas: Array, aprobadas: Array, creditosReconocidos: number, total: number}}
  */
-export function buildEquivalenceRows(equivalences, convalidaciones, subjects, credits) {
-  const catalog = asList(subjects);
-  const creditMap = asCredits(credits);
-
-  const estadoMap = new Map();
-  const legacy = asList(convalidaciones);
-  if (convalidaciones && typeof convalidaciones === "object" && !Array.isArray(convalidaciones)) {
-    for (const [id, value] of Object.entries(convalidaciones)) {
-      const estado = normalizeEstado(value);
-      if (id && estado) estadoMap.set(String(id), estado);
-    }
-  }
-  for (const entry of legacy) {
-    const estado = entryEstado(entry);
-    if (entry?.id && estado) estadoMap.set(String(entry.id), estado);
-  }
-
-  const seen = new Set();
-  const entries = [];
-  const push = (entry) => {
-    if (!entry || typeof entry !== "object") return;
-    const key = entryKey(entry);
-    if (key) {
-      if (seen.has(key)) return;
-      seen.add(key);
-    }
-    entries.push(entry);
+export function buildConvalidaciones(convalidaciones, subjects = []) {
+  const catálogo = asList(subjects);
+  const fila = (c) => ({
+    id: c.id,
+    estado: c.estado,
+    origenes: c.origenes.map((o) => o.nombre || o.codigo),
+    creditos: c.creditos,
+    calificacion: c.calificacion,
+    destinos: c.destinos.map((destino) => {
+      // Los créditos libres no son una asignatura: no tienen ECTS propios y no
+      // pueden estar «fuera del catálogo» aunque el catálogo no los tenga.
+      if (esDestinoLibre(destino)) {
+        return { code: DESTINO_LIBRE.codigo, name: DESTINO_LIBRE.nombre, ects: 0, libre: true, fueraDelCatalogo: false };
+      }
+      const resuelto = resolverDestino(destino, catálogo);
+      return {
+        code: resuelto.codigo,
+        name: resuelto.nombre || resuelto.codigo,
+        ects: resuelto.subject ? subjectEcts(resuelto.subject) : 0,
+        // Fuera del catálogo: no casa ni por código ni por nombre (los datos
+        // viejos guardaban un código que ya no existe). Se enseña el nombre
+        // guardado, no se esconde.
+        fueraDelCatalogo: !resuelto.subject,
+      };
+    }),
+  });
+  const grupos = gruposDeConvalidaciones(convalidaciones);
+  return {
+    pendientes: grupos.pendientes.map(fila),
+    rechazadas: grupos.rechazadas.map(fila),
+    aprobadas: grupos.aprobadas.map(fila),
+    creditosReconocidos: grupos.aprobadas.reduce((n, c) => n + (Number(c.creditos) || 0), 0),
+    total: grupos.pendientes.length + grupos.rechazadas.length + grupos.aprobadas.length,
   };
-  for (const entry of asList(equivalences)) push(entry);
-  for (const entry of legacy) push(entry);
-
-  const rows = [];
-  for (const entry of entries) {
-    // mapEquivalences por entrada: reutiliza la normalización canónica
-    // (uned/ugr vs cursada/reconocida) en vez de reimplementarla aquí.
-    const { mappings, orphans } = mapEquivalences([entry], catalog);
-    const normalized = mappings[0] || orphans[0];
-    if (!normalized) continue;
-    if (!normalized.from.code && !normalized.to.code) continue;
-    const orphan = mappings.length === 0;
-    const id = entry.id ? String(entry.id) : "";
-    rows.push({
-      id,
-      from: normalized.from,
-      to: normalized.to,
-      ects: normalized.ects,
-      source: normalized.source,
-      estado: entryEstado(entry) ?? (id ? estadoMap.get(id) ?? null : null),
-      recognizedPassed: isPassed(creditMap, normalized.to.code),
-      orphan,
-      reason: orphan ? normalized.reason : "",
-    });
-  }
-  return rows;
 }

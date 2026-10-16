@@ -2,7 +2,6 @@ import { open, isAvailable, getStoreMode } from "./store/db.js";
 import { initStore, flush, getState, dispatch, subscribe } from "./store/commands.js";
 import { listReviews, saveReviews, deleteReview } from "./store/reviews.js";
 import { run as migrateLegacy } from "./migrate/migrateLegacy.js";
-import { ingestConvalidacionesEstados } from "./migrate/convalidacionesEstados.js";
 import { registerModule, startAll, stopAll, getModule } from "./kernel/registry.js";
 import { bus } from "./kernel/bus.js";
 import { createDevtools } from "./devtools/index.js";
@@ -41,13 +40,6 @@ async function bootstrap() {
     } else {
       console.error("[bootstrap] Migration failed:", migrateResult.error);
     }
-  }
-
-  // Los estados de convalidación viven en el store (progress.equivalences), no
-  // en localStorage: la ingesta los vuelca una vez y el dashboard ya lee de ahí.
-  const ingestResult = await ingestConvalidacionesEstados();
-  if (!ingestResult.ok) {
-    console.warn("[bootstrap] Ingesta de convalidaciones falló:", ingestResult.error);
   }
 
   registerModule({

@@ -1,4 +1,6 @@
 import { isValidStatus, normalizeEstado } from "../progress/status.js";
+import { normalizeConvalidaciones } from "../progress/convalidaciones.js";
+import { normalizeFails } from "../progress/summary.js";
 
 export const initialState = {
   rev: 0,
@@ -25,19 +27,19 @@ export const initialState = {
     // para viajar con el usuarioState y sobrevivir al reload.
     ignoreDocents: false,
   },
-  propuestas: {
-    items: [],
-    activeId: null,
-    vista: "oficial",
-  },
   // Fuente canónica del progreso académico (ver src/progress/). commands.js
   // persiste userState en IndexedDB, así que este objeto es lo que se guarda.
   progress: {
     credits: {},
+    // Las convalidaciones (`src/progress/convalidaciones.js`): una sola lista,
+    // cada una con sus orígenes, sus destinos UGR y su estado. La asignatura de
+    // destino **no se marca a mano**: se calcula desde aquí.
     equivalences: [],
     plan: { totalECTS: 240 },
     // Mención elegida (vacío = sin decidir): el título lleva una y se asigna.
     mencion: "",
+    // Suspensos por asignatura, informativos: { [code]: n }. No cambian los ECTS.
+    fails: {},
   },
 };
 
@@ -242,41 +244,6 @@ export function reduceUI(state, cmd) {
   }
 }
 
-export function reducePropuestas(state, cmd) {
-  const ns = clone(state);
-  switch (cmd.type) {
-    case "propuestas/save": {
-      const { propuesta } = cmd.payload;
-      const idx = ns.propuestas.items.findIndex((p) => p.id === propuesta.id);
-      if (idx >= 0) ns.propuestas.items[idx] = propuesta;
-      else ns.propuestas.items.push(propuesta);
-      return nextRev(ns);
-    }
-    case "propuestas/delete": {
-      ns.propuestas.items = ns.propuestas.items.filter((p) => p.id !== cmd.payload.id);
-      if (ns.propuestas.activeId === cmd.payload.id) {
-        ns.propuestas.activeId = ns.propuestas.items[0]?.id || null;
-      }
-      return nextRev(ns);
-    }
-    case "propuestas/setActive": {
-      ns.propuestas.activeId = cmd.payload.id;
-      return nextRev(ns);
-    }
-    case "propuestas/setVista": {
-      ns.propuestas.vista = cmd.payload.vista;
-      return nextRev(ns);
-    }
-    case "propuestas/setAll": {
-      ns.propuestas.items = cmd.payload.items || [];
-      ns.propuestas.activeId = ns.propuestas.items[0]?.id || null;
-      return nextRev(ns);
-    }
-    default:
-      return state;
-  }
-}
-
 export function reduceProgress(state, cmd) {
   switch (cmd.type) {
     case "progress/setMencion": {
@@ -308,47 +275,38 @@ export function reduceProgress(state, cmd) {
       ns.progress.updatedAt = new Date().toISOString();
       return nextRev(ns);
     }
-    case "progress/setMapping": {
-      // Sin `mappings` en el payload se conservan las equivalencias previas:
-      // el comando no debe destruir datos por un campo ausente.
-      const mappings = cmd.payload?.mappings;
+    case "progress/setConvalidaciones": {
+      // Reemplaza la lista entera: la sección de Progreso manda lo que tiene (y ya
+      // viene normalizado por ella). Sin `items` en el payload se conserva lo que
+      // hubiera, para no destruir datos por un campo ausente.
+      const items = cmd.payload?.items;
+      if (!Array.isArray(items)) return state;
       const ns = clone(state);
-      ns.progress.equivalences = Array.isArray(mappings) ? mappings : ns.progress.equivalences;
+      ns.progress.equivalences = normalizeConvalidaciones(items);
       ns.progress.updatedAt = new Date().toISOString();
       return nextRev(ns);
     }
-    case "progress/setEquivalenceEstados": {
-      // Upsert por id: existing → pone estado; nueva → append. El id es el de
-      // la entrada en CONVALIDACIONES (igual que el formato legacy). Estados
-      // inválidos se descartan (igual que progress/setAll con credits): una
-      // ingesta o un bundle con basura no debe romper el store. Sin cambios →
-      // no tocar: idempotente y sin writes en IDB al repetir el comando.
-      const entries = cmd.payload?.entries;
-      if (!Array.isArray(entries) || entries.length === 0) return state;
+    case "progress/setEstadoConvalidacion": {
+      // Cambia el estado de una convalidación sin reenviar la lista entera.
+      // Estado inválido o sin cambios → no tocar: idempotente.
+      const { id, estado } = cmd.payload || {};
+      const nuevo = normalizeEstado(estado);
+      if (!id || !nuevo) return state;
       const ns = clone(state);
-      const list = ns.progress.equivalences;
-      const indexById = new Map();
-      list.forEach((e, i) => {
-        if (e && e.id) indexById.set(String(e.id), i);
-      });
-      let changed = false;
-      for (const entry of entries) {
-        if (!entry || typeof entry !== "object") continue;
-        const id = entry.id ? String(entry.id) : "";
-        if (!id) continue;
-        const estado = normalizeEstado(entry.estado);
-        if (!estado) continue;
-        const idx = indexById.get(id);
-        if (idx !== undefined) {
-          if (list[idx].estado === estado) continue;
-          list[idx] = { ...list[idx], estado };
-        } else {
-          indexById.set(id, list.length);
-          list.push({ ...entry, estado });
-        }
-        changed = true;
-      }
-      if (!changed) return state;
+      const idx = ns.progress.equivalences.findIndex((item) => item && String(item.id) === String(id));
+      if (idx === -1 || ns.progress.equivalences[idx].estado === nuevo) return state;
+      ns.progress.equivalences[idx] = { ...ns.progress.equivalences[idx], estado: nuevo };
+      ns.progress.updatedAt = new Date().toISOString();
+      return nextRev(ns);
+    }
+    case "progress/setFails": {
+      // Suspensos de una asignatura (0 = sin suspensos: se borra la clave).
+      const { code, count } = cmd.payload || {};
+      if (!code) return state;
+      const ns = clone(state);
+      const fallos = normalizeFails({ ...ns.progress.fails, [code]: count });
+      if (JSON.stringify(fallos) === JSON.stringify(ns.progress.fails || {})) return state;
+      ns.progress.fails = fallos;
       ns.progress.updatedAt = new Date().toISOString();
       return nextRev(ns);
     }
@@ -357,15 +315,19 @@ export function reduceProgress(state, cmd) {
       if (!p || typeof p !== "object") return state;
       const ns = clone(state);
       // Filtrar estados inválidos mantiene la invariante del store aunque el
-      // payload venga de un bundle antiguo o de una migración parcial.
+      // payload venga de un bundle antiguo o de una migración parcial. Las
+      // convalidaciones se normalizan: las del formato viejo (la tabla del autor)
+      // no pasan, que es justo lo que no debe restaurarse.
       const credits = {};
       for (const [code, status] of Object.entries(p.credits || {})) {
         if (isValidStatus(status)) credits[code] = status;
       }
       ns.progress = {
         credits: { ...ns.progress.credits, ...credits },
-        equivalences: Array.isArray(p.equivalences) ? p.equivalences : ns.progress.equivalences,
+        equivalences: Array.isArray(p.equivalences) ? normalizeConvalidaciones(p.equivalences) : ns.progress.equivalences,
+        fails: { ...(ns.progress.fails || {}), ...normalizeFails(p.fails) },
         plan: { ...ns.progress.plan, ...(p.plan || {}) },
+        mencion: typeof p.mencion === "string" ? p.mencion : ns.progress.mencion,
         updatedAt: new Date().toISOString(),
       };
       return nextRev(ns);
@@ -392,8 +354,7 @@ const KNOWN_COMMANDS = new Set([
   "filters/add", "filters/remove", "filters/setWeight", "filters/setAll",
   "blocks/add", "blocks/remove", "blocks/setAll",
   "ui/setView", "ui/setCompareIds", "ui/toggleFavorite", "ui/setIgnoreDocents",
-  "propuestas/save", "propuestas/delete", "propuestas/setActive", "propuestas/setVista", "propuestas/setAll",
-  "progress/setStatus", "progress/setCredit", "progress/setMencion", "progress/setMapping", "progress/setEquivalenceEstados", "progress/setAll",
+  "progress/setStatus", "progress/setCredit", "progress/setMencion", "progress/setConvalidaciones", "progress/setEstadoConvalidacion", "progress/setFails", "progress/setAll",
   "configs/save",
 ]);
 
@@ -404,7 +365,6 @@ export function reducer(state, cmd) {
   ns = reduceFilters(ns, cmd);
   ns = reduceBlocks(ns, cmd);
   ns = reduceUI(ns, cmd);
-  ns = reducePropuestas(ns, cmd);
   ns = reduceProgress(ns, cmd);
   ns = reduceConfigs(ns, cmd);
   if (ns === state && !KNOWN_COMMANDS.has(cmd.type)) {

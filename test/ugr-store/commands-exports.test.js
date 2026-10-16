@@ -45,6 +45,7 @@ describe("store/commands.js: import real (humo de sintaxis)", () => {
       equivalences: [],
       plan: { totalECTS: 240 },
       mencion: "",
+      fails: {},
     });
   });
 });

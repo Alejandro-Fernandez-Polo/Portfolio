@@ -2831,79 +2831,211 @@ footer {
   color: var(--muted);
   cursor: not-allowed;
 }
-.progress-table tr.is-orphan td {
-  background: var(--danger-tint);
+/* ─── Convalidaciones ─────────────────────────────────────── */
+/* La sección vive dentro de Progreso y se despliega con su botón: el
+   contenedor es el marco y el panel el bloque que se muestra u oculta. */
+.progress-convalidaciones {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.35rem;
 }
-
-/* ─── Badges ─────────────────────────────────────────────── */
-.progress-badge {
-  display: inline-block;
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 0.12rem 0.4rem;
+.progress-convalidaciones-panel {
+  margin-top: 0.8rem;
+}
+/* Campos del formulario: en dos columnos cuando hay sitio y apilados en
+   pantallas estrechas. Cada campo agrupa etiqueta, control y —si lo tiene— la
+   lista de lo ya añadido, para que la rejilla no separe el control de su
+   etiqueta. Se alinean arriba porque las listas de chips dan alturas distintas. */
+.convalidaciones-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  align-items: start;
+}
+.convalidaciones-campo {
+  min-width: 0;
+}
+.convalidaciones-campos label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  /* Dos líneas reservadas: así los controles de la misma fila quedan alineados
+     aunque una etiqueta larga ocupe más que las demás. */
+  min-height: 2.6em;
+}
+.convalidaciones-campos input,
+.convalidaciones-campos select {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  letter-spacing: 0.02em;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+}
+.convalidaciones-campos input:focus,
+.convalidaciones-campos select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-halo);
+}
+/* Créditos: cuando los suma la app el campo está bloqueado, y atenuado se lee
+   como «esto lo pone la aplicación, no lo escribas tú». */
+.convalidaciones-campos input.is-readonly,
+.convalidaciones-campos input[readonly] {
+  background: var(--surface-muted);
+  cursor: default;
+}
+/* Control + botón «Añadir» en la misma fila: el botón mete al control lo que
+   tenga dentro, así que se leen como una sola unidad. El input/select cede el
+   ancho (`min-width: 0`) para que el botón no se comprima. */
+.convalidaciones-anadir {
+  display: flex;
+  gap: 0.4rem;
+}
+.convalidaciones-anadir input,
+.convalidaciones-anadir select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.convalidaciones-anadir .btn {
+  flex: 0 0 auto;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
   white-space: nowrap;
 }
-.progress-badge-muted {
-  background: var(--surface-muted);
-  color: var(--muted);
-  border-color: var(--border);
+/* Lista de lo ya añadido (orígenes y destinos): chips con su botón de quitar.
+   Vacía no ocupa ni pinta nada, para que el formulario no salga con huecos. */
+.convalidaciones-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+}
+.convalidaciones-chips:empty {
+  display: none;
+}
+.convalidaciones-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 100%;
+  padding: 0.15rem 0.2rem 0.15rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  font-size: 0.8rem;
+}
+.convalidaciones-chip-texto {
+  overflow-wrap: anywhere;
+}
+/* El chip de créditos libres no es una asignatura: el borde discontinuo lo
+   distingue de un vistazo del resto de destinos. */
+.convalidaciones-chip.is-libre {
   border-style: dashed;
 }
-.progress-badge-passed {
-  background: var(--success-tint);
-  color: #155724;
-  border-color: #c3e6cb;
-}
-.progress-badge-pending {
-  background: var(--surface-muted);
-  color: var(--text-light);
-  border-color: var(--border);
-}
-.progress-badge-orphan {
-  background: var(--danger-tint);
-  color: #721c24;
-  border-color: #f5c6cb;
-}
-.progress-badge-estado-pendiente {
-  background: var(--surface-muted);
-  color: var(--text-light);
-  border-color: var(--border);
-}
-.progress-badge-estado-solicitada {
-  background: var(--warning-tint);
-  color: #856404;
-  border-color: var(--border);
-}
-.progress-badge-estado-concedida {
-  background: var(--success-tint);
-  color: #155724;
-  border-color: #c3e6cb;
-}
-.progress-badge-estado-denegada {
-  background: var(--danger-tint);
-  color: #721c24;
-  border-color: #f5c6cb;
-}
-/* Misma pareja cromática que .badge-origen de la vista Convalidaciones. */
-.progress-badge-source-uned {
-  background: var(--surface-muted);
-  color: #0b4f9e;
-  border-color: var(--border);
-}
-.progress-badge-source-gs {
-  background: var(--surface-muted);
-  color: #5b1e8c;
-  border-color: var(--border);
-}
-.progress-orphan-reason {
-  display: block;
-  font-size: 0.72rem;
+/* El botón de quitar es una ✕ sin fondo: el borde del chip ya marca el grupo y
+   su `aria-label` dice qué quita. El foco visible lo pone el :focus-visible
+   global, pero aquí se refuerza en :hover para que sea un objetivo claro. */
+.convalidaciones-chip-quitar {
+  border: none;
+  border-radius: 999px;
+  padding: 0.05rem 0.35rem;
+  background: none;
   color: var(--muted);
-  margin-top: 0.15rem;
-  max-width: 22rem;
+  font-size: 1rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.convalidaciones-chip-quitar:hover {
+  background: var(--danger-tint);
+  color: var(--danger);
+}
+/* Botones de estado más pequeños que los de la fila: van en grupo. */
+.btn-small {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.78rem;
+}
+/* El botón del estado actual se marca con borde y fondo: el color no es la
+   única señal — además lleva aria-pressed. */
+.btn-small.is-activo {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+/* Grupos de convalidaciones (pendientes / rechazadas / aprobadas). */
+.convalidaciones-grupo {
+  margin-top: 0.9rem;
+}
+.convalidaciones-grupo h3 {
+  font-size: 0.95rem;
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+}
+/* Cada fila: tarjeta con borde y sombra suave, con los datos arriba y los
+   botones abajo. */
+.convalidaciones-fila {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.5rem;
+}
+.convalidaciones-fila-main {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.convalidaciones-fila-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+/* Destino fuera del catálogo: se marca con borde discontinuo y texto en un
+   tono de aviso, no solo con color. */
+.convalidaciones-destino.is-fuera {
+  border: 1px dashed var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 0.05rem 0.3rem;
+  color: var(--danger);
+}
+/* La etiqueta de una asignatura convalidada: cuenta como superada sin tener
+   estado marcado a mano, así que sin explicarla parecería un error del cálculo. */
+.progress-convalidada {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+/* ─── Suspensos ───────────────────────────────────────────── */
+/* El input de suspensos va junto al selector de estado: más estrecho y
+   alineado con él. */
+.progress-fails {
+  width: 4.2rem;
+  margin-left: 0.4rem;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.progress-fails:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-halo);
+}
+.progress-fails:disabled {
+  background: var(--surface-muted);
+  color: var(--muted);
+  cursor: not-allowed;
 }
 
 /* ─── Backup / restore ────────────────────────────────────── */
@@ -2944,9 +3076,6 @@ footer {
     flex-wrap: wrap;
     gap: 0.2rem;
   }
-  .progress-orphan-reason {
-    max-width: 100%;
-  }
 }
 @media (max-width: 480px) {
   .progress-kpis {
@@ -2957,5 +3086,10 @@ footer {
   }
   .progress-bar-meta {
     white-space: normal;
+  }
+  /* El botón «Añadir» cae debajo del control: en la misma fila no cabe el texto
+     que se está escribiendo en el origen. */
+  .convalidaciones-anadir {
+    flex-wrap: wrap;
   }
 }

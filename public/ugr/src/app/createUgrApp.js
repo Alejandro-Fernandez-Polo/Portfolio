@@ -1,7 +1,6 @@
 import { createLegacyDataAdapter } from "./adapters/legacyData.js";
 import { createPersistenceAdapter } from "./adapters/persistence.js";
 import { timeToMinutes, timesOverlap } from "./domain/schedule.js";
-import { calcPropuestaCreditos } from "./domain/proposals.js";
 import {
   calculateConfigMetrics,
   calculateConfigDeadHours,
@@ -104,7 +103,6 @@ export function createUgrApp(dependencies) {
     domain: {
       timeToMinutes,
       timesOverlap,
-      calcPropuestaCreditos,
       calculateConfigMetrics,
       calculateConfigDeadHours,
       calculateConfigDays,

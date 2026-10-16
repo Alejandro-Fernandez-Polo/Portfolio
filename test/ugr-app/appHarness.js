@@ -92,7 +92,6 @@ function indexBody() {
  * @param {Array} [options.profesores] perfiles (`PROFESORES`).
  * @param {Array} [options.convalidaciones] tabla oficial (`CONVALIDACIONES`).
  * @param {Array} [options.propuestasIniciales] propuestas semilla
- *   (`PROPUESTAS_INICIALES`, el `propuestas.js` clásico).
  * @param {Object} [options.storage] pares clave/valor que se siembran en
  *   `localStorage` antes de arrancar (para los caminos que leen al evaluarse,
  *   como los filtros del solver).
@@ -112,7 +111,6 @@ export async function bootUgrApp(options = {}) {
   globalThis.PROFESORES = options.profesores || [];
   globalThis.CONVALIDACIONES = options.convalidaciones || [];
   globalThis.PROPUESTAS = [];
-  globalThis.PROPUESTAS_INICIALES = JSON.parse(JSON.stringify(options.propuestasIniciales || []));
 
   document.body.innerHTML = indexBody();
   globalThis.localStorage.clear();

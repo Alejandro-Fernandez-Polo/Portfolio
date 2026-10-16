@@ -18,7 +18,6 @@
   <nav id="main-nav">
     <button class="nav-tab active" data-view="horario">Horario</button>
     <button class="nav-tab" data-view="datos">Datos</button>
-    <button class="nav-tab" data-view="convalidaciones">Convalidaciones</button>
     <button class="nav-tab" data-view="progreso">Progreso</button>
   </nav>
 
@@ -253,53 +252,6 @@
       </section>
     </div>
 
-    <!-- ═══ VISTA: CONVALIDACIONES ═══ -->
-    <div id="view-convalidaciones" class="view" style="display:none;">
-      <!-- Propuestas en bloque -->
-      <section class="panel" id="propuestas-panel">
-        <div class="panel-header">
-          <h2>Propuestas de convalidación</h2>
-          <div class="summary-bar" id="propuestas-summary"></div>
-        </div>
-        <div class="propuestas-bar">
-          <select id="propuesta-select" class="filter-select" style="min-width:280px;"></select>
-          <span id="propuesta-badge" class="propuesta-badge"></span>
-          <div class="propuestas-actions">
-            <button id="btn-nueva-propuesta" class="btn btn-sm btn-secondary">+ Nueva</button>
-            <button id="btn-nueva-vacia-propuesta" class="btn btn-sm btn-primary">+ Vacía</button>
-            <button id="btn-duplicar-propuesta" class="btn btn-sm btn-secondary">Duplicar</button>
-            <button id="btn-renombrar-propuesta" class="btn btn-sm btn-secondary">Renombrar</button>
-            <button id="btn-eliminar-propuesta" class="btn btn-sm btn-danger">Eliminar</button>
-          </div>
-        </div>
-        <div class="propuestas-bar" style="margin-top:0.6rem;">
-          <div class="propuestas-actions">
-            <button id="btn-compartir-propuesta" class="btn btn-sm btn-secondary">Compartir Propuesta</button>
-            <button id="btn-export-propuesta" class="btn btn-sm btn-secondary">Exportar JSON</button>
-            <button id="btn-import-propuesta" class="btn btn-sm btn-secondary">Importar JSON</button>
-            <input type="file" id="import-propuesta-input" accept=".json" style="display:none;">
-          </div>
-        </div>
-        <div id="propuesta-detalle"></div>
-        <!-- Propuestas guardadas (igual que configuraciones de horario) -->
-        <div class="panel" style="margin-top:1rem; border-top:2px solid var(--border); padding-top:1rem;">
-          <div class="panel-header">
-            <h3>Propuestas guardadas</h3>
-            <div class="saved-configs-header-actions">
-              <button id="btn-export-all-propuestas" class="btn btn-sm btn-secondary">Exportar todas</button>
-              <button id="btn-import-propuesta-guardada" class="btn btn-sm btn-secondary">Importar</button>
-              <input type="file" id="import-propuesta-guardada-input" accept=".json" style="display:none;">
-            </div>
-          </div>
-          <div class="save-config-row">
-            <input type="text" id="propuesta-guardada-nombre" placeholder="Nombre para guardar la propuesta activa" autocomplete="off">
-            <button id="btn-guardar-propuesta-interna" class="btn btn-primary">Guardar propuesta</button>
-          </div>
-          <div id="propuestas-guardadas-list"></div>
-        </div>
-      </section>
-    </div>
-
     <!-- ═══ VISTA: PROGRESO ═══ -->
     <!-- Los IDs de dentro los consulta src/ui/progress-dashboard.js: si cambian,
          ese módulo se queda en modo degradado sin renderizar nada. -->
@@ -327,7 +279,67 @@
           <select id="progress-subjects-mencion" class="filter-select"></select>
         </div>
         <div id="progress-subjects"></div>
-        <div id="progress-equivalences"></div>
+        <!-- Convalidaciones: la sección vive **dentro** de Progreso y se despliega
+             con su botón. Los IDs los consulta src/ui/progress-dashboard.js. -->
+        <div class="progress-convalidaciones">
+          <button type="button" class="btn btn-secondary" id="btn-convalidaciones" aria-expanded="false" aria-controls="convalidaciones-panel">
+            Convalidaciones
+          </button>
+          <section id="convalidaciones-panel" class="progress-convalidaciones-panel" hidden>
+            <p class="progress-hint">
+              Lo que has cursado fuera (UNED, Grado Superior…) y las asignaturas de esta
+              titulación que te lo reconocen. Añade cada uno a su lista: puedes juntar
+              varios orígenes con varios destinos. Los créditos se suman solos a partir
+              de las asignaturas que elijas; si lo que te reconocen son créditos sueltos,
+              añade <strong>Créditos libres</strong> para escribirlos tú. <strong>Aprobar</strong>
+              una convalidación marca sus asignaturas como superadas: no hace falta
+              marcarlas en la tabla.
+            </p>
+            <!-- Alta por listas: los orígenes y los destinos se **añaden** de uno en
+                 uno a dos listas de chips (sin multiselección), y el envío junta
+                 las dos. Los borradores viven en src/ui/progress-dashboard.js, que
+                 también suma los créditos y decide si el campo se puede escribir.
+                 Ningún campo lleva `required`: la validación (al menos un origen
+                 y un destino) la hace ese módulo para poder explicarla en
+                 #convalidaciones-aviso en lugar de con el aviso del navegador. -->
+            <form id="convalidaciones-form">
+              <div class="convalidaciones-campos">
+                <div class="convalidaciones-campo">
+                  <label for="convalidacion-origen">Lo que has cursado (origen)</label>
+                  <div class="convalidaciones-anadir">
+                    <input type="text" id="convalidacion-origen" placeholder="p. ej. Cálculo I (UNED)" autocomplete="off">
+                    <button type="button" class="btn btn-secondary" id="convalidacion-origen-anadir">Añadir</button>
+                  </div>
+                  <ul class="convalidaciones-chips" id="convalidaciones-origenes-lista" aria-label="Orígenes añadidos"></ul>
+                </div>
+                <div class="convalidaciones-campo">
+                  <label for="convalidacion-destinos">Asignaturas de esta titulación que te lo reconocen</label>
+                  <div class="convalidaciones-anadir">
+                    <select id="convalidacion-destinos"></select>
+                    <button type="button" class="btn btn-secondary" id="convalidacion-destinos-anadir">Añadir</button>
+                  </div>
+                  <ul class="convalidaciones-chips" id="convalidaciones-destinos-lista" aria-label="Destinos añadidos"></ul>
+                </div>
+                <div class="convalidaciones-campo">
+                  <label for="convalidacion-creditos">Créditos reconocidos</label>
+                  <!-- Bloqueado por defecto: los créditos los suma el módulo a
+                       partir de los destinos. Solo se puede escribir si en la
+                       lista hay «Créditos libres». -->
+                  <input type="number" id="convalidacion-creditos" min="0" max="99" step="0.5" value="0"
+                    readonly aria-readonly="true" aria-describedby="convalidacion-creditos-nota" class="is-readonly">
+                  <p class="progress-hint" id="convalidacion-creditos-nota">Se suman solos los créditos de las asignaturas que elijas.</p>
+                </div>
+                <div class="convalidaciones-campo">
+                  <label for="convalidacion-calificacion">Calificación (opcional)</label>
+                  <input type="text" id="convalidacion-calificacion" placeholder="p. ej. 7,5" autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn-primary">Añadir convalidación</button>
+              </div>
+            </form>
+            <p class="progress-hint" id="convalidaciones-aviso" role="status" aria-live="polite"></p>
+            <div id="convalidaciones-grupos"></div>
+          </section>
+        </div>
 
         <!-- Backup/restore: los IDs los consulta
              src/ui/progress-dashboard.js; si faltan, el bloque queda inerte y
@@ -796,8 +808,6 @@
   <script src="/ugr/src/monitoring/config.js"></script>
   <script src="/ugr/src/monitoring/init.js"></script>
   <script src="/ugr/data.js"></script>
-  <script src="/ugr/convalidaciones.js"></script>
-  <script src="/ugr/propuestas.js"></script>
   <script src="/ugr/docentes.js"></script>
   <script src="/ugr/app.js"></script>
   <script type="module" src="/ugr/src/bootstrap.js"></script>

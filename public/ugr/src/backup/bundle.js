@@ -149,6 +149,7 @@ export function buildMergePlan(current, incoming, strategy) {
         ...inc,
         credits: { ...(cur.credits || {}), ...(inc.credits || {}) },
         equivalences: inc.equivalences || cur.equivalences || [],
+        fails: { ...(cur.fails || {}), ...(inc.fails || {}) },
         plan: { ...(cur.plan || {}), ...(inc.plan || {}) },
         updatedAt: new Date().toISOString(),
       };

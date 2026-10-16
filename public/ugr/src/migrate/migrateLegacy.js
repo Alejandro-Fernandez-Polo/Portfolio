@@ -14,10 +14,7 @@ export async function run() {
   const legacy = await snapshotAllKeys(dbFacade);
 
   try {
-    // CONVALIDACIONES es un global de convalidaciones.js (script clásico
-    // cargado antes que el bootstrap): es lo que permite resolver id → código
-    // UGR al migrar ugr-convalidaciones.
-    const plan = buildPlan(legacy, { convalidaciones: globalThis.CONVALIDACIONES });
+    const plan = buildPlan(legacy);
 
     await transact(DESTINIES, async () => {
       for (const cmd of plan.commands) {
@@ -57,13 +54,12 @@ async function applyCommand(cmd) {
     case "ui/setView":
     case "ui/setCompareIds":
     case "ui/toggleFavorite":
-    case "propuestas/save":
-    case "propuestas/delete":
-    case "propuestas/setActive":
-    case "propuestas/setVista":
-    case "propuestas/setAll":
+    case "progress/setStatus":
     case "progress/setCredit":
-    case "progress/setMapping":
+    case "progress/setMencion":
+    case "progress/setConvalidaciones":
+    case "progress/setEstadoConvalidacion":
+    case "progress/setFails":
     case "progress/setAll":
     case "configs/save":
       dispatch(cmd);

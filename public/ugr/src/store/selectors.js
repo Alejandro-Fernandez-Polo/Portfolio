@@ -1,8 +1,7 @@
 import { getState } from "./commands.js";
 import { summarize, projectDegree } from "../progress/index.js";
-import { isValidEstado } from "../progress/status.js";
 
-const EMPTY_PROGRESS = { credits: {}, equivalences: [], plan: { totalECTS: 240 }, mencion: "" };
+const EMPTY_PROGRESS = { credits: {}, equivalences: [], plan: { totalECTS: 240 }, mencion: "", fails: {} };
 
 export function getSelectedCodes() {
   const state = getState();
@@ -39,11 +38,6 @@ export function getUI() {
   return state ? state.ui : { view: "horario", compareIds: [], favorites: [] };
 }
 
-export function getPropuestas() {
-  const state = getState();
-  return state ? state.propuestas : { items: [], activeId: null, vista: "oficial" };
-}
-
 export function getProgress() {
   const state = getState();
   if (!state) return { ...EMPTY_PROGRESS };
@@ -56,33 +50,32 @@ export function getProgress() {
     equivalences: Array.isArray(p.equivalences) ? p.equivalences : [],
     plan: { totalECTS: 240, ...(p.plan || {}) },
     mencion: typeof p.mencion === "string" ? p.mencion : "",
+    fails: p.fails && typeof p.fails === "object" ? p.fails : {},
   };
 }
 
-// Mapa { [id]: estado } de las equivalencias del store: es la lectura que
-// sustituye a localStorage['ugr-convalidaciones'] (el dashboard ya no toca
-// esa clave). Solo entran entradas con estado válido; el resto se ignora.
-export function getEquivalenceEstados() {
-  const equivalences = getProgress().equivalences;
-  const map = {};
-  for (const entry of equivalences) {
-    if (entry && entry.id && isValidEstado(entry.estado)) {
-      map[String(entry.id)] = entry.estado;
-    }
-  }
-  return map;
+/** Las convalidaciones (una sola lista, con sus estados). */
+export function getConvalidaciones() {
+  return getProgress().equivalences;
+}
+
+/** Los suspensos por asignatura, informativos: `{ [code]: n }`. */
+export function getFails() {
+  return getProgress().fails;
 }
 
 export function getProgressSummary(subjects = []) {
   const state = getState();
   if (!state) return summarize([], {});
-  return summarize(subjects, getProgress().credits);
+  const progress = getProgress();
+  return summarize(subjects, progress.credits, progress.equivalences);
 }
 
 export function getProjection(subjects = [], plan) {
   const state = getState();
   if (!state) return projectDegree([], {}, plan);
-  return projectDegree(subjects, getProgress().credits, plan);
+  const progress = getProgress();
+  return projectDegree(subjects, progress.credits, plan, progress.equivalences);
 }
 
 export function getRevisionInfo() {

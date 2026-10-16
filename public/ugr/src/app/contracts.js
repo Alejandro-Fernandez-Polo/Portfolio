@@ -25,7 +25,7 @@
  * @property {Object} progress API de `window.__ugrProgress` (créditos,
  *   equivalencias y estados de convalidación).
  * @property {UgrLegacyData} legacyData Frontera a los datos clásicos de los
- *   scripts `data.js` / `convalidaciones.js` / `propuestas.js` / `docentes.js`.
+ *   scripts `data.js` / `docentes.js`.
  * @property {UgrPersistence} persistence Persistencia residual en
  *   `localStorage` (las claves que hoy conserva `app.js` fuera del store).
  * @property {UgrDomain} domain Reglas puras de dominio: única implementación,
@@ -38,9 +38,8 @@
 
 /**
  * Reglas puras de dominio (`src/app/domain/schedule.js`,
- * `src/app/domain/proposals.js`, `src/app/domain/metrics.js`,
- * `src/app/domain/selection.js`, `src/app/domain/calendar.js` y
- * `src/app/domain/configs.js`).
+ * `src/app/domain/metrics.js`, `src/app/domain/selection.js`,
+ * `src/app/domain/calendar.js` y `src/app/domain/configs.js`).
  *
  * Sin DOM ni globals: se exponen por la composición porque `app.js` es un
  * script clásico que no puede importar ESM y delega en `deps.domain`. Las de
@@ -53,8 +52,6 @@
  * @property {(t: string) => number} timeToMinutes `"HH:MM"` → minutos.
  * @property {(s1: string, e1: string, s2: string, e2: string) => boolean} timesOverlap
  *   `true` si dos tramos comparten minuto (adyacentes = no).
- * @property {(p: Object|null) => number} calcPropuestaCreditos Suma de créditos
- *   de una propuesta (0 si no tiene `mappings`).
  * @property {(selectedSubjects: Object, groupChoices: Object, ctx: {subjects: Array,
  *   dificultad?: Function, difficultyScore?: Function}) => {manana: number,
  *   tarde: number, profScore: number, profCount: number, sameGroupPerYear: boolean}}
@@ -158,24 +155,18 @@
  * Esos datos se declaran con `const`/`let` en el global lexical de scripts
  * clásicos y NO son propiedades de `window`, así que un módulo ESM no puede
  * resolverlos por nombre: llegan a la composición como referencias o thunks.
- * `PROPUESTAS` es `let` y `app.js` la reasigna en `loadPropuestas`, por eso se
- * expone como thunk que se invoca en cada lectura (una referencia directa
- * quedaría congelada en el valor del arranque).
  *
  * @typedef {Object} UgrLegacyData
  * @property {() => Array} getSubjects `SUBJECTS` (materias por defecto, con las
  *   ediciones locales encima).
  * @property {() => Array} getDefaultSubjects `DEFAULT_SUBJECTS` (copia inicial).
- * @property {() => Array} getConvalidaciones `CONVALIDACIONES`.
- * @property {() => Array|null} getPropuestas `PROPUESTAS`; puede ser `null`
- *   antes de poblarse, leer siempre vía thunk.
  * @property {() => Array} getDocentes `DOCENTES`.
  */
 
 /**
  * Persistencia residual legacy (`src/app/adapters/persistence.js`). Cubre solo
  * las claves de `localStorage` que hoy escribe `app.js` fuera del store;
- * `selection`, `blocks`, `propuestas` del store, `ui.compareIds` y `progress`
+ * `selection`, `blocks` del store, `ui.compareIds` y `progress`
  * son dominio de los comandos/selectores del store y no pasan por aquí.
  *
  * @typedef {Object} UgrPersistence
@@ -190,8 +181,6 @@
  *   `null` cuando no hay snapshot utilizable (el llamante conserva sus datos
  *   actuales, como hacía el monolito).
  * @property {(list: Array) => void} saveSubjects
- * @property {() => Array} loadSavedPropuestas `ugr-propuestas-guardadas`.
- * @property {(list: Array) => void} saveSavedPropuestas
  * @property {() => Object|null} loadDegradedState Espejo `ugr-horario-state`
  *   del modo degradado; `null` si no existe o el JSON está roto.
  * @property {(state: Object) => void} saveDegradedState

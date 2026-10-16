@@ -1,9 +1,18 @@
-export { STATUS, PASSED_STATUSES, isValidStatus, ESTADO, isValidEstado, normalizeEstado } from "./status.js";
+export { STATUS, PASSED_STATUSES, SELECTABLE_STATUSES, isValidStatus, ESTADO, isValidEstado, normalizeEstado } from "./status.js";
 export { isPassed, solvableCodes } from "./filter.js";
+export {
+  normalizeConvalidacion,
+  normalizeConvalidaciones,
+  destinosAprobados,
+  gruposDeConvalidaciones,
+  convalidacionDeDestino,
+  DESTINO_LIBRE,
+  esDestinoLibre,
+} from "./convalidaciones.js";
 export {
   summarize,
   projectDegree,
-  mapEquivalences,
+  countFails,
   subjectCode,
   subjectEcts,
   subjectCourse,
@@ -18,5 +27,5 @@ export {
   buildMenciones,
   buildSummary,
   buildProjection,
-  buildEquivalenceRows,
+  buildConvalidaciones,
 } from "./dashboard-model.js";

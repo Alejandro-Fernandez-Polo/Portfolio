@@ -3,7 +3,6 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { reducer, initialState } from "../../public/ugr/src/store/reducer.js";
 import { timeToMinutes, timesOverlap } from "../../public/ugr/src/app/domain/schedule.js";
-import { calcPropuestaCreditos } from "../../public/ugr/src/app/domain/proposals.js";
 import {
   calculateConfigMetrics,
   calculateConfigDeadHours,
@@ -149,10 +148,8 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
   else if (mirror) entries["ugr-horario-state"] = JSON.stringify(mirror);
   const localStorage = makeLocalStorage(entries);
   defineGlobal("localStorage", localStorage);
-  // data.js define SUBJECTS, propuestas.js PROPUESTAS_INICIALES y
-  // convalidaciones.js CONVALIDACIONES como globals de script: se simulan aquí.
+  // data.js define SUBJECTS como global de script: se simula aquí.
   defineGlobal("SUBJECTS", []);
-  defineGlobal("PROPUESTAS_INICIALES", [{ id: "p-init", mappings: [], totalCreditos: 0 }]);
   defineGlobal("CONVALIDACIONES", []);
 
   const windowObj = {
@@ -171,7 +168,6 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
   windowObj.__ugrAppDomain = {
     timeToMinutes,
     timesOverlap,
-    calcPropuestaCreditos,
     calculateConfigMetrics,
     calculateConfigDeadHours,
     calculateConfigDays,
@@ -239,7 +235,6 @@ describe("app.js (C3): el store es la persistencia", () => {
     delete globalThis.window;
     delete globalThis.localStorage;
     delete globalThis.SUBJECTS;
-    delete globalThis.PROPUESTAS_INICIALES;
     delete globalThis.CONVALIDACIONES;
     delete globalThis.document;
   });
@@ -258,7 +253,7 @@ describe("app.js (C3): el store es la persistencia", () => {
     expect(localStorage.getItem("ugr-horario-state")).toBeNull();
   });
 
-  it("loadState() hidrata perfil/selección/propuestas/compareIds desde el store y el espejo no gana", async () => {
+  it("loadState() hidrata perfil/selección/compareIds desde el store y el espejo no gana", async () => {
     const store = makeStore(MIGRATED);
     const espejoStr = JSON.stringify(ESPEJO);
     const { legacy, localStorage } = await bootApp({ store, mirror: ESPEJO });
@@ -269,7 +264,6 @@ describe("app.js (C3): el store es la persistencia", () => {
     expect(s.turnoPreferente).toBe("mañana");
     expect(s.selectedSubjects).toEqual({ FFT: true });
     expect(s.cuatrimestreActivo).toBe(2);
-    expect(s.propuestas.map((p) => p.id)).toEqual(["p-store"]);
 
     legacy.saveState();
     // compareIds hidratado: si no lo estuviera, el push enviaría [] y lo borraría.
@@ -348,7 +342,6 @@ describe("app.js (C3): el store es la persistencia", () => {
     expect(at("loadState();")).toBeLessThan(at("ensureProfileStoreSubscription();"));
     expect(at("loadState();")).toBeLessThan(at("pushProfileToStore();"));
     expect(at("loadState();")).toBeLessThan(at("pushSelectionToStore();"));
-    expect(at("loadState();")).toBeLessThan(at("pushPropuestasToStore();"));
     expect(at("loadState();")).toBeLessThan(at("pushCompareIdsToStore();"));
   });
 });
