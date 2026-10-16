@@ -321,8 +321,6 @@
     store.subscribe(() => hydratePropuestasFromStore());
   }
 
-  let configMaxManana = 0;
-  let configMaxTarde = 0;
 
   // ─── Solver ────────────────────────────────────────────────
   // Los tipos de filtro los conoce el adaptador de persistencia y el panel: la
@@ -350,6 +348,8 @@
     // ya montado. No fatal si el import falla — el monolito sigue siendo la
     // fachada operativa y `getDomain()` avisará solo si alguien lo consulta.
     await ensureUgrApp();
+    // El índice de docentes primero: las vistas lo reciben por getter.
+    await ensureDocentIndex();
     // La vista de configuraciones se monta aquí, cuando la composición ESM (y su
     // adaptador de persistencia) ya está montada, y es ella la que carga la lista
     // guardada. Si el import o el adaptador fallan, arranca sin configuraciones
@@ -359,6 +359,15 @@
     await ensureCatalogView();
     // Y la de asignaturas: la lista se pinta desde ella y el modal es suyo.
     await ensureManageSubjectsView();
+    // Los bloqueos y la comparación: sus paneles y sus ventanas.
+    await ensureBlockFiltersView();
+    await ensureCompareView();
+    // El resumen de la selección: contadores, conflictos y barra.
+    await ensureSummaryView();
+    // La de la ficha de asignatura: su ventana y el evento que la pide.
+    await ensureAsignaturaFichaView();
+    // La del panel de grupos: el plegado y su render se montan aquí.
+    await ensureGroupConfigView();
     // La del generador: su panel y su estado. Antes de compartir, que valida la
     // estrategia de un enlace con la tabla de estrategias de esta vista.
     await ensureSolverView();
@@ -380,7 +389,7 @@
     // el montaje quedan en no-op.
     await ensureCalendarViewFeature();
     // Antes de tocar el catálogo: las valoraciones propias se superponen a los
-    // perfiles, así que tienen que estar cargadas cuando `rebuildDocentIndexes`
+    // perfiles: son la fuente con la que el índice rehace su fusión
     // construya el índice.
     await loadOwnReviews();
     const catalogCodesChanged = await bootstrapCatalogState();
@@ -608,331 +617,64 @@
   }
 
   // ─── Config Metrics ─────────────────────────────────────────
-  function calculateConfigMetrics(selectedSubjects, groupChoices) {
-    // Delegación: la única implementación vive en ESM
-    // (src/app/domain/metrics.js); aquí solo se inyectan los datos legacy.
-    // Con «Ignorar profesores» se inyecta un lookup vacío: la columna «Prof»
-    // desaparece del cálculo (queda a hueco) sin tocar la implementación pura.
-    return getDomain().calculateConfigMetrics(selectedSubjects, groupChoices, {
-      subjects: SUBJECTS,
-      dificultad: ignoreDocents ? () => null : getDificultad,
-      difficultyScore: getDifficultyScore,
-    });
-  }
+  // ─── Config Metrics ─────────────────────────────────────────
+  // Las métricas de una configuración (créditos, horas, días libres) las calcula
+  // el dominio y las pide la vista de configuraciones, que lo importa él mismo:
+  // aquí ya no queda nada que delegar.
 
-  function calculateConfigDeadHours(selectedSubjects, groupChoices) {
-    // Delegación: la única implementación vive en ESM (metrics.js).
-    return getDomain().calculateConfigDeadHours(selectedSubjects, groupChoices, {
-      subjects: SUBJECTS,
-    });
-  }
-
-  function calculateConfigDays(selectedSubjects, groupChoices) {
-    // Delegación: la única implementación vive en ESM (metrics.js).
-    return getDomain().calculateConfigDays(selectedSubjects, groupChoices, {
-      subjects: SUBJECTS,
-    });
-  }
-
-  function calculateConfigFreeDays(selectedSubjects, groupChoices) {
-    // Delegación: la única implementación vive en ESM (metrics.js). Se le pasan
-    // los días de la rejilla para que el orden de la columna coincida con el
-    // del calendario.
-    return getDomain().calculateConfigFreeDays(selectedSubjects, groupChoices, {
-      subjects: SUBJECTS,
-      days: DAYS,
-    });
-  }
-
-  function addBlockFilter(type) {
-    // Delegación: validar y construir el payload es regla pura
-    // (src/app/domain/configs.js `buildBlockPayload`); aquí solo se leen los
-    // selects del panel. El `return` temprano con payload nulo es legacy: NO
-    // se re-renderiza cuando la validación falla (ni con `type` desconocida,
-    // que en ese caso solo re-renderiza, como siempre).
-    if (type === 'subject' || type === 'subject-only' || type === 'curso') {
-      const payload = getDomain().buildBlockPayload(type, {
-        subject: (document.getElementById('block-subject-select') || {}).value,
-        group: (document.getElementById('block-subject-group') || {}).value,
-        curso: (document.getElementById('block-curso-select') || {}).value,
-        cursoGroup: (document.getElementById('block-curso-group') || {}).value,
-      });
-      if (!payload) return;
-      dispatchBlock({ type: 'blocks/add', payload });
-    }
-    resetConfigsPage();
-    renderBlockFilters();
-    renderSavedConfigs();
-  }
-
-  function removeBlockFilter(index) {
-    dispatchBlock({ type: 'blocks/remove', payload: { index } });
-    resetConfigsPage();
-    renderBlockFilters();
-    renderSavedConfigs();
-  }
-
+  // ─── Bloqueos ───────────────────────────────────────────────
+  // El panel de bloqueos (grupos y topes de días) vive en la vista ESM; aquí
+  // quedan el disparador que usa el resto del monolito y la lectura de sus topes.
   function renderBlockFilters() {
-    const panel = document.getElementById('block-filters-panel');
-    if (!panel) return;
-
-    const subjects = SUBJECTS.filter(s => s.grupos && s.grupos.length > 0);
-    const allGroups = new Set();
-    subjects.forEach(s => s.grupos.forEach(g => allGroups.add(g.letra)));
-    const groupOptions = [...allGroups].sort().map(g => `<option value="${g}">${g}</option>`).join('');
-
-    const cursoGroups = {};
-    subjects.forEach(s => {
-      if (!cursoGroups[s.curso]) cursoGroups[s.curso] = new Set();
-      s.grupos.forEach(g => cursoGroups[s.curso].add(g.letra));
-    });
-
-    let html = '<div class="block-filters-container">';
-    html += '<button class="btn btn-sm btn-secondary block-filters-toggle" id="btn-toggle-block-filters">';
-    const blocks = getBlocks();
-    html += `Bloqueos${blocks.length > 0 ? ` (${blocks.length})` : ''}`;
-    html += '</button>';
-    html += '<div class="block-filters-body" style="display:none">';
-
-    if (blocks.length > 0) {
-      html += '<div class="block-filters-active">';
-      blocks.forEach((f, i) => {
-        let label;
-        if (f.type === 'subject') {
-          label = `${f.codigo} \u00D7 Grupo ${f.letra}`;
-        } else if (f.type === 'subject-only') {
-          label = `${f.codigo} (todas)`;
-        } else {
-          label = `${f.curso}\u00BA Curso \u00D7 Grupo ${f.letra}`;
-        }
-        html += `<span class="block-chip">${label}<button class="block-chip-remove" data-block-idx="${i}">\u00D7</button></span>`;
-      });
-      html += '</div>';
-    }
-
-    html += '<div class="block-filters-form">';
-    html += '<div class="block-filter-row">';
-    html += '<span class="block-filter-label">Asignatura:</span>';
-    html += '<select id="block-subject-select" class="block-filter-select">';
-    html += '<option value="">Seleccionar...</option>';
-    subjects.forEach(s => {
-      html += `<option value="${s.codigo}">${s.nombre} (${s.curso}\u00BA)</option>`;
-    });
-    html += '</select>';
-    html += '<select id="block-subject-group" class="block-filter-select"><option value="">Grupo</option></select>';
-    html += '<button class="btn btn-sm btn-primary" data-block-add="subject">+ Bloquear</button>';
-    html += '<button class="btn btn-sm btn-primary" data-block-add="subject-only">+ Bloquear Asig.</button>';
-    html += '</div>';
-
-    html += '<div class="block-filter-row">';
-    html += '<span class="block-filter-label">Curso:</span>';
-    html += '<select id="block-curso-select" class="block-filter-select">';
-    html += '<option value="">Seleccionar...</option>';
-    [1, 2, 3, 4].forEach(c => {
-      html += `<option value="${c}">${c}\u00BA Curso</option>`;
-    });
-    html += '</select>';
-    html += '<select id="block-curso-group" class="block-filter-select"><option value="">Grupo</option></select>';
-    html += '<button class="btn btn-sm btn-primary" data-block-add="curso">+ Bloquear Curso</button>';
-    html += '</div>';
-
-    html += '<div class="block-filter-row">';
-    html += '<span class="block-filter-label">M\u00E1x d\u00EDas:</span>';
-    html += '<label class="day-filter-label">Ma\u00F1ana:</label>';
-    html += '<input type="number" id="block-max-manana" class="block-filter-input" min="0" max="5" value="' + configMaxManana + '">';
-    html += '<label class="day-filter-label">Tarde:</label>';
-    html += '<input type="number" id="block-max-tarde" class="block-filter-input" min="0" max="5" value="' + configMaxTarde + '">';
-    html += '<button class="btn btn-sm btn-primary" id="btn-apply-day-filter">Aplicar</button>';
-    if (configMaxManana > 0 || configMaxTarde > 0) {
-      html += '<button class="btn btn-sm btn-danger" id="btn-clear-day-filter">Limpiar</button>';
-    }
-    html += '</div>';
-
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
-
-    panel.innerHTML = html;
-
-    panel.querySelector('#btn-toggle-block-filters').addEventListener('click', () => {
-      const body = panel.querySelector('.block-filters-body');
-      body.style.display = body.style.display === 'none' ? 'block' : 'none';
-    });
-
-    panel.querySelectorAll('.block-chip-remove').forEach(btn => {
-      btn.addEventListener('click', () => removeBlockFilter(parseInt(btn.dataset.blockIdx)));
-    });
-
-    panel.querySelectorAll('[data-block-add]').forEach(btn => {
-      btn.addEventListener('click', () => addBlockFilter(btn.dataset.blockAdd));
-    });
-
-    const subjectSelect = panel.querySelector('#block-subject-select');
-    const subjectGroup = panel.querySelector('#block-subject-group');
-    if (subjectSelect && subjectGroup) {
-      subjectSelect.addEventListener('change', () => {
-        const subj = subjects.find(s => s.codigo === subjectSelect.value);
-        if (subj) {
-          subjectGroup.innerHTML = '<option value="">Grupo</option>' +
-            subj.grupos.map(g => `<option value="${g.letra}">${g.letra} (${g.turno})</option>`).join('');
-        } else {
-          subjectGroup.innerHTML = '<option value="">Grupo</option>';
-        }
-      });
-    }
-
-    const cursoSelect = panel.querySelector('#block-curso-select');
-    const cursoGroup = panel.querySelector('#block-curso-group');
-    if (cursoSelect && cursoGroup) {
-      cursoSelect.addEventListener('change', () => {
-        const c = parseInt(cursoSelect.value);
-        if (c && cursoGroups[c]) {
-          cursoGroup.innerHTML = '<option value="">Grupo</option>' +
-            [...cursoGroups[c]].sort().map(g => `<option value="${g}">${g}</option>`).join('');
-        } else {
-          cursoGroup.innerHTML = '<option value="">Grupo</option>';
-        }
-      });
-    }
-
-    const applyDayBtn = panel.querySelector('#btn-apply-day-filter');
-    if (applyDayBtn) {
-      applyDayBtn.addEventListener('click', () => {
-        const mananaInput = panel.querySelector('#block-max-manana');
-        const tardeInput = panel.querySelector('#block-max-tarde');
-        configMaxManana = parseInt(mananaInput.value) || 0;
-        configMaxTarde = parseInt(tardeInput.value) || 0;
-        resetConfigsPage();
-        renderBlockFilters();
-        renderSavedConfigs();
-      });
-    }
-
-    const clearDayBtn = panel.querySelector('#btn-clear-day-filter');
-    if (clearDayBtn) {
-      clearDayBtn.addEventListener('click', () => {
-        configMaxManana = 0;
-        configMaxTarde = 0;
-        resetConfigsPage();
-        renderBlockFilters();
-        renderSavedConfigs();
-      });
-    }
+    const view = getBlockFiltersView();
+    if (view) view.render();
   }
 
-  function getEntriesForConfig(config) {
-    const savedSel = { ...state.selectedSubjects };
-    const savedGrp = JSON.parse(JSON.stringify(state.groupChoices));
-    state.selectedSubjects = { ...config.selectedSubjects };
-    state.groupChoices = JSON.parse(JSON.stringify(config.groupChoices));
-    const entries = getActiveSchedule();
-    state.selectedSubjects = savedSel;
-    state.groupChoices = savedGrp;
-    return entries;
+  /** Topes de días por turno: los posee la vista de bloqueos. */
+  function getConfigCeilings() {
+    const view = getBlockFiltersView();
+    return view ? view.getCeilings() : { maxManana: 0, maxTarde: 0 };
   }
 
-  function renderMiniCalendar(container, entries) {
-    let html = '<div class="cal-header"></div>';
-    DAYS.forEach(d => { html += `<div class="cal-header">${DAY_LABELS[d]}</div>`; });
-    for (let h = START_HOUR; h < END_HOUR; h++) {
-      html += `<div class="cal-time">${h}:00</div>`;
-      DAYS.forEach(dia => {
-        html += `<div class="cal-cell" data-dia="${dia}" data-hour="${h}"></div>`;
-      });
-    }
-    container.innerHTML = html;
-
-    entries.forEach(entry => {
-      const startMin = timeToMinutes(entry.inicio);
-      const endMin = timeToMinutes(entry.fin);
-      const startRow = Math.floor((startMin - START_HOUR * 60) / 60);
-      const topOffset = ((startMin - START_HOUR * 60) % 60) / 60 * 100;
-      const height = ((endMin - startMin) / 60) * 100;
-      const cell = container.querySelector(`.cal-cell[data-dia="${entry.dia}"][data-hour="${START_HOUR + startRow}"]`);
-      if (!cell) return;
-      const eventDiv = document.createElement('div');
-      eventDiv.className = 'cal-event';
-      eventDiv.dataset.subject = entry.codigo;
-      eventDiv.tabIndex = 0;
-      eventDiv.setAttribute('role', 'group');
-      // La etiqueta accesible vive en el feature ESM; sin feature el
-      // aria-label queda vacío (mismo no-op que el resto de delegaciones).
-      const calView = getCalendarViewFeature();
-      eventDiv.setAttribute('aria-label', calView ? calView.buildEventLabel(entry, false) : '');
-      eventDiv.style.top = topOffset + '%';
-      eventDiv.style.height = height + '%';
-      eventDiv.innerHTML = `<div class="event-label">${entry.codigo}</div><div class="event-type">${entry.tipo}</div>`;
-      if (entry.letra) {
-        // Con «Ignorar profesores» tampoco se pinta el punto de dificultad en
-        // las miniaturas: el modo es «no influye» **y** «no se muestra».
-        const diff = ignoreDocents ? null : getDificultad(entry.codigo, entry.letra);
-        if (diff) {
-          const dot = document.createElement('span');
-          dot.className = `event-diff-dot mini diff-${diff}`;
-          dot.title = getDificultadLabel(diff);
-          eventDiv.appendChild(dot);
-        }
-      }
-      cell.style.position = 'relative';
-      cell.appendChild(eventDiv);
-    });
-  }
-
+  // ─── Comparación ────────────────────────────────────────────
+  // La ventana con los mini-calendarios vive en su vista ESM; aquí quedan los
+  // disparadores que usa la tabla de configuraciones y el botón flotante (que la
+  // vista monta por su cuenta).
   function toggleCompareId(id) {
-    const idx = compareIds.indexOf(id);
-    if (idx >= 0) {
-      compareIds.splice(idx, 1);
-    } else if (compareIds.length < 4) {
-      compareIds.push(id);
-    }
-    // Mutación in-place sobre la caché: sin este push la selección a comparar
-    // solo viviría en memoria.
-    pushCompareIdsToStore();
-    updateCompareButton();
-    renderSavedConfigs();
-  }
-
-  function toggleFavorite(id) {
-    // Delegación: la lista de configuraciones la vive su vista ESM.
-    const view = getSavedConfigsView();
-    if (view) view.toggleFavorite(id);
+    const view = getCompareView();
+    if (view) view.toggle(id);
   }
 
   function updateCompareButton() {
-    const btn = document.getElementById('btn-compare-floating');
-    const countEl = document.getElementById('compare-count');
-    if (compareIds.length >= 2) {
-      btn.style.display = 'flex';
-      countEl.textContent = compareIds.length;
-    } else {
-      btn.style.display = 'none';
-    }
+    const view = getCompareView();
+    if (view) view.updateButton();
   }
 
   function openCompare(ids) {
-    const allConfigs = getDisplayConfigs();
-    const configs = ids.map(id => allConfigs.find(c => c.id === id)).filter(Boolean);
-    if (configs.length < 2) return;
+    const view = getCompareView();
+    if (view) view.open(ids);
+  }
 
-    const container = document.getElementById('compare-content');
-    let html = `<div class="compare-grid">`;
+  // Guardar, editar y borrar una configuración los vive la vista ESM: aquí solo
+  // queda el disparador (botón y Enter del campo de nombre).
+  function saveConfig() {
+    const view = getSavedConfigsView();
+    if (view) view.saveCurrent();
+  }
 
-    configs.forEach(cfg => {
-      html += `<div class="compare-side">`;
-      html += `<div class="compare-label">${cfg.name}</div>`;
-      html += `<div class="compare-calendar-wrap"><div class="compare-cal mini-calendar" data-cfg-id="${cfg.id}"></div></div>`;
-      html += `</div>`;
-    });
+  function loadConfig(id) {
+    const view = getSavedConfigsView();
+    if (view) view.load(id);
+  }
 
-    html += '</div>';
-    container.innerHTML = html;
+  function deleteConfig(id) {
+    const view = getSavedConfigsView();
+    if (view) view.remove(id);
+  }
 
-    configs.forEach(cfg => {
-      const calEl = container.querySelector(`.compare-cal[data-cfg-id="${cfg.id}"]`);
-      if (calEl) renderMiniCalendar(calEl, getEntriesForConfig(cfg));
-    });
-
-    document.getElementById('compare-modal').style.display = 'flex';
+  function renderSavedConfigs() {
+    const view = getSavedConfigsView();
+    if (view) view.render();
   }
 
   // ─── Conflict Detection ─────────────────────────────────────
@@ -952,88 +694,42 @@
     return getDomain().timeToMinutes(t);
   }
 
-  // ─── Professor Preferences Helpers ──────────────────────────
-  // Dos capas: `DOCENTES` son las **asignaciones** (qué profesor da
-  // la teoría de una letra de grupo o las prácticas de un subgrupo) y
-  // `PROFESORES` son los **perfiles** del volcado, uno por (asignatura,
-  // modalidad, nombre). El perfil no cuelga de la asignación: se busca por la
-  // terna, con la misma clave que construye `profesorKey` en
-  // `src/solver/catalog.js`. Así la asignación es del usuario y el perfil de la
-  // hoja, y ninguno de los dos duplica al otro.
-  function getProfKey(codigo, letra) {
-    return codigo + '-' + letra;
-  }
+  // ─── Índice de docentes ─────────────────────────────────────
+  // Las dos capas del dato (asignaciones y perfiles) y su fusión —manda la tuya—
+  // viven en `src/app/docentes.js`. Aquí quedan los accesos que usan el render y
+  // las vistas (que se los llevan inyectados), y la caché de valoraciones, que es
+  // la fuente con la que el índice rehace la fusión.
+  let ugrDocentIndex = null;
 
-  function getProfesorKey(asignacion) {
-    return asignacion.subjectCode + '|' + (asignacion.modalidad || 'Teoría') + '|' + asignacion.name;
-  }
-
-  function indexByKey(list, keyOf) {
-    return (Array.isArray(list) ? list : []).reduce((acc, entry) => {
-      const key = keyOf(entry);
-      if (key) acc[key] = entry;
-      return acc;
-    }, {});
-  }
-
-  const docentesByKey = indexByKey(typeof DOCENTES !== 'undefined' ? DOCENTES : [], d => d && d.key);
-  const profesoresByKey = indexByKey(typeof PROFESORES !== 'undefined' ? PROFESORES : [], p => p && p.key);
-  /**
-   * La base del catálogo activo, sin las valoraciones propias. `profesoresByKey`
-   * es la **fusión** que lee el render, así que para rehacerla —al cambiar de
-   * catálogo o al guardar/borrar una valoración— hace falta poder volver a la
-   * base en vez de ir acumulando superposiciones.
-   */
-  const catalogoProfesoresByKey = {};
-  /**
-   * Valoraciones propias: las que añade el usuario en la pestaña de datos.
-   * Viven en la tabla `reviews` del store y esta es la caché que lee el render;
-   * se recargan al arrancar y tras cada alta, edición, borrado o importación.
-   */
+  /** Valoraciones propias: la caché que lee el índice y la pestaña de datos. */
   let ownReviews = [];
-  let ownReviewKeys = new Set();
-  /** Nombres con alguna valoración: los que pueden abrir ficha. */
-  const nombresConFicha = new Set(
-    Object.keys(profesoresByKey).map(key => profesoresByKey[key]).filter(p => p && p.name).map(p => p.name),
-  );
 
   function getDocentInfo(key) {
-    return docentesByKey[key] || null;
+    return ugrDocentIndex ? ugrDocentIndex.getDocent(key) : null;
   }
 
-  /**
-   * Perfil del profesor asignado a un grupo (teoría) o subgrupo (prácticas).
-   * `null` cuando no hay asignación o cuando el volcado no trae perfil para esa
-   * terna —los 10 nombres del maestro antiguo que no están en la hoja—, que es
-   * «sin dificultad», no «difícil».
-   */
   function getProfesorInfo(codigo, letra) {
-    const asignacion = getDocentInfo(getProfKey(codigo, letra));
-    if (!asignacion) return null;
-    return profesoresByKey[getProfesorKey(asignacion)] || null;
-  }
-
-  function getDifficultyScore(dificultad) {
-    const api = typeof window !== 'undefined' && window.__ugrCatalog ? window.__ugrCatalog : null;
-    // Sin catálogo no se inventa un peso: «sin puntuación» (`null`) es un valor
-    // legítimo que el motor y las métricas entienden.
-    if (api && typeof api.difficultyScore === 'function') return api.difficultyScore(dificultad);
-    return null;
-  }
-
-  /** Perfiles del catálogo activo como lista: el índice es por clave. */
-  function profesoresList() {
-    return Object.keys(profesoresByKey).map(key => profesoresByKey[key]);
+    return ugrDocentIndex ? ugrDocentIndex.getProfesor(codigo, letra) : null;
   }
 
   function getProfName(codigo, letra) {
-    const asignacion = getDocentInfo(getProfKey(codigo, letra));
-    return asignacion && asignacion.name ? asignacion.name : '';
+    return ugrDocentIndex ? ugrDocentIndex.getProfName(codigo, letra) : '';
   }
 
   function getDificultad(codigo, letra) {
-    const info = getProfesorInfo(codigo, letra);
-    return info && info.dificultad ? info.dificultad : null;
+    return ugrDocentIndex ? ugrDocentIndex.getDificultad(codigo, letra) : null;
+  }
+
+  function getDifficultyScore(dificultad) {
+    return ugrDocentIndex ? ugrDocentIndex.getDifficultyScore(dificultad) : null;
+  }
+
+  function profesoresList() {
+    return ugrDocentIndex ? ugrDocentIndex.profesoresList() : [];
+  }
+
+  function hasFicha(nombre) {
+    return ugrDocentIndex ? ugrDocentIndex.hasFicha(nombre) : false;
   }
 
   // La escala (etiquetas y color) la decide el dominio: aquí solo se pregunta.
@@ -1059,164 +755,12 @@
   }
 
   // ─── Render Group Config ────────────────────────────────────
+  // El panel de grupos (elección de teoría y de subgrupo, con el profesor de
+  // cada uno) vive en la vista ESM; aquí queda el disparador que usa el resto
+  // del monolito.
   function renderGroupConfig() {
-    const panel = document.getElementById('group-config');
-    const content = document.getElementById('group-config-content');
-    const toggleBtn = document.getElementById('toggle-group-config');
-    const selectedCodes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
-
-    if (selectedCodes.length === 0) {
-      panel.style.display = 'none';
-      toggleBtn.style.display = 'none';
-      return;
-    }
-
-    toggleBtn.style.display = 'inline-flex';
-    let html = '<div class="group-config-grid">';
-    // ¿Hay algún nombre de la guía sin valoración? Entonces se explica arriba
-    // de dónde salen los nombres, porque si no parecen «inventados».
-    let haySinValoracion = false;
-
-    selectedCodes.forEach(codigo => {
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      const choice = state.groupChoices[codigo];
-
-      html += `<div class="group-config-item">`;
-      html += `<h3>${subject.codigo}</h3>`;
-      html += `<div class="group-config-columns">`;
-
-      // Theory column
-      html += `<div class="group-config-col">`;
-      html += `<div class="group-config-col-label">Teoría</div>`;
-      subject.grupos.forEach(group => {
-        const isSelected = choice && choice.teoria === group.letra;
-        const isPreferred = state.turnoPreferente !== 'indiferente' && group.turno === state.turnoPreferente;
-
-        html += `<div class="group-option ${isSelected ? 'selected' : ''} ${isPreferred ? 'preferred' : ''}" `;
-        html += `data-codigo="${codigo}" data-letra="${group.letra}" data-type="teoria">`;
-        html += `<input type="radio" name="teoria-${codigo}" ${isSelected ? 'checked' : ''}>`;
-        html += `<div class="group-info">`;
-        const profName = getProfName(codigo, group.letra);
-
-        html += `<div class="group-label">G${group.letra} <span style="font-weight:400;color:#888;font-size:0.65rem;">${group.turno}</span></div>`;
-        html += `<div class="group-schedule">`;
-        group.teoria.forEach(s => {
-          html += `<span class="session">${DAY_LABELS[s.dia].substr(0, 3)} ${s.inicio}</span>`;
-        });
-        if (group.teoria.length === 0) {
-          html += `<span class="session" style="color:#999;">-</span>`;
-        }
-        html += `</div>`;
-        // Con «Ignorar profesores» el bloque del profesor no se pinta: el modo
-        // apaga también la parte informativa, no solo el peso en el coste.
-        //
-        // El bloque se queda corto a propósito: el nombre, que abre la ficha, y
-        // la insignia de dificultad. La razón, las opiniones y los comentarios
-        // viven en la ficha. El nombre solo es un botón cuando hay ficha que
-        // abrir, es decir, cuando el catálogo activo trae perfil para esa terna.
-        if (profName && !ignoreDocents) {
-          const diff = getDificultad(codigo, group.letra);
-          const nombre = escapeCatalogText(profName);
-          const conFicha = nombresConFicha.has(profName);
-          if (!conFicha) haySinValoracion = true;
-          html += `<div class="group-profesor">`;
-          if (conFicha) {
-            html += `<button type="button" class="prof-name-btn" data-prof-name="${nombre}"`
-              + ` data-prof-codigo="${codigo}" data-prof-modalidad="Teoría">${nombre}</button>`;
-          } else {
-            html += `<span class="prof-name">${nombre}</span>`;
-          }
-          if (diff) {
-            html += `<span class="dificultad-badge ${dificultadClase(diff)}">${getDificultadLabel(diff)}</span>`;
-          }
-          html += `</div>`;
-        }
-        html += `</div></div>`;
-      });
-      html += `</div>`;
-
-      // Practice column
-      if (choice) {
-        const selectedGroup = subject.grupos.find(g => g.letra === choice.teoria);
-        if (selectedGroup && selectedGroup.practicas && selectedGroup.practicas.subgrupos.length > 0) {
-          html += `<div class="group-config-col">`;
-          html += `<div class="group-config-col-label">Práctica</div>`;
-          selectedGroup.practicas.subgrupos.forEach(sub => {
-            const isCurrentPractica = choice.practica === sub;
-            const sessions = selectedGroup.practicas[sub] || [];
-            const subgrupoNum = parseInt(sub.replace(/[A-Z]/g, ''));
-            const apellidoNum = getSubgrupoForApellido(state.apellido);
-            const isAutoSelected = apellidoNum && subgrupoNum === apellidoNum;
-
-            html += `<div class="group-option ${isCurrentPractica ? 'selected' : ''} ${isAutoSelected ? 'preferred-practica' : ''}" `;
-            html += `data-codigo="${codigo}" data-sub="${sub}" data-type="practica">`;
-            html += `<input type="radio" name="practica-${codigo}" ${isCurrentPractica ? 'checked' : ''}>`;
-            html += `<div class="group-info">`;
-            html += `<div class="group-label">${sub} ${isAutoSelected ? '<span style="color:#28a745;font-size:0.6rem;">auto</span>' : ''}</div>`;
-            html += `<div class="group-schedule">`;
-            sessions.forEach(s => {
-              html += `<span class="session practice">${DAY_LABELS[s.dia].substr(0, 3)} ${s.inicio}</span>`;
-            });
-            if (sessions.length === 0) {
-              html += `<span class="session practice" style="color:#999;">-</span>`;
-            }
-            html += `</div>`;
-            // La columna de prácticas dice también quién la da: la dificultad es
-            // por modalidad, así que la de prácticas no tiene por qué coincidir
-            // con la de teoría del mismo grupo.
-            const profPracticas = getProfName(codigo, sub);
-            if (profPracticas && !ignoreDocents) {
-              const diffPracticas = getDificultad(codigo, sub);
-              const nombrePracticas = escapeCatalogText(profPracticas);
-              const conFichaPracticas = nombresConFicha.has(profPracticas);
-              if (!conFichaPracticas) haySinValoracion = true;
-              html += `<div class="group-profesor">`;
-              if (conFichaPracticas) {
-                html += `<button type="button" class="prof-name-btn" data-prof-name="${nombrePracticas}"`
-                  + ` data-prof-codigo="${codigo}" data-prof-modalidad="Prácticas">${nombrePracticas}</button>`;
-              } else {
-                html += `<span class="prof-name">${nombrePracticas}</span>`;
-              }
-              if (diffPracticas) {
-                html += `<span class="dificultad-badge ${dificultadClase(diffPracticas)}">${getDificultadLabel(diffPracticas)}</span>`;
-              }
-              html += `</div>`;
-            }
-            html += `</div></div>`;
-          });
-          html += `</div>`;
-        }
-      }
-
-      html += `</div></div>`;
-    });
-
-    html += '</div>';
-    content.innerHTML = (haySinValoracion
-      ? '<p class="group-config-hint">Los nombres de los profesores son los de las <strong>guías oficiales</strong> de la ETSIIT. Los que aparecen <strong>sin insignia</strong> todavía no tienen valoración: no están inventados.</p>'
-      : '') + html;
-
-    // Bind events
-    content.querySelectorAll('.group-option').forEach(opt => {
-      opt.addEventListener('click', (e) => {
-        const codigo = opt.dataset.codigo;
-        if (opt.dataset.type === 'teoria') {
-          state.groupChoices[codigo].teoria = opt.dataset.letra;
-          const subject = SUBJECTS.find(s => s.codigo === codigo);
-          const group = subject.grupos.find(g => g.letra === opt.dataset.letra);
-          if (group && group.practicas && group.practicas.subgrupos.length > 0) {
-            state.groupChoices[codigo].practica = group.practicas.subgrupos[0];
-          } else {
-            state.groupChoices[codigo].practica = null;
-          }
-        } else {
-          state.groupChoices[codigo].practica = opt.dataset.sub;
-        }
-        saveState();
-        updateAll();
-      });
-    });
+    const view = getGroupConfigView();
+    if (view) view.render();
   }
 
   // ─── Ficha del profesor y listado del claustro ──────────────
@@ -1228,113 +772,14 @@
     if (view) view.renderList();
   }
 
-  // Ficha de asignatura: dificultad y descripción del plan, por modalidad.
-  let asignaturaFichaOpener = null;
-  let asignaturaFichaBound = false;
-
   // ─── Ficha de asignatura ───────────────────────────────────
-  // Dificultad y descripción del **plan** (por modalidad), que no son del
-  // profesor y no se pintaban en ningún sitio. Solo las trae el catálogo
-  // completo (el archivo con contraseña); la muestra devuelve la ficha vacía.
-  function asignaturaModalEls() {
-    return {
-      modal: document.getElementById('asignatura-modal'),
-      title: document.getElementById('asignatura-modal-title'),
-      body: document.getElementById('asignatura-modal-body'),
-      close: document.getElementById('asignatura-modal-close'),
-    };
-  }
-
-  function asignaturaFichaHtml(ficha) {
-    let html = '<div class="asignatura-ficha">';
-    const meta = [
-      ficha.codigo,
-      ficha.curso ? `${ficha.curso}º curso` : '',
-      ficha.cuatrimestre ? `${ficha.cuatrimestre}º cuatrimestre` : '',
-      ficha.creditos ? `${ficha.creditos} ECTS` : '',
-    ]
-      .filter(Boolean)
-      .join(' · ');
-    if (meta) html += `<p class="asignatura-ficha-meta">${escapeCatalogText(meta)}</p>`;
-
-    const plan = [ficha.caracter, ficha.mencion ? `Mención ${ficha.mencion}` : '']
-      .filter(Boolean)
-      .join(' · ');
-    if (plan) html += `<p class="asignatura-ficha-plan">${escapeCatalogText(plan)}</p>`;
-
-    if (ficha.dificultades.length) {
-      html += '<h3 class="asignatura-ficha-sub">Dificultad de la asignatura</h3>';
-      ficha.dificultades.forEach((d) => {
-        html += '<div class="asignatura-ficha-row">'
-          + `<span class="asignatura-ficha-modalidad">${escapeCatalogText(d.modalidad)}</span>`
-          + `${dificultadBadgeHtml(d.clave)}</div>`;
-      });
-    }
-
-    if (ficha.descripciones.length) {
-      html += '<h3 class="asignatura-ficha-sub">Descripción</h3>';
-      ficha.descripciones.forEach((d) => {
-        html += '<div class="asignatura-ficha-row is-block">'
-          + `<span class="asignatura-ficha-modalidad">${escapeCatalogText(d.modalidad)}</span>`
-          + `<p class="asignatura-ficha-texto">${escapeCatalogText(d.texto)}</p></div>`;
-      });
-    }
-
-    if (!ficha.dificultades.length && !ficha.descripciones.length) {
-      html += '<p class="asignatura-ficha-vacio">Esta asignatura no trae dificultad ni descripción. '
-        + 'Solo vienen con el catálogo completo (el archivo con contraseña).</p>';
-    }
-
-    html += '</div>';
-    return html;
-  }
-
+  // La ventana con la dificultad y la descripción del plan vive en la vista ESM,
+  // que escucha las peticiones de las tarjetas de materia
+  // (`ugr:openAsignatura`). La lista de datos, en cambio, la pide por callback:
+  // de ahí este disparador.
   function openAsignaturaFicha(codigo, opener) {
-    const els = asignaturaModalEls();
-    if (!els.modal || !els.title || !els.body || !codigo) return;
-    const subject = SUBJECTS.find(s => s.codigo === codigo);
-    if (!subject) return;
-    const ficha = getDomain().buildAsignaturaFicha(subject);
-    els.title.textContent = ficha.nombre || ficha.codigo;
-    els.body.innerHTML = asignaturaFichaHtml(ficha);
-    asignaturaFichaOpener = opener || null;
-    els.modal.hidden = false;
-    if (els.close) els.close.focus();
-  }
-
-  function closeAsignaturaFicha() {
-    const els = asignaturaModalEls();
-    if (!els.modal || els.modal.hidden) return;
-    els.modal.hidden = true;
-    const opener = asignaturaFichaOpener;
-    asignaturaFichaOpener = null;
-    // El foco vuelve a quien abrió la ficha si el nodo sigue vivo (los paneles
-    // se repintan enteros; el botón puede haber muerto).
-    if (opener && document.contains(opener) && typeof opener.focus === 'function') opener.focus();
-  }
-
-  function setupAsignaturaFicha() {
-    const els = asignaturaModalEls();
-    if (!els.modal) return;
-    if (els.close) els.close.addEventListener('click', closeAsignaturaFicha);
-    els.modal.addEventListener('click', (e) => {
-      if (e.target === els.modal) closeAsignaturaFicha();
-    });
-    els.modal.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeAsignaturaFicha();
-      }
-    });
-    // La tarjeta de materia vive en la vista ESM (features/subjects.js), que no
-    // puede llamar a este cierre: pide la ficha con un evento.
-    if (!asignaturaFichaBound) {
-      document.addEventListener('ugr:openAsignatura', (e) => {
-        const codigo = e.detail && e.detail.codigo;
-        if (codigo) openAsignaturaFicha(codigo, null);
-      });
-      asignaturaFichaBound = true;
-    }
+    const view = getAsignaturaFichaView();
+    if (view) view.open(codigo, opener);
   }
 
   // ─── Render Calendar ───────────────────────────────────────
@@ -1348,83 +793,28 @@
     if (feature) feature.render();
   }
 
-  // ─── Render Conflicts ──────────────────────────────────────
+  // ─── Render Conflicts y resumen ────────────────────────────
+  // El panel del resumen, la lista de conflictos, la barra de contadores y el
+  // estado de los botones viven en la vista ESM; aquí quedan los disparadores que
+  // usa `updateAll`.
   function renderConflicts() {
-    const panel = document.getElementById('conflicts-panel');
-    const list = document.getElementById('conflicts-list');
-    if (!panel || !list) return;
-
-    panel.classList.toggle('has-conflicts', conflicts.length > 0);
-
-    if (conflicts.length === 0) {
-      list.innerHTML = '<p class="empty-state">Sin conflictos.</p>';
-      return;
-    }
-
-    let html = '';
-    conflicts.forEach(c => {
-      html += `<div class="conflict-item">`;
-      html += `<div class="conflict-icon">⚠</div>`;
-      html += `<div class="conflict-details">`;
-      html += `<strong>${c.nombre1}</strong> ${c.tipo1} `;
-      html += `(<span>${DAY_LABELS[c.dia]} ${c.inicio}-${c.fin}</span>) `;
-      html += `se solapa con `;
-      html += `<strong>${c.nombre2}</strong> ${c.tipo2}`;
-      html += `</div></div>`;
-    });
-
-    list.innerHTML = html;
+    const view = getSummaryView();
+    if (view) view.renderConflicts();
   }
 
-  // ─── Render Summary ────────────────────────────────────────
   function renderSummary() {
-    const content = document.getElementById('summary-content');
-    // La regla (créditos, horas y turno de la selección) vive en el dominio; aquí
-    // solo se pinta.
-    const summary = getDomain().buildSelectionSummary(state.selectedSubjects, state.groupChoices, SUBJECTS);
-
-    if (summary.count === 0) {
-      content.innerHTML = '<p class="empty-state">Selecciona asignaturas para ver el resumen.</p>';
-      return;
-    }
-
-    const tags = summary.codes
-      .filter(codigo => SUBJECTS.some(s => s.codigo === codigo))
-      .map(codigo => `<span class="summary-subject-tag">${codigo}</span>`);
-
-    // Clase y texto del turno: el dominio dice **cuál** es; cómo se ve es de aquí.
-    const TURNO_BADGE = {
-      'mañana': ['mañana', 'Turno: Mañana'],
-      'tarde': ['tarde', 'Turno: Tarde'],
-      'mixto': ['mixed', 'Turno: Mixto'],
-    };
-    const turno = TURNO_BADGE[summary.turno];
-
-    let html = `<div class="summary-grid">`;
-    html += `<div class="summary-stat"><div class="stat-value">${summary.count}</div><div class="stat-label">Asignaturas</div></div>`;
-    html += `<div class="summary-stat"><div class="stat-value">${summary.credits}</div><div class="stat-label">Créditos ECTS</div></div>`;
-    html += `<div class="summary-stat"><div class="stat-value">${summary.hours.toFixed(1)}h</div><div class="stat-label">Horas/semana</div></div>`;
-    html += `<div class="summary-stat"><div class="stat-value">${conflicts.length}</div><div class="stat-label">Conflictos</div></div>`;
-    html += `</div>`;
-
-    if (turno) {
-      html += `<div style="text-align:center;margin-bottom:0.8rem;"><span class="turno-badge ${turno[0]}">${turno[1]}</span></div>`;
-    }
-
-    html += `<div class="summary-subjects">${tags.join('')}</div>`;
-
-    content.innerHTML = html;
+    const view = getSummaryView();
+    if (view) view.renderSummary();
   }
 
-  // ─── Summary Bar ────────────────────────────────────────────
   function updateSummaryBar() {
-    const summary = getDomain().buildSelectionSummary(state.selectedSubjects, state.groupChoices, SUBJECTS);
-    document.getElementById('selected-count').textContent = summary.count;
-    document.getElementById('total-credits').textContent = summary.credits;
+    const view = getSummaryView();
+    if (view) view.updateSummaryBar();
+  }
 
-    const meta = document.getElementById('credit-meta');
-    meta.textContent = summary.credits >= 30 ? `(meta: 30 ✓)` : `(meta: 30)`;
-    meta.classList.toggle('over', summary.credits > 30);
+  function updateButtons() {
+    const view = getSummaryView();
+    if (view) view.updateButtons();
   }
 
   // ─── Buttons ────────────────────────────────────────────────
@@ -1453,7 +843,6 @@
   }
 
   function setupActions() {
-    setupAsignaturaFicha();
     document.getElementById('btn-export').addEventListener('click', exportCalendar);
     document.getElementById('btn-share').addEventListener('click', shareLink);
     document.getElementById('btn-clear-selected').addEventListener('click', clearSelected);
@@ -1486,38 +875,13 @@
       document.getElementById('import-config-input').click();
     });
     document.getElementById('import-config-input').addEventListener('change', importSavedConfig);
-    document.getElementById('compare-modal-close').addEventListener('click', () => {
-      document.getElementById('compare-modal').style.display = 'none';
-    });
-    document.getElementById('compare-modal').addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) e.target.style.display = 'none';
-    });
-    document.getElementById('btn-compare-floating').addEventListener('click', () => {
-      if (compareIds.length >= 2) {
-        openCompare(compareIds);
-        compareIds = [];
-        pushCompareIdsToStore();
-        updateCompareButton();
-        renderSavedConfigs();
-      }
-    });
-    setupGroupConfigToggle();
+    // La ventana de comparar (y su botón flotante) la monta su vista ESM.
+
     // Los toggles semana/lista y compacto los gestiona el feature ESM
     // (listeners idempotentes: un `init()` repetido no los duplica).
     const calView = getCalendarViewFeature();
     if (calView) calView.mount();
     renderSavedConfigs();
-  }
-
-  function setupGroupConfigToggle() {
-    const btn = document.getElementById('toggle-group-config');
-    btn.addEventListener('click', () => {
-      const panel = document.getElementById('group-config');
-      const isOpen = panel.style.display !== 'none';
-      panel.style.display = isOpen ? 'none' : 'block';
-      btn.classList.toggle('open', !isOpen);
-      btn.querySelector('.toggle-icon').innerHTML = isOpen ? '&#9660;' : '&#9650;';
-    });
   }
 
   // ─── Export ─────────────────────────────────────────────────
@@ -1980,58 +1344,12 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  /**
-   * Rehace los dos índices del profesor con lo que sirva el catálogo activo:
-   * las asignaciones y los perfiles. Se vacían en sitio porque son `const` que
-   * comparten los ayudantes del profesor (no se reasigna la referencia).
-   *
-   * @param {Array} docents asignaciones.
-   * @param {Array} profesores perfiles.
-   */
-  function rebuildDocentIndexes(docents, profesores) {
-    Object.keys(docentesByKey).forEach(key => { delete docentesByKey[key]; });
-    (Array.isArray(docents) ? docents : []).forEach(d => {
-      if (d && d.key) docentesByKey[d.key] = d;
-    });
-    Object.keys(catalogoProfesoresByKey).forEach(key => { delete catalogoProfesoresByKey[key]; });
-    (Array.isArray(profesores) ? profesores : []).forEach(p => {
-      if (p && p.key) catalogoProfesoresByKey[p.key] = p;
-    });
-    rebuildProfesoresIndex();
-  }
-
-  /**
-   * Rehace el índice de perfiles que lee el render: el catálogo activo con las
-   * valoraciones propias por encima —para la misma (asignatura, modalidad,
-   * nombre) manda la tuya—. Es idempotente y se puede llamar tantas veces como
-   * haga falta: parte siempre de la base y de la lista de propias.
-   */
-  function rebuildProfesoresIndex() {
-    Object.keys(profesoresByKey).forEach(key => { delete profesoresByKey[key]; });
-    nombresConFicha.clear();
-    const add = p => {
-      if (!p || !p.key) return;
-      profesoresByKey[p.key] = p;
-      // La ficha agrupa todo lo que se sabe de un profesor, así que se abre
-      // aunque no haya valoración de *esta* asignatura: si tiene alguna en otra,
-      // el nombre es un botón y la ficha la enseña.
-      if (p.name) nombresConFicha.add(p.name);
-    };
-    Object.keys(catalogoProfesoresByKey).forEach(key => add(catalogoProfesoresByKey[key]));
-    ownReviews.forEach(review => add(getDomain().ownReviewToProfesor(review)));
-    ownReviewKeys = new Set(ownReviews.map(r => r.docentKey).filter(Boolean));
-  }
-
-  /**
-   * Lee las valoraciones propias del store y rehace el índice con ellas. Sin
-   * IndexedDB no hay nada que leer y la app se queda con el catálogo a secas.
-   */
   async function loadOwnReviews() {
     const store = __getStore();
     if (store && typeof store.listReviews === 'function') {
       try { ownReviews = await store.listReviews(); } catch (e) { ownReviews = []; }
     }
-    rebuildProfesoresIndex();
+    if (ugrDocentIndex) ugrDocentIndex.setReviews(ownReviews);
   }
 
   function syncFromActiveCatalog() {
@@ -2058,10 +1376,12 @@
 
     SUBJECTS.length = 0;
     incoming.forEach(s => SUBJECTS.push(s));
-    rebuildDocentIndexes(
-      typeof api.getDocents === 'function' ? api.getDocents() : [],
-      typeof api.getProfesores === 'function' ? api.getProfesores() : [],
-    );
+    if (ugrDocentIndex) {
+      ugrDocentIndex.rebuild(
+        typeof api.getDocents === 'function' ? api.getDocents() : [],
+        typeof api.getProfesores === 'function' ? api.getProfesores() : [],
+      );
+    }
 
     DEFAULT_SUBJECTS.length = 0;
     incoming.forEach(s => DEFAULT_SUBJECTS.push(cloneCatalogValue(s)));
@@ -2428,7 +1748,7 @@
             getExtraConfigs: () => (getSolverView() ? getSolverView().getResults() : []),
             weekdays: DAYS,
             getBlocks,
-            getCeilings: () => ({ maxManana: configMaxManana, maxTarde: configMaxTarde }),
+            getCeilings: getConfigCeilings,
             getCompareIds: () => compareIds,
             // Con «Ignorar profesores» se inyecta un lookup vacío, igual que en
             // el resto de la app: la columna «Prof» queda a hueco.
@@ -2498,6 +1818,231 @@
   function setupManageSubjectsView() {
     const view = getManageSubjectsView();
     if (view) view.setup();
+  }
+
+  // ─── Composición ESM: el índice de docentes ────────────────
+  // Mismo patrón de import dinámico con instancia y promesa cacheadas. Se monta
+  // al principio de `init` porque las vistas lo reciben por getter.
+  let ugrDocentInitPromise = null;
+
+  function ensureDocentIndex() {
+    if (ugrDocentIndex) return Promise.resolve(ugrDocentIndex);
+    if (!ugrDocentInitPromise) {
+      ugrDocentInitPromise = import('./src/app/docentes.js')
+        .then(({ createDocentIndex }) => {
+          ugrDocentIndex = createDocentIndex({
+            docents: typeof DOCENTES !== 'undefined' ? DOCENTES : [],
+            profesores: typeof PROFESORES !== 'undefined' ? PROFESORES : [],
+            catalogApi: getCatalogApi,
+          });
+          return ugrDocentIndex;
+        })
+        .catch((err) => {
+          console.error('[ugr] el índice de docentes no pudo iniciarse', err);
+          ugrDocentInitPromise = null;
+          return null;
+        });
+    }
+    return ugrDocentInitPromise;
+  }
+
+  // ─── Features ESM: los bloqueos ────────────────────────────
+  // Mismo patrón: import dinámico con instancia y promesa cacheadas.
+  let ugrBlockFiltersView = null;
+  let ugrBlockFiltersInitPromise = null;
+
+  function getBlockFiltersView() {
+    return ugrBlockFiltersView;
+  }
+
+  function ensureBlockFiltersView() {
+    if (ugrBlockFiltersView) return Promise.resolve(ugrBlockFiltersView);
+    if (!ugrBlockFiltersInitPromise) {
+      ugrBlockFiltersInitPromise = import('./src/app/features/blockFilters.js')
+        .then(({ createBlockFiltersView }) => {
+          ugrBlockFiltersView = createBlockFiltersView({
+            document,
+            getSubjects: () => SUBJECTS,
+            getBlocks,
+            dispatchBlock,
+            onFiltersChanged: () => {
+              resetConfigsPage();
+              renderSavedConfigs();
+            },
+          });
+          ugrBlockFiltersView.setup();
+          return ugrBlockFiltersView;
+        })
+        .catch((err) => {
+          console.error('[ugr] block filters view no pudo iniciarse', err);
+          ugrBlockFiltersInitPromise = null;
+          return null;
+        });
+    }
+    return ugrBlockFiltersInitPromise;
+  }
+
+  // ─── Features ESM: la comparación ──────────────────────────
+  // Mismo patrón. La marca de lo que se compara sigue siendo del monolito (vive
+  // en el store); la vista la lee y avisa por intent cuando cambia.
+  let ugrCompareView = null;
+  let ugrCompareInitPromise = null;
+
+  function getCompareView() {
+    return ugrCompareView;
+  }
+
+  function ensureCompareView() {
+    if (ugrCompareView) return Promise.resolve(ugrCompareView);
+    if (!ugrCompareInitPromise) {
+      ugrCompareInitPromise = import('./src/app/features/compare.js')
+        .then(({ createCompareView }) => {
+          const calView = getCalendarViewFeature();
+          ugrCompareView = createCompareView({
+            document,
+            getSubjects: () => SUBJECTS,
+            getDisplayConfigs,
+            getCompareIds: () => compareIds,
+            onCompareChanged: () => {
+              pushCompareIdsToStore();
+              updateCompareButton();
+              renderSavedConfigs();
+            },
+            onCompareDone: () => {
+              compareIds = [];
+              pushCompareIdsToStore();
+              updateCompareButton();
+              renderSavedConfigs();
+            },
+            dayLabels: DAY_LABELS,
+            weekdays: DAYS,
+            startHour: START_HOUR,
+            endHour: END_HOUR,
+            getDificultad,
+            getDificultadLabel,
+            isIgnoringDocents: () => ignoreDocents,
+            buildEventLabel: calView ? (entry, mini) => calView.buildEventLabel(entry, mini) : null,
+          });
+          ugrCompareView.setup();
+          return ugrCompareView;
+        })
+        .catch((err) => {
+          console.error('[ugr] compare view no pudo iniciarse', err);
+          ugrCompareInitPromise = null;
+          return null;
+        });
+    }
+    return ugrCompareInitPromise;
+  }
+
+  // ─── Features ESM: el resumen de la selección ──────────────
+  // Mismo patrón: import dinámico con instancia y promesa cacheadas.
+  let ugrSummaryView = null;
+  let ugrSummaryInitPromise = null;
+
+  function getSummaryView() {
+    return ugrSummaryView;
+  }
+
+  function ensureSummaryView() {
+    if (ugrSummaryView) return Promise.resolve(ugrSummaryView);
+    if (!ugrSummaryInitPromise) {
+      ugrSummaryInitPromise = import('./src/app/features/summary.js')
+        .then(({ createSummaryView }) => {
+          ugrSummaryView = createSummaryView({
+            document,
+            getState: () => state,
+            getSubjects: () => SUBJECTS,
+            getConflicts: () => conflicts,
+            dayLabels: DAY_LABELS,
+            onUpdateControlPanel: updateControlPanel,
+          });
+          return ugrSummaryView;
+        })
+        .catch((err) => {
+          console.error('[ugr] summary view no pudo iniciarse', err);
+          ugrSummaryInitPromise = null;
+          return null;
+        });
+    }
+    return ugrSummaryInitPromise;
+  }
+
+  // ─── Features ESM: la ficha de asignatura ──────────────────
+  // Mismo patrón: import dinámico con instancia y promesa cacheadas.
+  let ugrAsignaturaFichaView = null;
+  let ugrAsignaturaFichaInitPromise = null;
+
+  function getAsignaturaFichaView() {
+    return ugrAsignaturaFichaView;
+  }
+
+  function ensureAsignaturaFichaView() {
+    if (ugrAsignaturaFichaView) return Promise.resolve(ugrAsignaturaFichaView);
+    if (!ugrAsignaturaFichaInitPromise) {
+      ugrAsignaturaFichaInitPromise = import('./src/app/features/asignaturaFicha.js')
+        .then(({ createAsignaturaFichaView }) => {
+          ugrAsignaturaFichaView = createAsignaturaFichaView({
+            document,
+            getSubjects: () => SUBJECTS,
+            escape: escapeCatalogText,
+            dificultadBadgeHtml,
+          });
+          ugrAsignaturaFichaView.setup();
+          return ugrAsignaturaFichaView;
+        })
+        .catch((err) => {
+          console.error('[ugr] asignatura ficha view no pudo iniciarse', err);
+          ugrAsignaturaFichaInitPromise = null;
+          return null;
+        });
+    }
+    return ugrAsignaturaFichaInitPromise;
+  }
+
+  // ─── Features ESM: el panel de grupos ──────────────────────
+  // Mismo patrón: import dinámico con instancia y promesa cacheadas. La vista
+  // solo pinta y encola la elección; el apellido y los docentes entran por
+  // getter, que cambian en caliente.
+  let ugrGroupConfigView = null;
+  let ugrGroupConfigInitPromise = null;
+
+  function getGroupConfigView() {
+    return ugrGroupConfigView;
+  }
+
+  function ensureGroupConfigView() {
+    if (ugrGroupConfigView) return Promise.resolve(ugrGroupConfigView);
+    if (!ugrGroupConfigInitPromise) {
+      ugrGroupConfigInitPromise = import('./src/app/features/groupConfig.js')
+        .then(({ createGroupConfigView }) => {
+          ugrGroupConfigView = createGroupConfigView({
+            document,
+            getState: () => state,
+            getSubjects: () => SUBJECTS,
+            dayLabels: DAY_LABELS,
+            getProfName,
+            getDificultad,
+            dificultadBadgeHtml,
+            hasFicha,
+            isIgnoringDocents: () => ignoreDocents,
+            escape: escapeCatalogText,
+            getSubgrupoForApellido,
+            onGroupChosen: () => {
+              saveState();
+              updateAll();
+            },
+          });
+          ugrGroupConfigView.setup();
+          return ugrGroupConfigView;
+        })
+        .catch((err) => {
+          console.error('[ugr] group config view no pudo iniciarse', err);
+          ugrGroupConfigInitPromise = null;
+          return null;
+        });
+    }
+    return ugrGroupConfigInitPromise;
   }
 
   // ─── Features ESM: la pestaña de profesores ────────────────
