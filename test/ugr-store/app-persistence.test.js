@@ -9,6 +9,7 @@ import {
   calculateConfigDeadHours,
   calculateConfigDays,
   calculateConfigFreeDays,
+  buildSelectionSummary,
   findConflicts,
 } from "../../public/ugr/src/app/domain/metrics.js";
 import {
@@ -16,9 +17,10 @@ import {
   buildGroupChoice,
   applyTurnoPreference,
   applyApellidoSubgroups,
+  hasSelectedInTerm,
 } from "../../public/ugr/src/app/domain/selection.js";
 import { buildActiveSchedule, buildConflictSet } from "../../public/ugr/src/app/domain/calendar.js";
-import { buildDocentScores, buildProblem } from "../../public/ugr/src/app/domain/problem.js";
+import { blockedEmptySubjects, buildDocentScores, buildProblem, feasibilitySignature } from "../../public/ugr/src/app/domain/problem.js";
 import { buildProfesorFicha, listProfesores } from "../../public/ugr/src/app/domain/profesor.js";
 import {
   DIFICULTAD_OPCIONES,
@@ -29,6 +31,11 @@ import {
   ownReviewsToJSON,
   parseOwnReviewsJSON,
 } from "../../public/ugr/src/app/domain/profesores-propios.js";
+import {
+  DIFFICULTY_UI_LABELS,
+  difficultyLabel,
+  difficultyToken,
+} from "../../public/ugr/src/solver/catalog.js";
 import { buildAsignaturaFicha } from "../../public/ugr/src/app/domain/asignatura.js";
 import {
   filterSubjectsByMention,
@@ -174,12 +181,18 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
     buildGroupChoice,
     applyTurnoPreference,
     applyApellidoSubgroups,
+    hasSelectedInTerm,
     buildActiveSchedule,
     buildConflictSet,
     buildDocentScores,
     buildProblem,
+    blockedEmptySubjects,
+    feasibilitySignature,
     buildProfesorFicha,
     listProfesores,
+    DIFFICULTY_UI_LABELS,
+    difficultyLabel,
+    difficultyToken,
     DIFICULTAD_OPCIONES,
     normalizeOwnReview,
     parseOwnReviewsJSON,

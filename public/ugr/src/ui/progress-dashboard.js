@@ -2,6 +2,7 @@ import { getModule } from "../kernel/registry.js";
 import { filterSubjectsByMention, mencionOptions, tipoClave, tipoDeAsignatura } from "../app/domain/plan.js";
 import { subscribe, flush } from "../store/commands.js";
 import { getProgress } from "../store/selectors.js";
+import { escapeHtml } from "../app/domain/text.js";
 import {
   STATUS,
   PASSED_STATUSES,
@@ -31,20 +32,6 @@ const ESTADO_LABELS = {
   denegada: "Denegada",
 };
 const SOURCE_LABELS = { uned: "UNED", gs: "Grado Superior" };
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (ch) =>
-    ch === "&"
-      ? "&amp;"
-      : ch === "<"
-        ? "&lt;"
-        : ch === ">"
-          ? "&gt;"
-          : ch === '"'
-            ? "&quot;"
-            : "&#39;",
-  );
-}
 
 function courseLabel(curso) {
   if (curso === "Opt") return "Optativas";

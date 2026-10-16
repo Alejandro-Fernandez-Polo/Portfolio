@@ -1,3 +1,5 @@
+import { CONFIG_STORAGE_SLOTS, configSlotKey } from "../../store/configSlots.js";
+
 /**
  * Persistencia residual legacy de `/ugr`.
  *
@@ -16,10 +18,6 @@
  * pide.
  */
 
-/** Ranuras de configuraciones guardadas — réplica de `CONFIG_STORAGE_SLOTS` (app.js L26). */
-const CONFIG_STORAGE_SLOTS = 3;
-
-const SAVED_CONFIGS_PREFIX = "ugr-horario-saved-configs";
 const SOLVER_FILTERS_KEY = "ugr-solver-filters";
 const SUBJECTS_KEY = "ugr-horario-subjects";
 const SAVED_PROPUESTAS_KEY = "ugr-propuestas-guardadas";
@@ -159,7 +157,12 @@ export function createPersistenceAdapter({ storage } = {}) {
   const store = storage === undefined ? defaultStorage() : storage;
 
   /** @param {number} slot */
-  const configKey = (slot) => `${SAVED_CONFIGS_PREFIX}-${slot}`;
+  const configKey = (slot) => configSlotKey(slot);
+
+  /** Vacía las ranuras del formato antiguo (lo pide «restaurar por defecto»). */
+  function clearSavedConfigs() {
+    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) removeRaw(store, configKey(i));
+  }
 
   /**
    * Reparte las configuraciones en las tres ranuras. Primero se vacían todas
@@ -292,6 +295,7 @@ export function createPersistenceAdapter({ storage } = {}) {
   return {
     loadSavedConfigs,
     saveAllConfigs,
+    clearSavedConfigs,
     loadSolverFilters,
     saveSolverFilters,
     loadSubjects,

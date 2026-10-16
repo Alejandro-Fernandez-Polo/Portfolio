@@ -1,6 +1,7 @@
 import { getState, getDeviceId, flush } from "../store/commands.js";
 import { get, getAll, stats, isAvailable, getStoreMode } from "../store/db.js";
 import { reducer, initialState } from "../store/reducer.js";
+import { configSlotKey } from "../store/configSlots.js";
 import { buildPlan, snapshotAllKeys, verify, cleanupLegacy } from "../migrate/legacyKeys.js";
 import { validateBundle, buildMergePlan } from "../backup/bundle.js";
 import { fromLegacySubjects } from "../solver/catalog.js";
@@ -65,7 +66,7 @@ function selfTest() {
   // Fixture uses parsed objects (not strings) because buildPlan expects parsed data
   const legacyFixture = {
     "ugr-horario-state": { selectedSubjects: { FFT: true, ED: true }, groupChoices: { FFT: { teoria: "A", practica: "A1" } }, apellido: "Garcia", turnoPreferente: "mañana", cuatrimestreActivo: 1, propuestas: [], propuestaActivaId: null, vistaConvalidaciones: "oficial" },
-    "ugr-horario-saved-configs-0": [{ id: 1, name: "Test", subjects: ["FFT"] }],
+    [configSlotKey(0)]: [{ id: 1, name: "Test", subjects: ["FFT"] }],
     "ugr-propuestas": [],
     "ugr-propuestas-guardadas": [],
     "ugr-convalidaciones": { FFT: "sup" },

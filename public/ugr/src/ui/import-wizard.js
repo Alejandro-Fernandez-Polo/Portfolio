@@ -4,6 +4,7 @@ import { parseJSON } from "../ingest/parseJSON.js";
 import { buildCatalog, rowsToRecords, REQUIRED_MAPPING_FIELDS } from "../ingest/buildCatalog.js";
 import { TEMPLATE_MAPPING, buildTemplateCSV } from "../ingest/template.js";
 import { count } from "../monitoring/index.js";
+import { escapeHtml } from "../app/domain/text.js";
 
 const FIELD_ORDER = [
   "codigo",
@@ -68,20 +69,6 @@ const SAVE_ERRORS = {
 
 const MAX_ERROR_ROWS = 50;
 const MAX_PREVIEW_SUBJECTS = 40;
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (ch) =>
-    ch === "&"
-      ? "&amp;"
-      : ch === "<"
-        ? "&lt;"
-        : ch === ">"
-          ? "&gt;"
-          : ch === '"'
-            ? "&quot;"
-            : "&#39;",
-  );
-}
 
 function stripAccents(value) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

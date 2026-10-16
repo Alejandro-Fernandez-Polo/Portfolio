@@ -1,8 +1,8 @@
+import { CONFIG_SLOT_KEYS } from "../store/configSlots.js";
+
 export const LEGACY_KEYS = [
   { key: "ugr-horario-state", type: "json", dest: "userState", transform: "state" },
-  { key: "ugr-horario-saved-configs-0", type: "json", dest: "configs", transform: "configs", slot: 0 },
-  { key: "ugr-horario-saved-configs-1", type: "json", dest: "configs", transform: "configs", slot: 1 },
-  { key: "ugr-horario-saved-configs-2", type: "json", dest: "configs", transform: "configs", slot: 2 },
+  ...CONFIG_SLOT_KEYS.map((key, slot) => ({ key, type: "json", dest: "configs", transform: "configs", slot })),
   { key: "ugr-propuestas", type: "json", dest: "userState", transform: "propuestas" },
   { key: "ugr-propuestas-guardadas", type: "json", dest: "configs", transform: "propuestasInternas" },
   { key: "ugr-convalidaciones", type: "json", dest: "progress", transform: "convalidaciones" },
@@ -67,12 +67,11 @@ export function buildPlan(legacy, ctx = {}) {
   }
 
   const allConfigs = [];
-  for (let i = 0; i < 3; i++) {
-    const key = `ugr-horario-saved-configs-${i}`;
+  CONFIG_SLOT_KEYS.forEach((key, i) => {
     if (legacy[key] && Array.isArray(legacy[key])) {
       allConfigs.push(...legacy[key].map((c) => ({ ...c, origin: "legacy", slot: i })));
     }
-  }
+  });
   if (legacy["ugr-propuestas-guardadas"] && Array.isArray(legacy["ugr-propuestas-guardadas"])) {
     allConfigs.push(...legacy["ugr-propuestas-guardadas"].map((c) => ({ ...c, tag: "propuesta-interna", origin: "legacy" })));
   }

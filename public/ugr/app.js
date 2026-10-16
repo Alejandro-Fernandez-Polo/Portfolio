@@ -3214,9 +3214,8 @@
 
     localStorage.removeItem('ugr-horario-state');
     localStorage.removeItem('ugr-horario-subjects');
-    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
-      localStorage.removeItem(getStorageKey(i));
-    }
+    // Las ranuras del formato antiguo las conoce y las vacía el adaptador.
+    getPersistence().clearSavedConfigs();
     localStorage.removeItem('ugr-convalidaciones');
     localStorage.removeItem('ugr-propuestas');
     localStorage.removeItem('ugr-propuestas-guardadas');
@@ -3972,10 +3971,10 @@
     renderCatalogSelector();
   }
 
+  // El escapado es **un solo conocimiento** y vive en el dominio
+  // (src/app/domain/text.js): aquí solo se pregunta. Tenía tres copias.
   function escapeCatalogText(text) {
-    return String(text).replace(/[&<>"']/g, ch => (
-      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
-    ));
+    return getDomain().escapeHtml(text);
   }
 
   async function renderCatalogSelector() {

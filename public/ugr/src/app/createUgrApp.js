@@ -28,6 +28,7 @@ import {
   parseOwnReviewsJSON,
 } from "./domain/profesores-propios.js";
 import { buildAsignaturaFicha } from "./domain/asignatura.js";
+import { escapeHtml } from "./domain/text.js";
 import {
   filterSubjectsByMention,
   listPlanSubjects,
@@ -116,6 +117,7 @@ export function createUgrApp(dependencies) {
       buildProblem,
       buildProfesorFicha,
       listProfesores,
+      escapeHtml,
       DIFICULTAD_OPCIONES,
       normalizeOwnReview,
       parseOwnReviewsJSON,
