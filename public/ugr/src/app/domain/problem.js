@@ -107,3 +107,39 @@ export function buildProblem({
       : buildDocentScores(subjects, catalog, dificultad, difficultyScore),
   };
 }
+
+/**
+ * Asignaturas que el bloqueo de profesores deja **sin ningún grupo**. El motor
+ * las descartaría; la vista avisa antes de generar. Con «Ignorar profesores» el
+ * bloqueo no se aplica (`buildProblem` lo retira), así que no puede dejar nada
+ * vacío: devolver una lista aquí haría avisar por un filtro que el motor ya no
+ * mira.
+ *
+ * @param {Object} problem problema del solver (su `subjects` son códigos).
+ * @param {Object} [ctx]
+ * @param {Array} [ctx.subjects] catálogo de materias.
+ * @param {Array<string>} [ctx.blocked] claves bloqueadas (`CODIGO-LETRA`).
+ * @param {boolean} [ctx.ignoreDocents] modo profesores ignorados.
+ * @returns {string[]} códigos sin grupos disponibles.
+ */
+export function blockedEmptySubjects(problem, { subjects = [], blocked = [], ignoreDocents = false } = {}) {
+  if (ignoreDocents) return [];
+  const set = new Set(blocked);
+  const lista = Array.isArray(subjects) ? subjects : [];
+  return (problem?.subjects || []).filter((code) => {
+    const subject = lista.find((s) => s.codigo === code);
+    if (!subject) return false;
+    return !(subject.grupos || []).some((g) => !set.has(`${code}-${g.letra}`));
+  });
+}
+
+/**
+ * Firma barata de un problema (asignaturas + filtros) para no volver a preguntar
+ * al motor si nada ha cambiado entre dos comprobaciones de viabilidad.
+ *
+ * @param {Object} problem problema del solver.
+ * @returns {string}
+ */
+export function feasibilitySignature(problem) {
+  return JSON.stringify([problem?.subjects, problem?.filters]);
+}

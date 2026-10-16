@@ -4,6 +4,7 @@ import {
   calculateConfigDeadHours,
   calculateConfigDays,
   calculateConfigFreeDays,
+  buildSelectionSummary,
   findConflicts,
 } from '../../public/ugr/src/app/domain/metrics.js';
 import { difficultyScore as realDifficultyScore } from '../../public/ugr/src/solver/catalog.js';
@@ -413,5 +414,55 @@ describe('calculateConfigFreeDays', () => {
       { subjects, days: ['viernes', 'lunes'] }
     );
     expect(free).toEqual(['viernes']);
+  });
+});
+
+// ─── Resumen de la selección activa (extraído en V2) ────────────────────────
+// Era la regla más gorda dentro de la capa del DOM: la calculaban, cada una por
+// su lado, el panel de resumen y la barra de contadores.
+
+describe('buildSelectionSummary', () => {
+  const SUBJECTS = [
+    {
+      codigo: 'FFT', creditos: 6, cuatrimestre: 1,
+      grupos: [{ letra: 'A', turno: 'mañana', teoria: [{ dia: 'lunes', inicio: '09:30', fin: '10:30' }], practicas: { subgrupos: ['A1'], A1: [{ dia: 'martes', inicio: '11:30', fin: '12:30' }] } }],
+    },
+    {
+      codigo: 'ALG', creditos: 6, cuatrimestre: 1,
+      grupos: [{ letra: 'B', turno: 'tarde', teoria: [{ dia: 'lunes', inicio: '17:30', fin: '19:30' }], practicas: { subgrupos: [] } }],
+    },
+  ];
+
+  it('suma créditos y horas de teoría y práctica', () => {
+    const s = buildSelectionSummary(
+      { FFT: true },
+      { FFT: { teoria: 'A', practica: 'A1' } },
+      SUBJECTS,
+    );
+    expect(s.count).toBe(1);
+    expect(s.credits).toBe(6);
+    // 1 h de teoría + 1 h de práctica = 2 h.
+    expect(s.hours).toBe(2);
+    expect(s.turno).toBe('mañana');
+  });
+
+  it('el turno sale de los grupos elegidos: mañana, tarde o mixto', () => {
+    const choices = { FFT: { teoria: 'A' }, ALG: { teoria: 'B' } };
+    expect(buildSelectionSummary({ FFT: true, ALG: true }, choices, SUBJECTS).turno).toBe('mixto');
+    expect(buildSelectionSummary({ ALG: true }, choices, SUBJECTS).turno).toBe('tarde');
+    // Sin grupo elegido no hay turno que enseñar.
+    expect(buildSelectionSummary({ FFT: true }, {}, SUBJECTS).turno).toBe('');
+  });
+
+  it('cuenta todas las marcadas, pero solo suma las que están en el catálogo', () => {
+    const s = buildSelectionSummary({ FFT: true, XX: true }, {}, SUBJECTS);
+    expect(s.count).toBe(2);
+    expect(s.codes).toEqual(['FFT', 'XX']);
+    expect(s.credits).toBe(6); // XX no está en el catálogo: no suma
+    expect(s.hours).toBe(0);   // y sin grupo elegido, tampoco horas
+  });
+
+  it('con la selección vacía devuelve ceros', () => {
+    expect(buildSelectionSummary({}, {}, SUBJECTS)).toEqual({ codes: [], count: 0, credits: 0, hours: 0, turno: '' });
   });
 });

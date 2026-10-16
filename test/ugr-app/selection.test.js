@@ -4,6 +4,7 @@ import {
   buildGroupChoice,
   applyTurnoPreference,
   applyApellidoSubgroups,
+  hasSelectedInTerm,
 } from '../../public/ugr/src/app/domain/selection.js';
 
 // Caracterización de la selección y las reglas de grupo: fijan el
@@ -236,5 +237,25 @@ describe('applyApellidoSubgroups', () => {
     const groupChoices = { FIS: { teoria: 'A', practica: null } };
     applyApellidoSubgroups({ FIS: true }, groupChoices, subjects, 'García');
     expect(groupChoices.FIS.practica).toBe(null);
+  });
+});
+
+// ─── ¿Hay selección en el cuatrimestre activo? (extraído en V2) ─────────────
+
+describe('hasSelectedInTerm', () => {
+  const SUBJECTS = [
+    { codigo: 'A1', cuatrimestre: 1 },
+    { codigo: 'B2', cuatrimestre: 2 },
+  ];
+
+  it('solo cuenta las asignaturas del cuatrimestre pedido', () => {
+    expect(hasSelectedInTerm({ B2: true }, SUBJECTS, 1)).toBe(false);
+    expect(hasSelectedInTerm({ B2: true }, SUBJECTS, 2)).toBe(true);
+  });
+
+  it('las marcadas en falso y las que no están en el catálogo no cuentan', () => {
+    expect(hasSelectedInTerm({ A1: false }, SUBJECTS, 1)).toBe(false);
+    expect(hasSelectedInTerm({ XX: true }, SUBJECTS, 1)).toBe(false);
+    expect(hasSelectedInTerm({}, SUBJECTS, 1)).toBe(false);
   });
 });

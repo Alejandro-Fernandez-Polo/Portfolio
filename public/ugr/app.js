@@ -2019,65 +2019,36 @@
   // ─── Render Summary ────────────────────────────────────────
   function renderSummary() {
     const content = document.getElementById('summary-content');
-    const selectedCodes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
+    // La regla (créditos, horas y turno de la selección) vive en el dominio; aquí
+    // solo se pinta.
+    const summary = getDomain().buildSelectionSummary(state.selectedSubjects, state.groupChoices, SUBJECTS);
 
-    if (selectedCodes.length === 0) {
+    if (summary.count === 0) {
       content.innerHTML = '<p class="empty-state">Selecciona asignaturas para ver el resumen.</p>';
       return;
     }
 
-    let totalCredits = 0;
-    let totalHours = 0;
-    let morningCount = 0;
-    let afternoonCount = 0;
-    const tags = [];
+    const tags = summary.codes
+      .filter(codigo => SUBJECTS.some(s => s.codigo === codigo))
+      .map(codigo => `<span class="summary-subject-tag">${codigo}</span>`);
 
-    selectedCodes.forEach(codigo => {
-      const subject = SUBJECTS.find(s => s.codigo === codigo);
-      if (!subject) return;
-      totalCredits += subject.creditos;
-
-      const choice = state.groupChoices[codigo];
-      if (choice) {
-        const group = subject.grupos.find(g => g.letra === choice.teoria);
-        if (group) {
-          if (group.turno === 'mañana') morningCount++;
-          else afternoonCount++;
-
-          // Count hours
-          group.teoria.forEach(s => {
-            totalHours += (timeToMinutes(s.fin) - timeToMinutes(s.inicio)) / 60;
-          });
-          if (choice.practica && group.practicas[choice.practica]) {
-            group.practicas[choice.practica].forEach(s => {
-              totalHours += (timeToMinutes(s.fin) - timeToMinutes(s.inicio)) / 60;
-            });
-          }
-        }
-      }
-
-      const isSelected = state.selectedSubjects[codigo];
-      tags.push(`<span class="summary-subject-tag" style="background:#e8f4fd;color:#003366;">${subject.codigo}</span>`);
-    });
-
-    let turnoBadge = '';
-    if (morningCount > 0 && afternoonCount === 0) {
-      turnoBadge = '<span class="turno-badge mañana">Turno: Mañana</span>';
-    } else if (afternoonCount > 0 && morningCount === 0) {
-      turnoBadge = '<span class="turno-badge tarde">Turno: Tarde</span>';
-    } else if (morningCount > 0 && afternoonCount > 0) {
-      turnoBadge = '<span class="turno-badge mixed">Turno: Mixto</span>';
-    }
+    // Clase y texto del turno: el dominio dice **cuál** es; cómo se ve es de aquí.
+    const TURNO_BADGE = {
+      'mañana': ['mañana', 'Turno: Mañana'],
+      'tarde': ['tarde', 'Turno: Tarde'],
+      'mixto': ['mixed', 'Turno: Mixto'],
+    };
+    const turno = TURNO_BADGE[summary.turno];
 
     let html = `<div class="summary-grid">`;
-    html += `<div class="summary-stat"><div class="stat-value">${selectedCodes.length}</div><div class="stat-label">Asignaturas</div></div>`;
-    html += `<div class="summary-stat"><div class="stat-value">${totalCredits}</div><div class="stat-label">Créditos ECTS</div></div>`;
-    html += `<div class="summary-stat"><div class="stat-value">${totalHours.toFixed(1)}h</div><div class="stat-label">Horas/semana</div></div>`;
+    html += `<div class="summary-stat"><div class="stat-value">${summary.count}</div><div class="stat-label">Asignaturas</div></div>`;
+    html += `<div class="summary-stat"><div class="stat-value">${summary.credits}</div><div class="stat-label">Créditos ECTS</div></div>`;
+    html += `<div class="summary-stat"><div class="stat-value">${summary.hours.toFixed(1)}h</div><div class="stat-label">Horas/semana</div></div>`;
     html += `<div class="summary-stat"><div class="stat-value">${conflicts.length}</div><div class="stat-label">Conflictos</div></div>`;
     html += `</div>`;
 
-    if (turnoBadge) {
-      html += `<div style="text-align:center;margin-bottom:0.8rem;">${turnoBadge}</div>`;
+    if (turno) {
+      html += `<div style="text-align:center;margin-bottom:0.8rem;"><span class="turno-badge ${turno[0]}">${turno[1]}</span></div>`;
     }
 
     html += `<div class="summary-subjects">${tags.join('')}</div>`;
@@ -2087,18 +2058,13 @@
 
   // ─── Summary Bar ────────────────────────────────────────────
   function updateSummaryBar() {
-    const selectedCodes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
-    const totalCredits = selectedCodes.reduce((sum, codigo) => {
-      const s = SUBJECTS.find(sub => sub.codigo === codigo);
-      return sum + (s ? s.creditos : 0);
-    }, 0);
-
-    document.getElementById('selected-count').textContent = selectedCodes.length;
-    document.getElementById('total-credits').textContent = totalCredits;
+    const summary = getDomain().buildSelectionSummary(state.selectedSubjects, state.groupChoices, SUBJECTS);
+    document.getElementById('selected-count').textContent = summary.count;
+    document.getElementById('total-credits').textContent = summary.credits;
 
     const meta = document.getElementById('credit-meta');
-    meta.textContent = totalCredits >= 30 ? `(meta: 30 ✓)` : `(meta: 30)`;
-    meta.classList.toggle('over', totalCredits > 30);
+    meta.textContent = summary.credits >= 30 ? `(meta: 30 ✓)` : `(meta: 30)`;
+    meta.classList.toggle('over', summary.credits > 30);
   }
 
   // ─── Buttons ────────────────────────────────────────────────
@@ -2113,11 +2079,7 @@
   }
 
   function hasSelectedInTerm() {
-    return Object.keys(state.selectedSubjects).some(c => {
-      if (!state.selectedSubjects[c]) return false;
-      const s = SUBJECTS.find(x => x.codigo === c);
-      return !!s && s.cuatrimestre === state.cuatrimestreActivo;
-    });
+    return getDomain().hasSelectedInTerm(state.selectedSubjects, SUBJECTS, state.cuatrimestreActivo);
   }
 
   function updateControlPanel() {
@@ -2833,15 +2795,12 @@
   }
 
   function blockedEmptySubjects(problem) {
-    // Con «Ignorar profesores» el bloqueo no se aplica (lo retira
-    // `buildProblem`), así que no puede dejar ninguna asignatura sin grupos: el
-    // aviso existiría por culpa de un filtro que el motor ya no mira.
-    if (ignoreDocents) return [];
-    const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
-    return problem.subjects.filter(code => {
-      const s = SUBJECTS.find(x => x.codigo === code);
-      if (!s) return false;
-      return !(s.grupos || []).some(g => !blocked.has(`${code}-${g.letra}`));
+    // El filtro (qué claves están bloqueadas) sigue siendo cosa de aquí; la
+    // regla de «esta asignatura se queda sin grupos» es del dominio.
+    return getDomain().blockedEmptySubjects(problem, {
+      subjects: SUBJECTS,
+      blocked: findSolverFilter('blockGroups')?.value || [],
+      ignoreDocents,
     });
   }
 
@@ -2890,10 +2849,9 @@
     updateGenerateButton();
   }
 
-  /** Firma barata del problema (asignaturas + filtros): si no cambia, no hay
-   *  que volver a preguntar al motor. */
+
   function feasibilitySignature(problem) {
-    return JSON.stringify([problem.subjects, problem.filters]);
+    return getDomain().feasibilitySignature(problem);
   }
 
   /** Programa la comprobación con debounce: tocar varios filtros seguidos deja

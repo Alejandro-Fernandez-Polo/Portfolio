@@ -264,3 +264,56 @@ export function findConflicts(entries) {
   }
   return conflicts;
 }
+
+/**
+ * Resumen de la **selección activa**: lo que suma el horario que se está
+ * montando (créditos, horas semanales y turno). Es una regla, no una vista: la
+ * usan el panel de resumen y la barra de contadores, así que vive aquí en vez de
+ * duplicada en cada sitio que la pinta.
+ *
+ * `codes` son **todas** las asignaturas marcadas (aunque el catálogo no las
+ * conozca); los créditos y las horas solo cuentan las que están en el catálogo.
+ *
+ * @param {Object} selectedSubjects mapa `codigo → boolean`.
+ * @param {Object} groupChoices mapa `codigo → { teoria, practica }`.
+ * @param {Array} subjects catálogo de materias.
+ * @returns {{codes: string[], count: number, credits: number, hours: number,
+ *   turno: ''|'mañana'|'tarde'|'mixto'}} el turno vacío es «sin grupos».
+ */
+export function buildSelectionSummary(selectedSubjects, groupChoices, subjects) {
+  const codes = Object.keys(selectedSubjects || {}).filter((code) => selectedSubjects[code]);
+  const lista = Array.isArray(subjects) ? subjects : [];
+  let credits = 0;
+  let minutesTotal = 0;
+  let morning = 0;
+  let afternoon = 0;
+
+  const minutesOf = (sessions) => (Array.isArray(sessions) ? sessions : [])
+    .reduce((sum, s) => sum + (timeToMinutes(s.fin) - timeToMinutes(s.inicio)), 0);
+
+  for (const code of codes) {
+    const subject = lista.find((s) => s.codigo === code);
+    if (!subject) continue;
+    credits += subject.creditos || 0;
+
+    const choice = (groupChoices || {})[code];
+    if (!choice) continue;
+    const group = (subject.grupos || []).find((g) => g.letra === choice.teoria);
+    if (!group) continue;
+
+    if (group.turno === 'mañana') morning++;
+    else afternoon++;
+
+    minutesTotal += minutesOf(group.teoria);
+    if (choice.practica && group.practicas && group.practicas[choice.practica]) {
+      minutesTotal += minutesOf(group.practicas[choice.practica]);
+    }
+  }
+
+  let turno = '';
+  if (morning > 0 && afternoon === 0) turno = 'mañana';
+  else if (afternoon > 0 && morning === 0) turno = 'tarde';
+  else if (morning > 0 && afternoon > 0) turno = 'mixto';
+
+  return { codes, count: codes.length, credits, hours: minutesTotal / 60, turno };
+}

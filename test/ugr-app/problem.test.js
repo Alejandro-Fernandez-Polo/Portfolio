@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import {
   buildDocentScores,
   buildProblem,
+  blockedEmptySubjects,
+  feasibilitySignature,
 } from '../../public/ugr/src/app/domain/problem.js';
 import { difficultyScore } from '../../public/ugr/src/solver/catalog.js';
 
@@ -143,5 +145,37 @@ describe('buildProblem', () => {
     // activo, decidiría desde una interfaz que ya no se ve. El resto de filtros
     // del usuario se respetan.
     expect(problem.filters).toEqual([{ type: 'freeDays', value: ['viernes'] }]);
+  });
+});
+
+// ─── Bloqueo y firma del problema (extraídos en V2) ─────────────────────────
+
+describe('blockedEmptySubjects', () => {
+  const SUBJECTS = [
+    { codigo: 'FFT', grupos: [{ letra: 'A' }, { letra: 'B' }] },
+    { codigo: 'ALG', grupos: [{ letra: 'A' }] },
+  ];
+
+  it('marca la asignatura cuyos grupos están todos bloqueados', () => {
+    expect(blockedEmptySubjects({ subjects: ['FFT', 'ALG'] }, { subjects: SUBJECTS, blocked: ['ALG-A'] })).toEqual(['ALG']);
+    // Con un grupo libre, no se marca.
+    expect(blockedEmptySubjects({ subjects: ['FFT'] }, { subjects: SUBJECTS, blocked: ['FFT-A'] })).toEqual([]);
+  });
+
+  it('con «Ignorar profesores» no puede quedar nada vacío (el motor ya no mira el bloqueo)', () => {
+    expect(blockedEmptySubjects({ subjects: ['ALG'] }, { subjects: SUBJECTS, blocked: ['ALG-A'], ignoreDocents: true })).toEqual([]);
+  });
+
+  it('un código que no está en el catálogo no se marca', () => {
+    expect(blockedEmptySubjects({ subjects: ['XX'] }, { subjects: SUBJECTS, blocked: ['XX-A'] })).toEqual([]);
+  });
+});
+
+describe('feasibilitySignature', () => {
+  it('es la misma si no cambian ni asignaturas ni filtros', () => {
+    const a = { subjects: ['FFT'], filters: [{ type: 'maxDays', value: 3 }] };
+    const b = { subjects: ['FFT'], filters: [{ type: 'maxDays', value: 3 }] };
+    expect(feasibilitySignature(a)).toBe(feasibilitySignature(b));
+    expect(feasibilitySignature({ ...a, filters: [] })).not.toBe(feasibilitySignature(a));
   });
 });

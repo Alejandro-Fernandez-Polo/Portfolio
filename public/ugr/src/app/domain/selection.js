@@ -135,3 +135,22 @@ export function applyApellidoSubgroups(selectedSubjects, groupChoices, subjects,
     }
   });
 }
+
+/**
+ * ¿Hay alguna asignatura seleccionada **de este cuatrimestre**? Es la condición
+ * que habilita generar y el propio panel de control. Vive aquí porque es una
+ * regla de la selección, no de la vista que la consulta.
+ *
+ * @param {Object} selectedSubjects mapa `codigo → boolean`.
+ * @param {Array} subjects catálogo de materias.
+ * @param {number} cuatrimestre cuatrimestre activo.
+ * @returns {boolean}
+ */
+export function hasSelectedInTerm(selectedSubjects, subjects, cuatrimestre) {
+  const lista = Array.isArray(subjects) ? subjects : [];
+  return Object.keys(selectedSubjects || {}).some((code) => {
+    if (!selectedSubjects[code]) return false;
+    const subject = lista.find((s) => s.codigo === code);
+    return !!subject && subject.cuatrimestre === cuatrimestre;
+  });
+}

@@ -7,6 +7,7 @@ import {
   calculateConfigDeadHours,
   calculateConfigDays,
   calculateConfigFreeDays,
+  buildSelectionSummary,
   findConflicts,
 } from "./domain/metrics.js";
 import {
@@ -14,9 +15,10 @@ import {
   buildGroupChoice,
   applyTurnoPreference,
   applyApellidoSubgroups,
+  hasSelectedInTerm,
 } from "./domain/selection.js";
 import { buildActiveSchedule, buildConflictSet } from "./domain/calendar.js";
-import { buildDocentScores, buildProblem } from "./domain/problem.js";
+import { blockedEmptySubjects, buildDocentScores, buildProblem, feasibilitySignature } from "./domain/problem.js";
 import { buildProfesorFicha, listProfesores } from "./domain/profesor.js";
 import {
   DIFICULTAD_OPCIONES,
@@ -107,15 +109,19 @@ export function createUgrApp(dependencies) {
       calculateConfigDeadHours,
       calculateConfigDays,
       calculateConfigFreeDays,
+      buildSelectionSummary,
       findConflicts,
       getSubgrupoForApellido,
       buildGroupChoice,
       applyTurnoPreference,
       applyApellidoSubgroups,
+      hasSelectedInTerm,
       buildActiveSchedule,
       buildConflictSet,
       buildDocentScores,
       buildProblem,
+      blockedEmptySubjects,
+      feasibilitySignature,
       buildProfesorFicha,
       listProfesores,
       DIFFICULTY_UI_LABELS,
