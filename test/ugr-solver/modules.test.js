@@ -46,4 +46,25 @@ describe("kernel modules", () => {
     const breakdown = solverApi.explain(result.items[0]);
     expect(breakdown).toHaveProperty("deadHours");
   });
+
+  // El puente (`modules/solver.js`) es quien inyecta el catálogo activo: el
+  // cliente puro no lo conoce. Sin esa inyección todos los códigos saldrían
+  // como «missing» y un filtro imposible parecería viable.
+  it("comprueba viabilidad inyectando el catálogo activo", async () => {
+    const ok = await solverApi.checkFeasible(
+      { subjects: EC_CODES, filters: [], catalogVersion: "fixtures-ec" },
+      {},
+    );
+    expect(ok.feasible).toBe(true);
+
+    const no = await solverApi.checkFeasible(
+      {
+        subjects: EC_CODES,
+        filters: [{ type: "blockGroups", value: ["SO-C"] }],
+        catalogVersion: "fixtures-ec",
+      },
+      {},
+    );
+    expect(no.feasible).toBe(false);
+  });
 });

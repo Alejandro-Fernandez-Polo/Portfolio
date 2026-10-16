@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { canonicalJSON, problemHash, sha256Hex } from "../../public/ugr/src/solver/hash.js";
-import { solveTopK, cancel, SOLVER_VERSION } from "../../public/ugr/src/solver/client.js";
+import { solveTopK, cancel, checkFeasible, SOLVER_VERSION } from "../../public/ugr/src/solver/client.js";
 import { fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
 import { EC_SUBJECTS, EC_CODES } from "./fixtures.js";
 
@@ -121,5 +121,33 @@ describe("solveTopK", () => {
 
   it("cancel() is safe with no active run", () => {
     expect(() => cancel()).not.toThrow();
+  });
+});
+
+describe("checkFeasible", () => {
+  let originalWorker;
+  beforeEach(() => {
+    originalWorker = globalThis.Worker;
+    globalThis.Worker = undefined;
+  });
+  afterEach(() => {
+    globalThis.Worker = originalWorker;
+    cancel();
+  });
+
+  it("dice que sí cuando hay al menos una combinación", async () => {
+    const result = await checkFeasible(problem, catalog);
+    expect(result.feasible).toBe(true);
+    expect(result.stats.found).toBeGreaterThan(0);
+  });
+
+  it("dice que no cuando un filtro duro vacía un dominio", async () => {
+    // SO solo tiene el grupo C en el fixture EC: bloquearlo lo deja sin valores.
+    const result = await checkFeasible(
+      { ...problem, filters: [{ type: "blockGroups", value: ["SO-C"] }] },
+      catalog,
+    );
+    expect(result.feasible).toBe(false);
+    expect(result.stats.found).toBe(0);
   });
 });

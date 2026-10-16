@@ -4,6 +4,7 @@ import {
   validateFilters,
   splitHardSoft,
   hardLimits,
+  courseConstraints,
   subgrupoForApellido,
   applyApellidoRule,
   pruneDomains,
@@ -212,5 +213,78 @@ describe("time and group pruning", () => {
     const domains = [{ code: "X", values }];
     pruneDomains(domains, [{ type: "blockGroups", value: ["X-A"] }], { apellido: "García" });
     expect(domains[0].values.map((v) => v.practica)).toEqual(["B2"]);
+  });
+});
+
+describe("turno duro y grupo compartido por curso", () => {
+  it("acepta los cinco valores de turno y los dos filtros de grupo", () => {
+    const filters = [
+      ...["indiferente", "mañana", "tarde", "solo-mañana", "solo-tarde"].map((value) => ({
+        type: "preferTurno",
+        value,
+      })),
+      { type: "sameTheoryPerCourse", value: true },
+      { type: "samePracticePerCourse", value: true },
+    ];
+    expect(validateFilters(filters)).toEqual({ ok: true, errors: [] });
+    expect(validateFilters([{ type: "sameTheoryPerCourse", value: "sí" }]).ok).toBe(false);
+    expect(validateFilters([{ type: "samePracticePerCourse", value: 1 }]).ok).toBe(false);
+  });
+
+  it("«solo por la mañana/tarde» es duro; «preferente» e «indiferente», blando", () => {
+    const { hard, soft } = splitHardSoft([
+      { type: "preferTurno", value: "solo-mañana" },
+      { type: "preferTurno", value: "mañana" },
+      { type: "preferTurno", value: "indiferente" },
+      { type: "preferTurno", value: "solo-tarde" },
+      { type: "sameTheoryPerCourse", value: true },
+    ]);
+    expect(hard.map((f) => f.value)).toEqual(["solo-mañana", "solo-tarde", true]);
+    expect(soft.map((f) => f.value)).toEqual(["mañana", "indiferente"]);
+  });
+
+  it("el grupo compartido de prácticas implica también el de teoría", () => {
+    expect(courseConstraints([{ type: "samePracticePerCourse", value: true }])).toEqual({
+      sameTheory: true,
+      samePractice: true,
+    });
+    expect(courseConstraints([{ type: "sameTheoryPerCourse", value: true }])).toEqual({
+      sameTheory: true,
+      samePractice: false,
+    });
+    expect(courseConstraints([])).toEqual({ sameTheory: false, samePractice: false });
+  });
+
+  it("solo por la mañana descarta los valores con una sesión de tarde", () => {
+    const domains = [
+      {
+        code: "X",
+        values: [
+          mkVal("A", "A1", [{ dia: "lunes", inicio: "9:00", fin: "10:00" }]),
+          mkVal("B", "B1", [{ dia: "lunes", inicio: "16:00", fin: "17:00" }]),
+          // Mixto: una sesión de mañana y otra de tarde → fuera con «solo».
+          mkVal("C", "C1", [
+            { dia: "lunes", inicio: "9:00", fin: "10:00" },
+            { dia: "martes", inicio: "16:00", fin: "17:00" },
+          ]),
+        ],
+      },
+    ];
+    pruneDomains(domains, [{ type: "preferTurno", value: "solo-mañana" }], {});
+    expect(domains[0].values.map((v) => v.teoria)).toEqual(["A"]);
+  });
+
+  it("solo por la tarde descarta los valores con una sesión de mañana", () => {
+    const domains = [
+      {
+        code: "X",
+        values: [
+          mkVal("A", "A1", [{ dia: "lunes", inicio: "9:00", fin: "10:00" }]),
+          mkVal("B", "B1", [{ dia: "lunes", inicio: "16:00", fin: "17:00" }]),
+        ],
+      },
+    ];
+    pruneDomains(domains, [{ type: "preferTurno", value: "solo-tarde" }], {});
+    expect(domains[0].values.map((v) => v.teoria)).toEqual(["B"]);
   });
 });

@@ -375,3 +375,80 @@ describe("time budget and cancellation", () => {
     expect(stats.truncated).toBe(true);
   });
 });
+
+describe("mismo grupo por curso", () => {
+  const s = (dia, h) => ({ dia, inicio: `${h}:00`, fin: `${h + 1}:00` });
+  const group = (letra, teoria, practicas) => ({ letra, turno: "mañana", teoria, practicas });
+  const subject = (codigo, curso, grupos) => ({
+    codigo,
+    nombre: codigo,
+    curso,
+    cuatrimestre: 1,
+    creditos: 6,
+    grupos,
+  });
+
+  // Cuatro asignaturas en dos cursos. P/Q comparten curso 1 y R/S el curso 2;
+  // S no tiene prácticas (exenta del subgrupo compartido).
+  const GROUP_SUBJECTS = [
+    subject("P", 1, [
+      group("A", [s("lunes", 8)], { subgrupos: ["A1", "A2"], A1: [s("martes", 8)], A2: [s("martes", 9)] }),
+      group("B", [s("lunes", 9)], { subgrupos: ["B1", "B2"], B1: [s("miercoles", 8)], B2: [s("miercoles", 9)] }),
+    ]),
+    subject("Q", 1, [
+      group("A", [s("martes", 10)], { subgrupos: ["A1", "A2"], A1: [s("jueves", 8)], A2: [s("jueves", 9)] }),
+      group("B", [s("martes", 11)], { subgrupos: ["B1", "B2"], B1: [s("viernes", 8)], B2: [s("viernes", 9)] }),
+    ]),
+    subject("R", 2, [
+      group("A", [s("lunes", 12)], { subgrupos: ["A1", "A2"], A1: [s("lunes", 15)], A2: [s("lunes", 16)] }),
+      group("B", [s("lunes", 13)], { subgrupos: ["B1", "B2"], B1: [s("lunes", 17)], B2: [s("lunes", 18)] }),
+    ]),
+    subject("S", 2, [
+      group("A", [s("martes", 12)], { subgrupos: [] }),
+      group("B", [s("martes", 13)], { subgrupos: [] }),
+    ]),
+  ];
+  const groupCatalog = fromLegacySubjects(GROUP_SUBJECTS);
+  const codes = ["P", "Q", "R", "S"];
+  const run = (filters) =>
+    solve({ subjects: codes, filters, catalogVersion: "groups" }, groupCatalog, {
+      k: Number.MAX_SAFE_INTEGER,
+    });
+
+  it("sin filtros hay horarios con letras distintas dentro de un curso", () => {
+    const { items } = run([]);
+    expect(items.length).toBeGreaterThan(0);
+    expect(items.some((it) => it.groupChoices.P.teoria !== it.groupChoices.Q.teoria)).toBe(true);
+  });
+
+  it("sameTheoryPerCourse obliga a la misma letra en cada curso", () => {
+    const { items } = run([{ type: "sameTheoryPerCourse", value: true }]);
+    expect(items.length).toBeGreaterThan(0);
+    for (const it of items) {
+      expect(it.groupChoices.P.teoria).toBe(it.groupChoices.Q.teoria);
+      expect(it.groupChoices.R.teoria).toBe(it.groupChoices.S.teoria);
+    }
+  });
+
+  it("samePracticePerCourse comparte el subgrupo y deja exenta la materia sin prácticas", () => {
+    const { items } = run([{ type: "samePracticePerCourse", value: true }]);
+    expect(items.length).toBeGreaterThan(0);
+    for (const it of items) {
+      expect(it.groupChoices.P.teoria).toBe(it.groupChoices.Q.teoria);
+      expect(it.groupChoices.P.practica).toBe(it.groupChoices.Q.practica);
+      expect(it.groupChoices.R.teoria).toBe(it.groupChoices.S.teoria);
+      expect(it.groupChoices.S.practica).toBeNull();
+      expect(it.groupChoices.R.practica).not.toBeNull();
+    }
+  });
+
+  it("firstSolutionOnly para en la primera solución", () => {
+    const { items, stats } = solve(
+      { subjects: codes, filters: [], catalogVersion: "groups" },
+      groupCatalog,
+      { k: 5, firstSolutionOnly: true },
+    );
+    expect(stats.found).toBe(1);
+    expect(items).toHaveLength(1);
+  });
+});

@@ -53,6 +53,8 @@ function runWorker(problem, catalog, opts, onProgress) {
         seed: opts.seed,
         timeBudgetMs: opts.timeBudgetMs,
         apellido: opts.apellido,
+        firstSolutionOnly: opts.firstSolutionOnly,
+        forceExact: opts.forceExact,
       },
     });
   });
@@ -104,4 +106,44 @@ export async function solveTopK(problem, catalog, opts = {}) {
 export function explain(solution) {
   if (!solution) return null;
   return solution.costBreakdown || null;
+}
+
+// Tope de la comprobación de viabilidad: si no termina, no se puede afirmar que
+// no haya ninguna combinación (recorrer el árbol entero cuesta como generar).
+export const FEASIBILITY_BUDGET_MS = 800;
+
+/**
+ * ¿Existe al menos una combinación con estos filtros?
+ *
+ * `feasible === true` → hay por lo menos una; `false` → se agotó la búsqueda sin
+ * ninguna (con `forceExact`, así que «no hay» es de verdad); `null` → no se pudo
+ * demostrar dentro del tope de tiempo.
+ *
+ * No pasa por la caché a propósito: guardar un resultado parcial (k=1) bajo la
+ * clave del problema haría que la generación real lo devolviera como si fuera
+ * suyo.
+ *
+ * @param {Object} problem problema del solver.
+ * @param {Object} catalog catálogo activo.
+ * @param {{timeBudgetMs?: number, apellido?: string}} [opts]
+ * @returns {Promise<{feasible: boolean|null, stats: Object}>}
+ */
+export async function checkFeasible(problem, catalog, opts = {}) {
+  const { timeBudgetMs = FEASIBILITY_BUDGET_MS, apellido = "" } = opts;
+  const runOpts = { k: 1, firstSolutionOnly: true, forceExact: true, timeBudgetMs, apellido };
+  let result;
+  if (canUseWorker()) {
+    try {
+      result = await runWorker(problem, catalog, runOpts, null);
+    } catch {
+      result = solve(problem, catalog, runOpts);
+    }
+  } else {
+    result = solve(problem, catalog, runOpts);
+  }
+  activeWorker = null;
+  const stats = result?.stats || {};
+  const found = (stats.found ?? 0) > 0 || (result?.items?.length ?? 0) > 0;
+  const unknown = !found && stats.truncated === true;
+  return { feasible: found ? true : unknown ? null : false, stats };
 }

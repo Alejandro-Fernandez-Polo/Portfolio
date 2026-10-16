@@ -1,7 +1,7 @@
 import { getSubject } from "./catalog.js";
 import { createGrid, maskForSession, collides, apply, undo } from "./grid.js";
 import { CostAccumulator, DEFAULT_WEIGHTS } from "./cost.js";
-import { validateFilters, splitHardSoft, pruneDomains, hardLimits } from "./filters.js";
+import { validateFilters, splitHardSoft, pruneDomains, hardLimits, courseConstraints } from "./filters.js";
 
 const DOMAIN_FAILSAFE = 2e7;
 const PROGRESS_EVERY = 2048;
@@ -33,6 +33,30 @@ function hasInternalConflict(masks) {
     apply(grid, m);
   }
   return false;
+}
+
+// Curso del plan de una asignatura: la clave por la que se ata el grupo
+// compartido. Las asignaturas sin curso van todas juntas bajo "".
+function courseOf(dom) {
+  return String(dom.subject?.curso ?? dom.subject?.course ?? "");
+}
+
+/**
+ * ¿El valor encaja con la elección de grupo ya fijada para su curso?
+ * Devuelve `-1` si no encaja, `0` si encaja sin tocar nada, `1` si hay que
+ * **crear** la elección del curso y `2` si hay que **rellenar** su subgrupo
+ * (la primera asignatura con prácticas del curso). La asignatura sin prácticas
+ * (`practica === null`) nunca rompe el subgrupo compartido: queda exenta y solo
+ * comparte la letra.
+ */
+function fitsCourse(choice, value, samePractice) {
+  if (!choice) return 1;
+  if (choice.teoria !== value.teoria) return -1;
+  if (samePractice && value.practica != null && choice.practica != null && choice.practica !== value.practica) {
+    return -1;
+  }
+  if (samePractice && choice.practica == null && value.practica != null) return 2;
+  return 0;
 }
 
 class BoundedHeap {
@@ -158,14 +182,32 @@ function itemFromChoices(choices, acc, cost, breakdown) {
   };
 }
 
-function beamSearch(domains, softFilters, weights, heap, stats, width = BEAM_WIDTH) {
+function beamSearch(domains, softFilters, weights, heap, stats, constraints = {}, width = BEAM_WIDTH) {
+  const sameTheory = constraints.sameTheory === true;
+  const samePractice = constraints.samePractice === true;
   const profWeight = weights.professor || 0;
   const beamCost = (beam) => beam.acc.value() + profWeight * beam.profPenalty;
-  let beams = [{ grid: createGrid(), acc: new CostAccumulator(softFilters, weights), choices: [], profPenalty: 0 }];
+  let beams = [
+    {
+      grid: createGrid(),
+      acc: new CostAccumulator(softFilters, weights),
+      choices: [],
+      profPenalty: 0,
+      courseChoice: new Map(),
+    },
+  ];
   for (const dom of domains) {
     const next = [];
+    const ck = sameTheory ? courseOf(dom) : "";
     for (const beam of beams) {
       for (const value of dom.values) {
+        let fit = 0;
+        let existing = null;
+        if (sameTheory) {
+          existing = beam.courseChoice.get(ck);
+          fit = fitsCourse(existing, value, samePractice);
+          if (fit === -1) continue;
+        }
         let ok = true;
         for (const m of value.masks) {
           if (collides(beam.grid, m)) {
@@ -180,11 +222,20 @@ function beamSearch(domains, softFilters, weights, heap, stats, width = BEAM_WID
         const acc = beam.acc.clone();
         for (const e of value.entries) acc.add(e);
         const penalty = value.profScore != null ? 6 - value.profScore : 0;
+        let courseChoice = beam.courseChoice;
+        if (fit === 1) {
+          courseChoice = new Map(beam.courseChoice);
+          courseChoice.set(ck, { teoria: value.teoria, practica: samePractice ? value.practica : null });
+        } else if (fit === 2) {
+          courseChoice = new Map(beam.courseChoice);
+          courseChoice.set(ck, { teoria: existing.teoria, practica: value.practica });
+        }
         next.push({
           grid,
           acc,
           choices: [...beam.choices, { code: dom.code, value }],
           profPenalty: beam.profPenalty + penalty,
+          courseChoice,
         });
       }
     }
@@ -211,6 +262,12 @@ export function solve(problem, catalog, opts = {}) {
     onNode,
     shouldStop,
     apellido = "",
+    // Parar en cuanto aparece la primera solución. Lo usa la comprobación de
+    // viabilidad: solo quiere saber si existe alguna combinación.
+    firstSolutionOnly = false,
+    // No tirar por la búsqueda aproximada (beam): así «cero soluciones» con la
+    // búsqueda agotada significa de verdad que no hay ninguna.
+    forceExact = false,
   } = opts;
 
   const t0 = performance.now();
@@ -224,6 +281,7 @@ export function solve(problem, catalog, opts = {}) {
   const { domains, missing } = buildDomains(problem, catalog);
   pruneDomains(domains, hard, { apellido });
   const limits = hardLimits(hard);
+  const constraints = courseConstraints(hard);
 
   const stats = {
     nodes: 0,
@@ -251,9 +309,9 @@ export function solve(problem, catalog, opts = {}) {
   const profWeight = weights.professor || 0;
   let profPenalty = 0;
 
-  if (product > DOMAIN_FAILSAFE) {
+  if (product > DOMAIN_FAILSAFE && !forceExact) {
     stats.approximate = true;
-    beamSearch(domains, soft, weights, heap, stats);
+    beamSearch(domains, soft, weights, heap, stats, constraints);
     stats.elapsedMs = performance.now() - t0;
     return { items: heap.toArray(), stats };
   }
@@ -261,6 +319,11 @@ export function solve(problem, catalog, opts = {}) {
   const grid = createGrid();
   const acc = new CostAccumulator(soft, weights);
   const chosen = new Array(domains.length);
+  // Grupo compartido por curso: la primera asignatura del año fija la letra (y
+  // el subgrupo) y las demás del mismo año la respetan.
+  const courseChoice = new Map();
+  const sameTheory = constraints.sameTheory === true;
+  const samePractice = constraints.samePractice === true;
   let stop = false;
   const budgetMs = timeBudgetMs > 0 ? timeBudgetMs : 0;
 
@@ -290,6 +353,8 @@ export function solve(problem, catalog, opts = {}) {
     breakdown.professorPenalty = profPenalty;
     heap.offer(itemFromChoices(chosen, acc, acc.value() + profWeight * profPenalty, breakdown));
     stats.kept = heap.size();
+    // Comprobación de viabilidad: con una solución basta, no hace falta el resto.
+    if (firstSolutionOnly) stop = true;
   }
 
   function search(depth) {
@@ -303,6 +368,7 @@ export function solve(problem, catalog, opts = {}) {
     const dom = domains[depth];
     if (dom.values.length === 0) return;
     const threshold = heap.isFull() ? heap.worstCost() : Infinity;
+    const ck = sameTheory ? courseOf(dom) : "";
     for (const value of dom.values) {
       let ok = true;
       for (const m of value.masks) {
@@ -312,6 +378,11 @@ export function solve(problem, catalog, opts = {}) {
         }
       }
       if (!ok) continue;
+
+      const existing = sameTheory ? courseChoice.get(ck) : null;
+      const fit = sameTheory ? fitsCourse(existing, value, samePractice) : 0;
+      if (fit === -1) continue;
+
       for (const m of value.masks) apply(grid, m);
       for (const e of value.entries) acc.add(e);
       const penalty = value.profScore != null ? 6 - value.profScore : 0;
@@ -335,9 +406,15 @@ export function solve(problem, catalog, opts = {}) {
         continue;
       }
 
+      if (fit === 1) courseChoice.set(ck, { teoria: value.teoria, practica: samePractice ? value.practica : null });
+      else if (fit === 2) existing.practica = value.practica;
+
       chosen[depth] = { code: dom.code, value };
       search(depth + 1);
       chosen[depth] = undefined;
+
+      if (fit === 1) courseChoice.delete(ck);
+      else if (fit === 2) existing.practica = null;
 
       profPenalty -= penalty;
       for (const e of value.entries) acc.remove(e);
