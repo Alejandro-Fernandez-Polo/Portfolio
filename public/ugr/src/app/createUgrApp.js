@@ -6,6 +6,7 @@ import {
   calculateConfigMetrics,
   calculateConfigDeadHours,
   calculateConfigDays,
+  calculateConfigFreeDays,
   findConflicts,
 } from "./domain/metrics.js";
 import {
@@ -17,6 +18,16 @@ import {
 import { buildActiveSchedule, buildConflictSet } from "./domain/calendar.js";
 import { buildDocentScores, buildProblem } from "./domain/problem.js";
 import { buildProfesorFicha, listProfesores } from "./domain/profesor.js";
+import {
+  DIFICULTAD_OPCIONES,
+  buildProfesorPrompt,
+  mergeProfesores,
+  normalizeOwnReview,
+  ownReviewToProfesor,
+  ownReviewsToJSON,
+  parseOwnReviewsJSON,
+} from "./domain/profesores-propios.js";
+import { buildAsignaturaFicha } from "./domain/asignatura.js";
 import {
   filterSubjectsByMention,
   listPlanSubjects,
@@ -93,6 +104,7 @@ export function createUgrApp(dependencies) {
       calculateConfigMetrics,
       calculateConfigDeadHours,
       calculateConfigDays,
+      calculateConfigFreeDays,
       findConflicts,
       getSubgrupoForApellido,
       buildGroupChoice,
@@ -104,6 +116,14 @@ export function createUgrApp(dependencies) {
       buildProblem,
       buildProfesorFicha,
       listProfesores,
+      DIFICULTAD_OPCIONES,
+      normalizeOwnReview,
+      parseOwnReviewsJSON,
+      ownReviewToProfesor,
+      mergeProfesores,
+      ownReviewsToJSON,
+      buildProfesorPrompt,
+      buildAsignaturaFicha,
       mencionOptions,
       filterSubjectsByMention,
       tipoDeAsignatura,

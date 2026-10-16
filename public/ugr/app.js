@@ -8,6 +8,9 @@
   // ─── State ──────────────────────────────────────────────────
   const DAYS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   const DAY_LABELS = { lunes: 'Lunes', martes: 'Martes', miercoles: 'Miércoles', jueves: 'Jueves', viernes: 'Viernes' };
+  // Iniciales para las columnas compactas (la de «Días libres» de las
+  // configuraciones guardadas).
+  const DAY_SHORT = { lunes: 'L', martes: 'M', miercoles: 'X', jueves: 'J', viernes: 'V' };
   const START_HOUR = 8;
   const END_HOUR = 21;
   let compareIds = [];
@@ -46,8 +49,9 @@
   // no haya terminado, cualquier lector ve `[]` en lugar de una copia legacy.
   let savedConfigs = [];
   let savedPropuestasInternas = JSON.parse(localStorage.getItem('ugr-propuestas-guardadas') || '[]');
-  let configSortField = 'name';
-  let configSortDir = 'asc';
+  // El orden, la página y «solo favoritos» de la tabla de configuraciones viven
+  // en su vista (`src/app/features/savedConfigs.js`); este bloque solo guarda lo
+  // que el adaptador de persistencia y las mutaciones necesitan.
   // Bloqueos de configuraciones: viven en el store (persistidos en IDB).
   // Fallback local si el store no está disponible (modo degradado).
   let localBlockFilters = [];
@@ -244,6 +248,19 @@
   }
 
   /**
+   * El interruptor «Ignorar profesores» está en los dos sitios donde importa:
+   * el panel del generador (donde se usa) y la sección de profesores (donde
+   * vive el dato). Los dos escriben la misma preferencia, así que al mover uno
+   * hay que dejar el otro igual.
+   */
+  function syncIgnoreDocentsInputs() {
+    ['solver-ignore-docents', 'profesores-ignore-docents'].forEach(id => {
+      const input = document.getElementById(id);
+      if (input) input.checked = ignoreDocents;
+    });
+  }
+
+  /**
    * Enciende/apaga el modo profesores. Si al encenderlo estaba elegido el
    * preset «Mejores profesores» se vuelve a «Equilibrado»: un preset cuyo peso
    * depende de datos que ya no existen generaría horarios distintos bajo la
@@ -257,10 +274,12 @@
       localStorage.setItem('ugr-solver-strategy', solverStrategy);
     }
     pushIgnoreDocentsToStore();
+    syncIgnoreDocentsInputs();
     renderSolverFilters();
     renderGroupConfig();
     renderCalendar();
     renderSavedConfigs();
+    renderProfesores();
   }
 
   // Corte único entre "el store existe" y "el store tiene datos de usuario".
@@ -309,20 +328,36 @@
 
   let configMaxManana = 0;
   let configMaxTarde = 0;
-  let configPage = 1;
-  let configShowFavoritesOnly = false;
-  const CONFIG_PAGE_SIZE = 50;
 
   // ─── Solver ────────────────────────────────────────────────
   const SOLVER_FILTER_TYPES = [
     'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
     'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
+    'sameTheoryPerCourse', 'samePracticePerCourse',
   ];
   let solverResults = [];
   let solverFilters = loadSolverFilters();
   let solverBusy = false;
   let solverRunSeq = 0;
   let solverIdSeq = 1000000000;
+
+  // Opciones del desplegable de turno, de mañana a tarde. Las dos «solo» son
+  // duras (recortan los grupos del otro turno) y las dos «preferente» blandas
+  // (solo puntúan). Los valores guardados son estables: «indiferente» no
+  // escribe filtro.
+  const SOLVER_TURNO_OPTIONS = [
+    ['solo-mañana', 'Solo por la mañana'],
+    ['mañana', 'Preferente por la mañana'],
+    ['indiferente', 'Indiferente'],
+    ['tarde', 'Preferente por la tarde'],
+    ['solo-tarde', 'Solo por la tarde'],
+  ];
+  // Comprobación de viabilidad (¿hay alguna combinación?): estado, temporizador
+  // del debounce y marca de la última consulta para no repetirla sin cambios.
+  let solverInfeasible = false;
+  let feasibilityTimer = null;
+  let feasibilitySeq = 0;
+  let feasibilityKey = '';
 
   const SOLVER_STRATEGIES = {
     balanced:   { label: 'Equilibrado',        weights: { deadHours: 1, days: 0.8, afternoons: 0.6, mornings: 0, earlyStart: 0.4, loadVariance: 0.5, filters: 1, professor: 0.5 } },
@@ -364,6 +399,13 @@
     // ya encuentre el feature; no fatal si el import falla — la delegación y
     // el montaje quedan en no-op.
     await ensureCalendarViewFeature();
+    // Antes de `setupActions()`/primer render: la tabla de configuraciones se
+    // pinta desde su vista ESM.
+    await ensureSavedConfigsView();
+    // Antes de tocar el catálogo: las valoraciones propias se superponen a los
+    // perfiles, así que tienen que estar cargadas cuando `rebuildDocentIndexes`
+    // construya el índice.
+    await loadOwnReviews();
     const catalogCodesChanged = await bootstrapCatalogState();
     loadPropuestas();
     // Orden de arranque (C3): HIDRATAR → SUSCRIBIR → PUSH.
@@ -720,6 +762,16 @@
     });
   }
 
+  function calculateConfigFreeDays(selectedSubjects, groupChoices) {
+    // Delegación: la única implementación vive en ESM (metrics.js). Se le pasan
+    // los días de la rejilla para que el orden de la columna coincida con el
+    // del calendario.
+    return getDomain().calculateConfigFreeDays(selectedSubjects, groupChoices, {
+      subjects: SUBJECTS,
+      days: DAYS,
+    });
+  }
+
   function addBlockFilter(type) {
     // Delegación: validar y construir el payload es regla pura
     // (src/app/domain/configs.js `buildBlockPayload`); aquí solo se leen los
@@ -736,14 +788,14 @@
       if (!payload) return;
       dispatchBlock({ type: 'blocks/add', payload });
     }
-    configPage = 1;
+    resetConfigsPage();
     renderBlockFilters();
     renderSavedConfigs();
   }
 
   function removeBlockFilter(index) {
     dispatchBlock({ type: 'blocks/remove', payload: { index } });
-    configPage = 1;
+    resetConfigsPage();
     renderBlockFilters();
     renderSavedConfigs();
   }
@@ -878,7 +930,7 @@
         const tardeInput = panel.querySelector('#block-max-tarde');
         configMaxManana = parseInt(mananaInput.value) || 0;
         configMaxTarde = parseInt(tardeInput.value) || 0;
-        configPage = 1;
+        resetConfigsPage();
         renderBlockFilters();
         renderSavedConfigs();
       });
@@ -889,7 +941,7 @@
       clearDayBtn.addEventListener('click', () => {
         configMaxManana = 0;
         configMaxTarde = 0;
-        configPage = 1;
+        resetConfigsPage();
         renderBlockFilters();
         renderSavedConfigs();
       });
@@ -1057,6 +1109,22 @@
 
   const docentesByKey = indexByKey(typeof DOCENTES !== 'undefined' ? DOCENTES : [], d => d && d.key);
   const profesoresByKey = indexByKey(typeof PROFESORES !== 'undefined' ? PROFESORES : [], p => p && p.key);
+  /**
+   * La base del catálogo activo, sin las valoraciones propias. `profesoresByKey`
+   * es la **fusión** que lee el render, así que para rehacerla —al cambiar de
+   * catálogo o al guardar/borrar una valoración— hace falta poder volver a la
+   * base en vez de ir acumulando superposiciones.
+   */
+  const catalogoProfesoresByKey = {};
+  /**
+   * Valoraciones propias: las que añade el usuario en la pestaña de datos.
+   * Viven en la tabla `reviews` del store y esta es la caché que lee el render;
+   * se recargan al arrancar y tras cada alta, edición, borrado o importación.
+   */
+  let ownReviews = [];
+  let ownReviewKeys = new Set();
+  /** Clave de la valoración que se está editando en el formulario ('' = alta). */
+  let editingReviewKey = '';
   /** Nombres con alguna valoración: los que pueden abrir ficha. */
   const nombresConFicha = new Set(
     Object.keys(profesoresByKey).map(key => profesoresByKey[key]).filter(p => p && p.name).map(p => p.name),
@@ -1128,6 +1196,9 @@
 
     toggleBtn.style.display = 'inline-flex';
     let html = '<div class="group-config-grid">';
+    // ¿Hay algún nombre de la guía sin valoración? Entonces se explica arriba
+    // de dónde salen los nombres, porque si no parecen «inventados».
+    let haySinValoracion = false;
 
     selectedCodes.forEach(codigo => {
       const subject = SUBJECTS.find(s => s.codigo === codigo);
@@ -1170,8 +1241,10 @@
         if (profName && !ignoreDocents) {
           const diff = getDificultad(codigo, group.letra);
           const nombre = escapeCatalogText(profName);
+          const conFicha = nombresConFicha.has(profName);
+          if (!conFicha) haySinValoracion = true;
           html += `<div class="group-profesor">`;
-          if (nombresConFicha.has(profName)) {
+          if (conFicha) {
             html += `<button type="button" class="prof-name-btn" data-prof-name="${nombre}"`
               + ` data-prof-codigo="${codigo}" data-prof-modalidad="Teoría">${nombre}</button>`;
           } else {
@@ -1219,8 +1292,10 @@
             if (profPracticas && !ignoreDocents) {
               const diffPracticas = getDificultad(codigo, sub);
               const nombrePracticas = escapeCatalogText(profPracticas);
+              const conFichaPracticas = nombresConFicha.has(profPracticas);
+              if (!conFichaPracticas) haySinValoracion = true;
               html += `<div class="group-profesor">`;
-              if (nombresConFicha.has(profPracticas)) {
+              if (conFichaPracticas) {
                 html += `<button type="button" class="prof-name-btn" data-prof-name="${nombrePracticas}"`
                   + ` data-prof-codigo="${codigo}" data-prof-modalidad="Prácticas">${nombrePracticas}</button>`;
               } else {
@@ -1241,7 +1316,9 @@
     });
 
     html += '</div>';
-    content.innerHTML = html;
+    content.innerHTML = (haySinValoracion
+      ? '<p class="group-config-hint">Los nombres de los profesores son los de las <strong>guías oficiales</strong> de la ETSIIT. Los que aparecen <strong>sin insignia</strong> todavía no tienen valoración: no están inventados.</p>'
+      : '') + html;
 
     // Bind events
     content.querySelectorAll('.group-option').forEach(opt => {
@@ -1272,6 +1349,10 @@
   // así que la ficha enseña al profesor en todas sus asignaturas, con la que se
   // ha pulsado primero y resaltada.
   let fichaOpener = null;
+
+  // Ficha de asignatura: dificultad y descripción del plan, por modalidad.
+  let asignaturaFichaOpener = null;
+  let asignaturaFichaBound = false;
 
   /**
    * Vuelve a encontrar el botón que abrió la ficha: mismo nombre y, si se abrió
@@ -1307,19 +1388,26 @@
     const dec = entry.highlighted ? ' is-focus' : '';
     let html = `<article class="profesor-ficha-entry${dec}">`;
     html += '<div class="profesor-ficha-head">';
-    html += `<span class="profesor-ficha-code">${escapeCatalogText(entry.subjectCode)}</span>`;
+    // Una valoración sin asignatura no tiene código ni modalidad que enseñar.
+    if (entry.subjectCode) {
+      html += `<span class="profesor-ficha-code">${escapeCatalogText(entry.subjectCode)}</span>`;
+    }
     if (entry.nombreAsignatura) {
       html += `<span class="profesor-ficha-subject">${escapeCatalogText(entry.nombreAsignatura)}</span>`;
     }
-    html += `<span class="profesor-ficha-modalidad">${escapeCatalogText(entry.modalidad)}</span>`;
+    if (entry.modalidad) {
+      html += `<span class="profesor-ficha-modalidad">${escapeCatalogText(entry.modalidad)}</span>`;
+    }
     html += dificultadBadgeHtml(entry.dificultad);
+    if (entry.propio) {
+      html += '<span class="prof-own-badge">tuya</span>';
+    }
     if (entry.cruzada) {
       html += `<span class="profesor-ficha-flag" title="Acumula más de una opinión en la hoja">cruzada</span>`;
     }
     html += '</div>';
     const plan = [entry.caracter, entry.mencion ? `Mención ${entry.mencion}` : ''].filter(Boolean).join(' · ');
     if (plan) html += `<div class="profesor-ficha-plan">${escapeCatalogText(plan)}</div>`;
-    if (entry.descripcion) html += `<p class="profesor-ficha-desc">${escapeCatalogText(entry.descripcion)}</p>`;
     if (entry.razon) html += `<p class="profesor-ficha-razon">${escapeCatalogText(entry.razon)}</p>`;
     entry.opinions.forEach(text => {
       html += `<p class="profesor-ficha-opinion">${escapeCatalogText(text)}</p>`;
@@ -1382,8 +1470,37 @@
     if (vivo && typeof vivo.focus === 'function') vivo.focus();
   }
 
+  /** Aviso bajo la barra de acciones de la pestaña de profesores. */
+  function setProfesoresStatus(message, isError) {
+    const status = document.getElementById('profesores-status');
+    if (!status) return;
+    status.textContent = message || '';
+    status.classList.toggle('is-error', !!isError);
+  }
+
+  /**
+   * Acciones de una fila del claustro. Solo las valoraciones **propias** se
+   * pueden editar o borrar, y cada una lleva su destino delante (asignatura y
+   * modalidad, o «Sin asignatura») porque un mismo nombre puede tener varias.
+   */
+  function ownRowActionsHtml(row) {
+    if (!row.ownKeys.length) return '—';
+    return row.ownKeys.map(key => {
+      const parts = key.includes('|') ? key.split('|') : [];
+      const destino = parts[0]
+        ? `${parts[0]}${parts[1] === 'Prácticas' ? ' (P)' : ''}`
+        : 'Sin asignatura';
+      return '<span class="prof-row-actions">'
+        + `<span class="prof-own-badge">${escapeCatalogText(destino)}</span>`
+        + `<button type="button" class="btn btn-sm btn-secondary" data-edit-prof="${escapeCatalogText(key)}">Editar</button>`
+        + `<button type="button" class="btn btn-sm btn-danger" data-delete-prof="${escapeCatalogText(key)}">Borrar</button>`
+        + '</span>';
+    }).join(' ');
+  }
+
   /** Listado del claustro de la pestaña de datos, con su buscador. */
   function renderProfesores() {
+    syncIgnoreDocentsInputs();
     const container = document.getElementById('profesores-container');
     if (!container) return;
     const search = document.getElementById('profesores-search');
@@ -1394,17 +1511,19 @@
       return;
     }
 
-    let html = '<div class="manage-table-wrapper"><table class="manage-table profesores-table">';
-    html += '<thead><tr><th>Profesor</th><th>Asignaturas</th><th>Dificultad</th></tr></thead><tbody>';
+    let html = '<p class="profesores-hint">Un profesor tiene una valoración <strong>por asignatura y modalidad</strong>. Los nombres del horario salen de las <strong>guías oficiales</strong> de la ETSIIT; si alguno no está en esta lista es que todavía no tiene valoración. Las marcadas como <strong>tuya</strong> las has añadido tú y <strong>mandan sobre el catálogo</strong>: cambian la insignia del horario y el peso del generador.</p>';
+    html += '<div class="manage-table-wrapper"><table class="manage-table profesores-table">';
+    html += '<thead><tr><th>Profesor</th><th>Asignaturas</th><th>Dificultad</th><th>Acciones</th></tr></thead><tbody>';
     rows.forEach(row => {
       const asignaturas = row.asignaturas
         .map(a => (a.modalidad === 'Prácticas' ? `${a.code} (P)` : a.code))
-        .join(', ');
+        .join(', ') || '—';
       const insignias = row.dificultades.map(dificultadBadgeHtml).join(' ') || '—';
       html += '<tr>';
       html += `<td><button type="button" class="prof-name-btn" data-prof-name="${escapeCatalogText(row.name)}">${escapeCatalogText(row.name)}</button></td>`;
       html += `<td class="profesores-asignaturas">${escapeCatalogText(asignaturas)}</td>`;
       html += `<td>${insignias}</td>`;
+      html += `<td class="td-actions">${ownRowActionsHtml(row)}</td>`;
       html += '</tr>';
     });
     html += '</tbody></table></div>';
@@ -1448,6 +1567,404 @@
     }
     const search = document.getElementById('profesores-search');
     if (search) search.addEventListener('input', renderProfesores);
+  }
+
+  // ─── Profesores propios ─────────────────────────────────────
+  // Alta, edición y borrado de las valoraciones propias, importación y
+  // exportación en JSON y el prompt que se copia para pedírselas a una IA. Las
+  // reglas son del dominio (`profesores-propios.js`) y el guardado va a la
+  // tabla `reviews` del store; aquí solo se leen los campos y se repinta.
+
+  function profesorFormEls() {
+    return {
+      modal: document.getElementById('profesor-form-modal'),
+      title: document.getElementById('profesor-form-title'),
+      name: document.getElementById('profesor-form-name'),
+      subject: document.getElementById('profesor-form-subject'),
+      modalidad: document.getElementById('profesor-form-modalidad'),
+      dificultad: document.getElementById('profesor-form-dificultad'),
+      opinions: document.getElementById('profesor-form-opinions'),
+      error: document.getElementById('profesor-form-error'),
+      del: document.getElementById('profesor-form-delete'),
+      save: document.getElementById('profesor-form-save'),
+      cancel: document.getElementById('profesor-form-cancel'),
+      close: document.getElementById('profesor-form-close'),
+    };
+  }
+
+  function showProfesorFormError(message) {
+    const el = document.getElementById('profesor-form-error');
+    if (!el) return;
+    el.textContent = message;
+    el.hidden = false;
+  }
+
+  function hideProfesorFormError() {
+    const el = document.getElementById('profesor-form-error');
+    if (!el) return;
+    el.textContent = '';
+    el.hidden = true;
+  }
+
+  /**
+   * Rellena los dos desplegables del formulario con el catálogo **activo**: la
+   * escala de dificultad del dominio y las asignaturas de esta sesión (que
+   * cambian al importar otro catálogo).
+   */
+  function fillProfesorFormOptions() {
+    const els = profesorFormEls();
+    if (els.dificultad) {
+      els.dificultad.innerHTML = '<option value="">Sin valoración</option>'
+        + getDomain().DIFICULTAD_OPCIONES
+          .map(o => `<option value="${o.key}">${escapeCatalogText(o.label)}</option>`)
+          .join('');
+    }
+    if (els.subject) {
+      els.subject.innerHTML = '<option value="">Sin asignatura</option>'
+        + SUBJECTS
+          .map(s => `<option value="${escapeCatalogText(s.codigo)}">${escapeCatalogText(s.codigo)} — ${escapeCatalogText(s.nombre)}</option>`)
+          .join('');
+    }
+  }
+
+  /** Abre el formulario. Sin clave es un alta; con clave, la edición de esa. */
+  function openProfesorForm(docentKey) {
+    const els = profesorFormEls();
+    if (!els.modal) return;
+    fillProfesorFormOptions();
+    const review = docentKey ? ownReviews.find(r => r.docentKey === docentKey) : null;
+    editingReviewKey = review ? review.docentKey : '';
+    els.title.textContent = review ? 'Editar profesor' : 'Añadir profesor';
+    els.name.value = review ? review.name : '';
+    els.subject.value = review ? review.subjectCode || '' : '';
+    els.modalidad.value = review && review.modalidad ? review.modalidad : 'Teoría';
+    els.dificultad.value = review && review.dificultad ? review.dificultad : '';
+    els.opinions.value = review && Array.isArray(review.opinions) ? review.opinions.join('\n') : '';
+    // La modalidad solo tiene sentido con asignatura: sin ella no hay terna que
+    // sustituir y la valoración queda suelta.
+    els.modalidad.disabled = !els.subject.value;
+    if (els.del) els.del.hidden = !review;
+    hideProfesorFormError();
+    els.modal.hidden = false;
+    if (els.name) els.name.focus();
+  }
+
+  function closeProfesorForm() {
+    const els = profesorFormEls();
+    if (!els.modal || els.modal.hidden) return;
+    els.modal.hidden = true;
+    editingReviewKey = '';
+  }
+
+  /** Guarda lo que hay en el formulario (alta o edición). */
+  async function saveProfesorForm() {
+    const els = profesorFormEls();
+    if (!els.modal) return;
+    const subjectCode = els.subject ? els.subject.value : '';
+    const review = getDomain().normalizeOwnReview({
+      name: els.name ? els.name.value : '',
+      subjectCode,
+      modalidad: subjectCode ? (els.modalidad ? els.modalidad.value : '') : '',
+      dificultad: els.dificultad ? els.dificultad.value : '',
+      opinions: (els.opinions ? els.opinions.value : '').split('\n'),
+      updatedAt: new Date().toISOString(),
+    });
+    if (!review) {
+      showProfesorFormError('Pon un nombre y, si eliges dificultad, una de la lista.');
+      return;
+    }
+    const store = __getStore();
+    if (!store || typeof store.saveReviews !== 'function') {
+      showProfesorFormError('No se puede guardar: el almacén no está disponible (modo degradado).');
+      return;
+    }
+    const previousKey = editingReviewKey;
+    const result = await store.saveReviews([review]);
+    if (!result || !result.ok) {
+      showProfesorFormError('No se pudo guardar la valoración.');
+      return;
+    }
+    // Al editar, cambiar de asignatura, modalidad o nombre cambia la clave: la
+    // fila vieja se queda huérfana y hay que borrarla explícitamente.
+    if (previousKey && previousKey !== review.docentKey && typeof store.deleteReview === 'function') {
+      await store.deleteReview(previousKey);
+    }
+    await loadOwnReviews();
+    closeProfesorForm();
+    renderProfesores();
+    updateAll();
+    setProfesoresStatus(`Guardado: ${review.name}.`);
+  }
+
+  /** Borra una valoración propia, con confirmación. */
+  async function deleteOwnReview(docentKey) {
+    const review = ownReviews.find(r => r.docentKey === docentKey);
+    if (!review) return;
+    if (!confirm(`¿Borrar tu valoración de ${review.name}?`)) return;
+    const store = __getStore();
+    if (!store || typeof store.deleteReview !== 'function') {
+      setProfesoresStatus('No se puede borrar: el almacén no está disponible.', true);
+      return;
+    }
+    const result = await store.deleteReview(docentKey);
+    if (!result || !result.ok) {
+      setProfesoresStatus('No se pudo borrar la valoración.', true);
+      return;
+    }
+    await loadOwnReviews();
+    closeProfesorForm();
+    renderProfesores();
+    updateAll();
+    setProfesoresStatus(`Borrada la valoración de ${review.name}.`);
+  }
+
+  /** Importa un JSON de valoraciones. Es un upsert: no borra lo que ya haya. */
+  async function importOwnProfesores(file) {
+    if (!file) return;
+    let text = '';
+    try { text = await file.text(); } catch (e) { text = ''; }
+    const { reviews, errors } = getDomain().parseOwnReviewsJSON(text);
+    if (reviews.length === 0) {
+      setProfesoresStatus(errors[0] || 'El fichero no traía ninguna valoración válida.', true);
+      return;
+    }
+    const store = __getStore();
+    if (!store || typeof store.saveReviews !== 'function') {
+      setProfesoresStatus('No se puede importar: el almacén no está disponible.', true);
+      return;
+    }
+    const result = await store.saveReviews(reviews);
+    if (!result || !result.ok) {
+      setProfesoresStatus('No se pudo importar el fichero.', true);
+      return;
+    }
+    await loadOwnReviews();
+    renderProfesores();
+    updateAll();
+    const descartadas = errors.length ? ` (${errors.length} entrada(s) descartada(s))` : '';
+    setProfesoresStatus(`Importadas ${result.count} valoraciones${descartadas}.`, errors.length > 0);
+  }
+
+  /** Descarga tus valoraciones en el mismo JSON que acepta la importación. */
+  function exportOwnProfesores() {
+    if (ownReviews.length === 0) {
+      setProfesoresStatus('Todavía no has añadido ninguna valoración.', true);
+      return;
+    }
+    downloadJSON(JSON.parse(getDomain().ownReviewsToJSON(ownReviews)), 'profesores-propios.json');
+    setProfesoresStatus(`Exportadas ${ownReviews.length} valoraciones.`);
+  }
+
+  function openProfesorPrompt() {
+    const modal = document.getElementById('profesor-prompt-modal');
+    const text = document.getElementById('profesor-prompt-text');
+    if (!modal || !text) return;
+    text.value = getDomain().buildProfesorPrompt(SUBJECTS);
+    modal.hidden = false;
+    text.focus();
+  }
+
+  function closeProfesorPrompt() {
+    const modal = document.getElementById('profesor-prompt-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+  }
+
+  async function copyProfesorPrompt() {
+    const text = document.getElementById('profesor-prompt-text');
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text.value);
+      setProfesoresStatus('Prompt copiado al portapapeles.');
+    } catch (e) {
+      // Sin permiso de portapapeles (o sin API) el texto ya está a la vista y
+      // seleccionado: se copia a mano en vez de fallar en silencio.
+      text.select();
+      setProfesoresStatus('No se pudo copiar solo: el texto queda seleccionado, cópialo a mano.', true);
+    }
+  }
+
+  function setupProfesoresSection() {
+    const add = document.getElementById('btn-add-profesor');
+    if (add) add.addEventListener('click', () => openProfesorForm(''));
+
+    const importBtn = document.getElementById('btn-import-profesores');
+    const importInput = document.getElementById('import-profesores-input');
+    if (importBtn && importInput) {
+      importBtn.addEventListener('click', () => importInput.click());
+      importInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        e.target.value = '';
+        importOwnProfesores(file);
+      });
+    }
+
+    const exportBtn = document.getElementById('btn-export-profesores');
+    if (exportBtn) exportBtn.addEventListener('click', exportOwnProfesores);
+    const promptBtn = document.getElementById('btn-copy-profesor-prompt');
+    if (promptBtn) promptBtn.addEventListener('click', openProfesorPrompt);
+    const promptCopy = document.getElementById('profesor-prompt-copy');
+    if (promptCopy) promptCopy.addEventListener('click', copyProfesorPrompt);
+
+    // El interruptor de esta sección es el mismo que el del generador.
+    const ignore = document.getElementById('profesores-ignore-docents');
+    if (ignore) ignore.addEventListener('change', () => setIgnoreDocents(ignore.checked));
+
+    const form = profesorFormEls();
+    if (form.modal) {
+      if (form.close) form.close.addEventListener('click', closeProfesorForm);
+      if (form.cancel) form.cancel.addEventListener('click', closeProfesorForm);
+      if (form.save) form.save.addEventListener('click', saveProfesorForm);
+      if (form.del) form.del.addEventListener('click', () => deleteOwnReview(editingReviewKey));
+      if (form.subject) {
+        form.subject.addEventListener('change', () => {
+          if (form.modalidad) form.modalidad.disabled = !form.subject.value;
+        });
+      }
+      form.modal.addEventListener('click', (e) => {
+        if (e.target === form.modal) closeProfesorForm();
+      });
+      form.modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeProfesorForm();
+        }
+      });
+    }
+
+    const prompt = document.getElementById('profesor-prompt-modal');
+    if (prompt) {
+      const closeBtn = document.getElementById('profesor-prompt-close');
+      if (closeBtn) closeBtn.addEventListener('click', closeProfesorPrompt);
+      prompt.addEventListener('click', (e) => {
+        if (e.target === prompt) closeProfesorPrompt();
+      });
+      prompt.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeProfesorPrompt();
+        }
+      });
+    }
+
+    // Delegado: la tabla se repinta entera en cada cambio de estado.
+    const lista = document.getElementById('profesores-container');
+    if (lista) {
+      lista.addEventListener('click', (e) => {
+        const edit = e.target.closest('[data-edit-prof]');
+        if (edit) {
+          openProfesorForm(edit.dataset.editProf);
+          return;
+        }
+        const remove = e.target.closest('[data-delete-prof]');
+        if (remove) deleteOwnReview(remove.dataset.deleteProf);
+      });
+    }
+  }
+
+  // ─── Ficha de asignatura ───────────────────────────────────
+  // Dificultad y descripción del **plan** (por modalidad), que no son del
+  // profesor y no se pintaban en ningún sitio. Solo las trae el catálogo
+  // completo (el archivo con contraseña); la muestra devuelve la ficha vacía.
+  function asignaturaModalEls() {
+    return {
+      modal: document.getElementById('asignatura-modal'),
+      title: document.getElementById('asignatura-modal-title'),
+      body: document.getElementById('asignatura-modal-body'),
+      close: document.getElementById('asignatura-modal-close'),
+    };
+  }
+
+  function asignaturaFichaHtml(ficha) {
+    let html = '<div class="asignatura-ficha">';
+    const meta = [
+      ficha.codigo,
+      ficha.curso ? `${ficha.curso}º curso` : '',
+      ficha.cuatrimestre ? `${ficha.cuatrimestre}º cuatrimestre` : '',
+      ficha.creditos ? `${ficha.creditos} ECTS` : '',
+    ]
+      .filter(Boolean)
+      .join(' · ');
+    if (meta) html += `<p class="asignatura-ficha-meta">${escapeCatalogText(meta)}</p>`;
+
+    const plan = [ficha.caracter, ficha.mencion ? `Mención ${ficha.mencion}` : '']
+      .filter(Boolean)
+      .join(' · ');
+    if (plan) html += `<p class="asignatura-ficha-plan">${escapeCatalogText(plan)}</p>`;
+
+    if (ficha.dificultades.length) {
+      html += '<h3 class="asignatura-ficha-sub">Dificultad de la asignatura</h3>';
+      ficha.dificultades.forEach((d) => {
+        html += '<div class="asignatura-ficha-row">'
+          + `<span class="asignatura-ficha-modalidad">${escapeCatalogText(d.modalidad)}</span>`
+          + `${dificultadBadgeHtml(d.clave)}</div>`;
+      });
+    }
+
+    if (ficha.descripciones.length) {
+      html += '<h3 class="asignatura-ficha-sub">Descripción</h3>';
+      ficha.descripciones.forEach((d) => {
+        html += '<div class="asignatura-ficha-row is-block">'
+          + `<span class="asignatura-ficha-modalidad">${escapeCatalogText(d.modalidad)}</span>`
+          + `<p class="asignatura-ficha-texto">${escapeCatalogText(d.texto)}</p></div>`;
+      });
+    }
+
+    if (!ficha.dificultades.length && !ficha.descripciones.length) {
+      html += '<p class="asignatura-ficha-vacio">Esta asignatura no trae dificultad ni descripción. '
+        + 'Solo vienen con el catálogo completo (el archivo con contraseña).</p>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function openAsignaturaFicha(codigo, opener) {
+    const els = asignaturaModalEls();
+    if (!els.modal || !els.title || !els.body || !codigo) return;
+    const subject = SUBJECTS.find(s => s.codigo === codigo);
+    if (!subject) return;
+    const ficha = getDomain().buildAsignaturaFicha(subject);
+    els.title.textContent = ficha.nombre || ficha.codigo;
+    els.body.innerHTML = asignaturaFichaHtml(ficha);
+    asignaturaFichaOpener = opener || null;
+    els.modal.hidden = false;
+    if (els.close) els.close.focus();
+  }
+
+  function closeAsignaturaFicha() {
+    const els = asignaturaModalEls();
+    if (!els.modal || els.modal.hidden) return;
+    els.modal.hidden = true;
+    const opener = asignaturaFichaOpener;
+    asignaturaFichaOpener = null;
+    // El foco vuelve a quien abrió la ficha si el nodo sigue vivo (los paneles
+    // se repintan enteros; el botón puede haber muerto).
+    if (opener && document.contains(opener) && typeof opener.focus === 'function') opener.focus();
+  }
+
+  function setupAsignaturaFicha() {
+    const els = asignaturaModalEls();
+    if (!els.modal) return;
+    if (els.close) els.close.addEventListener('click', closeAsignaturaFicha);
+    els.modal.addEventListener('click', (e) => {
+      if (e.target === els.modal) closeAsignaturaFicha();
+    });
+    els.modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeAsignaturaFicha();
+      }
+    });
+    // La tarjeta de materia vive en la vista ESM (features/subjects.js), que no
+    // puede llamar a este cierre: pide la ficha con un evento.
+    if (!asignaturaFichaBound) {
+      document.addEventListener('ugr:openAsignatura', (e) => {
+        const codigo = e.detail && e.detail.codigo;
+        if (codigo) openAsignaturaFicha(codigo, null);
+      });
+      asignaturaFichaBound = true;
+    }
   }
 
   // ─── Render Calendar ───────────────────────────────────────
@@ -1597,13 +2114,24 @@
     const canGenerate = hasSelectedInTerm();
     const hint = document.getElementById('control-hint');
     if (hint) hint.hidden = canGenerate;
+    // La selección o el cuatrimestre pueden haber cambiado, y con ellos la
+    // viabilidad: se revisa (con debounce) antes de decidir el botón.
+    scheduleFeasibilityCheck();
+    updateGenerateButton();
+  }
+
+  /** El botón de generar está libre solo si hay selección, no hay trabajo en
+   *  curso y la comprobación de viabilidad no ha dicho que no hay ninguna. */
+  function updateGenerateButton() {
     const gen = document.getElementById('btn-solver-generate');
-    if (gen) gen.disabled = solverBusy || !canGenerate;
+    if (gen) gen.disabled = solverBusy || !hasSelectedInTerm() || solverInfeasible;
   }
 
   function setupActions() {
     setupShareDialog();
     setupProfesorFicha();
+    setupProfesoresSection();
+    setupAsignaturaFicha();
     document.getElementById('btn-export').addEventListener('click', exportCalendar);
     document.getElementById('btn-share').addEventListener('click', shareLink);
     document.getElementById('btn-clear-selected').addEventListener('click', clearSelected);
@@ -2052,8 +2580,18 @@
   }
 
   // ─── Saved Configs ─────────────────────────────────────────
+  // La **vista** (tabla, orden, paginación, acciones) vive en ESM
+  // (`src/app/features/savedConfigs.js`). Aquí quedan los datos que la vista
+  // recibe y las **mutaciones** (guardar/cargar/borrar/exportar), que el
+  // monolito sigue poseyendo y le pasa como intents.
   function getDisplayConfigs() {
     return savedConfigs.concat(solverResults);
+  }
+
+  /** Vuelve la tabla a la primera página (la pide quien cambia la lista). */
+  function resetConfigsPage() {
+    const view = getSavedConfigsView();
+    if (view) view.resetPage();
   }
 
   // ─── Solver UI ─────────────────────────────────────────────
@@ -2079,6 +2617,9 @@
       solverFilters.push({ type, value, weight: 1 });
     }
     saveSolverFilters();
+    // Cualquier cambio de filtro puede dejar el problema sin solución: se
+    // comprueba (con debounce) para avisar y bloquear el botón si no hay nada.
+    scheduleFeasibilityCheck();
   }
 
   function getSolverProfessorOptions() {
@@ -2118,6 +2659,8 @@
     const earliestStart = findSolverFilter('earliestStart')?.value || '';
     const latestEnd = findSolverFilter('latestEnd')?.value || '';
     const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
+    const sameTheory = findSolverFilter('sameTheoryPerCourse')?.value === true;
+    const samePractice = findSolverFilter('samePracticePerCourse')?.value === true;
     // Con «Ignorar profesores» no se construyen las opciones: ni se pinta el
     // bloque ni se ofrece el preset «Mejores profesores».
     const profOptions = ignoreDocents ? [] : getSolverProfessorOptions();
@@ -2131,9 +2674,9 @@
       html += `<option value="${key}" ${solverStrategy === key ? 'selected' : ''}>${s.label}</option>`;
     });
     html += '</select></label>';
-    // «Ignorar profesores»: casilla provisional en el panel del
-    // generador —es donde hoy vive todo lo de docentes—; cuando exista la
-    // sección «Profesores» se mudará allí.
+    // «Ignorar profesores»: el mismo interruptor está también en la sección
+    // «Profesores» (donde vive el dato); los dos escriben `ui.ignoreDocents`,
+    // así que encienden y apagan lo mismo.
     html += '<label class="solver-ignore-docents"><input type="checkbox" id="solver-ignore-docents"'
       + `${ignoreDocents ? ' checked' : ''}> Ignorar profesores</label>`;
     html += '</div>';
@@ -2152,13 +2695,20 @@
     html += '</div>';
 
     html += '<div class="solver-filter-row">';
-    html += '<label>Turno preferente <select id="solver-prefer-turno">';
-    ['indiferente', 'mañana', 'tarde'].forEach(v => {
-      html += `<option value="${v}" ${turno === v ? 'selected' : ''}>${v}</option>`;
+    html += '<label>Turno <select id="solver-prefer-turno">';
+    SOLVER_TURNO_OPTIONS.forEach(([value, label]) => {
+      html += `<option value="${value}" ${turno === value ? 'selected' : ''}>${label}</option>`;
     });
     html += '</select></label>';
     html += `<label>No empezar antes de <input type="time" id="solver-earliest-start" value="${earliestStart}"></label>`;
     html += `<label>No acabar después de <input type="time" id="solver-latest-end" value="${latestEnd}"></label>`;
+    html += '</div>';
+
+    // Mismo grupo por curso. El segundo check exige el primero, así que se queda
+    // deshabilitado (y desmarcado) mientras no esté activo.
+    html += '<div class="solver-filter-row">';
+    html += `<label class="solver-same-group"><input type="checkbox" id="solver-same-theory"${sameTheory ? ' checked' : ''}> Mismo grupo de teoría por curso</label>`;
+    html += `<label class="solver-same-group"><input type="checkbox" id="solver-same-practice"${samePractice ? ' checked' : ''}${sameTheory ? '' : ' disabled'}> Mismo grupo de teoría y de prácticas por curso</label>`;
     html += '</div>';
 
     // El panel «Bloquear profesores» solo existe con los profesores activos:
@@ -2234,6 +2784,19 @@
       setSolverFilter('latestEnd', latestInput.value || null);
     });
 
+    const sameTheoryInput = panel.querySelector('#solver-same-theory');
+    const samePracticeInput = panel.querySelector('#solver-same-practice');
+    if (sameTheoryInput) sameTheoryInput.addEventListener('change', () => {
+      setSolverFilter('sameTheoryPerCourse', sameTheoryInput.checked ? true : null);
+      // El subgrupo de prácticas no tiene sentido sin el grupo de teoría: al
+      // apagar el primero se apaga también el segundo.
+      if (!sameTheoryInput.checked) setSolverFilter('samePracticePerCourse', null);
+      renderSolverFilters();
+    });
+    if (samePracticeInput) samePracticeInput.addEventListener('change', () => {
+      setSolverFilter('samePracticePerCourse', samePracticeInput.checked ? true : null);
+    });
+
     const profToggle = panel.querySelector('#btn-toggle-solver-profs');
     const profBody = panel.querySelector('.solver-prof-body');
     if (profToggle && profBody) {
@@ -2298,12 +2861,72 @@
 
   function setSolverBusy(busy) {
     solverBusy = busy;
-    const gen = document.getElementById('btn-solver-generate');
     const cancel = document.getElementById('btn-solver-cancel');
     const prog = document.getElementById('solver-progress');
-    if (gen) gen.disabled = busy || !hasSelectedInTerm();
+    updateGenerateButton();
     if (cancel) cancel.style.display = busy ? '' : 'none';
     if (prog) prog.style.display = busy ? '' : 'none';
+  }
+
+  // ─── Comprobación de viabilidad ─────────────────────────────
+  /** Pinta el mensaje de la comprobación, si el bloque existe en el HTML. */
+  function setFeasibilityMessage(text, active) {
+    const el = document.getElementById('solver-feasibility');
+    if (el) {
+      el.textContent = text;
+      el.classList.toggle('is-blocking', active === true);
+    }
+    solverInfeasible = active === true;
+    updateGenerateButton();
+  }
+
+  /** Firma barata del problema (asignaturas + filtros): si no cambia, no hay
+   *  que volver a preguntar al motor. */
+  function feasibilitySignature(problem) {
+    return JSON.stringify([problem.subjects, problem.filters]);
+  }
+
+  /** Programa la comprobación con debounce: tocar varios filtros seguidos deja
+   *  una sola consulta. */
+  function scheduleFeasibilityCheck() {
+    if (feasibilityTimer) clearTimeout(feasibilityTimer);
+    feasibilityTimer = setTimeout(runFeasibilityCheck, 300);
+  }
+
+  async function runFeasibilityCheck() {
+    feasibilityTimer = null;
+    const bridge = window.__ugrSolver;
+    let problem;
+    try {
+      problem = buildSolverProblem();
+    } catch (e) {
+      return; // dominio aún sin montar: no hay nada que comprobar
+    }
+    if (!bridge || typeof bridge.checkFeasible !== 'function' || problem.subjects.length === 0) {
+      // Sin asignaturas no hay nada que generar, así que no se bloquea nada.
+      setFeasibilityMessage('', false);
+      feasibilityKey = feasibilitySignature(problem);
+      return;
+    }
+    const key = feasibilitySignature(problem);
+    if (key === feasibilityKey) return;
+    feasibilityKey = key;
+
+    const seq = ++feasibilitySeq;
+    let result;
+    try {
+      result = await bridge.checkFeasible(problem, { apellido: state.apellido });
+    } catch (e) {
+      result = { feasible: null };
+    }
+    if (seq !== feasibilitySeq) return; // llegó tarde: hay otra consulta en curso
+    if (result && result.feasible === false) {
+      setFeasibilityMessage('Ningún horario cumple esos filtros.', true);
+    } else if (result && result.feasible === null) {
+      setFeasibilityMessage('No se pudo comprobar si hay alguna combinación: hay demasiadas posibilidades.', false);
+    } else {
+      setFeasibilityMessage('', false);
+    }
   }
 
   function setSolverProgress(stats) {
@@ -2350,7 +2973,7 @@
     const k = Math.max(1, Math.min(500, parseInt(kInput?.value || '200', 10) || 200));
     const runId = ++solverRunSeq;
     solverResults = [];
-    configPage = 1;
+    resetConfigsPage();
     setSolverBusy(true);
     setSolverStatus('Generando…');
     const weights = (SOLVER_STRATEGIES[solverStrategy] || SOLVER_STRATEGIES.balanced).weights;
@@ -2442,7 +3065,7 @@
     // Emit only after persistence succeeds so telemetry counts saved configs, not invalid attempts.
     document.dispatchEvent(new Event('ugr:configSaved'));
     nameInput.value = '';
-    configPage = 1;
+    resetConfigsPage();
     renderSavedConfigs();
     showToast(`"${name}" guardada`, 'success');
   }
@@ -2473,154 +3096,18 @@
     // local se reasigna aquí (confirm/persistencia/render no cambian).
     savedConfigs = getDomain().removeConfigById(savedConfigs, id);
     saveAllConfigs(savedConfigs);
-    configPage = 1;
+    resetConfigsPage();
     renderSavedConfigs();
     showToast(`"${config.name}" eliminada`, 'info');
   }
 
+  /**
+   * Pinta la tabla de configuraciones delegando en su vista ESM. Sin vista
+   * montada (import fallido) es un no-op, como el resto de vistas.
+   */
   function renderSavedConfigs() {
-    const container = document.getElementById('saved-configs-list');
-    const displayConfigs = getDisplayConfigs();
-    if (displayConfigs.length === 0) {
-      container.innerHTML = '<p class="empty-state">No hay configuraciones guardadas.</p>';
-      return;
-    }
-
-    // Delegación: orden + filtros (bloqueos, favoritos, techos de días)
-    // viven en ESM (src/app/domain/configs.js `selectVisibleConfigs`); aquí
-    // solo se inyecta el criterio del cierre y los datos legacy (store,
-    // catálogo y lookups de dificultad).
-    const filtered = getDomain().selectVisibleConfigs(displayConfigs, {
-      sortField: configSortField,
-      sortDir: configSortDir,
-      showFavoritesOnly: configShowFavoritesOnly,
-      maxManana: configMaxManana,
-      maxTarde: configMaxTarde,
-      blocks: getBlocks(),
-      subjects: SUBJECTS,
-      dificultad: ignoreDocents ? () => null : getDificultad,
-      difficultyScore: getDifficultyScore,
-    });
-    const toolbarHtml = '<div class="saved-configs-toolbar">' +
-      `<button class="btn btn-sm ${configShowFavoritesOnly ? 'btn-primary' : 'btn-secondary'}" id="btn-toggle-favorites">\u2605 Favoritos${configShowFavoritesOnly ? ' (activado)' : ''}</button>` +
-      '</div>';
-
-    if (filtered.length === 0) {
-      container.innerHTML = toolbarHtml + '<p class="empty-state">No hay resultados con los filtros actuales.</p>';
-      bindSavedConfigsToolbar(container);
-      return;
-    }
-
-    // Delegación: totales, recorte de página y slice viven en ESM
-    // (`paginateConfigs`); el cierre solo reasigna su `configPage` con el
-    // valor ya recortado al rango [1, totalPages].
-    const { totalEntries, totalPages, page, entries: pageEntries } = getDomain().paginateConfigs(filtered, configPage, CONFIG_PAGE_SIZE);
-    configPage = page;
-
-    const arrow = (field) => configSortField === field ? (configSortDir === 'asc' ? ' \u25B2' : ' \u25BC') : '';
-
-    let html = toolbarHtml;
-
-    html += '<table class="saved-configs-table">';
-    html += '<thead><tr>';
-    html += '<th class="col-fav-head">\u2605</th>';
-    html += `<th data-sort="name" class="sortable${configSortField === 'name' ? ' sort-active' : ''}">Nombre${arrow('name')}</th>`;
-    html += `<th data-sort="count" class="sortable${configSortField === 'count' ? ' sort-active' : ''}">N. Asig${arrow('count')}</th>`;
-    html += `<th data-sort="turno" class="sortable${configSortField === 'turno' ? ' sort-active' : ''}">Turno${arrow('turno')}</th>`;
-    html += `<th data-sort="manana" class="sortable${configSortField === 'manana' ? ' sort-active' : ''}">D\u00EDas M${arrow('manana')}</th>`;
-    html += `<th data-sort="tarde" class="sortable${configSortField === 'tarde' ? ' sort-active' : ''}">D\u00EDas T${arrow('tarde')}</th>`;
-    html += `<th data-sort="deadHours" class="sortable${configSortField === 'deadHours' ? ' sort-active' : ''}">Huecos${arrow('deadHours')}</th>`;
-    html += `<th data-sort="profScore" class="sortable${configSortField === 'profScore' ? ' sort-active' : ''}">Prof${arrow('profScore')}</th>`;
-    html += `<th data-sort="sameGroup" class="sortable${configSortField === 'sameGroup' ? ' sort-active' : ''}">Grupo${arrow('sameGroup')}</th>`;
-    html += '<th class="col-actions-head">Acciones</th>';
-    html += '</tr></thead><tbody>';
-
-    pageEntries.forEach(config => {
-      const count = Object.keys(config.selectedSubjects).filter(c => config.selectedSubjects[c]).length;
-      const m = calculateConfigMetrics(config.selectedSubjects, config.groupChoices);
-      const d = calculateConfigDays(config.selectedSubjects, config.groupChoices);
-      html += '<tr>';
-      html += `<td class="col-fav"><button class="btn-fav ${isConfigFavorited(config) ? 'active' : ''}" data-action="favorite" data-id="${config.id}">${isConfigFavorited(config) ? '\u2605' : '\u2606'}</button></td>`;
-      html += `<td class="col-name">${config.name}</td>`;
-      html += `<td class="col-count">${count}</td>`;
-      html += `<td class="col-turno">${config.turnoPreferente}</td>`;
-      html += `<td class="col-manana">${d.manana}</td>`;
-      html += `<td class="col-tarde">${d.tarde}</td>`;
-      const dead = config.deadHours != null ? config.deadHours : calculateConfigDeadHours(config.selectedSubjects, config.groupChoices);
-      html += `<td class="col-deadhours">${dead}</td>`;
-      // Sin nada que puntuar (`profCount === 0`) se pinta un hueco, no «0/0»:
-      // es el caso normal cuando no hay dificultades, cuando todas son
-      // «Desconocidas» y cuando el modo profesores está activo.
-      html += `<td class="col-prof">${m.profCount ? `${m.profScore}/${m.profCount * 6}` : '\u2014'}</td>`;
-      html += `<td class="col-group ${m.sameGroupPerYear ? 'group-ok' : 'group-warn'}">${m.sameGroupPerYear ? '\u2713 Uniforme' : '\u2717 Mixtos'}</td>`;
-      html += '<td class="col-actions">';
-      html += `<button class="btn btn-sm btn-secondary" data-action="load" data-id="${config.id}">Cargar</button>`;
-      html += `<button class="btn btn-sm ${compareIds.includes(config.id) ? 'btn-danger' : 'btn-secondary'}" data-action="compare" data-id="${config.id}">${compareIds.includes(config.id) ? 'Quitar' : 'Comparar'}</button>`;
-      html += `<button class="btn btn-sm btn-secondary" data-action="export-config" data-id="${config.id}">Exportar</button>`;
-      if (config.solver) {
-        html += `<button class="btn btn-sm btn-primary" data-action="save-solver" data-id="${config.id}">Guardar</button>`;
-      } else {
-        html += `<button class="btn btn-sm btn-danger" data-action="delete" data-id="${config.id}">Eliminar</button>`;
-      }
-      html += '</td>';
-      html += '</tr>';
-    });
-
-    html += '</tbody></table>';
-
-    if (totalPages > 1) {
-      html += '<div class="pagination">';
-      html += `<button class="btn btn-sm btn-secondary" id="cfg-page-prev" ${configPage <= 1 ? 'disabled' : ''}>\u2190 Anterior</button>`;
-      html += `<span class="page-info">P\u00e1gina ${configPage} de ${totalPages} (${totalEntries} entradas)</span>`;
-      html += `<button class="btn btn-sm btn-secondary" id="cfg-page-next" ${configPage >= totalPages ? 'disabled' : ''}>Siguiente \u2192</button>`;
-      html += '</div>';
-    }
-
-    container.innerHTML = html;
-
-    bindSavedConfigsToolbar(container);
-
-    container.querySelectorAll('th.sortable').forEach(th => {
-      th.addEventListener('click', () => {
-        const field = th.dataset.sort;
-        if (configSortField === field) {
-          configSortDir = configSortDir === 'asc' ? 'desc' : 'asc';
-        } else {
-          configSortField = field;
-          configSortDir = (field === 'name' || field === 'turno') ? 'asc' : 'desc';
-        }
-        configPage = 1;
-        renderSavedConfigs();
-      });
-    });
-
-    container.querySelectorAll('[data-action]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = parseInt(btn.dataset.id);
-        if (btn.dataset.action === 'load') loadConfig(id);
-        else if (btn.dataset.action === 'delete') deleteConfig(id);
-        else if (btn.dataset.action === 'save-solver') saveSolverResult(id);
-        else if (btn.dataset.action === 'export-config') exportSingleConfig(id);
-        else if (btn.dataset.action === 'compare') toggleCompareId(id);
-        else if (btn.dataset.action === 'favorite') toggleFavorite(id);
-      });
-    });
-
-    const prevBtn = container.querySelector('#cfg-page-prev');
-    const nextBtn = container.querySelector('#cfg-page-next');
-    if (prevBtn) prevBtn.addEventListener('click', () => { configPage--; renderSavedConfigs(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { configPage++; renderSavedConfigs(); });
-  }
-
-  function bindSavedConfigsToolbar(container) {
-    const toggleFavBtn = container.querySelector('#btn-toggle-favorites');
-    if (toggleFavBtn) {
-      toggleFavBtn.addEventListener('click', () => {
-        configShowFavoritesOnly = !configShowFavoritesOnly;
-        configPage = 1;
-        renderSavedConfigs();
-      });
-    }
+    const view = getSavedConfigsView();
+    if (view) view.render();
   }
 
   // ─── Export/Import JSON ────────────────────────────────────
@@ -2766,7 +3253,7 @@
     pushCompareIdsToStore();
     saveState();
 
-    configPage = 1;
+    resetConfigsPage();
     renderSavedConfigs();
     renderPropuestasGuardadas();
     renderPropuestasBar();
@@ -2827,7 +3314,7 @@
         });
 
         saveAllConfigs(savedConfigs);
-        configPage = 1;
+        resetConfigsPage();
         renderSavedConfigs();
         showToast(`${configsToAdd.length} configuración(es) importada(s)`, 'success');
       } catch (err) {
@@ -2923,7 +3410,7 @@
       const tipo = getDomain().tipoDeAsignatura(s);
       const clave = getDomain().tipoClave(s);
       html += '<tr>';
-      html += `<td>${escapeCatalogText(s.nombre)}</td>`;
+      html += `<td><button type="button" class="ficha-name-btn" data-ficha-codigo="${escapeCatalogText(s.codigo)}">${escapeCatalogText(s.nombre)}</button></td>`;
       html += `<td class="td-tipo${clave ? ` td-tipo-${clave}` : ''}">`
         + `${tipo ? escapeCatalogText(tipo) : '<span class="td-tipo-vacio">—</span>'}</td>`;
       html += `<td>${s.curso}º</td>`;
@@ -2951,6 +3438,12 @@
         if (btn.dataset.action === 'edit') openEditModal(codigo);
         else if (btn.dataset.action === 'delete') deleteSubject(codigo);
       });
+    });
+
+    // El nombre abre la ficha de la asignatura (dificultad y descripción del
+    // plan). Las del plan sin horario también la tienen si el catálogo la trae.
+    container.querySelectorAll('[data-ficha-codigo]').forEach(btn => {
+      btn.addEventListener('click', () => openAsignaturaFicha(btn.dataset.fichaCodigo, btn));
     });
   }
 
@@ -3305,18 +3798,48 @@
    */
   function rebuildDocentIndexes(docents, profesores) {
     Object.keys(docentesByKey).forEach(key => { delete docentesByKey[key]; });
-    Object.keys(profesoresByKey).forEach(key => { delete profesoresByKey[key]; });
-    nombresConFicha.clear();
     (Array.isArray(docents) ? docents : []).forEach(d => {
       if (d && d.key) docentesByKey[d.key] = d;
     });
+    Object.keys(catalogoProfesoresByKey).forEach(key => { delete catalogoProfesoresByKey[key]; });
     (Array.isArray(profesores) ? profesores : []).forEach(p => {
-      if (p && p.key) profesoresByKey[p.key] = p;
+      if (p && p.key) catalogoProfesoresByKey[p.key] = p;
+    });
+    rebuildProfesoresIndex();
+  }
+
+  /**
+   * Rehace el índice de perfiles que lee el render: el catálogo activo con las
+   * valoraciones propias por encima —para la misma (asignatura, modalidad,
+   * nombre) manda la tuya—. Es idempotente y se puede llamar tantas veces como
+   * haga falta: parte siempre de la base y de la lista de propias.
+   */
+  function rebuildProfesoresIndex() {
+    Object.keys(profesoresByKey).forEach(key => { delete profesoresByKey[key]; });
+    nombresConFicha.clear();
+    const add = p => {
+      if (!p || !p.key) return;
+      profesoresByKey[p.key] = p;
       // La ficha agrupa todo lo que se sabe de un profesor, así que se abre
       // aunque no haya valoración de *esta* asignatura: si tiene alguna en otra,
       // el nombre es un botón y la ficha la enseña.
-      if (p && p.name) nombresConFicha.add(p.name);
-    });
+      if (p.name) nombresConFicha.add(p.name);
+    };
+    Object.keys(catalogoProfesoresByKey).forEach(key => add(catalogoProfesoresByKey[key]));
+    ownReviews.forEach(review => add(getDomain().ownReviewToProfesor(review)));
+    ownReviewKeys = new Set(ownReviews.map(r => r.docentKey).filter(Boolean));
+  }
+
+  /**
+   * Lee las valoraciones propias del store y rehace el índice con ellas. Sin
+   * IndexedDB no hay nada que leer y la app se queda con el catálogo a secas.
+   */
+  async function loadOwnReviews() {
+    const store = __getStore();
+    if (store && typeof store.listReviews === 'function') {
+      try { ownReviews = await store.listReviews(); } catch (e) { ownReviews = []; }
+    }
+    rebuildProfesoresIndex();
   }
 
   function syncFromActiveCatalog() {
@@ -3477,7 +4000,10 @@
       return;
     }
     select.innerHTML = list.map(c => {
-      const marca = (c.sources || []).includes('volcado') ? 'volcado' : 'muestra';
+      // Etiqueta legible para el usuario: la muestra pública o el volcado
+      // (el que se desbloquea con la contraseña). «Volcado» a secas no decía
+      // de dónde salía.
+      const marca = (c.sources || []).includes('volcado') ? 'archivo con contraseña' : 'muestra';
       const label = [c.university, c.degree, c.version, `${c.subjectCount} asignaturas`, marca]
         .filter(Boolean)
         .join(' · ') || c.id;
@@ -4555,6 +5081,7 @@
             saveState,
             updateAll,
             getMenciones: () => catalogMenciones(),
+            getDificultadLabel,
           });
           return ugrSubjectsView;
         })
@@ -4620,6 +5147,55 @@
         });
     }
     return ugrCalendarInitPromise;
+  }
+
+  // ─── Features ESM: vista de configuraciones guardadas ──────
+  // Mismo patrón que `ensureSubjectsView`/`ensureCalendarViewFeature`: import
+  // dinámico con instancia y promesa cacheadas, para que `init()` repetido no
+  // duplique los listeners de la tabla. Recibe del monolito los datos y las
+  // mutaciones (como intents); si el import falla, la vista queda en `null` y
+  // `renderSavedConfigs()` degrada a no-op.
+  let ugrSavedConfigsView = null;
+  let ugrSavedConfigsInitPromise = null;
+
+  function getSavedConfigsView() {
+    return ugrSavedConfigsView;
+  }
+
+  function ensureSavedConfigsView() {
+    if (ugrSavedConfigsView) return Promise.resolve(ugrSavedConfigsView);
+    if (!ugrSavedConfigsInitPromise) {
+      ugrSavedConfigsInitPromise = import('./src/app/features/savedConfigs.js')
+        .then(({ createSavedConfigsView }) => {
+          ugrSavedConfigsView = createSavedConfigsView({
+            document,
+            getConfigs: () => getDisplayConfigs(),
+            getSubjects: () => SUBJECTS,
+            days: DAYS,
+            getBlocks,
+            getCeilings: () => ({ maxManana: configMaxManana, maxTarde: configMaxTarde }),
+            getCompareIds: () => compareIds,
+            // Con «Ignorar profesores» se inyecta un lookup vacío, igual que en
+            // el resto de la app: la columna «Prof» queda a hueco.
+            getDificultad: (codigo, letra) => (ignoreDocents ? null : getDificultad(codigo, letra)),
+            difficultyScore: getDifficultyScore,
+            dayShort: DAY_SHORT,
+            onLoad: loadConfig,
+            onDelete: deleteConfig,
+            onSaveSolver: saveSolverResult,
+            onExport: exportSingleConfig,
+            onCompare: toggleCompareId,
+            onFavorite: toggleFavorite,
+          });
+          return ugrSavedConfigsView;
+        })
+        .catch((err) => {
+          console.error('[ugr] saved configs view no pudo iniciarse', err);
+          ugrSavedConfigsInitPromise = null;
+          return null;
+        });
+    }
+    return ugrSavedConfigsInitPromise;
   }
 
   // ─── Start ──────────────────────────────────────────────────

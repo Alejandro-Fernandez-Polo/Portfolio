@@ -199,7 +199,8 @@ export function createCalendarView({
     return group ? (group.turno === 'mañana' ? 'Mañana' : 'Tarde') : '—';
   }
 
-  /** Dificultad del profesor del subgrupo elegido; '' sin letra o sin dato. */
+  /** Dificultad del profesor del grupo (teoría) o subgrupo (prácticas)
+   *  elegido; '' sin dato. */
   function getEntryDificultadLabel(entry) {
     if (!entry.letra) return '';
     const diff = getDificultad(entry.codigo, entry.letra);

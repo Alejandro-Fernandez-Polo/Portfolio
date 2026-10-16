@@ -3,6 +3,7 @@ import {
   calculateConfigMetrics,
   calculateConfigDeadHours,
   calculateConfigDays,
+  calculateConfigFreeDays,
   findConflicts,
 } from '../../public/ugr/src/app/domain/metrics.js';
 import { difficultyScore as realDifficultyScore } from '../../public/ugr/src/solver/catalog.js';
@@ -358,5 +359,59 @@ describe('calculateConfigDays', () => {
     // MAT-B: teoría Martes 16:00 y práctica Martes 14:00 → tarde.
     // FIS-A: Lunes 08:00 → mañana.
     expect(days).toEqual({ manana: 1, tarde: 1 });
+  });
+});
+
+describe('calculateConfigFreeDays', () => {
+  // Fixture con días en minúscula (como el catálogo real) y un día por sesión.
+  const subjects = [
+    {
+      codigo: 'MAT',
+      grupos: [
+        {
+          letra: 'A',
+          teoria: [{ dia: 'lunes', inicio: '9:00', fin: '10:00' }],
+          practicas: { subgrupos: ['A1'], A1: [{ dia: 'miercoles', inicio: '10:00', fin: '11:00' }] },
+        },
+      ],
+    },
+    {
+      codigo: 'FIS',
+      grupos: [
+        {
+          letra: 'B',
+          teoria: [{ dia: 'martes', inicio: '16:00', fin: '17:00' }],
+          practicas: { subgrupos: [] },
+        },
+      ],
+    },
+  ];
+
+  it('devuelve los días sin ninguna sesión, en el orden de la semana', () => {
+    const free = calculateConfigFreeDays(
+      { MAT: true, FIS: true },
+      { MAT: { teoria: 'A', practica: 'A1' }, FIS: { teoria: 'B', practica: null } },
+      { subjects }
+    );
+    expect(free).toEqual(['jueves', 'viernes']);
+  });
+
+  it('sin selección están libres todos los días laborables', () => {
+    expect(calculateConfigFreeDays({}, {}, { subjects })).toEqual([
+      'lunes',
+      'martes',
+      'miercoles',
+      'jueves',
+      'viernes',
+    ]);
+  });
+
+  it('respeta la lista de días que se le pase', () => {
+    const free = calculateConfigFreeDays(
+      { MAT: true },
+      { MAT: { teoria: 'A', practica: null } },
+      { subjects, days: ['viernes', 'lunes'] }
+    );
+    expect(free).toEqual(['viernes']);
   });
 });

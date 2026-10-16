@@ -8,6 +8,7 @@ import {
   calculateConfigMetrics,
   calculateConfigDeadHours,
   calculateConfigDays,
+  calculateConfigFreeDays,
   findConflicts,
 } from "../../public/ugr/src/app/domain/metrics.js";
 import {
@@ -19,6 +20,16 @@ import {
 import { buildActiveSchedule, buildConflictSet } from "../../public/ugr/src/app/domain/calendar.js";
 import { buildDocentScores, buildProblem } from "../../public/ugr/src/app/domain/problem.js";
 import { buildProfesorFicha, listProfesores } from "../../public/ugr/src/app/domain/profesor.js";
+import {
+  DIFICULTAD_OPCIONES,
+  buildProfesorPrompt,
+  mergeProfesores,
+  normalizeOwnReview,
+  ownReviewToProfesor,
+  ownReviewsToJSON,
+  parseOwnReviewsJSON,
+} from "../../public/ugr/src/app/domain/profesores-propios.js";
+import { buildAsignaturaFicha } from "../../public/ugr/src/app/domain/asignatura.js";
 import {
   filterSubjectsByMention,
   listPlanSubjects,
@@ -149,7 +160,7 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
   // `getDomain()`, que en producción las recibe de la composición ESM
   // (`deps.domain`). Aquí no se monta la composición, así que se inyecta el
   // MISMO módulo ESM real por el escape hatch, con el dominio completo
-  // (36 funciones), sin duplicar nada.
+  // (45 funciones), sin duplicar nada.
   windowObj.__ugrAppDomain = {
     timeToMinutes,
     timesOverlap,
@@ -157,6 +168,7 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
     calculateConfigMetrics,
     calculateConfigDeadHours,
     calculateConfigDays,
+    calculateConfigFreeDays,
     findConflicts,
     getSubgrupoForApellido,
     buildGroupChoice,
@@ -168,6 +180,14 @@ function bootApp({ store = null, degraded = false, mirror, mirrorStr = null } = 
     buildProblem,
     buildProfesorFicha,
     listProfesores,
+    DIFICULTAD_OPCIONES,
+    normalizeOwnReview,
+    parseOwnReviewsJSON,
+    ownReviewToProfesor,
+    mergeProfesores,
+    ownReviewsToJSON,
+    buildProfesorPrompt,
+    buildAsignaturaFicha,
     mencionOptions,
     filterSubjectsByMention,
     tipoDeAsignatura,

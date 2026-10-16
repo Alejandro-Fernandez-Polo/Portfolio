@@ -12,8 +12,6 @@
 
 import { DIFFICULTY_SCORES, MODALIDADES } from "../../solver/catalog.js";
 
-const MODALITY_KEYS = { Teoría: "teoria", Prácticas: "practicas" };
-
 /**
  * Posición de una dificultad en la escala. Se ordena de la más suave a la más
  * dura usando los mismos pesos que el solver, y `null` (sin puntuación) queda
@@ -69,7 +67,8 @@ function distinctDifficulties(entries) {
 /**
  * Ficha de un profesor: todas sus entradas con lo que hace falta para pintarlas
  * (dificultad, razón, opiniones, comentarios) más el plan de la asignatura
- * (nombre, carácter, mención y la descripción de esa modalidad).
+ * (nombre, carácter y mención). La **descripción** de la asignatura no entra
+ * aquí: es dato de la asignatura y va en su propia ficha, no en la del profesor.
  *
  * `focus` es la entrada desde la que se ha abierto la ficha (el grupo cuyo
  * nombre se ha pulsado): va **primero y marcada**. Sin `focus` —cuando se abre
@@ -99,13 +98,10 @@ export function buildProfesorFicha(profesores, subjects, name, focus = null) {
       opinions: Array.isArray(profesor.opinions) ? profesor.opinions : [],
       comentarios: Array.isArray(profesor.comentarios) ? profesor.comentarios : [],
       cruzada: profesor.cruzada === true,
+      propio: profesor.propio === true,
       nombreAsignatura: subject ? subject.nombre : "",
       caracter: subject ? subject.caracter || "" : "",
       mencion: subject ? subject.mencion || "" : "",
-      descripcion:
-        subject && subject.descripcion
-          ? subject.descripcion[MODALITY_KEYS[profesor.modalidad]] || ""
-          : "",
       highlighted,
     };
   });
@@ -123,10 +119,13 @@ export function buildProfesorFicha(profesores, subjects, name, focus = null) {
  * mínimo para reconocerlo (sus asignaturas y sus dificultades). El contenido
  * largo vive en la ficha.
  *
- * @param {Array} profesores perfiles del catálogo activo.
+ * @param {Array} profesores perfiles del catálogo activo (ya fusionados con las
+ *   valoraciones propias).
  * @param {{query?: string}} [options] filtro por nombre o código de asignatura.
  * @returns {Array<{name: string, asignaturas: Array<{code: string,
- *   modalidad: string}>, dificultades: string[], total: number}>}
+ *   modalidad: string}>, dificultades: string[], total: number,
+ *   ownKeys: string[]}>} `ownKeys` son las entradas que son valoraciones
+ *   propias: las únicas que se pueden editar o borrar.
  */
 export function listProfesores(profesores, options = {}) {
   const query = String(options.query || "").trim().toLowerCase();
@@ -143,9 +142,14 @@ export function listProfesores(profesores, options = {}) {
     const sorted = entries.sort(compareEntries);
     rows.push({
       name,
-      asignaturas: sorted.map((p) => ({ code: p.subjectCode, modalidad: p.modalidad })),
+      // Una valoración propia sin asignatura no aporta destino: la fila sale
+      // sin asignaturas, pero con su dificultad y su ficha.
+      asignaturas: sorted
+        .filter((p) => p.subjectCode)
+        .map((p) => ({ code: p.subjectCode, modalidad: p.modalidad })),
       dificultades: distinctDifficulties(sorted),
       total: sorted.length,
+      ownKeys: sorted.filter((p) => p.propio === true && p.key).map((p) => p.key),
     });
   }
   rows.sort((a, b) => a.name.localeCompare(b.name));

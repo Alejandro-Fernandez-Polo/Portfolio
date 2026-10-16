@@ -176,11 +176,51 @@ export function calculateConfigDays(selectedSubjects, groupChoices, { subjects }
       });
     };
     addDays(group.teoria);
-    if (choice.practica && group.practicas[choice.practica]) {
+    if (choice.practica && group.practicas && group.practicas[choice.practica]) {
       addDays(group.practicas[choice.practica]);
     }
   });
   return { manana: morningDays.size, tarde: afternoonDays.size };
+}
+
+/** Días laborables del calendario, en orden (los mismos que la rejilla). */
+export const WEEK_DAYS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+
+/**
+ * Días de la semana **sin ninguna** hora de clase en una configuración.
+ *
+ * A diferencia de `calculateConfigDays` (que cuenta días de mañana y de
+ * tarde por separado), aquí un día cuenta como libre solo si no tiene ninguna
+ * sesión, sea del turno que sea.
+ *
+ * @param {Object} selectedSubjects mapa `codigo → boolean` de selección.
+ * @param {Object} groupChoices mapa `codigo → { teoria, practica }`.
+ * @param {{subjects: Array, days?: string[]}} ctx catálogo y días laborables
+ *   (por defecto, de lunes a viernes).
+ * @returns {string[]} días sin clase, en el orden de `days`.
+ */
+export function calculateConfigFreeDays(selectedSubjects, groupChoices, { subjects, days = WEEK_DAYS } = {}) {
+  const busy = new Set();
+  Object.keys(selectedSubjects).forEach(codigo => {
+    if (!selectedSubjects[codigo]) return;
+    const subject = subjects.find(s => s.codigo === codigo);
+    if (!subject) return;
+    const choice = groupChoices[codigo];
+    if (!choice) return;
+    const group = subject.grupos.find(g => g.letra === choice.teoria);
+    if (!group) return;
+
+    const addDays = (sessions) => {
+      // Sin distinguir mayúsculas: el catálogo usa «lunes» y las fixtures de
+      // test escriben «Lunes»; lo que importa es que el día coincida.
+      sessions.forEach(s => busy.add(String(s.dia).toLowerCase()));
+    };
+    addDays(group.teoria);
+    if (choice.practica && group.practicas && group.practicas[choice.practica]) {
+      addDays(group.practicas[choice.practica]);
+    }
+  });
+  return days.filter(d => !busy.has(String(d).toLowerCase()));
 }
 
 /**

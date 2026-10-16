@@ -253,6 +253,34 @@ main {
   color: var(--accent);
   font-weight: 500;
 }
+/* Dificultad de la asignatura (T = teoría, P = prácticas): dos puntos con su
+   inicial. El bloque es un botón que abre la ficha, pero se lee como dato. */
+.subject-card .subject-diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+.subject-card .subject-diff:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.subject-diff-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.subject-diff-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
 .subject-card .check-indicator {
   position: absolute;
   top: 0.5rem;
@@ -519,6 +547,22 @@ main {
 }
 .prof-name-btn:hover { color: var(--accent); }
 .prof-name-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* El nombre de la asignatura en la lista de datos abre su ficha: mismo patrón
+   que el nombre del profesor. */
+.ficha-name-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--primary);
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--accent);
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.ficha-name-btn:hover { color: var(--accent); }
+.ficha-name-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .dificultad-badge {
   display: inline-block;
   padding: 1px 6px;
@@ -983,6 +1027,12 @@ main {
 .col-tarde { color: #6f42c1; }
 .col-prof { color: var(--success); }
 .col-group { text-align: center; }
+.col-freedays {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
 .group-ok { color: var(--success); font-weight: 600; }
 .group-warn { color: var(--danger); font-weight: 600; }
 .col-actions-head { text-align: center; }
@@ -1395,6 +1445,36 @@ main {
   flex-direction: column;
   gap: 0.7rem;
 }
+/* Ficha de asignatura: dificultad y descripción del plan, por modalidad. */
+.asignatura-ficha { display: flex; flex-direction: column; gap: 0.3rem; }
+.asignatura-ficha-meta {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  font-family: monospace;
+}
+.asignatura-ficha-plan { font-size: 0.72rem; color: var(--text-light); }
+.asignatura-ficha-sub {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--primary);
+  margin-top: 0.5rem;
+}
+.asignatura-ficha-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.asignatura-ficha-row.is-block { display: block; }
+.asignatura-ficha-modalidad {
+  font-size: 0.68rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.asignatura-ficha-texto { font-size: 0.82rem; margin: 0.2rem 0 0; }
+.asignatura-ficha-vacio { font-size: 0.82rem; color: var(--text-light); margin-top: 0.3rem; }
 .profesor-ficha-entry {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -1438,7 +1518,6 @@ main {
   color: var(--text-light);
   margin-top: 0.2rem;
 }
-.profesor-ficha-desc,
 .profesor-ficha-razon,
 .profesor-ficha-opinion,
 .profesor-ficha-vacio {
@@ -1471,6 +1550,103 @@ main {
   font-size: 0.85rem;
   color: var(--text-light);
 }
+/* Pista de procedencia de los nombres: ni los del horario están inventados ni
+   los que faltan aquí son un error. Disponible en el panel de grupos y en la
+   pestaña de datos. */
+.profesores-hint,
+.group-config-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--bg-alt);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ─── Profesores propios: alta, importación y prompt ───────── */
+.profesores-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.profesores-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.profesores-ignore { margin: 0; }
+.profesores-status {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0 0 0.6rem;
+}
+.profesores-status:empty { display: none; }
+.profesores-status.is-error { color: var(--danger); font-weight: 600; }
+/* Marca de las valoraciones propias: van por encima del catálogo. */
+.prof-own-badge {
+  margin-left: 0.4rem;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  vertical-align: middle;
+}
+.prof-row-actions { display: flex; gap: 0.35rem; }
+.prof-row-actions .btn { padding: 0.15rem 0.45rem; font-size: 0.72rem; }
+
+.profesor-form-modal { max-width: 520px; }
+.profesor-prompt-modal { max-width: 720px; }
+.profesor-prompt-hint { font-size: 0.82rem; color: var(--text-light); margin: 0 0 0.6rem; }
+.profesor-prompt-text {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  background: var(--bg-alt);
+  color: var(--text);
+  resize: vertical;
+}
+.form-field textarea {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border var(--transition);
+}
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-halo);
+}
+.form-hint { font-weight: 400; color: var(--text-light); font-size: 0.78rem; }
+.form-error {
+  margin: 0.4rem 0 0;
+  padding: 0.5rem 0.6rem;
+  background: var(--danger-tint);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.form-error[hidden] { display: none; }
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.modal-actions .btn-danger { margin-right: auto; }
+.modal-actions .btn[hidden] { display: none; }
 .td-codigo {
   font-family: monospace;
   font-weight: 600;
@@ -2166,6 +2342,35 @@ footer {
   color: var(--muted);
   min-height: 1.1rem;
 }
+/* Mismo grupo por curso: las dos casillas se apilan para que la segunda, que
+   depende de la primera, quede debajo y se lea como su consecuencia. */
+.solver-same-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+.solver-filter-row .solver-same-group {
+  flex-basis: 100%;
+}
+.solver-same-group input:disabled,
+.solver-same-group:has(input:disabled) {
+  color: var(--muted);
+}
+/* Mensaje de la comprobación de viabilidad. Solo el bloqueo (no hay ninguna
+   combinación) se tiñe de aviso; el «no se pudo comprobar» se queda neutro. */
+.solver-feasibility {
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-height: 1.1rem;
+}
+.solver-feasibility.is-blocking {
+  background: var(--danger-tint);
+  color: var(--danger);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.6rem;
+}
 
 /* Solver: bloqueo de profesores */
 .solver-prof-block {
@@ -2612,6 +2817,17 @@ footer {
   color: var(--muted);
   white-space: nowrap;
 }
+/* Con ECTS en curso el bloque de cifras se apila: arriba lo superado y debajo
+   lo superado + en curso, en un tono más suave para que no compitan. */
+.progress-bar-metas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 0 0 auto;
+}
+.progress-bar-meta-enrolled {
+  opacity: 0.7;
+}
 .progress-bar-track {
   height: 14px;
   width: 100%;
@@ -2619,13 +2835,33 @@ footer {
   border: 1px solid var(--border);
   border-radius: 999px;
   overflow: hidden;
+  /* Dos tramos (superado y en curso) se colocan uno junto al otro. */
+  display: flex;
 }
 .progress-bar-fill {
   display: block;
   height: 100%;
   background: var(--success);
   border-radius: 999px;
+  flex: 0 0 auto;
   transition: width 0.15s linear;
+}
+/* El tramo en curso va rallado: distingue lo que se está cursando de lo ya
+   superado sin depender solo del color. */
+.progress-bar-fill-enrolled {
+  display: block;
+  height: 100%;
+  flex: 0 0 auto;
+  background: repeating-linear-gradient(45deg, var(--muted) 0 2px, var(--surface) 2px 8px);
+  transition: width 0.15s linear;
+}
+/* Con dos tramos, cada uno redondea solo su borde exterior y el interior queda
+   recto: así se tocan sin el hueco que dejarían dos esquinas curvas. */
+.progress-bar-track.is-segmented .progress-bar-fill {
+  border-radius: 999px 0 0 999px;
+}
+.progress-bar-track.is-segmented .progress-bar-fill-enrolled {
+  border-radius: 0 999px 999px 0;
 }
 /* Fila agregada del plan: separada visualmente de los cursos. */
 .progress-bar-row.is-plan {

@@ -426,23 +426,37 @@ export function setupProgressDashboard() {
   function renderCourseBars(bars) {
     // role/aria van en la barra, no en el contenedor: es el valor numérico el
     // que anuncia el progreso. El texto de al lado repite el dato para que el
-    // color no sea la única señal.
+    // color no sea la única señal. Con ECTS en curso la barra lleva dos tramos
+    // y una segunda cifra (en un tono más suave) que ya los suma.
     barsEl.innerHTML =
       "<h3>Barras por curso</h3>" +
       bars
         .map((bar) => {
           const title = bar.curso === "plan" ? "Total del grado" : courseLabel(bar.curso);
-          const label = `${title}: ${bar.passedECTS} de ${bar.totalECTS} ECTS superados, ${bar.pct}%`;
+          const conCurso = bar.enrolledECTS > 0;
+          const base = `${bar.passedECTS} / ${bar.totalECTS} ECTS · ${bar.pct}%`;
+          const conCursando = `${bar.passedECTS + bar.enrolledECTS} / ${bar.totalECTS} ECTS · ${bar.totalPct}%`;
+          const metas = conCurso
+            ? `<span class="progress-bar-meta">${base}</span>
+               <span class="progress-bar-meta progress-bar-meta-enrolled">con cursando: ${conCursando}</span>`
+            : `<span class="progress-bar-meta">${base}</span>`;
+          const valorTexto = conCurso
+            ? `${bar.passedECTS} de ${bar.totalECTS} ECTS superados y ${bar.enrolledECTS} en curso`
+            : `${bar.passedECTS} de ${bar.totalECTS} ECTS superados`;
+          const label = conCurso
+            ? `${title}: ${valorTexto}, ${bar.totalPct}%`
+            : `${title}: ${valorTexto}, ${bar.pct}%`;
+          const tramoCurso = conCurso
+            ? `<span class="progress-bar-fill-enrolled" style="width:${bar.enrolledPct}%"></span>`
+            : "";
           return `<div class="progress-bar-row${bar.curso === "plan" ? " is-plan" : ""}">
             <div class="progress-bar-head">
               <span class="progress-bar-title">${escapeHtml(title)}</span>
-              <span class="progress-bar-meta">${bar.passedECTS} / ${bar.totalECTS} ECTS · ${bar.pct}%</span>
+              <span class="progress-bar-metas">${metas}</span>
             </div>
-            <div class="progress-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                 aria-valuenow="${bar.pct}" aria-valuetext="${escapeHtml(
-                   `${bar.passedECTS} de ${bar.totalECTS} ECTS superados`,
-                 )}" aria-label="${escapeHtml(label)}">
-              <span class="progress-bar-fill" style="width:${bar.pct}%"></span>
+            <div class="progress-bar-track${conCurso ? " is-segmented" : ""}" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                 aria-valuenow="${bar.pct}" aria-valuetext="${escapeHtml(valorTexto)}" aria-label="${escapeHtml(label)}">
+              <span class="progress-bar-fill" style="width:${bar.pct}%"></span>${tramoCurso}
             </div>
           </div>`;
         })

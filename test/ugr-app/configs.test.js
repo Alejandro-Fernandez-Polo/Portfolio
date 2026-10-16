@@ -316,6 +316,49 @@ describe('sortSavedConfigs', () => {
     const list = [cfg({ id: 1, name: 'Horario #4' }), cfg({ id: 2, name: 'Horario #2' })];
     expect(sortSavedConfigs(list).map(c => c.id)).toEqual([2, 1]);
   });
+
+  it('freeDays ordena por número de días libres', () => {
+    // Fixture propia con los días sin tilde, como el catálogo real
+    // («miercoles»): así el día de la práctica sí coincide.
+    const subjects = [
+      {
+        codigo: 'MAT',
+        grupos: [
+          {
+            letra: 'A',
+            teoria: [{ dia: 'lunes' }],
+            practicas: { subgrupos: ['A1'], A1: [{ dia: 'miercoles' }] },
+          },
+        ],
+      },
+      {
+        codigo: 'FIS',
+        grupos: [{ letra: 'B', teoria: [{ dia: 'martes' }], practicas: { subgrupos: [] } }],
+      },
+    ];
+    // MAT-A + A1 ocupa Lunes y Miércoles → 3 libres; FIS-B ocupa Martes → 4.
+    const conClase = cfg({
+      id: 1,
+      selectedSubjects: { MAT: true },
+      groupChoices: { MAT: { teoria: 'A', practica: 'A1' } },
+    });
+    const masLibre = cfg({
+      id: 2,
+      selectedSubjects: { FIS: true },
+      groupChoices: { FIS: { teoria: 'B', practica: null } },
+    });
+    const opts = { subjects };
+
+    expect(sortSavedConfigs([conClase, masLibre], { ...opts, field: 'freeDays', dir: 'desc' }).map(c => c.id)).toEqual([2, 1]);
+    expect(sortSavedConfigs([conClase, masLibre], { ...opts, field: 'freeDays', dir: 'asc' }).map(c => c.id)).toEqual([1, 2]);
+    // Con los mismos días libres, el orden no cambia.
+    const igual = cfg({
+      id: 3,
+      selectedSubjects: { FIS: true },
+      groupChoices: { FIS: { teoria: 'B', practica: null } },
+    });
+    expect(sortSavedConfigs([masLibre, igual], { ...opts, field: 'freeDays', dir: 'desc' }).map(c => c.id)).toEqual([2, 3]);
+  });
 });
 
 // ─── Cargar, borrar, exportar e importar ────────────────────

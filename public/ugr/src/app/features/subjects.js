@@ -29,6 +29,8 @@ import { filterSubjectsByMention, mencionClave, mencionOptions } from "../domain
  * @param {() => void} deps.updateAll re-renderiza el resto de vistas.
  * @param {() => Array} [deps.getMenciones] lee las menciones del catálogo (para
  *   el desplegable de mención).
+ * @param {(clave: string) => string} [deps.getDificultadLabel] etiqueta de una
+ *   dificultad (para el tooltip de los puntos de la asignatura).
  * @returns {{render: () => void, toggleSubject: (codigo: string) => void,
  *   selectCourse: (curso: number, cuatrimestre: number) => void}}
  */
@@ -40,6 +42,7 @@ export function createSubjectsView({
   saveState,
   updateAll,
   getMenciones,
+  getDificultadLabel,
 }) {
   /** Mención elegida en el desplegable: vacío es «todas». */
   let mencionElegida = "";
@@ -106,7 +109,13 @@ export function createSubjectsView({
     const state = getState();
     const subject = getSubjects().find(s => s.codigo === codigo);
     const wasSelected = state.selectedSubjects[codigo];
-    state.selectedSubjects[codigo] = !wasSelected;
+    // Se **borra** la clave al desmarcar en vez de escribir `false`: una clave
+    // falsa viaja al store y se queda en el userState guardado. Todo el código
+    // filtra por veracidad, así que lo que se ve no cambia; lo que cambia es que
+    // el estado no acumula claves muertas. `groupChoices` sí se conserva: es la
+    // elección recordada de la materia (`initGroupChoice` respeta la que ya hay).
+    if (wasSelected) delete state.selectedSubjects[codigo];
+    else state.selectedSubjects[codigo] = true;
 
     if (!wasSelected) {
       // Selecting: init group choice
@@ -130,7 +139,9 @@ export function createSubjectsView({
     );
     const allSelected = courseSubjects.every(s => state.selectedSubjects[s.codigo]);
     courseSubjects.forEach(s => {
-      state.selectedSubjects[s.codigo] = !allSelected;
+      // Mismo criterio que en `toggleSubject`: sin claves `false`.
+      if (allSelected) delete state.selectedSubjects[s.codigo];
+      else state.selectedSubjects[s.codigo] = true;
       if (!allSelected && !state.groupChoices[s.codigo]) {
         initGroupChoice(s);
       }
@@ -140,6 +151,34 @@ export function createSubjectsView({
     }
     saveState();
     updateAll();
+  }
+
+  /**
+   * Puntos de dificultad de la **asignatura** (T = teoría, P = prácticas), que
+   * el catálogo guarda por modalidad. Solo se pintan si la trae (el archivo con
+   * contraseña); el botón abre la ficha, donde están también las descripciones.
+   */
+  function subjectDiffHtml(subject) {
+    const d = subject.dificultad;
+    if (!d) return "";
+    const items = [];
+    if (d.teoria) items.push(["T", "Teoría", d.teoria]);
+    if (d.practicas) items.push(["P", "Prácticas", d.practicas]);
+    if (!items.length) return "";
+    const etiqueta = (modalidad, clave) =>
+      `${modalidad}: ${typeof getDificultadLabel === "function" ? getDificultadLabel(clave) : clave}`;
+    return (
+      `<button type="button" class="subject-diff" data-diff-codigo="${subject.codigo}"`
+      + ` aria-label="Ver dificultad y descripción de ${subject.codigo}">`
+      + items
+        .map(
+          ([sigla, modalidad, clave]) =>
+            `<span class="subject-diff-item" title="${etiqueta(modalidad, clave)}">`
+            + `<span class="subject-diff-dot diff-${clave}"></span>${sigla}</span>`,
+        )
+        .join("")
+      + "</button>"
+    );
   }
 
   /** Pinta `subjects-container` con las materias del cuatrimestre activo. */
@@ -204,6 +243,8 @@ export function createSubjectsView({
         if (etiquetas.length) html += `<div class="subject-etiquetas">${etiquetas.join('')}</div>`;
         html += `<div class="subject-code">${s.codigo}</div>`;
         html += `<div class="subject-name">${s.nombre}</div>`;
+        const diff = subjectDiffHtml(s);
+        if (diff) html += diff;
         if (isAprobada && s.corresponde) {
           html += `<div class="subject-corresponde">Convalida ${s.corresponde}</div>`;
         }
@@ -221,6 +262,17 @@ export function createSubjectsView({
       card.addEventListener('click', () => {
         const codigo = card.dataset.codigo;
         toggleSubject(codigo);
+      });
+    });
+
+    // Los puntos de dificultad de la asignatura abren su ficha; no deben
+    // seleccionar la materia, así que frenan el clic de la tarjeta.
+    container.querySelectorAll('.subject-diff').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.dispatchEvent(new CustomEvent('ugr:openAsignatura', {
+          detail: { codigo: btn.dataset.diffCodigo },
+        }));
       });
     });
 

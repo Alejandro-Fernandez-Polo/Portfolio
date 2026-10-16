@@ -87,6 +87,10 @@
             <div id="solver-progress-fill"></div>
           </div>
           <div id="solver-status" class="solver-status"></div>
+          <!-- Mensaje de la comprobación de viabilidad (¿hay alguna
+               combinación?): lo escribe src/ui/... vía app.js; si falta, la
+               comprobación no pinta nada y el botón no se bloquea. -->
+          <p id="solver-feasibility" class="solver-feasibility" role="status" aria-live="polite"></p>
         </div>
 
         <div id="conflicts-panel" class="control-panel-block">
@@ -230,6 +234,21 @@
           <input type="search" id="profesores-search" class="filter-select profesores-search"
                  placeholder="Buscar por nombre o asignatura" aria-label="Buscar profesor">
         </div>
+        <div class="profesores-toolbar">
+          <div class="profesores-actions">
+            <button type="button" id="btn-add-profesor" class="btn btn-primary">+ Añadir Profesor</button>
+            <button type="button" id="btn-import-profesores" class="btn btn-sm btn-secondary">Importar JSON</button>
+            <input type="file" id="import-profesores-input" accept=".json" style="display:none;">
+            <button type="button" id="btn-export-profesores" class="btn btn-sm btn-secondary">Exportar JSON</button>
+            <button type="button" id="btn-copy-profesor-prompt" class="btn btn-sm btn-secondary">Copiar prompt</button>
+          </div>
+          <!-- El mismo interruptor del panel del generador: aquí vive el dato,
+               allí se usa. Los dos escriben la preferencia `ui.ignoreDocents`. -->
+          <label class="solver-ignore-docents profesores-ignore">
+            <input type="checkbox" id="profesores-ignore-docents"> Ignorar profesores
+          </label>
+        </div>
+        <p id="profesores-status" class="profesores-status" role="status"></p>
         <div id="profesores-container"></div>
       </section>
     </div>
@@ -696,6 +715,85 @@
         <button type="button" class="modal-close-btn" id="profesor-modal-close" aria-label="Cerrar">&times;</button>
       </div>
       <div class="modal-body" id="profesor-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Ficha de asignatura: dificultad y descripción del plan, por modalidad.
+       La rellena src/app/domain/asignatura.js vía app.js; si falta, abrir la
+       ficha no pinta nada. -->
+  <div id="asignatura-modal" class="modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="asignatura-modal-title" hidden>
+    <div class="modal asignatura-modal">
+      <div class="modal-header">
+        <h2 id="asignatura-modal-title">Asignatura</h2>
+        <button type="button" class="modal-close-btn" id="asignatura-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body" id="asignatura-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Alta y edición de una valoración propia (profesor + dificultad +
+       opiniones). La asignatura y la modalidad son opcionales: sin asignatura
+       la valoración queda suelta, para asociarla después. -->
+  <div id="profesor-form-modal" class="modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="profesor-form-title" hidden>
+    <div class="modal profesor-form-modal">
+      <div class="modal-header">
+        <h2 id="profesor-form-title">Añadir profesor</h2>
+        <button type="button" class="modal-close-btn" id="profesor-form-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <label for="profesor-form-name">Nombre</label>
+          <input type="text" id="profesor-form-name" class="filter-select" autocomplete="off"
+                 placeholder="Nombre y apellidos">
+        </div>
+        <div class="form-field">
+          <label for="profesor-form-subject">Asignatura <span class="form-hint">(opcional)</span></label>
+          <select id="profesor-form-subject" class="filter-select"></select>
+        </div>
+        <div class="form-field">
+          <label for="profesor-form-modalidad">Modalidad</label>
+          <select id="profesor-form-modalidad" class="filter-select">
+            <option value="Teoría">Teoría</option>
+            <option value="Prácticas">Prácticas</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="profesor-form-dificultad">Dificultad</label>
+          <select id="profesor-form-dificultad" class="filter-select"></select>
+        </div>
+        <div class="form-field">
+          <label for="profesor-form-opinions">Opiniones <span class="form-hint">(una por línea)</span></label>
+          <textarea id="profesor-form-opinions" class="filter-select" rows="4"></textarea>
+        </div>
+        <p id="profesor-form-error" class="form-error" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button type="button" id="profesor-form-delete" class="btn btn-danger" hidden>Borrar</button>
+          <button type="button" id="profesor-form-cancel" class="btn btn-secondary">Cancelar</button>
+          <button type="button" id="profesor-form-save" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- El prompt que se copia para pedirle a una IA un JSON de valoraciones.
+       Se enseña en un textarea para poder leerlo y copiarlo a mano. -->
+  <div id="profesor-prompt-modal" class="modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="profesor-prompt-title" hidden>
+    <div class="modal profesor-prompt-modal">
+      <div class="modal-header">
+        <h2 id="profesor-prompt-title">Prompt para valoraciones</h2>
+        <button type="button" class="modal-close-btn" id="profesor-prompt-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="profesor-prompt-hint">Copia el texto, pásaselo a tu IA favorita y guarda su respuesta
+          como un <code>.json</code>: se importa con «Importar JSON».</p>
+        <textarea id="profesor-prompt-text" class="filter-select profesor-prompt-text" rows="14" readonly></textarea>
+        <div class="modal-actions">
+          <button type="button" id="profesor-prompt-copy" class="btn btn-primary">Copiar</button>
+        </div>
+      </div>
     </div>
   </div>
 

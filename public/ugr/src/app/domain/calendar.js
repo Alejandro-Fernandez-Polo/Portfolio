@@ -15,8 +15,9 @@
  * `codigo, nombre, tipo, grupo, letra, dia, inicio, fin, color` — `color` es
  * el código de la materia (legacy: el CSS lo resuelve por clase). La teoría
  * usa `tipo: 'Teoría'`, `grupo: 'Grupo <letra>'` y `letra`; la práctica
- * `tipo: 'Práctica'`, `grupo: 'Subgrupo <sub>'` y `letra: null` (así
- * `getEntryDificultadLabel` no pide dificultad por subgrupo).
+ * `tipo: 'Práctica'`, `grupo: 'Subgrupo <sub>'` y `letra` = el subgrupo
+ * (`A1`), que es la clave con la que el catálogo guarda la dificultad de las
+ * prácticas: así el punto y el tooltip salen también en ellas.
  *
  * @param {Object} selectedSubjects mapa `codigo → boolean` de selección.
  * @param {Object} groupChoices mapa `codigo → { teoria, practica }`.
@@ -58,7 +59,7 @@ export function buildActiveSchedule(selectedSubjects, groupChoices, subjects) {
           nombre: subject.nombre,
           tipo: 'Práctica',
           grupo: `Subgrupo ${choice.practica}`,
-          letra: null,
+          letra: choice.practica,
           dia: session.dia,
           inicio: session.inicio,
           fin: session.fin,

@@ -15,7 +15,7 @@
  * ya exportados por personas usuarias: no se tocan.
  */
 
-import { calculateConfigDays, calculateConfigDeadHours, calculateConfigMetrics } from './metrics.js';
+import { calculateConfigDays, calculateConfigDeadHours, calculateConfigFreeDays, calculateConfigMetrics } from './metrics.js';
 
 /**
  * ¿Está marcada una configuración como favorita?
@@ -93,7 +93,7 @@ export function buildConfigFromState(estado, id, name) {
  * van siempre primero y después aplica `field`. `name` compara el número de
  * `#N` del nombre (sin `#` → `0`) y `turno` usa `localeCompare`; ambos
  * respetan `dir` dentro de su rama. El resto de campos (`count`, `manana`,
- * `tarde`, `deadHours`, `profScore`, `sameGroup`) se calculan, se comparan al
+ * `tarde`, `freeDays`, `deadHours`, `profScore`, `sameGroup`) se calculan, se comparan al
  * final con la misma regla de dirección y un campo desconocido devuelve `0`
  * (no reordena), igual que legacy. No muta la entrada: devuelve una copia.
  *
@@ -144,6 +144,12 @@ export function sortSavedConfigs(
         const da = calculateConfigDays(a.selectedSubjects, a.groupChoices, ctx);
         const db = calculateConfigDays(b.selectedSubjects, b.groupChoices, ctx);
         va = da.tarde; vb = db.tarde; break;
+      }
+      case 'freeDays': {
+        // Por número de días libres; con los mismos días el orden no cambia.
+        va = calculateConfigFreeDays(a.selectedSubjects, a.groupChoices, ctx).length;
+        vb = calculateConfigFreeDays(b.selectedSubjects, b.groupChoices, ctx).length;
+        break;
       }
       case 'deadHours': {
         va = a.deadHours != null ? a.deadHours : calculateConfigDeadHours(a.selectedSubjects, a.groupChoices, ctx);

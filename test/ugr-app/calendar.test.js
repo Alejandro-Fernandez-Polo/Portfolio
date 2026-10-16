@@ -85,14 +85,15 @@ describe('buildActiveSchedule', () => {
       fin: '10:00',
       color: 'MAT',
     });
-    // La práctica lleva `letra: null` (el render no pide dificultad por
-    // subgrupo) y el grupo como "Subgrupo <sub>".
+    // La práctica lleva su subgrupo en `letra`: es la clave con la que el
+    // catálogo guarda su dificultad, así que el render la pide igual que la
+    // de teoría.
     expect(entries[2]).toEqual({
       codigo: 'MAT',
       nombre: 'Matemáticas I',
       tipo: 'Práctica',
       grupo: 'Subgrupo A1',
-      letra: null,
+      letra: 'A1',
       dia: 'Viernes',
       inicio: '11:00',
       fin: '13:00',

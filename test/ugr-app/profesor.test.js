@@ -58,7 +58,7 @@ describe("profesorEntries", () => {
 });
 
 describe("buildProfesorFicha", () => {
-  it("cuelga de cada entrada el plan de la asignatura y su descripción por modalidad", () => {
+  it("cuelga de cada entrada el plan de la asignatura, sin la descripción (es de la asignatura)", () => {
     const ficha = buildProfesorFicha(PROFESORES, SUBJECTS, "Ana Ruiz");
     const [ig, soTeoria, soPracticas] = ficha.entries;
     expect(ig).toMatchObject({
@@ -66,10 +66,12 @@ describe("buildProfesorFicha", () => {
       nombreAsignatura: "Informática Gráfica",
       caracter: "Optativa",
       mencion: "IS",
-      descripcion: "",
     });
-    expect(soTeoria).toMatchObject({ caracter: "Obligatoria", mencion: "Común", descripcion: "Con demostraciones" });
-    expect(soPracticas).toMatchObject({ descripcion: "En el laboratorio", dificultad: "verde" });
+    expect(soTeoria).toMatchObject({ caracter: "Obligatoria", mencion: "Común", dificultad: "naranja" });
+    expect(soPracticas).toMatchObject({ dificultad: "verde" });
+    // La descripción del plan NO viaja en la ficha del profesor: tiene su sitio
+    // en la ficha de la asignatura.
+    for (const entry of ficha.entries) expect(entry.descripcion).toBeUndefined();
   });
 
   it("la entrada pulsada va primero y marcada, y solo esa", () => {
@@ -108,8 +110,16 @@ describe("buildProfesorFicha", () => {
       nombreAsignatura: "",
       caracter: "",
       mencion: "",
-      descripcion: "",
     });
+  });
+
+  it("marca las entradas propias, incluidas las que no tienen asignatura", () => {
+    const propio = profesor({ subjectCode: "SO", modalidad: "Teoría", propio: true, dificultad: "negro" });
+    const sinAsignatura = { key: "Ana Ruiz", name: "Ana Ruiz", subjectCode: "", modalidad: "", dificultad: "rojo", razon: "", opinions: ["Suelta"], comentarios: [], propio: true };
+    const ficha = buildProfesorFicha([propio, sinAsignatura], SUBJECTS, "Ana Ruiz");
+    expect(ficha.entries.every((e) => e.propio === true)).toBe(true);
+    // La que no tiene asignatura va primero (código vacío) y no cuelga plan.
+    expect(ficha.entries[0]).toMatchObject({ subjectCode: "", modalidad: "", nombreAsignatura: "", caracter: "" });
   });
 });
 
@@ -125,7 +135,24 @@ describe("listProfesores", () => {
     // naranja pesa 3, verde 5, gris 0 → de la más suave a la más dura, gris al final
     expect(rows[0].dificultades).toEqual(["verde", "naranja", "gris"]);
     expect(rows[0].total).toBe(3);
+    // Del catálogo no hay nada propio que editar.
+    expect(rows[0].ownKeys).toEqual([]);
     expect(rows[1].dificultades).toEqual([]);
+  });
+
+  it("marca las valoraciones propias y deja sin asignaturas la que no está asociada", () => {
+    const propia = profesor({ subjectCode: "SO", modalidad: "Teoría", propio: true });
+    const sinAsignatura = { key: "Ana Ruiz", name: "Ana Ruiz", subjectCode: "", modalidad: "", dificultad: "rojo", opinions: [], propio: true };
+    const rows = listProfesores([...PROFESORES, propia, sinAsignatura]);
+    const ana = rows.find((r) => r.name === "Ana Ruiz");
+    // La suelta va primero por el código vacío; su clave es el nombre.
+    expect(ana.ownKeys).toEqual(["Ana Ruiz", "SO|Teoría|Ana Ruiz"]);
+    expect(ana.asignaturas).toEqual([
+      { code: "IG", modalidad: "Teoría" },
+      { code: "SO", modalidad: "Teoría" },
+      { code: "SO", modalidad: "Teoría" },
+      { code: "SO", modalidad: "Prácticas" },
+    ]);
   });
 
   it("filtra por nombre o por código de asignatura, sin distinguir mayúsculas", () => {

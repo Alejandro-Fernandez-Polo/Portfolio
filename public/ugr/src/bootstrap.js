@@ -1,5 +1,6 @@
 import { open, isAvailable, getStoreMode } from "./store/db.js";
 import { initStore, flush, getState, dispatch, subscribe } from "./store/commands.js";
+import { listReviews, saveReviews, deleteReview } from "./store/reviews.js";
 import { run as migrateLegacy } from "./migrate/migrateLegacy.js";
 import { ingestConvalidacionesEstados } from "./migrate/convalidacionesEstados.js";
 import { registerModule, startAll, stopAll, getModule } from "./kernel/registry.js";
@@ -54,7 +55,7 @@ async function bootstrap() {
   registerModule({
     id: "store",
     version: "1.0.0",
-    api: { getState, dispatch, subscribe, flush },
+    api: { getState, dispatch, subscribe, flush, listReviews, saveReviews, deleteReview },
     requires: [],
     publishes: ["store:changed"],
     subscribes: [],
@@ -92,6 +93,7 @@ async function bootstrap() {
     solveTopK: solverApi.solveTopK,
     cancel: solverApi.cancel,
     explain: solverApi.explain,
+    checkFeasible: solverApi.checkFeasible,
     getCatalog: () => {
       const catalogApi = getModule("catalog");
       return catalogApi ? catalogApi.getCatalog() : null;
@@ -110,6 +112,9 @@ async function bootstrap() {
     dispatch,
     subscribe,
     getState,
+    listReviews,
+    saveReviews,
+    deleteReview,
   };
 
   if (typeof window !== "undefined" && !window.__ugrDegraded) {

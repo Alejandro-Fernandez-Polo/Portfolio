@@ -100,10 +100,30 @@ describe('buildCourseBars', () => {
       curso: 1,
       totalECTS: 60,
       passedECTS: 6,
+      enrolledECTS: 0,
       pct: 10,
+      enrolledPct: 0,
+      totalPct: 10,
     });
     expect(bars.find((bar) => bar.curso === 2)).toMatchObject({ totalECTS: 60, passedECTS: 6, pct: 10 });
     expect(bars.find((bar) => bar.curso === 'Opt')).toMatchObject({ totalECTS: 60, passedECTS: 0, pct: 0 });
+  });
+
+  it('separa los ECTS en curso de los superados en cada curso y en el plan', () => {
+    // Un curso con una superada y otra cursándose: los dos tramos van medidos
+    // por separado y `totalPct` es la suma de ambos.
+    const bars = buildCourseBars(SUBJECTS, { FFT: 'sup', SO: 'enroll' }, { totalECTS: 240 });
+    expect(bars.find((bar) => bar.curso === 2)).toEqual({
+      curso: 2,
+      totalECTS: 60,
+      passedECTS: 0,
+      enrolledECTS: 6,
+      pct: 0,
+      enrolledPct: 10,
+      totalPct: 10,
+    });
+    const plan = bars.find((bar) => bar.curso === 'plan');
+    expect(plan).toMatchObject({ passedECTS: 6, enrolledECTS: 6, totalPct: 5 });
   });
 
   it('la fila de optativas va tras los cursos y antes del total del plan', () => {
@@ -114,12 +134,28 @@ describe('buildCourseBars', () => {
   it('la fila de plan usa plan.totalECTS y el total de ECTS superados', () => {
     const bars = buildCourseBars(SUBJECTS, { FFT: 'sup', SO: 'sup' }, { totalECTS: 60 });
     const plan = bars.find((bar) => bar.curso === 'plan');
-    expect(plan).toEqual({ curso: 'plan', totalECTS: 60, passedECTS: 12, pct: 20 });
+    expect(plan).toEqual({
+      curso: 'plan',
+      totalECTS: 60,
+      passedECTS: 12,
+      enrolledECTS: 0,
+      pct: 20,
+      enrolledPct: 0,
+      totalPct: 20,
+    });
   });
 
   it('sin datos devuelve solo la fila del plan (240 por defecto)', () => {
     expect(buildCourseBars(undefined, null, undefined)).toEqual([
-      { curso: 'plan', totalECTS: 240, passedECTS: 0, pct: 0 },
+      {
+        curso: 'plan',
+        totalECTS: 240,
+        passedECTS: 0,
+        enrolledECTS: 0,
+        pct: 0,
+        enrolledPct: 0,
+        totalPct: 0,
+      },
     ]);
   });
 });

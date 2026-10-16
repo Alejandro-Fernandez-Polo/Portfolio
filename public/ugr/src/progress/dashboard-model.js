@@ -201,7 +201,10 @@ export function buildMenciones(subjects, credits, menciones = [], mencionElegida
  * Una barra por curso (más la de optativas si el catálogo las trae) y una
  * fila final `curso: "plan"` con el total de la titulación: sirve a la UI para
  * mostrar el agregado junto a los cursos sin recomputar summarize por su lado.
- * `pct` es superados/total del propio curso (en la fila de plan, sobre el
+ *
+ * El tramo superado y el que está en curso se miden por separado porque la
+ * barra los pinta pegados: `pct` es superados/total, `enrolledPct` en
+ * curso/total y `totalPct` la suma de los dos (en la fila de plan, sobre el
  * plan.totalECTS).
  */
 export function buildCourseBars(subjects, credits, plan) {
@@ -214,15 +217,26 @@ export function buildCourseBars(subjects, credits, plan) {
     if (!bar) {
       // El plan son 60 ECTS por curso: el catálogo trae además las optativas de
       // todas las menciones, así que sumarlas daría un máximo que nadie cursa.
-      bar = { curso: row.curso, totalECTS: ECTS_PER_COURSE, passedECTS: 0, pct: 0 };
+      bar = {
+        curso: row.curso,
+        totalECTS: ECTS_PER_COURSE,
+        passedECTS: 0,
+        enrolledECTS: 0,
+        pct: 0,
+        enrolledPct: 0,
+        totalPct: 0,
+      };
       byCourse.set(row.curso, bar);
     }
     if (PASSED_STATUSES.includes(row.status)) bar.passedECTS += row.ects;
+    else if (row.status === STATUS.EN_CURSO) bar.enrolledECTS += row.ects;
   }
 
   const bars = Array.from(byCourse.values()).sort((a, b) => rangoDeCurso(a) - rangoDeCurso(b));
   for (const bar of bars) {
     bar.pct = pct(bar.passedECTS, bar.totalECTS);
+    bar.enrolledPct = pct(bar.enrolledECTS, bar.totalECTS);
+    bar.totalPct = pct(bar.passedECTS + bar.enrolledECTS, bar.totalECTS);
   }
 
   const planTotal = Number(plan?.totalECTS) || DEFAULT_TOTAL_ECTS;
@@ -230,7 +244,10 @@ export function buildCourseBars(subjects, credits, plan) {
     curso: "plan",
     totalECTS: planTotal,
     passedECTS: summary.ectsPassed,
+    enrolledECTS: summary.ectsEnrolled,
     pct: pct(summary.ectsPassed, planTotal),
+    enrolledPct: pct(summary.ectsEnrolled, planTotal),
+    totalPct: pct(summary.ectsPassed + summary.ectsEnrolled, planTotal),
   });
   return bars;
 }
