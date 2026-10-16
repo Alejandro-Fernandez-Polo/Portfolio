@@ -182,6 +182,46 @@ function tieneSubgrupo(subject, etiqueta) {
  *   (`horarios-subgrupos.json`).
  * @returns {{asignaciones: Array, sinGuia: string[], conflictos: string[], sinEtiqueta: string[]}}
  */
+/**
+ * Correcciones puntuales de nombres de profesor.
+ *
+ * Las dos fuentes del dato —las **guías** de la ETSIIT (de donde salen las
+ * asignaciones) y el **volcado de la hoja** (de donde salen los perfiles)—
+ * escriben a veces el mismo nombre de forma distinta, y como la clave de un
+ * perfil es `(asignatura, modalidad, nombre)`, con una tilde de diferencia el
+ * perfil no se encuentra y ese grupo se queda sin dificultad, sin ficha y sin
+ * comentarios.
+ *
+ * Esto es una **corrección de datos, de una vez**: la lista es corta, son casos
+ * vistos uno a uno y no hay más. No es un normalizador ni un «fuzzy match»: no
+ * merece la pena montar eso para un puñado de erratas que ya están aquí
+ * escritas (el porqué, en `planes/TECH-DEBT.md`).
+ *
+ * La tabla se aplica en los dos lados (asignaciones y perfiles) y es idempotente:
+ * el nombre canónico no se corrige a sí mismo.
+ */
+const CORRECCIONES_NOMBRES = {
+  // La guía escribe el apellido con jota; la hoja, con g (lo correcto).
+  "Miguel Gea Mejías": "Miguel Gea Megías",
+  // La guía pone el nombre de pila completo; la hoja, el de siempre.
+  "Rosa Ana Montes Soldado": "Rosana Montes Soldado",
+  // El apellido «de la» va en minúscula (lo trae bien la hoja).
+  "José Luis Padilla De la Torre": "José Luis Padilla de la Torre",
+  // Tildes que la hoja perdió (la guía las trae bien).
+  "Jose Luis Garrido Bullejos": "José Luis Garrido Bullejos",
+  "Luis Lopez Escudero": "Luis López Escudero",
+  "María José Rodriguez Fortiz": "María José Rodríguez Fortiz",
+  "Antonio Javier Fernandez Ares": "Antonio Javier Fernández Ares",
+  // Un asterisco de la hoja pegado al apellido.
+  "José Antonio Jiménez Madrid*": "José Antonio Jiménez Madrid",
+};
+
+/** Aplica la tabla de correcciones (idempotente). */
+export function corregirNombre(nombre) {
+  const limpio = String(nombre || "").trim();
+  return CORRECCIONES_NOMBRES[limpio] || limpio;
+}
+
 export function buildAsignaciones({ guias, subjects, subgrupos }) {
   const porNombre = new Map();
   for (const guia of Array.isArray(guias) ? guias : []) {
@@ -212,7 +252,7 @@ export function buildAsignaciones({ guias, subjects, subgrupos }) {
       // Se normaliza aquí también, y no solo al parsear: el volcado guardado es
       // el del último scrapeo, y así un cambio en el parser no deja nombres con
       // el punto final pegado en los datos ya guardados.
-      const nombre = normalizePersonName(nombreCrudo);
+      const nombre = corregirNombre(normalizePersonName(nombreCrudo));
       if (!nombre) return;
       const key = `${subject.codigo}-${destino}`;
       const previo = puestos.get(key);

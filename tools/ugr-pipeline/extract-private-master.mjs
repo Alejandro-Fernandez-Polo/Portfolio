@@ -57,7 +57,7 @@ import {
   validateCatalog,
 } from "../../public/ugr/src/solver/catalog.js";
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
-import { buildAsignaciones, subjectMatchKey } from "./guias.js";
+import { buildAsignaciones, corregirNombre, subjectMatchKey } from "./guias.js";
 import { practicasPorAsignatura } from "./horarios.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
@@ -158,7 +158,10 @@ export function buildMaster(dump, legacySubjects, guias = [], subgrupos = {}) {
   for (const row of rows) {
     const subjectCode = subjectCodeOf(row.asignatura);
     const modalidad = row.tipo;
-    const key = profesorKey(subjectCode, modalidad, row.profesor);
+    // El nombre del volcado pasa por la tabla de correcciones: es lo que hace
+    // que su clave case con la asignación de la guía (ver `guias.js`).
+    const profesor = corregirNombre(row.profesor);
+    const key = profesorKey(subjectCode, modalidad, profesor);
     const existing = profesoresByKey.get(key);
     if (existing) {
       mergedRows += 1;
@@ -171,7 +174,7 @@ export function buildMaster(dump, legacySubjects, guias = [], subgrupos = {}) {
       subjectCode,
       modalidad,
       asignatura: String(row.asignatura),
-      name: row.profesor,
+      name: profesor,
       dificultad: colorOf(row.dificultadProfesor),
       opinions: row.opinion ? [row.opinion] : [],
       cruzada: row.cruzada === true,

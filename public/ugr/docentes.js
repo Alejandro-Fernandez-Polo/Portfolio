@@ -50,7 +50,7 @@ const DOCENTES = [
   },
   {
     "key": "FFT-B",
-    "name": "José Luis Padilla De la Torre",
+    "name": "José Luis Padilla de la Torre",
     "subjectCode": "FFT",
     "groupLetter": "B",
     "modalidad": "Teoría"
@@ -1198,14 +1198,14 @@ const DOCENTES = [
   },
   {
     "key": "DIU-B",
-    "name": "Miguel Gea Mejías",
+    "name": "Miguel Gea Megías",
     "subjectCode": "DIU",
     "groupLetter": "B",
     "modalidad": "Teoría"
   },
   {
     "key": "DIU-A",
-    "name": "Rosa Ana Montes Soldado",
+    "name": "Rosana Montes Soldado",
     "subjectCode": "DIU",
     "groupLetter": "A",
     "modalidad": "Teoría"
@@ -1219,7 +1219,7 @@ const DOCENTES = [
   },
   {
     "key": "DIU-B2",
-    "name": "Miguel Gea Mejías",
+    "name": "Miguel Gea Megías",
     "subjectCode": "DIU",
     "groupLetter": "B2",
     "modalidad": "Prácticas"
@@ -1590,14 +1590,14 @@ const DOCENTES = [
   },
   {
     "key": "FS-C",
-    "name": "Rosa Ana Montes Soldado",
+    "name": "Rosana Montes Soldado",
     "subjectCode": "FS",
     "groupLetter": "C",
     "modalidad": "Teoría"
   },
   {
     "key": "FS-D",
-    "name": "Rosa Ana Montes Soldado",
+    "name": "Rosana Montes Soldado",
     "subjectCode": "FS",
     "groupLetter": "D",
     "modalidad": "Teoría"

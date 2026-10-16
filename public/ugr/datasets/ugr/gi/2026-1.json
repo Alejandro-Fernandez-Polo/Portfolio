@@ -4,7 +4,7 @@
     "degree": "GI",
     "plan": "2022",
     "version": "2026-1",
-    "hash": "sha256-0097bcf0f06efeceff3998ec82e54a971bdc73dee60962d6897419305b90e500",
+    "hash": "sha256-ce8cd21340731b9e7f94f28332638a2e7b63f48f85d1c1106426dfd9f7dff91d",
     "sources": [
       "legacy",
       "muestra"
@@ -11199,7 +11199,7 @@
     },
     {
       "key": "FFT-B",
-      "name": "José Luis Padilla De la Torre",
+      "name": "José Luis Padilla de la Torre",
       "subjectCode": "FFT",
       "groupLetter": "B",
       "modalidad": "Teoría"
@@ -12347,14 +12347,14 @@
     },
     {
       "key": "DIU-B",
-      "name": "Miguel Gea Mejías",
+      "name": "Miguel Gea Megías",
       "subjectCode": "DIU",
       "groupLetter": "B",
       "modalidad": "Teoría"
     },
     {
       "key": "DIU-A",
-      "name": "Rosa Ana Montes Soldado",
+      "name": "Rosana Montes Soldado",
       "subjectCode": "DIU",
       "groupLetter": "A",
       "modalidad": "Teoría"
@@ -12368,7 +12368,7 @@
     },
     {
       "key": "DIU-B2",
-      "name": "Miguel Gea Mejías",
+      "name": "Miguel Gea Megías",
       "subjectCode": "DIU",
       "groupLetter": "B2",
       "modalidad": "Prácticas"
@@ -12739,14 +12739,14 @@
     },
     {
       "key": "FS-C",
-      "name": "Rosa Ana Montes Soldado",
+      "name": "Rosana Montes Soldado",
       "subjectCode": "FS",
       "groupLetter": "C",
       "modalidad": "Teoría"
     },
     {
       "key": "FS-D",
-      "name": "Rosa Ana Montes Soldado",
+      "name": "Rosana Montes Soldado",
       "subjectCode": "FS",
       "groupLetter": "D",
       "modalidad": "Teoría"
