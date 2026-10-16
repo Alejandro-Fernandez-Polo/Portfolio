@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { canonicalJSON, problemHash, sha256Hex } from "../../public/ugr/src/solver/hash.js";
-import { solveTopK, cancel, checkFeasible, SOLVER_VERSION } from "../../public/ugr/src/solver/client.js";
+import { solveTopK, checkFeasible, SOLVER_VERSION } from "../../public/ugr/src/solver/client.js";
+// El cancelar es del ejecutor (capa de adaptadores), no del solver.
+import { cancel } from "../../public/ugr/src/modules/solverRunner.js";
 import { fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
 import { EC_SUBJECTS, EC_CODES } from "./fixtures.js";
 

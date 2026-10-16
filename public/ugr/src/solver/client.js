@@ -1,64 +1,8 @@
 import { solve } from "./engine.js";
 import { problemHash } from "./hash.js";
-import { SOLVER_VERSION } from "./cache.js";
+import { SOLVER_VERSION } from "./version.js";
 
 export { SOLVER_VERSION };
-
-let activeWorker = null;
-
-export function cancel() {
-  if (activeWorker) {
-    activeWorker.terminate();
-    activeWorker = null;
-  }
-}
-
-function canUseWorker() {
-  return typeof Worker !== "undefined";
-}
-
-function runWorker(problem, catalog, opts, onProgress) {
-  return new Promise((resolve, reject) => {
-    let worker;
-    try {
-      worker = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
-    } catch (err) {
-      reject(err);
-      return;
-    }
-    activeWorker = worker;
-    worker.onmessage = (event) => {
-      const msg = event.data;
-      if (msg.type === "solver:progress") {
-        if (onProgress) onProgress(msg.stats);
-      } else if (msg.type === "solver:solution") {
-        worker.terminate();
-        resolve(msg.result);
-      } else if (msg.type === "solver:error") {
-        worker.terminate();
-        reject(new Error(msg.error));
-      }
-    };
-    worker.onerror = (err) => {
-      worker.terminate();
-      reject(err);
-    };
-    worker.postMessage({
-      type: "solve",
-      problem,
-      catalog,
-      opts: {
-        k: opts.k,
-        weights: opts.weights,
-        seed: opts.seed,
-        timeBudgetMs: opts.timeBudgetMs,
-        apellido: opts.apellido,
-        firstSolutionOnly: opts.firstSolutionOnly,
-        forceExact: opts.forceExact,
-      },
-    });
-  });
-}
 
 export async function solveTopK(problem, catalog, opts = {}) {
   const {
@@ -73,7 +17,10 @@ export async function solveTopK(problem, catalog, opts = {}) {
 
   const hash = await problemHash(problem, catalog, weights);
 
-  const cache = opts.cache || (await import("./cache.js").catch(() => null));
+  // La caché llega **inyectada** desde el adaptador (`modules/solver.js`): el
+  // solver no debe conocer el almacenamiento (Regla de Dependencia). Sin caché,
+  // simplemente no se cachea.
+  const cache = opts.cache || null;
   if (useCache && cache) {
     const cached = await cache.get(hash);
     if (cached) {
@@ -83,18 +30,16 @@ export async function solveTopK(problem, catalog, opts = {}) {
   }
 
   const runOpts = { k, weights, seed, timeBudgetMs, apellido, onProgress };
+  // El **ejecutor** llega inyectado desde el adaptador (hilo aparte o en línea).
+  // Por defecto se resuelve en el hilo principal, que es lo que puede hacer el
+  // solver sin conocer el navegador.
+  const run = opts.run || ((p, cat, o) => solve(p, cat, o));
   let result;
-  if (canUseWorker()) {
-    try {
-      result = await runWorker(problem, catalog, runOpts, onProgress);
-    } catch {
-      result = solve(problem, catalog, runOpts);
-    }
-  } else {
+  try {
+    result = await run(problem, catalog, runOpts, onProgress);
+  } catch {
     result = solve(problem, catalog, runOpts);
   }
-
-  activeWorker = null;
 
   if (useCache && cache && result) {
     await cache.put(hash, { items: result.items, stats: result.stats, k });
@@ -129,19 +74,17 @@ export const FEASIBILITY_BUDGET_MS = 800;
  * @returns {Promise<{feasible: boolean|null, stats: Object}>}
  */
 export async function checkFeasible(problem, catalog, opts = {}) {
-  const { timeBudgetMs = FEASIBILITY_BUDGET_MS, apellido = "" } = opts;
+  const { timeBudgetMs = FEASIBILITY_BUDGET_MS, apellido = "", run } = opts;
   const runOpts = { k: 1, firstSolutionOnly: true, forceExact: true, timeBudgetMs, apellido };
+  // Mismo criterio que la generación: el **ejecutor** llega inyectado y, sin él,
+  // se resuelve en el hilo principal.
+  const execute = run || ((p, cat, o) => solve(p, cat, o));
   let result;
-  if (canUseWorker()) {
-    try {
-      result = await runWorker(problem, catalog, runOpts, null);
-    } catch {
-      result = solve(problem, catalog, runOpts);
-    }
-  } else {
+  try {
+    result = await execute(problem, catalog, runOpts, null);
+  } catch {
     result = solve(problem, catalog, runOpts);
   }
-  activeWorker = null;
   const stats = result?.stats || {};
   const found = (stats.found ?? 0) > 0 || (result?.items?.length ?? 0) > 0;
   const unknown = !found && stats.truncated === true;

@@ -1,7 +1,9 @@
 import { registerModule, getModule } from "../kernel/registry.js";
 import { bus } from "../kernel/bus.js";
-import { solveTopK as clientSolveTopK, cancel, explain, checkFeasible, SOLVER_VERSION } from "../solver/client.js";
+import { solveTopK as clientSolveTopK, explain, checkFeasible, SOLVER_VERSION } from "../solver/client.js";
+import { cancel as cancelRunner, run as runSolver } from "./solverRunner.js";
 import { captureException, count } from "../monitoring/index.js";
+import { cache as solutionsCache } from "../store/solutionsCache.js";
 
 function currentCatalog() {
   const api = getModule("catalog");
@@ -30,7 +32,14 @@ async function solve(problem, options = {}) {
   try {
     const catalog = currentCatalog();
     if (!catalog) throw new Error("catalog no disponible");
-    const result = await clientSolveTopK(withActiveCatalogVersion(problem), catalog, withEvents(options));
+    // El adaptador es quien conoce el almacenamiento y el navegador: aquí se
+    // atan la caché y el ejecutor (hilo aparte o en línea).
+    const options_ = {
+      ...withEvents(options),
+      cache: options.cache || solutionsCache,
+      run: options.run || runSolver,
+    };
+    const result = await clientSolveTopK(withActiveCatalogVersion(problem), catalog, options_);
     count("ugr.generar_horario");
     bus.emit(
       "solver:solution",
@@ -60,7 +69,7 @@ export function registerSolver() {
   return registerModule({
     id: "solver",
     version: SOLVER_VERSION,
-    api: { solve, solveTopK: solve, explain, cancel, checkFeasible: check },
+    api: { solve, solveTopK: solve, explain, cancel: cancelRunner, checkFeasible: check },
     requires: ["catalog@^1", "store@^1"],
     publishes: ["solver:progress", "solver:solution", "solver:cancelled"],
     subscribes: [],
