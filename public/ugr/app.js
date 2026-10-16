@@ -264,10 +264,10 @@
    */
   function setIgnoreDocents(on) {
     ignoreDocents = !!on;
-    if (ignoreDocents && solverStrategy === 'professors') {
-      solverStrategy = 'balanced';
-      localStorage.setItem('ugr-solver-strategy', solverStrategy);
-    }
+    // La estrategia de profesores depende de unos datos que el modo apagado
+    // retira: quien la conoce es la vista del generador.
+    const solverView = getSolverView();
+    if (solverView) solverView.onIgnoreDocentsChanged();
     pushIgnoreDocentsToStore();
     syncIgnoreDocentsInputs();
     renderSolverFilters();
@@ -325,45 +325,15 @@
   let configMaxTarde = 0;
 
   // ─── Solver ────────────────────────────────────────────────
+  // Los tipos de filtro los conoce el adaptador de persistencia y el panel: la
+  // lista vive aquí y se le inyecta a la vista (que la usa para validar lo
+  // guardado). El resto del estado del generador —filtros, estrategia,
+  // resultados y viabilidad— lo posee la vista ESM.
   const SOLVER_FILTER_TYPES = [
     'freeDays', 'maxDays', 'maxMorningDays', 'maxAfternoonDays',
     'earliestStart', 'latestEnd', 'blockGroups', 'preferTurno', 'maxGaps',
     'sameTheoryPerCourse', 'samePracticePerCourse',
   ];
-  let solverResults = [];
-  let solverFilters = loadSolverFilters();
-  let solverBusy = false;
-  let solverRunSeq = 0;
-  let solverIdSeq = 1000000000;
-
-  // Opciones del desplegable de turno, de mañana a tarde. Las dos «solo» son
-  // duras (recortan los grupos del otro turno) y las dos «preferente» blandas
-  // (solo puntúan). Los valores guardados son estables: «indiferente» no
-  // escribe filtro.
-  const SOLVER_TURNO_OPTIONS = [
-    ['solo-mañana', 'Solo por la mañana'],
-    ['mañana', 'Preferente por la mañana'],
-    ['indiferente', 'Indiferente'],
-    ['tarde', 'Preferente por la tarde'],
-    ['solo-tarde', 'Solo por la tarde'],
-  ];
-  // Comprobación de viabilidad (¿hay alguna combinación?): estado, temporizador
-  // del debounce y marca de la última consulta para no repetirla sin cambios.
-  let solverInfeasible = false;
-  let feasibilityTimer = null;
-  let feasibilitySeq = 0;
-  let feasibilityKey = '';
-
-  const SOLVER_STRATEGIES = {
-    balanced:   { label: 'Equilibrado',        weights: { deadHours: 1, days: 0.8, afternoons: 0.6, mornings: 0, earlyStart: 0.4, loadVariance: 0.5, filters: 1, professor: 0.5 } },
-    professors: { label: 'Mejores profesores', weights: { professor: 1000, deadHours: 1, days: 0.3, afternoons: 0, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
-    morning:    { label: 'Priorizar mañana',   weights: { afternoons: 1000, professor: 1, deadHours: 0.5, days: 0.3, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
-    afternoon:  { label: 'Priorizar tarde',    weights: { mornings: 1000, professor: 1, deadHours: 0.5, days: 0.3, afternoons: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
-    compact:    { label: 'Menos horas muertas', weights: { deadHours: 1000, professor: 1, days: 0.3, afternoons: 0, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
-    shortWeek:  { label: 'Menos días',         weights: { days: 1000, deadHours: 1, professor: 0.5, afternoons: 0, mornings: 0, earlyStart: 0.2, loadVariance: 0.2, filters: 1 } },
-  };
-  let solverStrategy = localStorage.getItem('ugr-solver-strategy') || 'balanced';
-  if (!SOLVER_STRATEGIES[solverStrategy]) solverStrategy = 'balanced';
 
   const DEFAULT_SUBJECTS = JSON.parse(JSON.stringify(SUBJECTS));
 
@@ -389,6 +359,9 @@
     await ensureCatalogView();
     // Y la de asignaturas: la lista se pinta desde ella y el modal es suyo.
     await ensureManageSubjectsView();
+    // La del generador: su panel y su estado. Antes de compartir, que valida la
+    // estrategia de un enlace con la tabla de estrategias de esta vista.
+    await ensureSolverView();
     // La de compartir: monta el diálogo y mira si la URL trae un enlace.
     await ensureShareView();
     // Y la de propuestas: barra, detalle, mapeos e instantáneas.
@@ -438,7 +411,6 @@
     checkUrlPropuesta();
     renderBlockFilters();
     ensureBlockStoreSubscription();
-    setupSolver();
   }
 
   // ─── Persistencia ───────────────────────────────────────────
@@ -1981,13 +1953,6 @@
     updateGenerateButton();
   }
 
-  /** El botón de generar está libre solo si hay selección, no hay trabajo en
-   *  curso y la comprobación de viabilidad no ha dicho que no hay ninguna. */
-  function updateGenerateButton() {
-    const gen = document.getElementById('btn-solver-generate');
-    if (gen) gen.disabled = solverBusy || !hasSelectedInTerm() || solverInfeasible;
-  }
-
   function setupActions() {
     setupProfesorFicha();
     setupProfesoresSection();
@@ -2123,7 +2088,7 @@
   // recibe y las **mutaciones** (guardar/cargar/borrar/exportar), que el
   // monolito sigue poseyendo y le pasa como intents.
   function getDisplayConfigs() {
-    return getSavedConfigs().concat(solverResults);
+    return getSavedConfigs().concat(getSolverView() ? getSolverView().getResults() : []);
   }
 
   /** Vuelve la tabla a la primera página (la pide quien cambia la lista). */
@@ -2139,434 +2104,34 @@
   }
 
   // ─── Solver UI ─────────────────────────────────────────────
-  function loadSolverFilters() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem('ugr-solver-filters') || '[]');
-      if (!Array.isArray(parsed)) return [];
-      return parsed.filter(f => f && SOLVER_FILTER_TYPES.includes(f.type));
-    } catch (e) { return []; }
-  }
-
-  function saveSolverFilters() {
-    localStorage.setItem('ugr-solver-filters', JSON.stringify(solverFilters));
-  }
-
-  function findSolverFilter(type) {
-    return solverFilters.find(f => f.type === type);
-  }
-
-  function setSolverFilter(type, value) {
-    solverFilters = solverFilters.filter(f => f.type !== type);
-    if (value !== null && value !== undefined && value !== '') {
-      solverFilters.push({ type, value, weight: 1 });
-    }
-    saveSolverFilters();
-    // Cualquier cambio de filtro puede dejar el problema sin solución: se
-    // comprueba (con debounce) para avisar y bloquear el botón si no hay nada.
-    scheduleFeasibilityCheck();
-  }
-
-  function getSolverProfessorOptions() {
-    const byName = new Map();
-    SUBJECTS.forEach(s => {
-      (s.grupos || []).forEach(g => {
-        const key = `${s.codigo}-${g.letra}`;
-        const info = getDocentInfo(key);
-        if (!info || !info.name) return;
-        if (!byName.has(info.name)) {
-          byName.set(info.name, { name: info.name, dificultad: (getProfesorInfo(s.codigo, g.letra) || {}).dificultad || null, keys: [], subjects: new Set() });
-        }
-        const entry = byName.get(info.name);
-        entry.keys.push(key);
-        entry.subjects.add(s.codigo);
-      });
-    });
-    return [...byName.values()].sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  function toggleProfessorBlock(name, blocked, options) {
-    const option = options.find(o => o.name === name);
-    if (!option) return;
-    const set = new Set(findSolverFilter('blockGroups')?.value || []);
-    option.keys.forEach(k => { if (blocked) set.add(k); else set.delete(k); });
-    setSolverFilter('blockGroups', set.size ? [...set] : null);
-  }
-
+  // El panel del generador —filtros y su persistencia, estrategia, bloqueo de
+  // profesores, viabilidad, progreso, cancelación y resultados— vive en la vista
+  // ESM. Aquí quedan los disparadores que usa el resto del monolito (la selección,
+  // el cambio de catálogo y la restauración de un enlace) y la lectura de su
+  // estado.
   function renderSolverFilters() {
-    const panel = document.getElementById('solver-filters-panel');
-    if (!panel) return;
-
-    const maxDays = findSolverFilter('maxDays')?.value;
-    const maxMorning = findSolverFilter('maxMorningDays')?.value;
-    const maxAfternoon = findSolverFilter('maxAfternoonDays')?.value;
-    const turno = findSolverFilter('preferTurno')?.value || 'indiferente';
-    const earliestStart = findSolverFilter('earliestStart')?.value || '';
-    const latestEnd = findSolverFilter('latestEnd')?.value || '';
-    const blocked = new Set(findSolverFilter('blockGroups')?.value || []);
-    const sameTheory = findSolverFilter('sameTheoryPerCourse')?.value === true;
-    const samePractice = findSolverFilter('samePracticePerCourse')?.value === true;
-    // Con «Ignorar profesores» no se construyen las opciones: ni se pinta el
-    // bloque ni se ofrece el preset «Mejores profesores».
-    const profOptions = ignoreDocents ? [] : getSolverProfessorOptions();
-    const blockedCount = profOptions.filter(o => o.keys.every(k => blocked.has(k))).length;
-
-    let html = '';
-    html += '<div class="solver-filter-row">';
-    html += '<label>Preferencia <select id="solver-strategy">';
-    Object.entries(SOLVER_STRATEGIES).forEach(([key, s]) => {
-      if (ignoreDocents && key === 'professors') return;
-      html += `<option value="${key}" ${solverStrategy === key ? 'selected' : ''}>${s.label}</option>`;
-    });
-    html += '</select></label>';
-    // «Ignorar profesores»: el mismo interruptor está también en la sección
-    // «Profesores» (donde vive el dato); los dos escriben `ui.ignoreDocents`,
-    // así que encienden y apagan lo mismo.
-    html += '<label class="solver-ignore-docents"><input type="checkbox" id="solver-ignore-docents"'
-      + `${ignoreDocents ? ' checked' : ''}> Ignorar profesores</label>`;
-    html += '</div>';
-    html += '<div class="solver-filter-row">';
-    html += '<span class="solver-filter-label">Días libres:</span>';
-    DAYS.forEach(d => {
-      const active = (findSolverFilter('freeDays')?.value || []).includes(d);
-      html += `<label class="solver-day-check"><input type="checkbox" data-solver-day="${d}" ${active ? 'checked' : ''}> ${DAY_LABELS[d]}</label>`;
-    });
-    html += '</div>';
-
-    html += '<div class="solver-filter-row">';
-    html += `<label>Máx. días con clase <input type="number" id="solver-max-days" min="0" max="5" value="${maxDays ?? ''}"></label>`;
-    html += `<label>Máx. días de mañana <input type="number" id="solver-max-morning" min="0" max="5" value="${maxMorning ?? ''}"></label>`;
-    html += `<label>Máx. días de tarde <input type="number" id="solver-max-afternoon" min="0" max="5" value="${maxAfternoon ?? ''}"></label>`;
-    html += '</div>';
-
-    html += '<div class="solver-filter-row">';
-    html += '<label>Turno <select id="solver-prefer-turno">';
-    SOLVER_TURNO_OPTIONS.forEach(([value, label]) => {
-      html += `<option value="${value}" ${turno === value ? 'selected' : ''}>${label}</option>`;
-    });
-    html += '</select></label>';
-    html += `<label>No empezar antes de <input type="time" id="solver-earliest-start" value="${earliestStart}"></label>`;
-    html += `<label>No acabar después de <input type="time" id="solver-latest-end" value="${latestEnd}"></label>`;
-    html += '</div>';
-
-    // Mismo grupo por curso. El segundo check exige el primero, así que se queda
-    // deshabilitado (y desmarcado) mientras no esté activo.
-    html += '<div class="solver-filter-row">';
-    html += `<label class="solver-same-group"><input type="checkbox" id="solver-same-theory"${sameTheory ? ' checked' : ''}> Mismo grupo de teoría por curso</label>`;
-    html += `<label class="solver-same-group"><input type="checkbox" id="solver-same-practice"${samePractice ? ' checked' : ''}${sameTheory ? '' : ' disabled'}> Mismo grupo de teoría y de prácticas por curso</label>`;
-    html += '</div>';
-
-    // El panel «Bloquear profesores» solo existe con los profesores activos:
-    // con el modo encendido el bloqueo no se aplica, y mostrar el botón
-    // invitaría a usar algo que el motor ignora.
-    if (!ignoreDocents) {
-      html += '<div class="solver-prof-block">';
-      html += `<button type="button" class="btn btn-sm btn-secondary" id="btn-toggle-solver-profs">Bloquear profesores${blockedCount ? ` (${blockedCount})` : ''}</button>`;
-      html += '<div class="solver-prof-body" style="display:none">';
-      html += '<input type="search" id="solver-prof-search" placeholder="Buscar profesor o asignatura...">';
-      html += '<div class="solver-prof-list" id="solver-prof-list">';
-      if (profOptions.length === 0) {
-        html += '<p class="empty-state">No hay datos de profesores.</p>';
-      } else {
-        profOptions.forEach(o => {
-          const isBlocked = o.keys.every(k => blocked.has(k));
-          const subjects = [...o.subjects].sort().join(', ');
-          const diff = o.dificultad ? getDificultadColor(o.dificultad) : '';
-          html += `<label class="solver-prof-item" data-search="${o.name.toLowerCase()} ${subjects.toLowerCase()}">`;
-          html += `<input type="checkbox" data-prof-name="${o.name}" ${isBlocked ? 'checked' : ''}>`;
-          html += `<span class="solver-prof-diff" style="background:${diff}"></span>`;
-          html += `<span class="solver-prof-name">${o.name}</span>`;
-          html += `<span class="solver-prof-meta">${subjects}</span>`;
-          html += '</label>';
-        });
-      }
-      html += '</div></div></div>';
-    }
-
-    panel.innerHTML = html;
-
-    const strategySelect = panel.querySelector('#solver-strategy');
-    if (strategySelect) strategySelect.addEventListener('change', () => {
-      solverStrategy = SOLVER_STRATEGIES[strategySelect.value] ? strategySelect.value : 'balanced';
-      localStorage.setItem('ugr-solver-strategy', solverStrategy);
-    });
-
-    const ignoreDocentsInput = panel.querySelector('#solver-ignore-docents');
-    if (ignoreDocentsInput) ignoreDocentsInput.addEventListener('change', () => {
-      setIgnoreDocents(ignoreDocentsInput.checked);
-    });
-
-    panel.querySelectorAll('[data-solver-day]').forEach(cb => {
-      cb.addEventListener('change', () => {
-        const days = new Set(findSolverFilter('freeDays')?.value || []);
-        if (cb.checked) days.add(cb.dataset.solverDay);
-        else days.delete(cb.dataset.solverDay);
-        setSolverFilter('freeDays', days.size ? [...days] : null);
-      });
-    });
-
-    const bindNumber = (id, type) => {
-      const input = panel.querySelector(id);
-      if (!input) return;
-      input.addEventListener('change', () => {
-        setSolverFilter(type, input.value === '' ? null : Number(input.value));
-      });
-    };
-    bindNumber('#solver-max-days', 'maxDays');
-    bindNumber('#solver-max-morning', 'maxMorningDays');
-    bindNumber('#solver-max-afternoon', 'maxAfternoonDays');
-
-    const turnoSelect = panel.querySelector('#solver-prefer-turno');
-    if (turnoSelect) turnoSelect.addEventListener('change', () => {
-      setSolverFilter('preferTurno', turnoSelect.value === 'indiferente' ? null : turnoSelect.value);
-    });
-    const earliestInput = panel.querySelector('#solver-earliest-start');
-    if (earliestInput) earliestInput.addEventListener('change', () => {
-      setSolverFilter('earliestStart', earliestInput.value || null);
-    });
-    const latestInput = panel.querySelector('#solver-latest-end');
-    if (latestInput) latestInput.addEventListener('change', () => {
-      setSolverFilter('latestEnd', latestInput.value || null);
-    });
-
-    const sameTheoryInput = panel.querySelector('#solver-same-theory');
-    const samePracticeInput = panel.querySelector('#solver-same-practice');
-    if (sameTheoryInput) sameTheoryInput.addEventListener('change', () => {
-      setSolverFilter('sameTheoryPerCourse', sameTheoryInput.checked ? true : null);
-      // El subgrupo de prácticas no tiene sentido sin el grupo de teoría: al
-      // apagar el primero se apaga también el segundo.
-      if (!sameTheoryInput.checked) setSolverFilter('samePracticePerCourse', null);
-      renderSolverFilters();
-    });
-    if (samePracticeInput) samePracticeInput.addEventListener('change', () => {
-      setSolverFilter('samePracticePerCourse', samePracticeInput.checked ? true : null);
-    });
-
-    const profToggle = panel.querySelector('#btn-toggle-solver-profs');
-    const profBody = panel.querySelector('.solver-prof-body');
-    if (profToggle && profBody) {
-      profToggle.addEventListener('click', () => {
-        profBody.style.display = profBody.style.display === 'none' ? 'block' : 'none';
-      });
-    }
-    const profSearch = panel.querySelector('#solver-prof-search');
-    if (profSearch) {
-      profSearch.addEventListener('input', () => {
-        const q = profSearch.value.trim().toLowerCase();
-        panel.querySelectorAll('.solver-prof-item').forEach(item => {
-          item.style.display = !q || item.dataset.search.includes(q) ? '' : 'none';
-        });
-      });
-    }
-    panel.querySelectorAll('[data-prof-name]').forEach(cb => {
-      cb.addEventListener('change', () => {
-        toggleProfessorBlock(cb.dataset.profName, cb.checked, profOptions);
-        const size = (findSolverFilter('blockGroups')?.value || []).length;
-        if (profToggle) profToggle.textContent = `Bloquear profesores${size ? ` (${profOptions.filter(o => o.keys.every(k => (findSolverFilter('blockGroups')?.value || []).includes(k))).length})` : ''}`;
-      });
-    });
+    const view = getSolverView();
+    if (view) view.renderPanel();
   }
 
-  function blockedEmptySubjects(problem) {
-    // El filtro (qué claves están bloqueadas) sigue siendo cosa de aquí; la
-    // regla de «esta asignatura se queda sin grupos» es del dominio.
-    return getDomain().blockedEmptySubjects(problem, {
-      subjects: SUBJECTS,
-      blocked: findSolverFilter('blockGroups')?.value || [],
-      ignoreDocents,
-    });
-  }
-
-  function buildSolverProblem() {
-    // Delegación: la construcción vive en ESM (src/app/domain/problem.js);
-    // aquí solo se juntan los datos del cierre (estado, catálogo, superadas) y
-    // la preferencia del store. Las asignaturas
-    // superadas se dejaban fuera del dominio aquí mismo: el solver no debe
-    // planificar lo aprobado, y sin `__ugrProgress` (modo degradado) no se
-    // excluye nada.
-    return getDomain().buildProblem({
-      selectedSubjects: state.selectedSubjects,
-      catalog: SUBJECTS,
-      cuatrimestre: state.cuatrimestreActivo,
-      passedCodes: window.__ugrProgress?.getPassedCodes?.() || [],
-      filters: solverFilters,
-      ignoreDocents,
-      dificultad: getDificultad,
-      difficultyScore: getDifficultyScore,
-    });
-  }
-
-  function setSolverStatus(text) {
-    const el = document.getElementById('solver-status');
-    if (el) el.textContent = text || '';
-  }
-
-  function setSolverBusy(busy) {
-    solverBusy = busy;
-    const cancel = document.getElementById('btn-solver-cancel');
-    const prog = document.getElementById('solver-progress');
-    updateGenerateButton();
-    if (cancel) cancel.style.display = busy ? '' : 'none';
-    if (prog) prog.style.display = busy ? '' : 'none';
-  }
-
-  // ─── Comprobación de viabilidad ─────────────────────────────
-  /** Pinta el mensaje de la comprobación, si el bloque existe en el HTML. */
-  function setFeasibilityMessage(text, active) {
-    const el = document.getElementById('solver-feasibility');
-    if (el) {
-      el.textContent = text;
-      el.classList.toggle('is-blocking', active === true);
-    }
-    solverInfeasible = active === true;
-    updateGenerateButton();
-  }
-
-  function feasibilitySignature(problem) {
-    return getDomain().feasibilitySignature(problem);
-  }
-
-  /** Programa la comprobación con debounce: tocar varios filtros seguidos deja
-   *  una sola consulta. */
   function scheduleFeasibilityCheck() {
-    if (feasibilityTimer) clearTimeout(feasibilityTimer);
-    feasibilityTimer = setTimeout(runFeasibilityCheck, 300);
+    const view = getSolverView();
+    if (view) view.scheduleFeasibility();
   }
 
-  async function runFeasibilityCheck() {
-    feasibilityTimer = null;
-    const bridge = window.__ugrSolver;
-    let problem;
-    try {
-      problem = buildSolverProblem();
-    } catch (e) {
-      return; // dominio aún sin montar: no hay nada que comprobar
-    }
-    if (!bridge || typeof bridge.checkFeasible !== 'function' || problem.subjects.length === 0) {
-      // Sin asignaturas no hay nada que generar, así que no se bloquea nada.
-      setFeasibilityMessage('', false);
-      feasibilityKey = feasibilitySignature(problem);
-      return;
-    }
-    const key = feasibilitySignature(problem);
-    if (key === feasibilityKey) return;
-    feasibilityKey = key;
-
-    const seq = ++feasibilitySeq;
-    let result;
-    try {
-      result = await bridge.checkFeasible(problem, { apellido: state.apellido });
-    } catch (e) {
-      result = { feasible: null };
-    }
-    if (seq !== feasibilitySeq) return; // llegó tarde: hay otra consulta en curso
-    if (result && result.feasible === false) {
-      setFeasibilityMessage('Ningún horario cumple esos filtros.', true);
-    } else if (result && result.feasible === null) {
-      setFeasibilityMessage('No se pudo comprobar si hay alguna combinación: hay demasiadas posibilidades.', false);
-    } else {
-      setFeasibilityMessage('', false);
-    }
-  }
-
-  function setSolverProgress(stats) {
-    const fill = document.getElementById('solver-progress-fill');
-    if (!fill || !stats) return;
-    const pct = Math.min(95, ((stats.nodes || 0) / 20000) * 100);
-    fill.style.width = pct + '%';
-    setSolverStatus(`${stats.found || 0} soluciones · ${stats.nodes || 0} nodos`);
-  }
-
-  function toSolverConfig(item, index) {
-    const strategy = SOLVER_STRATEGIES[solverStrategy] ? solverStrategy : 'balanced';
-    return {
-      id: solverIdSeq++,
-      name: `Generado ${index + 1} · ${SOLVER_STRATEGIES[strategy].label}`,
-      selectedSubjects: { ...item.selectedSubjects },
-      groupChoices: JSON.parse(JSON.stringify(item.groupChoices)),
-      apellido: state.apellido,
-      turnoPreferente: state.turnoPreferente,
-      solver: true,
-      strategy,
-      cost: item.cost,
-      deadHours: item.costBreakdown ? item.costBreakdown.deadHours : null,
-    };
-  }
-
-  async function runSolver() {
-    if (solverBusy) return;
-    const bridge = window.__ugrSolver;
-    if (!bridge) { setSolverStatus('El motor no está disponible.'); return; }
-    const problem = buildSolverProblem();
-    if (problem.subjects.length === 0) {
-      setSolverStatus(problem.excludedPassed.length
-        ? 'Todas las asignaturas seleccionadas de este cuatrimestre están superadas.'
-        : 'No hay asignaturas seleccionadas en este cuatrimestre.');
-      return;
-    }
-    const empty = blockedEmptySubjects(problem);
-    if (empty.length) {
-      setSolverStatus(`El bloqueo de profesores deja sin grupos: ${empty.join(', ')}.`);
-      return;
-    }
-    const kInput = document.getElementById('solver-topk');
-    const k = Math.max(1, Math.min(500, parseInt(kInput?.value || '200', 10) || 200));
-    const runId = ++solverRunSeq;
-    solverResults = [];
-    resetConfigsPage();
-    setSolverBusy(true);
-    setSolverStatus('Generando…');
-    const weights = (SOLVER_STRATEGIES[solverStrategy] || SOLVER_STRATEGIES.balanced).weights;
-    try {
-      const result = await bridge.solveTopK(problem, {
-        k,
-        weights,
-        apellido: state.apellido,
-        onProgress: (stats) => { if (runId === solverRunSeq) setSolverProgress(stats); },
-      });
-      if (runId !== solverRunSeq) return;
-      solverResults = result.items.map(toSolverConfig);
-      renderSavedConfigs();
-      const approx = result.stats.approximate ? ' (aprox.)' : '';
-      const omitted = problem.excludedPassed.length ? ` · ${problem.excludedPassed.length} superadas omitidas` : '';
-      setSolverStatus(`${solverResults.length} horarios generados${approx}${result.fromCache ? ' · caché' : ''}${omitted}`);
-    } catch (err) {
-      if (runId === solverRunSeq) setSolverStatus('Error: ' + (err?.message || err));
-    } finally {
-      if (runId === solverRunSeq) setSolverBusy(false);
-    }
+  function updateGenerateButton() {
+    const view = getSolverView();
+    if (view) view.refreshGenerateButton();
   }
 
   function cancelSolver() {
-    solverRunSeq++;
-    if (window.__ugrSolver) window.__ugrSolver.cancel();
-    setSolverBusy(false);
-    setSolverStatus('Generación cancelada.');
+    const view = getSolverView();
+    if (view) view.cancel();
   }
 
   function saveSolverResult(id) {
-    const cfg = solverResults.find(c => c.id === id);
-    if (!cfg) return;
-    const view = getSavedConfigsView();
-    if (view) {
-      view.append([{
-        id: Date.now(),
-        name: cfg.name,
-        selectedSubjects: { ...cfg.selectedSubjects },
-        groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
-        apellido: cfg.apellido,
-        turnoPreferente: cfg.turnoPreferente,
-      }]);
-    }
-    showToast('Horario guardado', 'success');
-    renderSavedConfigs();
-  }
-
-  function setupSolver() {
-    renderSolverFilters();
-    const gen = document.getElementById('btn-solver-generate');
-    const cancel = document.getElementById('btn-solver-cancel');
-    if (gen) gen.addEventListener('click', runSolver);
-    if (cancel) cancel.addEventListener('click', cancelSolver);
+    const view = getSolverView();
+    if (view) view.saveResult(id);
   }
 
   function isConfigFavorited(config) {
@@ -3097,9 +2662,8 @@
       if (sync.carriedFields && api) persistLegacySubjectFields(api);
       if (sync.codesChanged && pruneSelectionsToActiveCatalog()) saveState();
     }
-    if (solverBusy) cancelSolver();
-    solverResults = [];
-    setSolverStatus('');
+    const solverView = getSolverView();
+    if (solverView) solverView.clear();
     updateAll();
     renderManageSubjects();
     renderSolverFilters();
@@ -3364,7 +2928,7 @@
             download: downloadJSON,
             escape: escapeCatalogText,
             getSubjects: () => SUBJECTS,
-            getExtraConfigs: () => solverResults,
+            getExtraConfigs: () => (getSolverView() ? getSolverView().getResults() : []),
             weekdays: DAYS,
             getBlocks,
             getCeilings: () => ({ maxManana: configMaxManana, maxTarde: configMaxTarde }),
@@ -3439,6 +3003,69 @@
     if (view) view.setup();
   }
 
+  // ─── Features ESM: el panel del generador ──────────────────
+  // Mismo patrón: import dinámico con instancia y promesa cacheadas. La vista
+  // posee el estado del panel (filtros, estrategia, resultados y viabilidad) y el
+  // monolito se lo lee por getters; el catálogo, la preferencia de profesores y
+  // los datos de docentes entran por getter porque cambian en caliente.
+  let ugrSolverView = null;
+  let ugrSolverInitPromise = null;
+
+  function getSolverView() {
+    return ugrSolverView;
+  }
+
+  function ensureSolverView() {
+    if (ugrSolverView) return Promise.resolve(ugrSolverView);
+    if (!ugrSolverInitPromise) {
+      ugrSolverInitPromise = import('./src/app/features/solver.js')
+        .then(({ createSolverView }) => {
+          ugrSolverView = createSolverView({
+            document,
+            window,
+            getState: () => state,
+            getSubjects: () => SUBJECTS,
+            getPassedCodes: () => (window.__ugrProgress && window.__ugrProgress.getPassedCodes ? window.__ugrProgress.getPassedCodes() : []),
+            filterTypes: SOLVER_FILTER_TYPES,
+            isIgnoringDocents: () => ignoreDocents,
+            onToggleIgnoreDocents: setIgnoreDocents,
+            weekdays: DAYS,
+            dayLabels: DAY_LABELS,
+            getDocentInfo,
+            getProfesorInfo,
+            getDificultad,
+            difficultyToken: getDificultadColor,
+            difficultyScore: getDifficultyScore,
+            hasSelectedInTerm,
+            onResultsCleared: resetConfigsPage,
+            onResultsReady: renderSavedConfigs,
+            onSaveResult: (cfg) => {
+              const view = getSavedConfigsView();
+              if (view) {
+                view.append([{
+                  id: Date.now(),
+                  name: cfg.name,
+                  selectedSubjects: { ...cfg.selectedSubjects },
+                  groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
+                  apellido: cfg.apellido,
+                  turnoPreferente: cfg.turnoPreferente,
+                }]);
+              }
+            },
+            notify: showToast,
+          });
+          ugrSolverView.setup();
+          return ugrSolverView;
+        })
+        .catch((err) => {
+          console.error('[ugr] solver view no pudo iniciarse', err);
+          ugrSolverInitPromise = null;
+          return null;
+        });
+    }
+    return ugrSolverInitPromise;
+  }
+
   // ─── Features ESM: propuestas de convalidación ─────────────
   // Mismo patrón: import dinámico con instancia y promesa cacheadas. El estado
   // (la lista, cuál está activa y la vista) es del monolito y se le cede por
@@ -3503,13 +3130,11 @@
             document,
             window,
             getState: () => state,
-            getFilters: () => solverFilters,
-            getStrategy: () => solverStrategy,
+            getFilters: () => (getSolverView() ? getSolverView().getFilters() : []),
+            getStrategy: () => (getSolverView() ? getSolverView().getStrategy() : 'balanced'),
             onApplyFilters: (filtros, estrategia) => {
-              solverFilters = filtros;
-              saveSolverFilters();
-              solverStrategy = estrategia;
-              localStorage.setItem('ugr-solver-strategy', estrategia);
+              const view = getSolverView();
+              if (view) view.applyFilters(filtros, estrategia);
             },
             onProfileChanged: pushProfileToStore,
             onPruneSelections: pruneSelectionsToActiveCatalog,
@@ -3520,7 +3145,7 @@
             },
             notify: showToast,
             filterTypes: SOLVER_FILTER_TYPES,
-            strategies: SOLVER_STRATEGIES,
+            strategies: getSolverView() ? getSolverView().getStrategies() : {},
           });
           ugrShareView.setup();
           return ugrShareView;
