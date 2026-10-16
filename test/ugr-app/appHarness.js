@@ -76,6 +76,11 @@ function indexBody() {
  * @param {Array} [options.convalidaciones] tabla oficial (`CONVALIDACIONES`).
  * @param {Array} [options.propuestasIniciales] propuestas semilla
  *   (`PROPUESTAS_INICIALES`, el `propuestas.js` clásico).
+ * @param {Object} [options.storage] pares clave/valor que se siembran en
+ *   `localStorage` antes de arrancar (para los caminos que leen al evaluarse,
+ *   como los filtros del solver).
+ * @param {Object} [options.progress] puente del progreso (`window.__ugrProgress`),
+ *   para el camino de «asignaturas superadas».
  * @param {Object} [options.store] store propio; si no, uno vacío.
  * @returns {Promise<{legacy: Object, store: Object, storage: Storage}>}
  *   `legacy` es `window.__ugrLegacy` (el contrato que expone el monolito).
@@ -94,6 +99,10 @@ export async function bootUgrApp(options = {}) {
 
   document.body.innerHTML = indexBody();
   globalThis.localStorage.clear();
+  // Semilla opcional: hay caminos que leen `localStorage` al evaluarse el cierre
+  // (los filtros del solver, por ejemplo), así que sembrar aquí es la única
+  // forma de caracterizarlos.
+  Object.entries(options.storage || {}).forEach(([clave, valor]) => globalThis.localStorage.setItem(clave, valor));
 
   const store = options.store || makeStore();
   globalThis.window.__ugrStore = store;
@@ -110,6 +119,9 @@ export async function bootUgrApp(options = {}) {
   else delete globalThis.window.__ugrCatalog;
   if (options.package) globalThis.window.__ugrPackage = options.package;
   else delete globalThis.window.__ugrPackage;
+  // Puente del progreso: es de donde el solver saca las asignaturas superadas.
+  if (options.progress) globalThis.window.__ugrProgress = options.progress;
+  else delete globalThis.window.__ugrProgress;
 
   await import(APP_PATH);
   const legacy = globalThis.window.__ugrLegacy;
