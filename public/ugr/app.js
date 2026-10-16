@@ -362,6 +362,8 @@
     // La del generador: su panel y su estado. Antes de compartir, que valida la
     // estrategia de un enlace con la tabla de estrategias de esta vista.
     await ensureSolverView();
+    // La de profesores: el claustro, la ficha y las valoraciones propias.
+    await ensureProfesoresView();
     // La de compartir: monta el diálogo y mira si la URL trae un enlace.
     await ensureShareView();
     // Y la de propuestas: barra, detalle, mapeos e instantáneas.
@@ -990,8 +992,6 @@
    */
   let ownReviews = [];
   let ownReviewKeys = new Set();
-  /** Clave de la valoración que se está editando en el formulario ('' = alta). */
-  let editingReviewKey = '';
   /** Nombres con alguna valoración: los que pueden abrir ficha. */
   const nombresConFicha = new Set(
     Object.keys(profesoresByKey).map(key => profesoresByKey[key]).filter(p => p && p.name).map(p => p.name),
@@ -1050,6 +1050,12 @@
   /** Clase CSS del color de la escala, para las insignias (fondo). */
   function dificultadClase(d) {
     return getDomain().DIFFICULTY_UI_LABELS[d] ? `diff-${d}` : 'diff-gris';
+  }
+
+  /** Insignia de dificultad: la usan la ficha de profesor y la de asignatura. */
+  function dificultadBadgeHtml(dificultad) {
+    if (!dificultad) return '';
+    return `<span class="dificultad-badge ${dificultadClase(dificultad)}">${getDificultadLabel(dificultad)}</span>`;
   }
 
   // ─── Render Group Config ────────────────────────────────────
@@ -1214,524 +1220,17 @@
   }
 
   // ─── Ficha del profesor y listado del claustro ──────────────
-  // El bloque del profesor enseña el nombre y la insignia; todo lo demás se
-  // consulta aquí. La ficha la compone el dominio (`buildProfesorFicha`), que
-  // agrupa los perfiles por nombre: cada perfil es de (asignatura, modalidad),
-  // así que la ficha enseña al profesor en todas sus asignaturas, con la que se
-  // ha pulsado primero y resaltada.
-  let fichaOpener = null;
+  // El listado del claustro, la ficha y las valoraciones propias viven en la
+  // vista ESM; aquí queda el disparador que usa el resto del monolito (la
+  // pestaña de datos, el cambio de catálogo y el interruptor de profesores).
+  function renderProfesores() {
+    const view = getProfesoresView();
+    if (view) view.renderList();
+  }
 
   // Ficha de asignatura: dificultad y descripción del plan, por modalidad.
   let asignaturaFichaOpener = null;
   let asignaturaFichaBound = false;
-
-  /**
-   * Vuelve a encontrar el botón que abrió la ficha: mismo nombre y, si se abrió
-   * desde un grupo, misma asignatura y modalidad. El listado de profesores no
-   * lleva asignatura, así que ahí basta el nombre.
-   */
-  function findProfesorButton(name, subjectCode, modalidad) {
-    for (const btn of document.querySelectorAll('.prof-name-btn')) {
-      if (btn.dataset.profName !== name) continue;
-      if (subjectCode && btn.dataset.profCodigo !== subjectCode) continue;
-      if (modalidad && btn.dataset.profModalidad !== modalidad) continue;
-      return btn;
-    }
-    return null;
-  }
-
-  function profesorModalEls() {
-    return {
-      modal: document.getElementById('profesor-modal'),
-      title: document.getElementById('profesor-modal-title'),
-      body: document.getElementById('profesor-modal-body'),
-      close: document.getElementById('profesor-modal-close'),
-    };
-  }
-
-  function dificultadBadgeHtml(dificultad) {
-    if (!dificultad) return '';
-    return `<span class="dificultad-badge ${dificultadClase(dificultad)}">${getDificultadLabel(dificultad)}</span>`;
-  }
-
-  /** Una entrada de la ficha: el profesor en una asignatura y una modalidad. */
-  function fichaEntryHtml(entry) {
-    const dec = entry.highlighted ? ' is-focus' : '';
-    let html = `<article class="profesor-ficha-entry${dec}">`;
-    html += '<div class="profesor-ficha-head">';
-    // Una valoración sin asignatura no tiene código ni modalidad que enseñar.
-    if (entry.subjectCode) {
-      html += `<span class="profesor-ficha-code">${escapeCatalogText(entry.subjectCode)}</span>`;
-    }
-    if (entry.nombreAsignatura) {
-      html += `<span class="profesor-ficha-subject">${escapeCatalogText(entry.nombreAsignatura)}</span>`;
-    }
-    if (entry.modalidad) {
-      html += `<span class="profesor-ficha-modalidad">${escapeCatalogText(entry.modalidad)}</span>`;
-    }
-    html += dificultadBadgeHtml(entry.dificultad);
-    if (entry.propio) {
-      html += '<span class="prof-own-badge">tuya</span>';
-    }
-    if (entry.cruzada) {
-      html += `<span class="profesor-ficha-flag" title="Acumula más de una opinión en la hoja">cruzada</span>`;
-    }
-    html += '</div>';
-    const plan = [entry.caracter, entry.mencion ? `Mención ${entry.mencion}` : ''].filter(Boolean).join(' · ');
-    if (plan) html += `<div class="profesor-ficha-plan">${escapeCatalogText(plan)}</div>`;
-    if (entry.razon) html += `<p class="profesor-ficha-razon">${escapeCatalogText(entry.razon)}</p>`;
-    entry.opinions.forEach(text => {
-      html += `<p class="profesor-ficha-opinion">${escapeCatalogText(text)}</p>`;
-    });
-    if (entry.comentarios.length) {
-      html += '<ul class="profesor-ficha-comentarios">';
-      entry.comentarios.forEach(comentario => {
-        const meta = [comentario.fecha, comentario.campo].filter(Boolean).join(' · ');
-        html += '<li>';
-        if (meta) html += `<span class="profesor-ficha-comentario-meta">${escapeCatalogText(meta)}</span>`;
-        html += `<span class="profesor-ficha-comentario-texto">${escapeCatalogText(comentario.texto)}</span>`;
-        html += '</li>';
-      });
-      html += '</ul>';
-    }
-    if (!entry.razon && entry.opinions.length === 0 && entry.comentarios.length === 0) {
-      html += '<p class="profesor-ficha-vacio">Sin opiniones ni comentarios.</p>';
-    }
-    html += '</article>';
-    return html;
-  }
-
-  /**
-   * Abre la ficha de un profesor. `focus` es la entrada pulsada (asignatura y
-   * modalidad) y `opener` el botón, para devolverle el foco al cerrar. Desde el
-   * listado de profesores no hay foco: no se resalta ninguna asignatura.
-   */
-  function openProfesorFicha(name, focus, opener) {
-    const els = profesorModalEls();
-    if (!els.modal || !els.title || !els.body || !name) return;
-    const ficha = getDomain().buildProfesorFicha(profesoresList(), SUBJECTS, name, focus || null);
-    if (!ficha.entries.length) return;
-    els.title.textContent = ficha.name;
-    els.body.innerHTML = `<div class="profesor-ficha">${ficha.entries.map(fichaEntryHtml).join('')}</div>`;
-    fichaOpener = {
-      name,
-      subjectCode: (focus && focus.subjectCode) || '',
-      modalidad: (focus && focus.modalidad) || '',
-      element: opener || null,
-    };
-    els.modal.hidden = false;
-    if (els.close) els.close.focus();
-  }
-
-  function closeProfesorFicha() {
-    const els = profesorModalEls();
-    if (!els.modal || els.modal.hidden) return;
-    els.modal.hidden = true;
-    // El foco vuelve a quien abrió la ficha, siempre que siga en el documento:
-    // los paneles se repintan enteros, así que el botón puede haber muerto.
-    const opener = fichaOpener;
-    fichaOpener = null;
-    if (!opener) return;
-    // El panel se repinta entero ante cualquier cambio del estado, así que el
-    // nodo que abrió la ficha puede estar muerto: si lo está, se busca por sus
-    // datos en la pantalla (mismo nombre y misma entrada) en vez de rendirse.
-    const vivo = opener.element && document.contains(opener.element)
-      ? opener.element
-      : findProfesorButton(opener.name, opener.subjectCode, opener.modalidad);
-    if (vivo && typeof vivo.focus === 'function') vivo.focus();
-  }
-
-  /** Aviso bajo la barra de acciones de la pestaña de profesores. */
-  function setProfesoresStatus(message, isError) {
-    const status = document.getElementById('profesores-status');
-    if (!status) return;
-    status.textContent = message || '';
-    status.classList.toggle('is-error', !!isError);
-  }
-
-  /**
-   * Acciones de una fila del claustro. Solo las valoraciones **propias** se
-   * pueden editar o borrar, y cada una lleva su destino delante (asignatura y
-   * modalidad, o «Sin asignatura») porque un mismo nombre puede tener varias.
-   */
-  function ownRowActionsHtml(row) {
-    if (!row.ownKeys.length) return '—';
-    return row.ownKeys.map(key => {
-      const parts = key.includes('|') ? key.split('|') : [];
-      const destino = parts[0]
-        ? `${parts[0]}${parts[1] === 'Prácticas' ? ' (P)' : ''}`
-        : 'Sin asignatura';
-      return '<span class="prof-row-actions">'
-        + `<span class="prof-own-badge">${escapeCatalogText(destino)}</span>`
-        + `<button type="button" class="btn btn-sm btn-secondary" data-edit-prof="${escapeCatalogText(key)}">Editar</button>`
-        + `<button type="button" class="btn btn-sm btn-danger" data-delete-prof="${escapeCatalogText(key)}">Borrar</button>`
-        + '</span>';
-    }).join(' ');
-  }
-
-  /** Listado del claustro de la pestaña de datos, con su buscador. */
-  function renderProfesores() {
-    syncIgnoreDocentsInputs();
-    const container = document.getElementById('profesores-container');
-    if (!container) return;
-    const search = document.getElementById('profesores-search');
-    const rows = getDomain().listProfesores(profesoresList(), { query: search ? search.value : '' });
-
-    if (rows.length === 0) {
-      container.innerHTML = '<p class="profesores-vacio">Ningún profesor coincide con la búsqueda.</p>';
-      return;
-    }
-
-    let html = '<p class="profesores-hint">Un profesor tiene una valoración <strong>por asignatura y modalidad</strong>. Los nombres del horario salen de las <strong>guías oficiales</strong> de la ETSIIT; si alguno no está en esta lista es que todavía no tiene valoración. Las marcadas como <strong>tuya</strong> las has añadido tú y <strong>mandan sobre el catálogo</strong>: cambian la insignia del horario y el peso del generador.</p>';
-    html += '<div class="manage-table-wrapper"><table class="manage-table profesores-table">';
-    html += '<thead><tr><th>Profesor</th><th>Asignaturas</th><th>Dificultad</th><th>Acciones</th></tr></thead><tbody>';
-    rows.forEach(row => {
-      const asignaturas = row.asignaturas
-        .map(a => (a.modalidad === 'Prácticas' ? `${a.code} (P)` : a.code))
-        .join(', ') || '—';
-      const insignias = row.dificultades.map(dificultadBadgeHtml).join(' ') || '—';
-      html += '<tr>';
-      html += `<td><button type="button" class="prof-name-btn" data-prof-name="${escapeCatalogText(row.name)}">${escapeCatalogText(row.name)}</button></td>`;
-      html += `<td class="profesores-asignaturas">${escapeCatalogText(asignaturas)}</td>`;
-      html += `<td>${insignias}</td>`;
-      html += `<td class="td-actions">${ownRowActionsHtml(row)}</td>`;
-      html += '</tr>';
-    });
-    html += '</tbody></table></div>';
-    container.innerHTML = html;
-  }
-
-  function setupProfesorFicha() {
-    const els = profesorModalEls();
-    if (!els.modal) return;
-    if (els.close) els.close.addEventListener('click', closeProfesorFicha);
-    els.modal.addEventListener('click', (e) => {
-      if (e.target === els.modal) closeProfesorFicha();
-    });
-    els.modal.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeProfesorFicha();
-      }
-    });
-    // Delegado: el panel de grupos y el listado se repintan enteros, así que un
-    // listener por botón se perdería en cada repintado.
-    const groupConfig = document.getElementById('group-config-content');
-    if (groupConfig) {
-      groupConfig.addEventListener('click', (e) => {
-        const btn = e.target.closest('.prof-name-btn');
-        if (!btn) return;
-        openProfesorFicha(
-          btn.dataset.profName,
-          { subjectCode: btn.dataset.profCodigo, modalidad: btn.dataset.profModalidad },
-          btn,
-        );
-      });
-    }
-    const lista = document.getElementById('profesores-container');
-    if (lista) {
-      lista.addEventListener('click', (e) => {
-        const btn = e.target.closest('.prof-name-btn');
-        if (!btn) return;
-        openProfesorFicha(btn.dataset.profName, null, btn);
-      });
-    }
-    const search = document.getElementById('profesores-search');
-    if (search) search.addEventListener('input', renderProfesores);
-  }
-
-  // ─── Profesores propios ─────────────────────────────────────
-  // Alta, edición y borrado de las valoraciones propias, importación y
-  // exportación en JSON y el prompt que se copia para pedírselas a una IA. Las
-  // reglas son del dominio (`profesores-propios.js`) y el guardado va a la
-  // tabla `reviews` del store; aquí solo se leen los campos y se repinta.
-
-  function profesorFormEls() {
-    return {
-      modal: document.getElementById('profesor-form-modal'),
-      title: document.getElementById('profesor-form-title'),
-      name: document.getElementById('profesor-form-name'),
-      subject: document.getElementById('profesor-form-subject'),
-      modalidad: document.getElementById('profesor-form-modalidad'),
-      dificultad: document.getElementById('profesor-form-dificultad'),
-      opinions: document.getElementById('profesor-form-opinions'),
-      error: document.getElementById('profesor-form-error'),
-      del: document.getElementById('profesor-form-delete'),
-      save: document.getElementById('profesor-form-save'),
-      cancel: document.getElementById('profesor-form-cancel'),
-      close: document.getElementById('profesor-form-close'),
-    };
-  }
-
-  function showProfesorFormError(message) {
-    const el = document.getElementById('profesor-form-error');
-    if (!el) return;
-    el.textContent = message;
-    el.hidden = false;
-  }
-
-  function hideProfesorFormError() {
-    const el = document.getElementById('profesor-form-error');
-    if (!el) return;
-    el.textContent = '';
-    el.hidden = true;
-  }
-
-  /**
-   * Rellena los dos desplegables del formulario con el catálogo **activo**: la
-   * escala de dificultad del dominio y las asignaturas de esta sesión (que
-   * cambian al importar otro catálogo).
-   */
-  function fillProfesorFormOptions() {
-    const els = profesorFormEls();
-    if (els.dificultad) {
-      els.dificultad.innerHTML = '<option value="">Sin valoración</option>'
-        + getDomain().DIFICULTAD_OPCIONES
-          .map(o => `<option value="${o.key}">${escapeCatalogText(o.label)}</option>`)
-          .join('');
-    }
-    if (els.subject) {
-      els.subject.innerHTML = '<option value="">Sin asignatura</option>'
-        + SUBJECTS
-          .map(s => `<option value="${escapeCatalogText(s.codigo)}">${escapeCatalogText(s.codigo)} — ${escapeCatalogText(s.nombre)}</option>`)
-          .join('');
-    }
-  }
-
-  /** Abre el formulario. Sin clave es un alta; con clave, la edición de esa. */
-  function openProfesorForm(docentKey) {
-    const els = profesorFormEls();
-    if (!els.modal) return;
-    fillProfesorFormOptions();
-    const review = docentKey ? ownReviews.find(r => r.docentKey === docentKey) : null;
-    editingReviewKey = review ? review.docentKey : '';
-    els.title.textContent = review ? 'Editar profesor' : 'Añadir profesor';
-    els.name.value = review ? review.name : '';
-    els.subject.value = review ? review.subjectCode || '' : '';
-    els.modalidad.value = review && review.modalidad ? review.modalidad : 'Teoría';
-    els.dificultad.value = review && review.dificultad ? review.dificultad : '';
-    els.opinions.value = review && Array.isArray(review.opinions) ? review.opinions.join('\n') : '';
-    // La modalidad solo tiene sentido con asignatura: sin ella no hay terna que
-    // sustituir y la valoración queda suelta.
-    els.modalidad.disabled = !els.subject.value;
-    if (els.del) els.del.hidden = !review;
-    hideProfesorFormError();
-    els.modal.hidden = false;
-    if (els.name) els.name.focus();
-  }
-
-  function closeProfesorForm() {
-    const els = profesorFormEls();
-    if (!els.modal || els.modal.hidden) return;
-    els.modal.hidden = true;
-    editingReviewKey = '';
-  }
-
-  /** Guarda lo que hay en el formulario (alta o edición). */
-  async function saveProfesorForm() {
-    const els = profesorFormEls();
-    if (!els.modal) return;
-    const subjectCode = els.subject ? els.subject.value : '';
-    const review = getDomain().normalizeOwnReview({
-      name: els.name ? els.name.value : '',
-      subjectCode,
-      modalidad: subjectCode ? (els.modalidad ? els.modalidad.value : '') : '',
-      dificultad: els.dificultad ? els.dificultad.value : '',
-      opinions: (els.opinions ? els.opinions.value : '').split('\n'),
-      updatedAt: new Date().toISOString(),
-    });
-    if (!review) {
-      showProfesorFormError('Pon un nombre y, si eliges dificultad, una de la lista.');
-      return;
-    }
-    const store = __getStore();
-    if (!store || typeof store.saveReviews !== 'function') {
-      showProfesorFormError('No se puede guardar: el almacén no está disponible (modo degradado).');
-      return;
-    }
-    const previousKey = editingReviewKey;
-    const result = await store.saveReviews([review]);
-    if (!result || !result.ok) {
-      showProfesorFormError('No se pudo guardar la valoración.');
-      return;
-    }
-    // Al editar, cambiar de asignatura, modalidad o nombre cambia la clave: la
-    // fila vieja se queda huérfana y hay que borrarla explícitamente.
-    if (previousKey && previousKey !== review.docentKey && typeof store.deleteReview === 'function') {
-      await store.deleteReview(previousKey);
-    }
-    await loadOwnReviews();
-    closeProfesorForm();
-    renderProfesores();
-    updateAll();
-    setProfesoresStatus(`Guardado: ${review.name}.`);
-  }
-
-  /** Borra una valoración propia, con confirmación. */
-  async function deleteOwnReview(docentKey) {
-    const review = ownReviews.find(r => r.docentKey === docentKey);
-    if (!review) return;
-    if (!confirm(`¿Borrar tu valoración de ${review.name}?`)) return;
-    const store = __getStore();
-    if (!store || typeof store.deleteReview !== 'function') {
-      setProfesoresStatus('No se puede borrar: el almacén no está disponible.', true);
-      return;
-    }
-    const result = await store.deleteReview(docentKey);
-    if (!result || !result.ok) {
-      setProfesoresStatus('No se pudo borrar la valoración.', true);
-      return;
-    }
-    await loadOwnReviews();
-    closeProfesorForm();
-    renderProfesores();
-    updateAll();
-    setProfesoresStatus(`Borrada la valoración de ${review.name}.`);
-  }
-
-  /** Importa un JSON de valoraciones. Es un upsert: no borra lo que ya haya. */
-  async function importOwnProfesores(file) {
-    if (!file) return;
-    let text = '';
-    try { text = await file.text(); } catch (e) { text = ''; }
-    const { reviews, errors } = getDomain().parseOwnReviewsJSON(text);
-    if (reviews.length === 0) {
-      setProfesoresStatus(errors[0] || 'El fichero no traía ninguna valoración válida.', true);
-      return;
-    }
-    const store = __getStore();
-    if (!store || typeof store.saveReviews !== 'function') {
-      setProfesoresStatus('No se puede importar: el almacén no está disponible.', true);
-      return;
-    }
-    const result = await store.saveReviews(reviews);
-    if (!result || !result.ok) {
-      setProfesoresStatus('No se pudo importar el fichero.', true);
-      return;
-    }
-    await loadOwnReviews();
-    renderProfesores();
-    updateAll();
-    const descartadas = errors.length ? ` (${errors.length} entrada(s) descartada(s))` : '';
-    setProfesoresStatus(`Importadas ${result.count} valoraciones${descartadas}.`, errors.length > 0);
-  }
-
-  /** Descarga tus valoraciones en el mismo JSON que acepta la importación. */
-  function exportOwnProfesores() {
-    if (ownReviews.length === 0) {
-      setProfesoresStatus('Todavía no has añadido ninguna valoración.', true);
-      return;
-    }
-    downloadJSON(JSON.parse(getDomain().ownReviewsToJSON(ownReviews)), 'profesores-propios.json');
-    setProfesoresStatus(`Exportadas ${ownReviews.length} valoraciones.`);
-  }
-
-  function openProfesorPrompt() {
-    const modal = document.getElementById('profesor-prompt-modal');
-    const text = document.getElementById('profesor-prompt-text');
-    if (!modal || !text) return;
-    text.value = getDomain().buildProfesorPrompt(SUBJECTS);
-    modal.hidden = false;
-    text.focus();
-  }
-
-  function closeProfesorPrompt() {
-    const modal = document.getElementById('profesor-prompt-modal');
-    if (!modal || modal.hidden) return;
-    modal.hidden = true;
-  }
-
-  async function copyProfesorPrompt() {
-    const text = document.getElementById('profesor-prompt-text');
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text.value);
-      setProfesoresStatus('Prompt copiado al portapapeles.');
-    } catch (e) {
-      // Sin permiso de portapapeles (o sin API) el texto ya está a la vista y
-      // seleccionado: se copia a mano en vez de fallar en silencio.
-      text.select();
-      setProfesoresStatus('No se pudo copiar solo: el texto queda seleccionado, cópialo a mano.', true);
-    }
-  }
-
-  function setupProfesoresSection() {
-    const add = document.getElementById('btn-add-profesor');
-    if (add) add.addEventListener('click', () => openProfesorForm(''));
-
-    const importBtn = document.getElementById('btn-import-profesores');
-    const importInput = document.getElementById('import-profesores-input');
-    if (importBtn && importInput) {
-      importBtn.addEventListener('click', () => importInput.click());
-      importInput.addEventListener('change', (e) => {
-        const file = e.target.files && e.target.files[0];
-        e.target.value = '';
-        importOwnProfesores(file);
-      });
-    }
-
-    const exportBtn = document.getElementById('btn-export-profesores');
-    if (exportBtn) exportBtn.addEventListener('click', exportOwnProfesores);
-    const promptBtn = document.getElementById('btn-copy-profesor-prompt');
-    if (promptBtn) promptBtn.addEventListener('click', openProfesorPrompt);
-    const promptCopy = document.getElementById('profesor-prompt-copy');
-    if (promptCopy) promptCopy.addEventListener('click', copyProfesorPrompt);
-
-    // El interruptor de esta sección es el mismo que el del generador.
-    const ignore = document.getElementById('profesores-ignore-docents');
-    if (ignore) ignore.addEventListener('change', () => setIgnoreDocents(ignore.checked));
-
-    const form = profesorFormEls();
-    if (form.modal) {
-      if (form.close) form.close.addEventListener('click', closeProfesorForm);
-      if (form.cancel) form.cancel.addEventListener('click', closeProfesorForm);
-      if (form.save) form.save.addEventListener('click', saveProfesorForm);
-      if (form.del) form.del.addEventListener('click', () => deleteOwnReview(editingReviewKey));
-      if (form.subject) {
-        form.subject.addEventListener('change', () => {
-          if (form.modalidad) form.modalidad.disabled = !form.subject.value;
-        });
-      }
-      form.modal.addEventListener('click', (e) => {
-        if (e.target === form.modal) closeProfesorForm();
-      });
-      form.modal.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          closeProfesorForm();
-        }
-      });
-    }
-
-    const prompt = document.getElementById('profesor-prompt-modal');
-    if (prompt) {
-      const closeBtn = document.getElementById('profesor-prompt-close');
-      if (closeBtn) closeBtn.addEventListener('click', closeProfesorPrompt);
-      prompt.addEventListener('click', (e) => {
-        if (e.target === prompt) closeProfesorPrompt();
-      });
-      prompt.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          closeProfesorPrompt();
-        }
-      });
-    }
-
-    // Delegado: la tabla se repinta entera en cada cambio de estado.
-    const lista = document.getElementById('profesores-container');
-    if (lista) {
-      lista.addEventListener('click', (e) => {
-        const edit = e.target.closest('[data-edit-prof]');
-        if (edit) {
-          openProfesorForm(edit.dataset.editProf);
-          return;
-        }
-        const remove = e.target.closest('[data-delete-prof]');
-        if (remove) deleteOwnReview(remove.dataset.deleteProf);
-      });
-    }
-  }
 
   // ─── Ficha de asignatura ───────────────────────────────────
   // Dificultad y descripción del **plan** (por modalidad), que no son del
@@ -1954,8 +1453,6 @@
   }
 
   function setupActions() {
-    setupProfesorFicha();
-    setupProfesoresSection();
     setupAsignaturaFicha();
     document.getElementById('btn-export').addEventListener('click', exportCalendar);
     document.getElementById('btn-share').addEventListener('click', shareLink);
@@ -3001,6 +2498,60 @@
   function setupManageSubjectsView() {
     const view = getManageSubjectsView();
     if (view) view.setup();
+  }
+
+  // ─── Features ESM: la pestaña de profesores ────────────────
+  // Mismo patrón: import dinámico con instancia y promesa cacheadas. La vista
+  // posee el estado de la pantalla (la ficha abierta y la valoración en edición)
+  // y lee el índice de docentes y la caché de valoraciones por getter, que los
+  // rehace el monolito al cambiar de catálogo.
+  let ugrProfesoresView = null;
+  let ugrProfesoresInitPromise = null;
+
+  function getProfesoresView() {
+    return ugrProfesoresView;
+  }
+
+  function ensureProfesoresView() {
+    if (ugrProfesoresView) return Promise.resolve(ugrProfesoresView);
+    if (!ugrProfesoresInitPromise) {
+      ugrProfesoresInitPromise = import('./src/app/features/profesores.js')
+        .then(({ createProfesoresView }) => {
+          ugrProfesoresView = createProfesoresView({
+            document,
+            window,
+            getSubjects: () => SUBJECTS,
+            getProfesores: profesoresList,
+            getOwnReviews: () => ownReviews,
+            reloadOwnReviews: loadOwnReviews,
+            saveReviews: async (reviews) => {
+              const store = __getStore();
+              if (!store || typeof store.saveReviews !== 'function') return null;
+              return store.saveReviews(reviews);
+            },
+            deleteReview: async (clave) => {
+              const store = __getStore();
+              if (!store || typeof store.deleteReview !== 'function') return null;
+              return store.deleteReview(clave);
+            },
+            onToggleIgnoreDocents: setIgnoreDocents,
+            syncIgnoreDocentsInputs,
+            dificultadBadgeHtml,
+            escape: escapeCatalogText,
+            download: downloadJSON,
+            confirmFn: (mensaje) => confirm(mensaje),
+            onChanged: updateAll,
+          });
+          ugrProfesoresView.setup();
+          return ugrProfesoresView;
+        })
+        .catch((err) => {
+          console.error('[ugr] profesores view no pudo iniciarse', err);
+          ugrProfesoresInitPromise = null;
+          return null;
+        });
+    }
+    return ugrProfesoresInitPromise;
   }
 
   // ─── Features ESM: el panel del generador ──────────────────
