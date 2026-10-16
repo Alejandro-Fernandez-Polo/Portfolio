@@ -2,6 +2,7 @@ import { describe, it, expect, beforeAll, afterEach, vi } from "vitest";
 import { createHash } from "node:crypto";
 import { registerCatalog } from "../../public/ugr/src/modules/catalog.js";
 import { MANIFEST_URL } from "../../public/ugr/src/modules/catalog-remote.js";
+import { TIMEOUTS } from "../../public/ugr/src/modules/http.js";
 import { startAll } from "../../public/ugr/src/kernel/registry.js";
 import { bus } from "../../public/ugr/src/kernel/bus.js";
 import { fromLegacySubjects } from "../../public/ugr/src/solver/catalog.js";
@@ -355,6 +356,50 @@ describe("módulo catalog actualización remota", () => {
 
     const status = await api.getCatalogStatus();
     expect(status).toEqual({ activeCatalogKey: LEGACY_ID, lastCheckAt: "", lastHash: "", upToDate: false });
+  });
+
+  it("un manifiesto que no contesta nunca → network, y no deja la comprobación colgada", async () => {
+    await boot(true);
+    vi.useFakeTimers();
+    try {
+      const fetchMock = stubFetch(() => new Promise(() => {}));
+
+      const pendiente = api.checkForUpdates();
+      await vi.advanceTimersByTimeAsync(0);
+      await vi.advanceTimersByTimeAsync(TIMEOUTS.manifest);
+
+      expect(await pendiente).toEqual({ ok: false, reason: "network" });
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(api.getActiveCatalogKey()).toBe(LEGACY_ID);
+      expect(api.getSubjects()).toHaveLength(EC_SUBJECTS.length);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("un dataset que no contesta nunca → network y el catálogo activo no cambia", async () => {
+    await boot(true);
+    vi.useFakeTimers();
+    try {
+      const fetchMock = stubFetch(
+        onlyManifest({
+          manifest: () => jsonResponse(manifestOf(FIXTURE)),
+          dataset: () => new Promise(() => {}),
+        }),
+      );
+
+      const pendiente = api.checkForUpdates();
+      await vi.advanceTimersByTimeAsync(0);
+      await vi.advanceTimersByTimeAsync(TIMEOUTS.dataset);
+
+      expect(await pendiente).toEqual({ ok: false, reason: "network" });
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls[1][0]).toBe(DATASET_URL);
+      expect(api.getActiveCatalogKey()).toBe(LEGACY_ID);
+      expect(await api.getCatalogById(FIXTURE_ID)).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("304 en el manifest → sin fetch del dataset y sin cambios", async () => {

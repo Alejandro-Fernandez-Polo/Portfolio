@@ -12,11 +12,16 @@
  * El catálogo importado se guarda con un identificador **distinto** al de la
  * muestra (`…+volcado`): si compartieran identificador, importar el volcado
  * pisaría el catálogo público y no habría forma de volver a él.
+ *
+ * La descarga tiene **fecha límite** y el plazo agotado se trata como un fallo de
+ * red: una dependencia que no contesta no puede dejar el panel esperando para
+ * siempre, y el mensaje que ve el usuario no cambia por ello.
  */
 
 import { decrypt } from "../backup/crypto.js";
 import { validateCatalog } from "../solver/catalog.js";
 import { validateCatalogJSON } from "../ingest/schema.js";
+import { TIMEOUTS, withDeadline } from "../modules/http.js";
 
 export const PACKAGE_URL = "/ugr/datasets/ugr/gi/package.enc.json";
 
@@ -96,22 +101,25 @@ export async function unlockPackage(password, options = {}) {
   const pedir = options.fetchImpl || (typeof fetch === "function" ? fetch : null);
   if (!pedir) return { ok: false, reason: "network" };
 
-  let respuesta;
+  const url = options.url || PACKAGE_URL;
+  let intento;
   try {
-    respuesta = await pedir(options.url || PACKAGE_URL, { cache: "no-store" });
+    intento = await withDeadline(url, TIMEOUTS.package, async (signal) => {
+      const respuesta = await pedir(url, { cache: "no-store", signal });
+      if (!respuesta) return { reason: "network" };
+      if (respuesta.status === 404) return { reason: "missing" };
+      if (respuesta.ok === false) return { reason: "network" };
+      try {
+        return { criptograma: await respuesta.json() };
+      } catch {
+        return { reason: "parse" };
+      }
+    });
   } catch {
     return { ok: false, reason: "network" };
   }
-  if (!respuesta) return { ok: false, reason: "network" };
-  if (respuesta.status === 404) return { ok: false, reason: "missing" };
-  if (respuesta.ok === false) return { ok: false, reason: "network" };
-
-  let criptograma;
-  try {
-    criptograma = await respuesta.json();
-  } catch {
-    return { ok: false, reason: "parse" };
-  }
+  if (intento.reason) return { ok: false, reason: intento.reason };
+  const criptograma = intento.criptograma;
 
   let plano;
   try {

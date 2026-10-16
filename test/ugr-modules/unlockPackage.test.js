@@ -1,6 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 
 import { encrypt } from "../../public/ugr/src/backup/crypto.js";
+import { TIMEOUTS } from "../../public/ugr/src/modules/http.js";
 import {
   PACKAGE_URL,
   esCatalogoImportado,
@@ -73,7 +74,9 @@ describe("unlockPackage", () => {
       },
     });
     expect(pedido.url).toBe(PACKAGE_URL);
-    expect(pedido.options).toEqual({ cache: "no-store" });
+    expect(pedido.options.cache).toBe("no-store");
+    // La señal es lo que permite abortar la descarga al agotarse el plazo.
+    expect(pedido.options.signal).toBeInstanceOf(AbortSignal);
   });
 
   it("con otra contraseña no abre", async () => {
@@ -107,6 +110,19 @@ describe("unlockPackage", () => {
       },
     });
     expect(res).toEqual({ ok: false, reason: "network" });
+  });
+
+  it("un paquete que no contesta nunca → network, sin dejar el panel esperando", async () => {
+    vi.useFakeTimers();
+    try {
+      const pendiente = unlockPackage("1234", { fetchImpl: () => new Promise(() => {}) });
+      await vi.advanceTimersByTimeAsync(0);
+      await vi.advanceTimersByTimeAsync(TIMEOUTS.package);
+
+      expect(await pendiente).toEqual({ ok: false, reason: "network" });
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("un paquete que no trae catálogo se rechaza", async () => {

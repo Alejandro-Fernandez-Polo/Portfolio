@@ -1,6 +1,7 @@
 import { get, put } from "../store/db.js";
 import { validateCatalogJSON } from "../ingest/schema.js";
 import { validateCatalog } from "../solver/catalog.js";
+import { TIMEOUTS, withDeadline } from "./http.js";
 
 export const MANIFEST_URL = "/ugr/datasets/manifest.json";
 const DATASET_URL_PREFIX = "/ugr/datasets/";
@@ -52,6 +53,33 @@ async function contentHash(subjects, docents, profesores, menciones, extraSubjec
   }
 }
 
+/**
+ * Una petición con su fecha límite. El plazo cubre la respuesta **y** la lectura
+ * del cuerpo (un dataset de 407 KB a medio llegar engancha igual), y un plazo
+ * agotado se trata como un fallo de red: ni el motivo ni lo que ve el usuario
+ * cambian por ponerle tope a la espera.
+ *
+ * @param {string} url qué se pide.
+ * @param {number} timeoutMs plazo en milisegundos.
+ * @param {Object} headers cabeceras condicionales, si toca.
+ * @returns {Promise<{res?: Object, data?: any, parseFailed?: boolean, network?: true}>}
+ */
+async function pedir(url, timeoutMs, headers) {
+  try {
+    return await withDeadline(url, timeoutMs, async (signal) => {
+      const res = await fetch(url, { cache: "no-store", headers, signal });
+      if (!res || res.status === 304 || res.ok === false) return { res };
+      try {
+        return { res, data: await res.json() };
+      } catch {
+        return { res, parseFailed: true };
+      }
+    });
+  } catch {
+    return { network: true };
+  }
+}
+
 export function createCatalogRemote(ctx) {
   const memory = {
     etag: "",
@@ -98,13 +126,13 @@ export function createCatalogRemote(ctx) {
       return { ok: true, reason: "private", id: from, from };
     }
 
-    let res;
-    try {
-      const headers = state.etag ? { "If-None-Match": state.etag } : {};
-      res = await fetch(MANIFEST_URL, { cache: "no-store", headers });
-    } catch {
-      return { ok: false, reason: "network" };
-    }
+    const consulta = await pedir(
+      MANIFEST_URL,
+      TIMEOUTS.manifest,
+      state.etag ? { "If-None-Match": state.etag } : {},
+    );
+    if (consulta.network) return { ok: false, reason: "network" };
+    const res = consulta.res;
     if (!res) return { ok: false, reason: "network" };
     if (res.status === 304) {
       await writeState({ lastCheckAt: now });
@@ -113,13 +141,9 @@ export function createCatalogRemote(ctx) {
     if (res.ok === false) {
       return { ok: false, reason: res.status ? "http" : "network", status: res.status || 0 };
     }
+    if (consulta.parseFailed) return { ok: false, reason: "parse" };
 
-    let manifest;
-    try {
-      manifest = await res.json();
-    } catch {
-      return { ok: false, reason: "parse" };
-    }
+    const manifest = consulta.data;
 
     const entry = manifest && Array.isArray(manifest.catalogs) ? manifest.catalogs[0] : null;
     if (!entry || typeof entry !== "object") return { ok: false, reason: "parse" };
@@ -139,26 +163,21 @@ export function createCatalogRemote(ctx) {
 
     if (!ctx.isStoreReady()) return { ok: false, reason: "store" };
 
-    let dres;
-    try {
-      const headers =
-        state.datasetEtag && state.datasetUrl === url ? { "If-None-Match": state.datasetEtag } : {};
-      dres = await fetch(url, { cache: "no-store", headers });
-    } catch {
-      return { ok: false, reason: "network" };
-    }
+    const descarga = await pedir(
+      url,
+      TIMEOUTS.dataset,
+      state.datasetEtag && state.datasetUrl === url ? { "If-None-Match": state.datasetEtag } : {},
+    );
+    if (descarga.network) return { ok: false, reason: "network" };
+    const dres = descarga.res;
     if (!dres) return { ok: false, reason: "network" };
     if (dres.status === 304) return { ok: false, reason: "not_modified", status: 304 };
     if (dres.ok === false) {
       return { ok: false, reason: dres.status ? "http" : "network", status: dres.status || 0 };
     }
+    if (descarga.parseFailed) return { ok: false, reason: "parse" };
 
-    let dataset;
-    try {
-      dataset = await dres.json();
-    } catch {
-      return { ok: false, reason: "parse" };
-    }
+    const dataset = descarga.data;
 
     const schemaCheck = validateCatalogJSON(dataset);
     if (!schemaCheck.ok) return { ok: false, reason: "invalid", errors: schemaCheck.errors };
