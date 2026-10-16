@@ -2,11 +2,13 @@
  * Vista de las configuraciones guardadas de `/ugr`: la tabla, su orden, su
  * paginación y sus acciones.
  *
- * Es la **extracción** del bloque que vivía en el monolito: aquí está el DOM y el
- * estado de la vista (orden, página, «solo favoritos»); el **estado del dominio
- * y las mutaciones siguen en el llamante**, que las expone como *intents*
- * (`onLoad`, `onDelete`…). Así este módulo no sabe nada de persistencia ni de
- * toasts: solo pinta y avisa.
+ * Es la **extracción** del bloque que vivía en el monolito: aquí están la lista
+ * de configuraciones guardadas, su persistencia residual, el DOM y el estado de
+ * la vista (orden, página, «solo favoritos»). El llamante le inyecta lo que es
+ * suyo —el estado del que se construye una configuración, el catálogo, los
+ * avisos y las confirmaciones— y las rutas que siguen en el monolito (cargar,
+ * exportar, el solver) leen y escriben la lista por `getAll`/`append`/
+ * `replaceAll`.
  *
  * El orden y los filtros (bloqueos, favoritos, techos de días) son reglas puras
  * y vienen del dominio; aquí solo se inyectan el catálogo y los lookups legacy.
@@ -20,7 +22,19 @@ import {
   calculateConfigFreeDays,
   calculateConfigMetrics,
 } from "../domain/metrics.js";
-import { isConfigFavorited, paginateConfigs, selectVisibleConfigs } from "../domain/configs.js";
+import {
+  applyConfigToState,
+  buildBatchConfigExport,
+  buildConfigFromState,
+  buildSingleConfigExport,
+  configFilename,
+  findDuplicateConfig,
+  isConfigFavorited,
+  paginateConfigs,
+  removeConfigById,
+  selectVisibleConfigs,
+} from "../domain/configs.js";
+import { MAX_DIFFICULTY_SCORE } from "../../solver/catalog.js";
 
 /** Configuraciones por página (legacy `CONFIG_PAGE_SIZE`). */
 const PAGE_SIZE = 50;
@@ -28,10 +42,22 @@ const PAGE_SIZE = 50;
 /**
  * @param {Object} deps dependencias del monolito.
  * @param {Document} deps.document raíz DOM.
- * @param {() => Array} deps.getConfigs lee las configuraciones a mostrar
- *   (guardadas + resultados del solver).
+ * @param {() => Object} deps.getState lee el estado corriente del monolito
+ *   (para construir la configuración al guardar).
+ * @param {Object} deps.persistence persistencia residual de configuraciones
+ *   (`{loadSavedConfigs, saveAllConfigs}` del adaptador).
+ * @param {(mensaje: string, tipo: string) => void} deps.notify aviso al usuario.
+ * @param {(mensaje: string) => boolean} deps.confirmFn confirmación (borrado).
+ * @param {() => void} deps.onConfigLoaded lo que el monolito hace al cargar una
+ *   configuración (empujar el perfil al store, persistir y repintar).
+ * @param {(data: Object, filename: string) => void} deps.download descarga JSON.
+ * @param {(texto: string) => string} deps.escape escapador de HTML (el nombre
+ *   de una configuración lo escribe el usuario).
  * @param {() => Array} deps.getSubjects lee el catálogo corriente.
- * @param {string[]} deps.days días laborables, para «Días libres».
+ * @param {() => Array} deps.getExtraConfigs configuraciones que **no** viven
+ *   aquí y que la tabla enseña igual (los resultados del solver, con su botón
+ *   «Guardar»); las mutaciones de esta vista solo tocan las guardadas.
+ * @param {string[]} deps.weekdays días laborables, para «Días libres».
  * @param {() => Array} deps.getBlocks lee los bloqueos del store.
  * @param {() => Object} deps.getCeilings lee los techos de días de mañana/tarde
  *   del panel de bloqueos (`{maxManana, maxTarde}`).
@@ -40,18 +66,25 @@ const PAGE_SIZE = 50;
  * @param {(d: ?) => ?} deps.difficultyScore puntuación de una dificultad.
  * @param {Object} deps.dayShort iniciales por día (legacy `DAY_SHORT`).
  * @param {(id: number) => void} deps.onLoad cargar una configuración.
- * @param {(id: number) => void} deps.onDelete eliminar una configuración.
  * @param {(id: number) => void} deps.onSaveSolver guardar un resultado del solver.
  * @param {(id: number) => void} deps.onExport exportar una configuración.
  * @param {(id: number) => void} deps.onCompare añadir/quitar de la comparación.
- * @param {(id: number) => void} deps.onFavorite marcar/desmarcar favorita.
- * @returns {{render: () => void, resetPage: () => void}}
+ * @returns {Object} la vista y sus operaciones: `render`, `resetPage`, `getAll`,
+ *   `loadFromStorage`, `replaceAll`, `append`, `saveCurrent`, `remove`,
+ *   `toggleFavorite`, `load`, `exportOne` y `exportAll`.
  */
 export function createSavedConfigsView({
   document,
-  getConfigs,
+  getState,
+  persistence,
+  notify,
+  confirmFn,
+  onConfigLoaded,
+  download,
+  escape,
   getSubjects,
-  days,
+  getExtraConfigs,
+  weekdays,
   getBlocks,
   getCeilings,
   getCompareIds,
@@ -59,12 +92,11 @@ export function createSavedConfigsView({
   difficultyScore,
   dayShort,
   onLoad,
-  onDelete,
   onSaveSolver,
   onExport,
   onCompare,
-  onFavorite,
 }) {
+  let configs = [];
   let page = 1;
   let sortField = "name";
   let sortDir = "asc";
@@ -73,6 +105,146 @@ export function createSavedConfigsView({
   /** La página vuelve a la primera cuando cambia la lista (alta o borrado). */
   function resetPage() {
     page = 1;
+  }
+
+  function persist() {
+    if (persistence && typeof persistence.saveAllConfigs === "function") {
+      persistence.saveAllConfigs(configs);
+    }
+  }
+
+  /** Lee la lista de la persistencia (lo hace el arranque del monolito). */
+  function loadFromStorage() {
+    try {
+      configs = persistence && typeof persistence.loadSavedConfigs === "function"
+        ? persistence.loadSavedConfigs()
+        : [];
+    } catch {
+      configs = [];
+    }
+    return configs;
+  }
+
+  function getAll() {
+    return configs;
+  }
+
+  /**
+   * Lo que enseña la tabla: las guardadas **más** las que aporta el llamante
+   * (resultados del solver). Es la misma unión de siempre; las mutaciones de
+   * esta vista solo tocan `configs`, nunca las de fuera.
+   */
+  function displayedConfigs() {
+    const extra = typeof getExtraConfigs === "function" ? getExtraConfigs() : [];
+    return configs.concat(Array.isArray(extra) ? extra : []);
+  }
+
+  /** Sustituye la lista entera (importación masiva, reinicio, borrado total). */
+  function replaceAll(list) {
+    configs = Array.isArray(list) ? list : [];
+    persist();
+    return configs;
+  }
+
+  /** Añade configuraciones al final (resultado del solver, importación). */
+  function append(list) {
+    const incoming = Array.isArray(list) ? list : [list];
+    incoming.forEach((config) => config && configs.push(config));
+    persist();
+    return configs;
+  }
+
+  /**
+   * Guarda lo que hay en el formulario. Exige nombre y al menos una materia
+   * seleccionada, avisa si ya existe una configuración con los mismos grupos y
+   * emite `ugr:configSaved` **después** de persistir (la telemetría cuenta
+   * configuraciones guardadas, no intentos).
+   */
+  function saveCurrent() {
+    const nameInput = document.getElementById("config-name");
+    const name = nameInput ? nameInput.value.trim() : "";
+    if (!name) {
+      notify("Introduce un nombre para la configuración", "error");
+      return;
+    }
+    const state = getState();
+    const selectedCodes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
+    if (selectedCodes.length === 0) {
+      notify("Selecciona al menos una asignatura", "error");
+      return;
+    }
+
+    const config = buildConfigFromState(state, Date.now(), name);
+    const duplicate = findDuplicateConfig(configs, state.groupChoices, state.selectedSubjects);
+    configs.push(config);
+    if (duplicate) {
+      notify(`Aviso: "${duplicate.name}" tiene los mismos grupos`, "info");
+    }
+    persist();
+    document.dispatchEvent(new Event("ugr:configSaved"));
+    if (nameInput) nameInput.value = "";
+    resetPage();
+    render();
+    notify(`"${name}" guardada`, "success");
+  }
+
+  /** Borra una configuración, con confirmación. */
+  function remove(id) {
+    const config = configs.find(c => c.id === id);
+    if (!config) return;
+    if (!confirmFn(`¿Eliminar "${config.name}"?`)) return;
+    configs = removeConfigById(configs, id);
+    persist();
+    resetPage();
+    render();
+    notify(`"${config.name}" eliminada`, "info");
+  }
+
+  /** Marca/desmarca una configuración como favorita. */
+  function toggleFavorite(id) {
+    const config = configs.find(c => c.id === id);
+    if (!config) return;
+    config.favorite = !config.favorite;
+    persist();
+    render();
+  }
+
+  /**
+   * Carga una configuración en el estado: la aplica, sincroniza los campos del
+   * perfil que viven en la cabecera y deja al monolito persistir y repintar el
+   * resto de vistas (el store y las otras secciones son suyos).
+   */
+  function load(id) {
+    const config = displayedConfigs().find(c => c.id === id);
+    if (!config) return;
+    applyConfigToState(getState(), config);
+    const apellido = document.getElementById("apellido");
+    const turno = document.getElementById("turno-preferente");
+    const state = getState();
+    if (apellido) apellido.value = state.apellido;
+    if (turno) turno.value = state.turnoPreferente;
+    onConfigLoaded();
+    notify(`"${config.name}" cargada`, "success");
+  }
+
+  /** Exporta una configuración (guardada o resultado del solver). */
+  function exportOne(id) {
+    const config = displayedConfigs().find(c => c.id === id);
+    if (!config) return;
+    const data = buildSingleConfigExport(config, new Date().toISOString());
+    download(data, configFilename(config.name));
+    notify(`"${config.name}" exportada`, "success");
+  }
+
+  /** Exporta todas las guardadas en un envoltorio batch. */
+  function exportAll() {
+    if (configs.length === 0) {
+      notify("No hay configuraciones propias que exportar", "info");
+      return;
+    }
+    const data = buildBatchConfigExport(configs, new Date().toISOString());
+    download(data, "ugr-horario-configs.json");
+    notify(`${configs.length} configuración(es) exportada(s)`, "success");
   }
 
   function toolbarHtml() {
@@ -118,13 +290,13 @@ export function createSavedConfigsView({
     const dayCounts = calculateConfigDays(config.selectedSubjects, config.groupChoices, { subjects });
     const freeDays = calculateConfigFreeDays(config.selectedSubjects, config.groupChoices, {
       subjects,
-      days,
+      weekdays,
     });
     const favorited = isConfigFavorited(config);
     const comparing = getCompareIds().includes(config.id);
     let html = "<tr>";
     html += `<td class="col-fav"><button class="btn-fav ${favorited ? "active" : ""}" data-action="favorite" data-id="${config.id}">${favorited ? "\u2605" : "\u2606"}</button></td>`;
-    html += `<td class="col-name">${config.name}</td>`;
+    html += `<td class="col-name">${escape(config.name)}</td>`;
     html += `<td class="col-count">${count}</td>`;
     html += `<td class="col-turno">${config.turnoPreferente}</td>`;
     html += `<td class="col-manana">${dayCounts.manana}</td>`;
@@ -139,7 +311,7 @@ export function createSavedConfigsView({
     // Sin nada que puntuar (`profCount === 0`) se pinta un hueco, no «0/0»: es
     // el caso normal cuando no hay dificultades, cuando todas son «Desconocidas»
     // y cuando el modo profesores está activo.
-    html += `<td class="col-prof">${metrics.profCount ? `${metrics.profScore}/${metrics.profCount * 6}` : "\u2014"}</td>`;
+    html += `<td class="col-prof">${metrics.profCount ? `${metrics.profScore}/${metrics.profCount * MAX_DIFFICULTY_SCORE}` : "\u2014"}</td>`;
     html += `<td class="col-group ${metrics.sameGroupPerYear ? "group-ok" : "group-warn"}">${metrics.sameGroupPerYear ? "\u2713 Uniforme" : "\u2717 Mixtos"}</td>`;
     html += '<td class="col-actions">';
     html += `<button class="btn btn-sm btn-secondary" data-action="load" data-id="${config.id}">Cargar</button>`;
@@ -185,11 +357,11 @@ export function createSavedConfigsView({
       btn.addEventListener("click", () => {
         const id = parseInt(btn.dataset.id);
         if (btn.dataset.action === "load") onLoad(id);
-        else if (btn.dataset.action === "delete") onDelete(id);
+        else if (btn.dataset.action === "delete") remove(id);
         else if (btn.dataset.action === "save-solver") onSaveSolver(id);
         else if (btn.dataset.action === "export-config") onExport(id);
         else if (btn.dataset.action === "compare") onCompare(id);
-        else if (btn.dataset.action === "favorite") onFavorite(id);
+        else if (btn.dataset.action === "favorite") toggleFavorite(id);
       });
     });
   }
@@ -214,7 +386,7 @@ export function createSavedConfigsView({
   function render() {
     const container = document.getElementById("saved-configs-list");
     if (!container) return;
-    const displayConfigs = getConfigs();
+    const displayConfigs = displayedConfigs();
     if (displayConfigs.length === 0) {
       container.innerHTML = '<p class="empty-state">No hay configuraciones guardadas.</p>';
       return;
@@ -222,7 +394,7 @@ export function createSavedConfigsView({
 
     const subjects = getSubjects();
     const freeDaysCounts = new Set(
-      displayConfigs.map(c => calculateConfigFreeDays(c.selectedSubjects, c.groupChoices, { subjects, days }).length),
+      displayConfigs.map(c => calculateConfigFreeDays(c.selectedSubjects, c.groupChoices, { subjects, weekdays }).length),
     );
     const freeDaysSortable = freeDaysCounts.size > 1;
 
@@ -263,5 +435,18 @@ export function createSavedConfigsView({
     bindPagination(container);
   }
 
-  return { render, resetPage };
+  return {
+    render,
+    resetPage,
+    getAll,
+    loadFromStorage,
+    replaceAll,
+    append,
+    saveCurrent,
+    remove,
+    toggleFavorite,
+    load,
+    exportOne,
+    exportAll,
+  };
 }

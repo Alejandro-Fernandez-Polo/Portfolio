@@ -31,16 +31,6 @@
     vistaConvalidaciones: 'oficial',
   };
 
-  const CONFIG_STORAGE_SLOTS = 3;
-
-  function getStorageKey(slot) {
-    return `ugr-horario-saved-configs-${slot}`;
-  }
-
-  function saveAllConfigs(list) {
-    // Delegación: la implementación vive en el adaptador ESM.
-    getPersistence().saveAllConfigs(list);
-  }
 
   // La carga real se hace en `init()` (vía `getPersistence().loadSavedConfigs()`),
   // cuando la composición ESM ya está montada. Este IIFE es un script clásico:
@@ -392,10 +382,13 @@
     // ya montado. No fatal si el import falla — el monolito sigue siendo la
     // fachada operativa y `getDomain()` avisará solo si alguien lo consulta.
     await ensureUgrApp();
-    // Las configuraciones guardadas se cargan aquí, cuando la composición
-    // ESM (y su adaptador de persistencia) ya está montada. Si el import o el
-    // adaptador fallan, arranca sin configs en vez de romper.
-    try { savedConfigs = getPersistence().loadSavedConfigs(); } catch (e) { savedConfigs = []; }
+    // La vista de configuraciones se monta aquí, cuando la composición ESM (y su
+    // adaptador de persistencia) ya está montada, y es ella la que carga la lista
+    // guardada. Si el import o el adaptador fallan, arranca sin configuraciones
+    // en vez de romper.
+    await ensureSavedConfigsView();
+    const savedConfigsView = getSavedConfigsView();
+    if (savedConfigsView) savedConfigsView.loadFromStorage();
     // La vista de materias vive en ESM (features/subjects.js). Se monta
     // antes del primer `renderSubjects()` para que ese render ya delegue; no
     // fatal si el import falla — la delegación queda en no-op.
@@ -405,9 +398,7 @@
     // ya encuentre el feature; no fatal si el import falla — la delegación y
     // el montaje quedan en no-op.
     await ensureCalendarViewFeature();
-    // Antes de `setupActions()`/primer render: la tabla de configuraciones se
-    // pinta desde su vista ESM.
-    await ensureSavedConfigsView();
+
     // Antes de tocar el catálogo: las valoraciones propias se superponen a los
     // perfiles, así que tienen que estar cargadas cuando `rebuildDocentIndexes`
     // construya el índice.
@@ -1027,12 +1018,9 @@
   }
 
   function toggleFavorite(id) {
-    const config = savedConfigs.find(c => c.id === id);
-    if (config) {
-      config.favorite = !config.favorite;
-      saveAllConfigs(savedConfigs);
-      renderSavedConfigs();
-    }
+    // Delegación: la lista de configuraciones la vive su vista ESM.
+    const view = getSavedConfigsView();
+    if (view) view.toggleFavorite(id);
   }
 
   function updateCompareButton() {
@@ -2129,13 +2117,13 @@
     document.getElementById('btn-reset-defaults').addEventListener('click', resetDefaults);
     document.getElementById('btn-export-all-configs').addEventListener('click', exportAllSavedConfigs);
     document.getElementById('btn-delete-all-configs').addEventListener('click', () => {
-      if (savedConfigs.length === 0) {
+      if (getSavedConfigs().length === 0) {
         showToast('No hay configuraciones propias que borrar', 'info');
         return;
       }
       if (!confirm('¿Eliminar todas tus configuraciones guardadas?')) return;
-      savedConfigs = [];
-      saveAllConfigs(savedConfigs);
+      const view = getSavedConfigsView();
+      if (view) view.replaceAll([]);
       renderSavedConfigs();
       showToast('Tus configuraciones eliminadas', 'success');
     });
@@ -2557,13 +2545,19 @@
   // recibe y las **mutaciones** (guardar/cargar/borrar/exportar), que el
   // monolito sigue poseyendo y le pasa como intents.
   function getDisplayConfigs() {
-    return savedConfigs.concat(solverResults);
+    return getSavedConfigs().concat(solverResults);
   }
 
   /** Vuelve la tabla a la primera página (la pide quien cambia la lista). */
   function resetConfigsPage() {
     const view = getSavedConfigsView();
     if (view) view.resetPage();
+  }
+
+  /** Configuraciones guardadas: las vive la vista; aquí solo se leen. */
+  function getSavedConfigs() {
+    const view = getSavedConfigsView();
+    return view ? view.getAll() : [];
   }
 
   // ─── Solver UI ─────────────────────────────────────────────
@@ -2975,15 +2969,17 @@
   function saveSolverResult(id) {
     const cfg = solverResults.find(c => c.id === id);
     if (!cfg) return;
-    savedConfigs.push({
-      id: Date.now(),
-      name: cfg.name,
-      selectedSubjects: { ...cfg.selectedSubjects },
-      groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
-      apellido: cfg.apellido,
-      turnoPreferente: cfg.turnoPreferente,
-    });
-    saveAllConfigs(savedConfigs);
+    const view = getSavedConfigsView();
+    if (view) {
+      view.append([{
+        id: Date.now(),
+        name: cfg.name,
+        selectedSubjects: { ...cfg.selectedSubjects },
+        groupChoices: JSON.parse(JSON.stringify(cfg.groupChoices)),
+        apellido: cfg.apellido,
+        turnoPreferente: cfg.turnoPreferente,
+      }]);
+    }
     showToast('Horario guardado', 'success');
     renderSavedConfigs();
   }
@@ -3003,70 +2999,28 @@
   }
 
   function findDuplicateConfig(newGroupChoices, newSelectedSubjects) {
-    // Delegación (configs.js): la lista de candidatas se inyecta aquí
-    // porque el IIFE es quien posee `savedConfigs`.
-    return getDomain().findDuplicateConfig(savedConfigs, newGroupChoices, newSelectedSubjects);
+    // Delegación (configs.js): la lista de candidatas se inyecta aquí, leída de
+    // la vista que las posee.
+    return getDomain().findDuplicateConfig(getSavedConfigs(), newGroupChoices, newSelectedSubjects);
   }
 
+  // Guardar, editar y borrar una configuración los vive la vista ESM: aquí solo
+  // queda el disparador (botón y Enter del campo de nombre).
   function saveConfig() {
-    const nameInput = document.getElementById('config-name');
-    const name = nameInput.value.trim();
-    if (!name) {
-      showToast('Introduce un nombre para la configuración', 'error');
-      return;
-    }
-
-    const selectedCodes = Object.keys(state.selectedSubjects).filter(c => state.selectedSubjects[c]);
-    if (selectedCodes.length === 0) {
-      showToast('Selecciona al menos una asignatura', 'error');
-      return;
-    }
-
-    const config = getDomain().buildConfigFromState(state, Date.now(), name);
-
-    const duplicate = findDuplicateConfig(state.groupChoices, state.selectedSubjects);
-    savedConfigs.push(config);
-    if (duplicate) {
-      showToast(`Aviso: "${duplicate.name}" tiene los mismos grupos`, 'info');
-    }
-    saveAllConfigs(savedConfigs);
-    // Emit only after persistence succeeds so telemetry counts saved configs, not invalid attempts.
-    document.dispatchEvent(new Event('ugr:configSaved'));
-    nameInput.value = '';
-    resetConfigsPage();
-    renderSavedConfigs();
-    showToast(`"${name}" guardada`, 'success');
+    const view = getSavedConfigsView();
+    if (view) view.saveCurrent();
   }
 
   function loadConfig(id) {
-    const config = getDisplayConfigs().find(c => c.id === id);
-    if (!config) return;
-
-    // Delegación: las 4 asignaciones viven en `applyConfigToState` (copia
-    // de materias + clon profundo de grupos); DOM, store y toast siguen aquí.
-    getDomain().applyConfigToState(state, config);
-    pushProfileToStore();
-
-    document.getElementById('apellido').value = state.apellido;
-    document.getElementById('turno-preferente').value = state.turnoPreferente;
-
-    saveState();
-    updateAll();
-    showToast(`"${config.name}" cargada`, 'success');
+    // Delegación: aplicarla al estado y sincronizar el perfil es de la vista;
+    // persistir y repintar el resto sigue aquí.
+    const view = getSavedConfigsView();
+    if (view) view.load(id);
   }
 
   function deleteConfig(id) {
-    const config = savedConfigs.find(c => c.id === id);
-    if (!config) return;
-    if (!confirm(`¿Eliminar "${config.name}"?`)) return;
-
-    // Delegación: el filtrado puro devuelve la nueva lista; el binding
-    // local se reasigna aquí (confirm/persistencia/render no cambian).
-    savedConfigs = getDomain().removeConfigById(savedConfigs, id);
-    saveAllConfigs(savedConfigs);
-    resetConfigsPage();
-    renderSavedConfigs();
-    showToast(`"${config.name}" eliminada`, 'info');
+    const view = getSavedConfigsView();
+    if (view) view.remove(id);
   }
 
   /**
@@ -3098,7 +3052,7 @@
       exportedAt: new Date().toISOString(),
       subjects: SUBJECTS,
       state: { ...state },
-      savedConfigs: savedConfigs,
+      savedConfigs: getSavedConfigs(),
       convalidaciones: convalidacionesEstados,
       propuestas: state.propuestas,
       propuestasGuardadas: savedPropuestasInternas,
@@ -3136,8 +3090,8 @@
         }
 
         if (data.savedConfigs && Array.isArray(data.savedConfigs)) {
-          savedConfigs = data.savedConfigs;
-          saveAllConfigs(savedConfigs);
+          const view = getSavedConfigsView();
+          if (view) view.replaceAll(data.savedConfigs);
         }
 
         if (data.convalidaciones) {
@@ -3194,7 +3148,8 @@
     };
     PROPUESTAS = JSON.parse(JSON.stringify(state.propuestas));
     localStorage.setItem('ugr-propuestas', JSON.stringify(PROPUESTAS));
-    savedConfigs = [];
+    const savedConfigsView = getSavedConfigsView();
+    if (savedConfigsView) savedConfigsView.replaceAll([]);
     savedPropuestasInternas = [];
     convalidacionesEstados = {};
     conflicts = [];
@@ -3231,29 +3186,13 @@
 
   // ─── Export/Import Single Config ───────────────────────────
   function exportSingleConfig(id) {
-    const allConfigs = getDisplayConfigs();
-    const config = allConfigs.find(c => c.id === id);
-    if (!config) return;
-
-    // Delegación: envoltorio exacto `{version, type, exportedAt, config}`
-    // (clon profundo) y nombre de fichero, ambos en el dominio puro; la fecha
-    // ISO se pasa aquí para que el dominio no lea el reloj.
-    const data = getDomain().buildSingleConfigExport(config, new Date().toISOString());
-    downloadJSON(data, getDomain().configFilename(config.name));
-    showToast(`"${config.name}" exportada`, 'success');
+    const view = getSavedConfigsView();
+    if (view) view.exportOne(id);
   }
 
   function exportAllSavedConfigs() {
-    if (savedConfigs.length === 0) {
-      showToast('No hay configuraciones propias que exportar', 'info');
-      return;
-    }
-
-    // Delegación: mismo envoltorio batch (type '…-configs-batch') con la
-    // lista clonada; el nombre de fichero legacy vive en `app.js`.
-    const data = getDomain().buildBatchConfigExport(savedConfigs, new Date().toISOString());
-    downloadJSON(data, 'ugr-horario-configs.json');
-    showToast(`${savedConfigs.length} configuración(es) exportada(s)`, 'success');
+    const view = getSavedConfigsView();
+    if (view) view.exportAll();
   }
 
   function importSavedConfig(e) {
@@ -3277,10 +3216,11 @@
 
         configsToAdd.forEach(c => {
           c.id = Date.now() + Math.floor(Math.random() * 1000);
-          savedConfigs.push(c);
+
         });
 
-        saveAllConfigs(savedConfigs);
+        const view = getSavedConfigsView();
+        if (view) view.append(configsToAdd);
         resetConfigsPage();
         renderSavedConfigs();
         showToast(`${configsToAdd.length} configuración(es) importada(s)`, 'success');
@@ -4857,9 +4797,20 @@
         .then(({ createSavedConfigsView }) => {
           ugrSavedConfigsView = createSavedConfigsView({
             document,
-            getConfigs: () => getDisplayConfigs(),
+            getState: () => state,
+            persistence: getPersistence(),
+            notify: showToast,
+            confirmFn: (mensaje) => confirm(mensaje),
+            onConfigLoaded: () => {
+              pushProfileToStore();
+              saveState();
+              updateAll();
+            },
+            download: downloadJSON,
+            escape: escapeCatalogText,
             getSubjects: () => SUBJECTS,
-            days: DAYS,
+            getExtraConfigs: () => solverResults,
+            weekdays: DAYS,
             getBlocks,
             getCeilings: () => ({ maxManana: configMaxManana, maxTarde: configMaxTarde }),
             getCompareIds: () => compareIds,
@@ -4869,11 +4820,11 @@
             difficultyScore: getDifficultyScore,
             dayShort: DAY_SHORT,
             onLoad: loadConfig,
-            onDelete: deleteConfig,
+
             onSaveSolver: saveSolverResult,
             onExport: exportSingleConfig,
             onCompare: toggleCompareId,
-            onFavorite: toggleFavorite,
+
           });
           return ugrSavedConfigsView;
         })
