@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "preview:stop": "pkill -f 'vite preview' || true",
     "test": "vitest run",
     "test:watch": "vitest"
   },
