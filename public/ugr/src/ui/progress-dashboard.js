@@ -137,10 +137,30 @@ function failsInput(row, canWrite) {
  * solo quien exporta o importa paga el coste del módulo (y de su crypto).
  * Si algún elemento del bloque no existe (HTML antiguo), no se engancha nada.
  */
+/**
+ * Secciones que puede llevar el respaldo. La exportación elige una de las
+ * combinaciones; la importación aplica las que traiga el fichero, así que un
+ * `.ugrbackup` con una sola sección se puede restaurar igual.
+ */
+const BACKUP_SECTIONS = {
+  all: ["userState", "configs", "progress", "reviews"],
+  progress: ["progress"],
+  reviews: ["reviews"],
+  configs: ["configs"],
+};
+
+const BACKUP_SECTION_LABELS = {
+  all: "Todo (progreso, configuraciones y profesores)",
+  progress: "solo el progreso",
+  reviews: "solo los profesores",
+  configs: "solo las configuraciones",
+};
+
 function setupBackupBlock() {
   const exportBtn = document.getElementById("btn-progress-export");
   const importBtn = document.getElementById("btn-progress-import");
   const fileInput = document.getElementById("progress-import-input");
+  const sectionsSelect = document.getElementById("progress-export-sections");
   const statusEl = document.getElementById("progress-backup-status");
   const block = document.getElementById("progress-backup");
   if (!exportBtn || !importBtn || !fileInput || !statusEl) return;
@@ -158,6 +178,8 @@ function setupBackupBlock() {
   }
 
   exportBtn.addEventListener("click", async () => {
+    const eleccion = (sectionsSelect && sectionsSelect.value) || "all";
+    const sections = BACKUP_SECTIONS[eleccion] || BACKUP_SECTIONS.all;
     setBusy(true);
     setStatus("Generando el backup…");
     try {
@@ -165,8 +187,10 @@ function setupBackupBlock() {
       // tras marcar una asignatura sacaría un snapshot atrasado de IDB.
       await flush();
       const { exportBundle } = await import("../backup/bundle.js");
-      await exportBundle({ sections: ["userState", "configs", "progress", "reviews"] });
-      setStatus("Backup descargado (.ugrbackup). Incluye tu progreso: guárdalo en un sitio seguro.");
+      await exportBundle({ sections });
+      setStatus(
+        `Backup descargado (.ugrbackup) con ${BACKUP_SECTION_LABELS[eleccion] || BACKUP_SECTION_LABELS.all}. Guárdalo en un sitio seguro.`,
+      );
     } catch (err) {
       setStatus(
         err?.message === "IDB_UNSUPPORTED"
@@ -215,10 +239,16 @@ function setupBackupBlock() {
       // comandos, notify() avisa al suscriptor del dashboard y render()
       // detecta el cambio en la clave del progreso.
       const applied = imported.plan.actions.length;
+      // Lo que traía el fichero, para que se vea que una sola sección también
+      // se importa (y para no prometer lo que no venía).
+      const traidas = ["userState", "configs", "progress", "reviews"].filter(
+        (seccion) => imported.payload && imported.payload[seccion],
+      );
+      const detalle = traidas.length ? ` (${traidas.join(", ")})` : "";
       setStatus(
         applied
-          ? `Backup importado: ${applied} cambio${applied === 1 ? "" : "s"} aplicado${applied === 1 ? "" : "s"}.`
-          : "Backup importado: no había nada nuevo que aplicar.",
+          ? `Backup importado${detalle}: ${applied} cambio${applied === 1 ? "" : "s"} aplicado${applied === 1 ? "" : "s"}.`
+          : `Backup importado${detalle}: no había nada nuevo que aplicar.`,
       );
     } catch (err) {
       setStatus(

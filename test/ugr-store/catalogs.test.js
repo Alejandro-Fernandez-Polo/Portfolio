@@ -4,6 +4,7 @@ import {
   SCHEMA_VERSION,
   SCHEMA_V1,
   SCHEMA_V2,
+  SCHEMA_V3,
   SCHEMA_VERSIONS,
 } from "../../public/ugr/src/store/schema.js";
 import { SCHEMA_MIGRATIONS } from "../../public/ugr/src/store/migrations.js";
@@ -27,8 +28,8 @@ function buildDb() {
 }
 
 describe("esquema v2 multi-catálogo", () => {
-  it("declara SCHEMA_VERSION = 2 y el store catalogs con índice de orden", () => {
-    expect(SCHEMA_VERSION).toBe(2);
+  it("declara SCHEMA_VERSION = 3 y el store catalogs con índice de orden", () => {
+    expect(SCHEMA_VERSION).toBe(3);
     expect(SCHEMA_V2.catalogs).toBe("key, updatedAt");
   });
 
@@ -39,10 +40,11 @@ describe("esquema v2 multi-catálogo", () => {
     expect(Object.keys(SCHEMA_V2)).toHaveLength(V1_KEYS.length + 1);
   });
 
-  it("SCHEMA_VERSIONS declara v1 y v2 sin superar la versión actual", () => {
-    expect(SCHEMA_VERSIONS.map((s) => s.version)).toEqual([1, 2]);
+  it("SCHEMA_VERSIONS declara v1, v2 y v3 sin superar la versión actual", () => {
+    expect(SCHEMA_VERSIONS.map((s) => s.version)).toEqual([1, 2, 3]);
     expect(SCHEMA_VERSIONS[0].stores).toEqual(SCHEMA_V1);
     expect(SCHEMA_VERSIONS[1].stores).toEqual(SCHEMA_V2);
+    expect(SCHEMA_VERSIONS[2].stores).toEqual(SCHEMA_V3);
     expect(SCHEMA_VERSIONS.every((s) => s.version <= SCHEMA_VERSION)).toBe(true);
   });
 
@@ -55,11 +57,34 @@ describe("esquema v2 multi-catálogo", () => {
   });
 });
 
+describe("esquema v3: los dos mundos", () => {
+  it("añade ownReviews con el mundo en la clave y en un índice", () => {
+    expect(SCHEMA_V3.ownReviews).toBe("id, docentKey, subjectCode, scope");
+  });
+
+  it("indexa el mundo en configs sin perder lo de v1", () => {
+    expect(SCHEMA_V3.configs).toBe("id, updatedAt, scope");
+    expect(SCHEMA_V3.userState).toBe(SCHEMA_V1.userState);
+    expect(SCHEMA_V3.catalogs).toBe(SCHEMA_V2.catalogs);
+  });
+
+  it("deja la tabla reviews declarada pero vacía (no se puede cambiar su clave)", () => {
+    expect(SCHEMA_V3.reviews).toBe(SCHEMA_V1.reviews);
+  });
+
+  it("incluye la migración scope-worlds en la versión 3", () => {
+    const migration = SCHEMA_MIGRATIONS.find((m) => m.version === 3);
+    expect(migration).toBeTruthy();
+    expect(migration.name).toBe("scope-worlds");
+    expect(typeof migration.up).toBe("function");
+  });
+});
+
 describe("mecánica de declaración Dexie (sin open)", () => {
-  it("queda en verno 2 con las versiones 1 y 2 ordenadas", () => {
+  it("queda en verno 3 con las versiones 1, 2 y 3 ordenadas", () => {
     const db = buildDb();
-    expect(db.verno).toBe(2);
-    expect(db._versions.map((v) => v._cfg.version)).toEqual([1, 2]);
+    expect(db.verno).toBe(3);
+    expect(db._versions.map((v) => v._cfg.version)).toEqual([1, 2, 3]);
   });
 
   it("la versión 1 conserva sus stores (el upgrade 1→2 no borra nada)", () => {
@@ -77,10 +102,21 @@ describe("mecánica de declaración Dexie (sin open)", () => {
     expect(v2.catalogs.idxByName).toHaveProperty("updatedAt");
   });
 
-  it("registra los upgrade() de ambas versiones", () => {
+  it("la versión 3 añade ownReviews y los índices de mundo", () => {
+    const db = buildDb();
+    const v3 = db._versions[2]._cfg.dbschema;
+    expect(v3.ownReviews.primKey.keyPath).toBe("id");
+    expect(v3.ownReviews.idxByName).toHaveProperty("docentKey");
+    expect(v3.ownReviews.idxByName).toHaveProperty("scope");
+    expect(v3.configs.idxByName).toHaveProperty("scope");
+    expect(v3.userState.primKey.keyPath).toBe("key");
+  });
+
+  it("registra los upgrade() de las tres versiones", () => {
     const db = buildDb();
     expect(typeof db._versions[0]._cfg.contentUpgrade).toBe("function");
     expect(typeof db._versions[1]._cfg.contentUpgrade).toBe("function");
+    expect(typeof db._versions[2]._cfg.contentUpgrade).toBe("function");
   });
 
   it("la forma ingenua (v2 sin declarar v1 con sus stores) vaciaría v1: por eso existe SCHEMA_VERSIONS", () => {

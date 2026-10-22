@@ -75,6 +75,57 @@ header {
 header h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
 header p { opacity: 0.85; font-size: 0.95rem; }
 
+/* Conmutador de mundo (datos de muestra ⇄ personales). Vive en la cabecera
+   para que el aviso de «de muestra» se vea en todas las vistas. */
+.header-world {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.world-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+.world-badge[data-scope="sample"] {
+  background: var(--warning);
+  border-color: var(--warning);
+  color: var(--text);
+}
+.sample-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+  max-width: 1600px;
+  margin: 0.75rem auto 0;
+  padding: 0.5rem 0.75rem;
+  background: var(--warning-tint);
+  border: 1px solid var(--warning);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+.sample-banner[hidden] { display: none; }
+.world-status {
+  max-width: 1600px;
+  margin: 0.5rem auto 0;
+  padding: 0 0.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.world-status:empty { display: none; }
+
 /* ─── Main ────────────────────────────────────────────────── */
 main {
   max-width: 1600px;
@@ -1530,6 +1581,17 @@ main {
 .profesor-ficha-razon,
 .profesor-ficha-vacio { color: var(--text-light); }
 .profesor-ficha-razon { font-style: italic; }
+/* Aviso de que las opiniones que siguen son de ejemplo: se lee antes que ellas,
+   con el mismo tono de aviso que la banda de la muestra. */
+.profesor-ficha-aviso {
+  margin: 0 0 0.6rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--warning-tint);
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.8rem;
+}
 .profesor-ficha-comentarios {
   display: flex;
   flex-direction: column;
@@ -3048,6 +3110,19 @@ footer {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  align-items: center;
+}
+/* Qué incluye el respaldo: la etiqueta y el desplegable van juntos para que el
+   texto se lea como parte del control. */
+.progress-backup-sections {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.progress-backup-sections .filter-select {
+  padding: 0.3rem 0.5rem;
 }
 /* Altura reservada: sin ella, cada mensaje de estado desplaza la tabla. */
 #progress-backup-status {

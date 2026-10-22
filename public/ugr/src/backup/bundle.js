@@ -1,30 +1,82 @@
 import { get, getAll, isAvailable } from "../store/db.js";
-import { getDeviceId } from "../store/commands.js";
+import { getDeviceId, getActiveScope } from "../store/commands.js";
+import { filterByScope, reviewId, userStateKey } from "../store/scope.js";
 import { sha256hex, encrypt, decrypt } from "./crypto.js";
 
 export const FORMAT_VERSION = 1;
 export const FORMAT_NAME = "ugr-backup";
 
+/**
+ * Las configuraciones guardadas viven en las ranuras de `localStorage` (el
+ * adaptador de persistencia residual), no en la tabla `configs`: el respaldo
+ * las lee y las escribe por ahí para que «exportar todo» lleve de verdad todo
+ * lo que el usuario tiene. La tabla se sigue consultando como reserva para
+ * respaldos de instalaciones que sí la usaron.
+ */
+async function readConfigs(scope) {
+  try {
+    const { createPersistenceAdapter } = await import("../app/adapters/persistence.js");
+    const adapter = createPersistenceAdapter({ getScope: () => scope });
+    const rows = adapter.loadSavedConfigs();
+    if (Array.isArray(rows) && rows.length) return rows;
+  } catch {
+    // Sin `localStorage` se cae a la tabla, que es lo único que puede haber.
+  }
+  return filterByScope(await getAll("configs"), scope);
+}
+
+/**
+ * Aplica configuraciones importadas sobre las del mundo activo. Con la
+ * estrategia de fusión, misma clave (`id`) se reemplaza y nueva se añade; con
+ * «reemplazar», la lista del fichero sustituye a la del mundo activo.
+ *
+ * @param {Array} acciones acciones del plan con `section === "configs"`.
+ */
+async function writeConfigs(acciones) {
+  const lista = Array.isArray(acciones) ? acciones : [];
+  if (!lista.length) return;
+  const { createPersistenceAdapter } = await import("../app/adapters/persistence.js");
+  const adapter = createPersistenceAdapter({ getScope: getActiveScope });
+  const sustitucion = lista.find((accion) => accion.action === "replace" && Array.isArray(accion.data));
+  if (sustitucion) {
+    adapter.saveAllConfigs(sustitucion.data.filter((row) => row && row.id !== undefined));
+    return;
+  }
+  const porId = new Map(adapter.loadSavedConfigs().map((row) => [String(row.id), row]));
+  for (const accion of lista) {
+    const row = accion.data;
+    if (row && row.id !== undefined) porId.set(String(row.id), row);
+  }
+  adapter.saveAllConfigs([...porId.values()]);
+}
+
+/**
+ * El respaldo es del **mundo activo**: el documento `userState` que toca, sus
+ * configuraciones y sus valoraciones. Un respaldo hecho probando la app con
+ * datos de muestra no puede llevarse por delante los datos personales —ni al
+ * exportar ni al importar—, y por eso las secciones se filtran por `scope`.
+ */
 export async function buildPayload(sections = ["userState", "configs", "progress", "reviews"]) {
   const payload = {};
+  const scope = getActiveScope();
   let userState;
   if (sections.includes("userState")) {
-    userState = await get("userState", "current");
+    userState = await get("userState", userStateKey(scope));
     payload.userState = userState;
   }
   if (sections.includes("configs")) {
-    payload.configs = await getAll("configs");
+    payload.configs = await readConfigs(scope);
   }
   if (sections.includes("progress")) {
     // El progreso canónico vive en userState.progress (single-writer). La
     // tabla `progress` solo se consulta como fallback de backups
     // anteriores, cuando el progreso se guardaba en esa tabla suelta.
-    if (!userState) userState = await get("userState", "current");
+    if (!userState) userState = await get("userState", userStateKey(scope));
     const canonical = userState?.progress;
     payload.progress = canonical || (await get("progress", "main"));
   }
   if (sections.includes("reviews")) {
-    payload.reviews = await getAll("reviews");
+    payload.reviews = filterByScope(await getAll("ownReviews"), scope);
   }
   return payload;
 }
@@ -187,18 +239,39 @@ function progressActionToCommand(action) {
 export async function applyPlan(plan) {
   const { transact, put } = await import("../store/db.js");
   const { applyCommandsInTransaction } = await import("../store/commands.js");
+  const scope = getActiveScope();
   const progressCommands = plan.actions
     .filter((a) => a.section === "progress")
     .map(progressActionToCommand)
     .filter(Boolean);
-  const otherActions = plan.actions.filter((a) => a.section !== "progress");
-  if (otherActions.length > 0) {
-    await transact(["userState", "configs", "reviews"], async () => {
-      for (const action of otherActions) {
-        await put(action.section, action.data);
+  // Las configuraciones no viven en IndexedDB: van por su adaptador.
+  const configActions = plan.actions.filter((a) => a.section === "configs");
+  const tableActions = plan.actions.filter(
+    (a) => a.section !== "progress" && a.section !== "configs",
+  );
+  if (tableActions.length > 0) {
+    await transact(["userState", "ownReviews"], async () => {
+      for (const action of tableActions) {
+        const data = action.data || {};
+        if (action.section === "userState") {
+          // La clave del documento es la del mundo activo, no la del fichero:
+          // importar en el mundo personal un respaldo hecho en la muestra no
+          // puede escribir en el documento de la muestra.
+          await put("userState", { ...data, key: userStateKey(scope) });
+        } else if (action.section === "reviews") {
+          // La estrategia «reemplazar» manda la lista entera; la de fusión,
+          // una valoración por acción. Las dos se escriben fila a fila para
+          // estampar el mundo en la clave.
+          const filas = Array.isArray(data) ? data : [data];
+          for (const fila of filas) {
+            if (!fila || !fila.docentKey) continue;
+            await put("ownReviews", { ...fila, id: reviewId(scope, fila.docentKey), scope });
+          }
+        }
       }
     });
   }
+  await writeConfigs(configActions);
   if (progressCommands.length > 0) {
     await applyCommandsInTransaction(progressCommands);
   }

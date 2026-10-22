@@ -15,9 +15,11 @@ vi.mock("../../public/ugr/src/store/db.js", () => ({
   getStoreMode: vi.fn(() => "ready"),
   get: vi.fn(async (store, key) => {
     if (store === "meta") return globalThis.__ugrTestMeta.get(key);
-    // verify() solo exige que exista un userState (y la comparación de
-    // selección se salta cuando el espejo no trae selectedSubjects).
-    if (store === "userState" && key === "current") return { selection: { selectedSubjects: {} } };
+    // verify() solo exige que exista el documento de userState del mundo
+    // activo (y la comparación de selección se salta cuando el espejo no trae
+    // selectedSubjects). El mundo no está inicializado en este test, así que
+    // se responde por cualquier clave.
+    if (store === "userState") return { selection: { selectedSubjects: {} } };
     return undefined;
   }),
   put: vi.fn(async (store, value) => {
@@ -120,6 +122,22 @@ describe("migración one-time ugr-horario-state → store (sin doble escritura)"
 
     expect(second.skipped).toBe(true);
     expect(globalThis.localStorage.getItem("ugr-horario-state")).toBe(espejoAntes);
+  });
+
+  it("sin nada del formato anterior no hay nada que migrar (y queda marcado)", async () => {
+    globalThis.localStorage = makeLocalStorage({});
+
+    const result = await run();
+
+    expect(result.ok).toBe(true);
+    expect(result.skipped).toBe(true);
+    expect(globalThis.__ugrTestMeta.has("migration:legacy-v1")).toBe(true);
+  });
+
+  it("hasLegacyData distingue un navegador estrenado de uno que ya usaba /ugr", () => {
+    expect(legacyKeys.hasLegacyData(globalThis.localStorage)).toBe(true);
+    expect(legacyKeys.hasLegacyData(makeLocalStorage({}))).toBe(false);
+    expect(legacyKeys.hasLegacyData(null)).toBe(false);
   });
 
   it("cleanupLegacy y resetLegacy retiran exactamente las claves LEGACY_KEYS", async () => {

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UGR Horario - Planificador de Horarios</title>
+  <link rel="stylesheet" href="/ugr/vendor/driver.css">
   <link rel="stylesheet" href="/ugr/styles.css">
 </head>
 <body>
@@ -11,6 +12,11 @@
     <div class="header-content">
       <h1>UGR Horario</h1>
       <p>Planificador de Horarios - Grado en Ingeniería Informática</p>
+    </div>
+    <div class="header-world">
+      <span id="world-badge" class="world-badge" aria-live="polite"></span>
+      <button id="btn-world-switch" class="btn btn-sm btn-secondary" type="button">Cambiar a mis datos</button>
+      <button id="btn-help" class="btn btn-sm btn-secondary" type="button" aria-label="Ayuda y recorrido guiado">Ayuda</button>
     </div>
   </header>
 
@@ -20,6 +26,16 @@
     <button class="nav-tab" data-view="datos">Datos</button>
     <button class="nav-tab" data-view="progreso">Progreso</button>
   </nav>
+
+  <!--
+    Aviso de que lo que se está viendo es la muestra. Se queda mientras dure el
+    mundo de ejemplo: el tutorial se cierra, esto no.
+  -->
+  <div id="sample-banner" class="sample-banner" role="note" hidden>
+    <span class="sample-banner-text">Estás viendo <strong>datos de muestra</strong>: lo que marques aquí no toca tus datos personales.</span>
+    <button id="sample-banner-switch" class="btn btn-sm btn-primary" type="button">Usar mis datos</button>
+  </div>
+  <p id="world-status" class="world-status" role="status"></p>
 
   <main>
     <!-- ═══ VISTA: HORARIO ═══ -->
@@ -347,10 +363,20 @@
         <div class="progress-backup" id="progress-backup">
           <h3>Backup</h3>
           <p class="progress-hint">
-            Descarga un archivo .ugrbackup con tu progreso, configuración y propuestas
-            para restaurarlo en otro dispositivo (se fusiona con lo que ya tengas).
+            Descarga un archivo .ugrbackup con lo que elijas de este mundo (el de muestra
+            o el tuyo) para restaurarlo en otro dispositivo: al importar se fusiona con lo
+            que ya tengas, y también acepta un archivo con una sola sección.
           </p>
           <div class="progress-backup-actions">
+            <label class="progress-backup-sections" for="progress-export-sections">
+              Qué incluir
+              <select id="progress-export-sections" class="filter-select">
+                <option value="all">Todo</option>
+                <option value="progress">Solo el progreso</option>
+                <option value="reviews">Solo los profesores</option>
+                <option value="configs">Solo las configuraciones</option>
+              </select>
+            </label>
             <button type="button" class="btn btn-secondary" id="btn-progress-export">Exportar backup (.ugrbackup)</button>
             <button type="button" class="btn btn-secondary" id="btn-progress-import">Importar backup</button>
             <input type="file" id="progress-import-input" accept=".ugrbackup,.json" hidden>
@@ -805,6 +831,7 @@
   </div>
 
   <script src="/ugr/vendor/sentry.bundle.js"></script>
+  <script src="/ugr/vendor/driver.js"></script>
   <script src="/ugr/src/monitoring/config.js"></script>
   <script src="/ugr/src/monitoring/init.js"></script>
   <script src="/ugr/data.js"></script>

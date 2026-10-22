@@ -1,4 +1,5 @@
 import { CONFIG_STORAGE_SLOTS, configSlotKey } from "../../store/configSlots.js";
+import { filterByScope, normalizeScope, otherScope } from "../../store/scope.js";
 
 /**
  * Persistencia residual legacy de `/ugr`.
@@ -148,32 +149,44 @@ function writeJson(storage, key, value) {
  * implementación indicada de `app.js`; ver `src/app/contracts.js` para el
  * contrato completo (`UgrPersistence`).
  *
- * @param {{storage?: Storage}} [options] `storage` omitido →
+ * @param {{storage?: Storage, getScope?: () => string}} [options] `storage` omitido →
  *   `globalThis.localStorage`; `null` explícito → desactiva la persistencia
- *   (útil en tests y en contextos sin almacenamiento).
+ *   (útil en tests y en contextos sin almacenamiento). `getScope` dice en qué
+ *   mundo se está (`"sample"` o `"personal"`); omitido → personal, que es lo
+ *   que había antes de existir los mundos.
  * @returns {import("../contracts.js").UgrPersistence}
  */
-export function createPersistenceAdapter({ storage } = {}) {
+export function createPersistenceAdapter({ storage, getScope } = {}) {
   const store = storage === undefined ? defaultStorage() : storage;
+
+  /**
+   * Mundo activo. Se pregunta en cada operación —no se captura al crear el
+   * adaptador— para que un cambio de mundo no deje las configuraciones
+   * apuntando al anterior.
+   *
+   * @returns {"sample"|"personal"}
+   */
+  function activeScope() {
+    try {
+      return normalizeScope(typeof getScope === "function" ? getScope() : "personal");
+    } catch {
+      return "personal";
+    }
+  }
 
   /** @param {number} slot */
   const configKey = (slot) => configSlotKey(slot);
 
-  /** Vacía las ranuras del formato antiguo (lo pide «restaurar por defecto»). */
-  function clearSavedConfigs() {
-    for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) removeRaw(store, configKey(i));
-  }
-
   /**
-   * Reparte las configuraciones en las tres ranuras. Primero se vacían todas
-   * (para que no queden entradas huérfanas al reducir la lista) y después se
-   * reparte round-robin, en el mismo orden que `app.js` L46-59.
+   * Escribe la lista entera en las ranuras: primero se vacían todas (para que
+   * no queden entradas huérfanas al reducir la lista) y después se reparte
+   * round-robin, en el mismo orden que `app.js` L46-59.
    *
-   * @param {Array} list
+   * @param {Array} rows
    */
-  function saveAllConfigs(list) {
+  function writeConfigRows(rows) {
     for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) removeRaw(store, configKey(i));
-    const configs = Array.isArray(list) ? list : []; // entrada inválida: no hay nada que repartir
+    const configs = Array.isArray(rows) ? rows : []; // entrada inválida: no hay nada que repartir
     for (let i = 0; i < configs.length; i++) {
       const key = configKey(i % CONFIG_STORAGE_SLOTS);
       let existing;
@@ -189,12 +202,12 @@ export function createPersistenceAdapter({ storage } = {}) {
   }
 
   /**
-   * Concatena en orden de ranura 0→2 e ignora por separado el JSON corrupto:
-   * una ranura rota pierde solo sus entradas, no las demás (`app.js` L32-44).
+   * Las filas de las tres ranuras, sin mirar el mundo: lo que hay guardado en
+   * el navegador son los dos mundos mezclados y cada fila dice el suyo.
    *
    * @returns {Array}
    */
-  function loadSavedConfigs() {
+  function readAllConfigs() {
     let all = [];
     for (let i = 0; i < CONFIG_STORAGE_SLOTS; i++) {
       const raw = readRaw(store, configKey(i));
@@ -206,6 +219,42 @@ export function createPersistenceAdapter({ storage } = {}) {
       }
     }
     return all;
+  }
+
+  /**
+   * Vacía las configuraciones del mundo activo (lo pide «restaurar por
+   * defecto»). Las del otro mundo se quedan: borrar lo de la muestra no puede
+   * llevarse por delante lo personal.
+   */
+  function clearSavedConfigs() {
+    writeConfigRows(filterByScope(readAllConfigs(), otherScope(activeScope())));
+  }
+
+  /**
+   * Reemplaza las configuraciones **del mundo activo**; las del otro se
+   * conservan tal cual. Cada fila se estampa con su mundo al escribir para que
+   * el filtrado de lectura no dependa de que el llamante se acuerde.
+   *
+   * @param {Array} list
+   */
+  function saveAllConfigs(list) {
+    const scope = activeScope();
+    const ajenas = filterByScope(readAllConfigs(), otherScope(scope));
+    const propias = (Array.isArray(list) ? list : [])
+      .filter((config) => config && typeof config === "object")
+      .map((config) => ({ ...config, scope }));
+    writeConfigRows(ajenas.concat(propias));
+  }
+
+  /**
+   * Configuraciones guardadas del mundo activo, en orden de ranura 0→2 e
+   * ignorando por separado el JSON corrupto: una ranura rota pierde solo sus
+   * entradas, no las demás (`app.js` L32-44).
+   *
+   * @returns {Array}
+   */
+  function loadSavedConfigs() {
+    return filterByScope(readAllConfigs(), activeScope());
   }
 
   /**

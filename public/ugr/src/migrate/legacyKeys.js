@@ -9,6 +9,34 @@ export const LEGACY_KEYS = [
 
 export const DESTINIES = ["userState", "configs", "progress", "legacy", "meta"];
 
+/**
+ * ¿Este navegador guarda algo del formato anterior al store? Cualquier clave de
+ * las que migra la app implica que la persona ya usaba `/ugr`, así que sus
+ * datos son los **personales**: un navegador así no puede arrancar en el mundo
+ * de muestra, o parecería que se ha perdido todo.
+ *
+ * @param {Storage|null} [storage] por defecto `localStorage`.
+ * @returns {boolean}
+ */
+export function hasLegacyData(storage) {
+  let almacen = storage;
+  if (almacen === undefined) {
+    try {
+      almacen = globalThis.localStorage || null;
+    } catch {
+      almacen = null;
+    }
+  }
+  if (!almacen || typeof almacen.getItem !== "function") return false;
+  return LEGACY_KEYS.some(({ key }) => {
+    try {
+      return almacen.getItem(key) !== null;
+    } catch {
+      return false;
+    }
+  });
+}
+
 function dedupeConfigs(configs) {
   const seen = new Map();
   for (const c of configs) {
@@ -104,8 +132,8 @@ export async function markMigration(db) {
   await db.put("meta", { key: "migration:legacy-v1", appliedAt: new Date().toISOString(), version: 1 });
 }
 
-export async function verify(db, plan) {
-  const state = await db.get("userState", "current");
+export async function verify(db, plan, key = "current") {
+  const state = await db.get("userState", key);
   if (!state) throw new Error("userState not found after migration");
 
   if (plan.stats.configs > 0) {

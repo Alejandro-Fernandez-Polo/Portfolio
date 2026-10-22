@@ -37,6 +37,8 @@ import {
  * @param {(clave: string) => Promise<Object|null>} deps.deleteReview borra una valoración (null si no hay almacén).
  * @param {(activado: boolean) => void} deps.onToggleIgnoreDocents el mismo interruptor que el generador.
  * @param {(d: ?) => string} deps.dificultadBadgeHtml insignia de dificultad (la comparte la ficha de asignatura).
+ * @param {() => boolean} [deps.isSampleOpinions] ¿las opiniones del catálogo son
+ *   inventadas? Entonces la ficha lo avisa.
  * @param {(texto: string) => string} deps.escape escapador de HTML.
  * @param {(data: Object, filename: string) => void} deps.download descarga JSON.
  * @param {(mensaje: string) => boolean} deps.confirmFn confirmación (borrado).
@@ -55,6 +57,7 @@ export function createProfesoresView({
   onToggleIgnoreDocents,
   syncIgnoreDocentsInputs,
   dificultadBadgeHtml,
+  isSampleOpinions,
   escape,
   download,
   confirmFn,
@@ -143,13 +146,30 @@ export function createProfesoresView({
    * modalidad) y `opener` el botón, para devolverle el foco al cerrar. Desde el
    * listado de profesores no hay foco: no se resalta ninguna asignatura.
    */
+  /**
+   * Aviso de que las opiniones que se van a leer son de ejemplo. Va dentro de la
+   * ficha, encima de las entradas, porque es ahí donde se leen: el aviso de la
+   * muestra dice que los datos son de ejemplo, y este dice qué parte está
+   * inventada.
+   */
+  function avisoOpinionesHtml() {
+    const muestra = typeof isSampleOpinions === "function" && isSampleOpinions();
+    if (!muestra) return "";
+    return (
+      '<p class="profesor-ficha-aviso" role="note">' +
+      "<strong>Opiniones de ejemplo.</strong> Las que trae la muestra son ficticias: " +
+      "el texto real de la hoja se importa con la contraseña del paquete." +
+      "</p>"
+    );
+  }
+
   function openProfesorFicha(name, focus, opener) {
     const els = profesorModalEls();
     if (!els.modal || !els.title || !els.body || !name) return;
     const ficha = buildProfesorFicha(getProfesores(), getSubjects(), name, focus || null);
     if (!ficha.entries.length) return;
     els.title.textContent = ficha.name;
-    els.body.innerHTML = `<div class="profesor-ficha">${ficha.entries.map(fichaEntryHtml).join("")}</div>`;
+    els.body.innerHTML = `<div class="profesor-ficha">${avisoOpinionesHtml()}${ficha.entries.map(fichaEntryHtml).join("")}</div>`;
     fichaOpener = {
       name,
       subjectCode: (focus && focus.subjectCode) || "",

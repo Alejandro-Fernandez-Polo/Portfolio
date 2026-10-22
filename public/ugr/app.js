@@ -1430,7 +1430,17 @@
               defaultSubjects: () => (typeof DEFAULT_SUBJECTS !== 'undefined' ? DEFAULT_SUBJECTS : null),
               docentes: () => DOCENTES,
             },
-            persistence: { storage: window.localStorage },
+            persistence: {
+              storage: window.localStorage,
+              // Las configuraciones guardadas llevan el mundo en cada fila: el
+              // adaptador pregunta cuál está activo en cada lectura y escritura.
+              getScope: () => {
+                const store = __getStore();
+                return store && typeof store.getActiveScope === 'function'
+                  ? store.getActiveScope()
+                  : 'personal';
+              },
+            },
             root: document,
             degraded: !!window.__ugrDegraded,
           });
@@ -1911,6 +1921,12 @@
             onToggleIgnoreDocents: setIgnoreDocents,
             syncIgnoreDocentsInputs,
             dificultadBadgeHtml,
+            // Las opiniones de la muestra son inventadas: el catálogo lo dice y
+            // la ficha del profesor lo avisa donde se leen.
+            isSampleOpinions: () => {
+              const api = getCatalogApi();
+              return !!(api && typeof api.isSampleOpinions === 'function' && api.isSampleOpinions());
+            },
             escape: escapeCatalogText,
             download: downloadJSON,
             confirmFn: (mensaje) => confirm(mensaje),

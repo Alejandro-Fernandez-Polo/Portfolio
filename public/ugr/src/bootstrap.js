@@ -1,7 +1,8 @@
 import { open, isAvailable, getStoreMode } from "./store/db.js";
-import { initStore, flush, getState, dispatch, subscribe } from "./store/commands.js";
+import { initStore, flush, getState, dispatch, subscribe, getActiveScope, setActiveScope } from "./store/commands.js";
 import { listReviews, saveReviews, deleteReview } from "./store/reviews.js";
 import { run as migrateLegacy } from "./migrate/migrateLegacy.js";
+import { hasLegacyData } from "./migrate/legacyKeys.js";
 import { registerModule, startAll, stopAll, getModule } from "./kernel/registry.js";
 import { bus } from "./kernel/bus.js";
 import { createDevtools } from "./devtools/index.js";
@@ -12,6 +13,8 @@ import { registerProgress } from "./modules/progress.js";
 import { setupImportWizard } from "./ui/import-wizard.js";
 import { setupProgressDashboard } from "./ui/progress-dashboard.js";
 import { setupStickyHeaders } from "./ui/sticky-headers.js";
+import { setupScopeMode } from "./ui/scope-mode.js";
+import { createTutorial } from "./ui/tutorial.js";
 import { count } from "./monitoring/index.js";
 
 async function bootstrap() {
@@ -26,7 +29,9 @@ async function bootstrap() {
     showDegradedBanner();
   }
 
-  const state = await initStore();
+  // Un navegador con datos del formato anterior sigue en el mundo personal:
+  // los suyos son los que hay, y arrancar en la muestra parecería perderlos.
+  const state = await initStore({ hasLegacyData: hasLegacyData() });
   recordBootTiming("store_hydrate");
 
   const migrateResult = await migrateLegacy();
@@ -45,7 +50,7 @@ async function bootstrap() {
   registerModule({
     id: "store",
     version: "1.0.0",
-    api: { getState, dispatch, subscribe, flush, listReviews, saveReviews, deleteReview },
+    api: { getState, dispatch, subscribe, flush, listReviews, saveReviews, deleteReview, getActiveScope, setActiveScope },
     requires: [],
     publishes: ["store:changed"],
     subscribes: [],
@@ -105,6 +110,8 @@ async function bootstrap() {
     listReviews,
     saveReviews,
     deleteReview,
+    getActiveScope,
+    setActiveScope,
   };
 
   if (typeof window !== "undefined" && !window.__ugrDegraded) {
@@ -119,6 +126,24 @@ async function bootstrap() {
       bootTiming: () => ({}),
     };
   }
+
+  // El conmutador de mundo y su aviso, más el recorrido guiado del botón de
+  // ayuda. Se monta antes del monolito: los botones de la cabecera y el aviso
+  // son HTML estático, y así se ven desde el primer pintado en vez de aparecer
+  // cuando termina de arrancar la app.
+  setupScopeMode({
+    document,
+    getScope: () => getActiveScope(),
+    setScope: (scope) => setActiveScope(scope),
+    activateCatalog: (scope) => {
+      const catalogApi = getModule("catalog");
+      return catalogApi && typeof catalogApi.activateCatalogForScope === "function"
+        ? catalogApi.activateCatalogForScope(scope)
+        : { ok: false, error: "catalog_unavailable" };
+    },
+    reload: () => window.location.reload(),
+    tutorial: createTutorial(),
+  });
 
   await startLegacyApp();
   recordBootTiming("legacy_started");

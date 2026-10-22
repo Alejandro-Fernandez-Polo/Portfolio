@@ -1,6 +1,7 @@
 import { open, get, put, transact, isAvailable } from "../store/db.js";
 import { buildPlan, snapshotAllKeys, alreadyMigrated, markMigration, verify, restoreFromSnapshot, cleanupLegacy, DESTINIES } from "./legacyKeys.js";
-import { dispatch, initStore, getState } from "../store/commands.js";
+import { dispatch, flush, initStore, getState, getActiveScope } from "../store/commands.js";
+import { userStateKey } from "../store/scope.js";
 
 const dbFacade = { get, getAll: (store) => import("../store/db.js").then(({ getAll: g }) => g(store)), put, transact, isAvailable };
 
@@ -13,6 +14,14 @@ export async function run() {
 
   const legacy = await snapshotAllKeys(dbFacade);
 
+  // Un navegador sin nada del formato antiguo no tiene nada que migrar —y no
+  // hay documento personal contra el que verificar, porque puede estar
+  // arrancando en el mundo de muestra—. Se marca como hecha y se sigue.
+  if (Object.keys(legacy).length === 0) {
+    await markMigration(dbFacade);
+    return { ok: true, skipped: true, empty: true };
+  }
+
   try {
     const plan = buildPlan(legacy);
 
@@ -23,7 +32,12 @@ export async function run() {
       await put("meta", { key: "migration:legacy-v1", appliedAt: new Date().toISOString(), from: { keys: Object.keys(legacy) } });
     });
 
-    await verify(dbFacade, plan);
+    // Los comandos dejan el estado en memoria y el store lo persiste con 250 ms
+    // de retardo: sin este volcado, la verificación leería el documento de
+    // antes de migrar y vería un descuadre que no existe.
+    await flush();
+
+    await verify(dbFacade, plan, userStateKey(getActiveScope()));
 
     await markMigration(dbFacade);
 

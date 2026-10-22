@@ -13,6 +13,7 @@ vi.mock('../../public/ugr/src/store/db.js', () => ({
 
 vi.mock('../../public/ugr/src/store/commands.js', () => ({
   getDeviceId: vi.fn(() => 'device-test'),
+  getActiveScope: vi.fn(() => 'personal'),
   applyCommandsInTransaction: vi.fn(() => Promise.resolve()),
 }));
 
@@ -118,20 +119,62 @@ describe('buildMergePlan: progreso', () => {
 
 describe('applyPlan: progreso', () => {
   it('vuelca el progreso a userState vía comandos, nunca a la tabla progress', async () => {
+    // Las configuraciones viven en las ranuras de localStorage: el respaldo
+    // las escribe por el adaptador, no en la tabla `configs`.
+    const almacen = new Map();
+    globalThis.localStorage = {
+      getItem: (k) => (almacen.has(k) ? almacen.get(k) : null),
+      setItem: (k, v) => almacen.set(k, String(v)),
+      removeItem: (k) => almacen.delete(k),
+    };
     const progressData = { credits: { FFT: 'pass' }, equivalences: [], plan: { totalECTS: 240 } };
-    await applyPlan({
-      actions: [
-        { section: 'progress', action: 'replace', data: progressData },
-        { section: 'configs', action: 'upsert', data: { id: 1 } },
-      ],
-    });
-    expect(commands.applyCommandsInTransaction).toHaveBeenCalledWith([
-      { type: 'progress/setAll', payload: progressData },
-    ]);
-    const progressPuts = db.put.mock.calls.filter(([store]) => store === 'progress');
-    expect(progressPuts).toHaveLength(0);
-    // las acciones ajenas al progreso sí se escriben en su store
-    expect(db.put).toHaveBeenCalledWith('configs', { id: 1 });
+    try {
+      await applyPlan({
+        actions: [
+          { section: 'progress', action: 'replace', data: progressData },
+          { section: 'configs', action: 'upsert', data: { id: 1 } },
+        ],
+      });
+      expect(commands.applyCommandsInTransaction).toHaveBeenCalledWith([
+        { type: 'progress/setAll', payload: progressData },
+      ]);
+      const progressPuts = db.put.mock.calls.filter(([store]) => store === 'progress');
+      expect(progressPuts).toHaveLength(0);
+      expect(db.put).not.toHaveBeenCalledWith('configs', expect.anything());
+      // La configuración aterriza en las ranuras del mundo activo.
+      const guardadas = [...almacen.values()].flatMap((valor) => JSON.parse(valor));
+      expect(guardadas.map((config) => config.id)).toEqual([1]);
+      expect(guardadas[0].scope).toBe('personal');
+    } finally {
+      delete globalThis.localStorage;
+    }
+  });
+
+  it('la estrategia «reemplazar» acepta las listas enteras de configs y reviews', async () => {
+    const almacen = new Map();
+    globalThis.localStorage = {
+      getItem: (k) => (almacen.has(k) ? almacen.get(k) : null),
+      setItem: (k, v) => almacen.set(k, String(v)),
+      removeItem: (k) => almacen.delete(k),
+    };
+    try {
+      await applyPlan({
+        actions: [
+          { section: 'configs', action: 'replace', data: [{ id: 'c1' }] },
+          { section: 'reviews', action: 'replace', data: [{ docentKey: 'K', name: 'Ana' }] },
+        ],
+      });
+      // Las valoraciones se escriben fila a fila, con el mundo en la clave.
+      expect(db.put).toHaveBeenCalledWith(
+        'ownReviews',
+        expect.objectContaining({ docentKey: 'K', id: 'personal|K', scope: 'personal' }),
+      );
+      // Y las configuraciones, por el adaptador (ranuras de localStorage).
+      const guardadas = [...almacen.values()].flatMap((valor) => JSON.parse(valor));
+      expect(guardadas.map((config) => config.id)).toEqual(['c1']);
+    } finally {
+      delete globalThis.localStorage;
+    }
   });
 
   it('convierte acciones upsert de progreso en progress/setStatus', async () => {
@@ -146,6 +189,42 @@ describe('applyPlan: progreso', () => {
   it('sin acciones de progreso no toca el store de comandos', async () => {
     await applyPlan({ actions: [{ section: 'reviews', action: 'upsert', data: { docentKey: 'K' } }] });
     expect(commands.applyCommandsInTransaction).not.toHaveBeenCalled();
+  });
+});
+
+describe('buildPayload: secciones por mundo', () => {
+  function almacenCon(filas) {
+    const mapa = new Map();
+    mapa.set('ugr-horario-saved-configs-0', JSON.stringify(filas));
+    globalThis.localStorage = {
+      getItem: (k) => (mapa.has(k) ? mapa.get(k) : null),
+      setItem: (k, v) => mapa.set(k, String(v)),
+      removeItem: (k) => mapa.delete(k),
+    };
+    return mapa;
+  }
+
+  it('las configuraciones salen de las ranuras del mundo activo', async () => {
+    almacenCon([
+      { id: 'de-muestra', scope: 'sample' },
+      { id: 'personal', scope: 'personal' },
+      { id: 'vieja' },
+    ]);
+    try {
+      const payload = await buildPayload(['configs']);
+      expect(payload.configs.map((c) => c.id)).toEqual(['personal', 'vieja']);
+    } finally {
+      delete globalThis.localStorage;
+    }
+  });
+
+  it('las valoraciones propias salen solo del mundo activo', async () => {
+    db.getAll.mockResolvedValue([
+      { id: 'sample|K', docentKey: 'K', scope: 'sample' },
+      { id: 'personal|L', docentKey: 'L', scope: 'personal' },
+    ]);
+    const payload = await buildPayload(['reviews']);
+    expect(payload.reviews.map((r) => r.docentKey)).toEqual(['L']);
   });
 });
 

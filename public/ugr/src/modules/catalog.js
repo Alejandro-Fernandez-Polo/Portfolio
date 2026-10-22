@@ -1,6 +1,8 @@
 import { registerModule } from "../kernel/registry.js";
 import { bus } from "../kernel/bus.js";
 import { open, get, put, del, getAll, isAvailable } from "../store/db.js";
+import { getActiveScope } from "../store/commands.js";
+import { normalizeScope } from "../store/scope.js";
 import { createCatalogRemote } from "./catalog-remote.js";
 import {
   fromLegacySubjects,
@@ -18,6 +20,13 @@ import {
 
 export const LEGACY_CATALOG_ID = "UGR/GI/legacy-1";
 export const ACTIVE_CATALOG_META_KEY = "activeCatalog";
+
+/**
+ * Clave de `meta` con el catálogo activo de **cada mundo**. Cambiar de mundo
+ * cambia el catálogo (la muestra o el volcado), así que cada uno recuerda el
+ * suyo y volver no obliga a elegirlo otra vez.
+ */
+export const SCOPE_CATALOG_META_KEY = "activeCatalogByScope";
 
 /**
  * Bloques del plan de estudios que trae el volcado y que hay que arrastrar por el
@@ -127,7 +136,10 @@ function nowIso() {
 }
 
 function buildLegacyCatalog(legacy, docentes, profesores) {
-  const built = fromLegacySubjects(legacy);
+  // El catálogo en memoria sale de `data.js` + `docentes.js`, que es la muestra:
+  // los nombres de profesor son reales (los publica la ETSIIT) y las opiniones
+  // son inventadas. Se marca para que la interfaz lo avise donde se leen.
+  const built = fromLegacySubjects(legacy, { sampleDocents: true, sampleOpinions: true });
   attachDocents(built, docentes);
   attachPlan(built, { profesores });
   return built;
@@ -232,6 +244,18 @@ function getActiveCatalogKey() {
   return activeKey;
 }
 
+/**
+ * ¿Las opiniones del catálogo activo son **inventadas**? La muestra las lleva de
+ * ejemplo —el texto real de la hoja viaja cifrado—, así que la ficha del
+ * profesor avisa de ello. El catálogo del paquete no trae la marca y sus
+ * opiniones son las de verdad.
+ *
+ * @returns {boolean}
+ */
+function isSampleOpinions() {
+  return catalog && catalog.meta ? catalog.meta.sampleOpinions === true : false;
+}
+
 async function listCatalogs() {
   if (!storeReady) return [];
   try {
@@ -317,6 +341,84 @@ async function deleteCatalog(id) {
   }
 }
 
+/** Catálogos recordados por mundo (`{ sample, personal }`). */
+async function readScopeCatalogs() {
+  try {
+    const row = await get("meta", SCOPE_CATALOG_META_KEY);
+    const value = row && row.value;
+    return value && typeof value === "object" && !Array.isArray(value) ? { ...value } : {};
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Recuerda qué catálogo estaba activo en un mundo. Es una comodidad, no un
+ * requisito: si la escritura falla, cambiar de mundo sigue funcionando.
+ */
+async function rememberScopeCatalog(scope, id) {
+  if (!storeReady || !id) return;
+  try {
+    const mapa = await readScopeCatalogs();
+    mapa[normalizeScope(scope)] = id;
+    await put("meta", { key: SCOPE_CATALOG_META_KEY, value: mapa, updatedAt: nowIso() });
+  } catch {
+    /* sin memoria por mundo se elige el catálogo como siempre */
+  }
+}
+
+/**
+ * ¿Este catálogo guardado viene del paquete cifrado? El público lo dice por sus
+ * fuentes; el importado lleva `volcado`, que es la marca que distingue los dos
+ * en el desplegable.
+ */
+function isVolcadoRecord(record) {
+  const sources = record && record.meta && record.meta.sources;
+  return Array.isArray(sources) && sources.includes("volcado");
+}
+
+/**
+ * Activa el catálogo del mundo pedido: el que ese mundo tenía la última vez o,
+ * si nunca hubo, el que le corresponde por naturaleza (el del volcado para los
+ * datos personales, cualquiera de la muestra para el ejemplo).
+ *
+ * @param {string} scope
+ * @returns {Promise<{ok: boolean, id?: string, changed?: boolean, error?: string}>}
+ */
+async function activateCatalogForScope(scope) {
+  if (!storeReady) return { ok: false, error: "store_unavailable" };
+  const objetivo = normalizeScope(scope);
+  let rows = [];
+  try {
+    rows = await getAll("catalogs");
+  } catch {
+    rows = [];
+  }
+  // Un navegador recién estrenado monta el catálogo en memoria desde `data.js`
+  // y no tiene filas guardadas: no hay nada que activar y tampoco es un fallo.
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return { ok: true, id: activeKey, changed: false };
+  }
+
+  const recordados = await readScopeCatalogs();
+  let destino = rows.find((row) => row.key === recordados[objetivo]) || null;
+  if (!destino) {
+    destino = rows.find((row) => isVolcadoRecord(row) === (objetivo === "personal")) || null;
+  }
+  if (!destino) return { ok: true, id: activeKey, changed: false };
+  if (destino.key === activeKey) {
+    await rememberScopeCatalog(objetivo, activeKey);
+    return { ok: true, id: activeKey, changed: false };
+  }
+
+  const activado = await setActiveCatalogKey(destino.key);
+  return {
+    ok: !!(activado && activado.ok),
+    id: (activado && activado.id) || activeKey,
+    changed: true,
+  };
+}
+
 async function setActiveCatalogKey(id) {
   if (!storeReady) return { ok: false, error: "store_unavailable" };
   if (!id) return { ok: false, error: "not_found" };
@@ -324,6 +426,7 @@ async function setActiveCatalogKey(id) {
     const record = await get("catalogs", id);
     if (!record) return { ok: false, error: "not_found" };
     await put("meta", { key: ACTIVE_CATALOG_META_KEY, value: record.key, updatedAt: nowIso() });
+    await rememberScopeCatalog(getActiveScope(), record.key);
     catalog = recordToCatalog(record);
     activeKey = record.key;
     bus.emit(
@@ -357,6 +460,8 @@ export function registerCatalog() {
       listCatalogs,
       getActiveCatalogKey,
       setActiveCatalogKey,
+      activateCatalogForScope,
+      isSampleOpinions,
       saveCatalog,
       deleteCatalog,
       getCatalogById,

@@ -57,9 +57,10 @@ const DOCENTES = [
 /**
  * El claustro sale del **catálogo activo**, no del global: se dobla la frontera
  * con las asignaturas, las asignaciones y los perfiles dentro, que es de donde
- * el monolito rehace sus índices.
+ * el monolito rehace sus índices. `sampleOpinions` imita al catálogo de la
+ * muestra, que avisa de que sus opiniones son inventadas.
  */
-function fakeCatalog(sinPerfiles = false) {
+function fakeCatalog({ sinPerfiles = false, sampleOpinions = false } = {}) {
   const catalogo = { id: "UGR/GI/2026-1", subjects: [FFT, CA], docentes: DOCENTES, profesores: PROFESORES };
   return {
     listCatalogs: async () => [{ id: catalogo.id, subjectCount: 2 }],
@@ -67,6 +68,7 @@ function fakeCatalog(sinPerfiles = false) {
     getCatalog: () => catalogo,
     getDocents: () => DOCENTES,
     getProfesores: () => (sinPerfiles ? [] : PROFESORES),
+    isSampleOpinions: () => sampleOpinions,
     saveCatalog: async () => ({ ok: true, id: catalogo.id }),
     setActiveCatalogKey: async () => ({ ok: true }),
     exportCatalog: async () => ({ meta: {}, subjects: [] }),
@@ -145,6 +147,27 @@ describe("la pestaña de profesores (monolito real, store de reseñas doblado)",
     expect(el("profesor-modal").hidden).toBe(true);
     // El foco vuelve al botón que la abrió.
     expect(document.activeElement.dataset.profName).toBe("Ana Ruiz");
+  });
+
+  it("la ficha de la muestra avisa de que las opiniones son ficticias", async () => {
+    await bootProfesores({ catalog: fakeCatalog({ sampleOpinions: true }) });
+
+    document.querySelector('.prof-name-btn[data-prof-name="Ana Ruiz"]').click();
+    await flush();
+
+    const aviso = document.querySelector("#profesor-modal-body .profesor-ficha-aviso");
+    expect(aviso).not.toBeNull();
+    expect(aviso.getAttribute("role")).toBe("note");
+    expect(textOf("#profesor-modal-body")).toMatch(/ficticias/i);
+  });
+
+  it("con un catálogo de verdad (sin marca) no aparece el aviso de ejemplo", async () => {
+    await bootProfesores();
+
+    document.querySelector('.prof-name-btn[data-prof-name="Ana Ruiz"]').click();
+    await flush();
+
+    expect(document.querySelector("#profesor-modal-body .profesor-ficha-aviso")).toBeNull();
   });
 
   it("la ficha se cierra con Escape y pulsando fuera", async () => {
