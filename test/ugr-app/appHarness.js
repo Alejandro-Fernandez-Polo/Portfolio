@@ -146,11 +146,35 @@ export async function bootUgrApp(options = {}) {
 }
 
 /**
- * Deja correr las tareas pendientes. Las features pintan en microtareas/rAF, así
- * que sin esto se afirmaría sobre un DOM a medio pintar.
+ * Deja correr las tareas pendientes. Las features pintan en microtareas/rAF y
+ * algunas cadenas cargan su módulo por `import()` dinámico, así que sin esto se
+ * afirmaría sobre un DOM a medio pintar. El margen es holgado a propósito: con
+ * la suite entera en paralelo, un plazo corto falla por lentitud del entorno y
+ * no por el comportamiento. Para lo que depende de una respuesta concreta está
+ * `waitFor`.
  */
 export function flush() {
-  return new Promise((resolve) => setTimeout(resolve, 30));
+  return new Promise((resolve) => setTimeout(resolve, 50));
+}
+
+/**
+ * Espera a que se cumpla una condición del DOM, sondeando. `flush()` espera un
+ * tiempo fijo y con la suite entera en paralelo ese tiempo no siempre alcanza
+ * para cadenas que cargan un módulo por `import()` dinámico: la comprobación
+ * falla por lentitud del entorno, no por el comportamiento. Para lo que depende
+ * de una respuesta asíncrona concreta, esto.
+ *
+ * @param {() => any} condicion
+ * @param {{timeout?: number, intervalo?: number}} [opciones]
+ */
+export async function waitFor(condicion, { timeout = 8000, intervalo = 20 } = {}) {
+  const limite = Date.now() + timeout;
+  for (;;) {
+    const valor = condicion();
+    if (valor) return valor;
+    if (Date.now() > limite) throw new Error("waitFor: condición no cumplida a tiempo");
+    await new Promise((resolve) => setTimeout(resolve, intervalo));
+  }
 }
 
 /** Clic en la tarjeta de una asignatura de la rejilla de selección. */

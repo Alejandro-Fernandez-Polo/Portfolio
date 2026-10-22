@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from "vitest";
 
-import { bootUgrApp, clickSubject, flush, savedConfigsFromStorage, textOf } from "./appHarness.js";
+import { bootUgrApp, clickSubject, flush, savedConfigsFromStorage, textOf, waitFor } from "./appHarness.js";
 
 // Caracterización de la interfaz del **solver** en el monolito: generar, la
 // tabla de resultados y guardar un resultado. Hueco que quedó a la vista en la
@@ -70,7 +70,7 @@ describe("interfaz del solver (monolito real, motor doblado)", () => {
     clickSubject("FFT");
     await flush();
     document.getElementById("btn-solver-generate").click();
-    await flush();
+    await waitFor(() => filas().length === 3);
 
     expect(textOf("#solver-status")).toContain("3 horarios generados");
     expect(filas()).toHaveLength(3);
@@ -83,7 +83,7 @@ describe("interfaz del solver (monolito real, motor doblado)", () => {
     clickSubject("FFT");
     await flush();
     document.getElementById("btn-solver-generate").click();
-    await flush();
+    await waitFor(() => filas().length === 3);
 
     document.querySelector('#saved-configs-list [data-action="save-solver"]').click();
     await flush();
@@ -104,7 +104,9 @@ describe("interfaz del solver (monolito real, motor doblado)", () => {
     clickSubject("FFT");
     await flush();
     document.getElementById("btn-solver-generate").click();
-    await flush();
+    // El aviso llega tras el `import()` del panel del generador: se espera a que
+    // aparezca en vez de dar por hecho que 30 ms bastan.
+    await waitFor(() => textOf("#solver-status").includes("motor no está disponible"));
     expect(textOf("#solver-status")).toContain("motor no está disponible");
     expect(filas()).toHaveLength(0);
     expect(sinMotor.legacy.getState().selectedSubjects).toEqual({ FFT: true });
@@ -394,7 +396,7 @@ describe("el panel del generador (monolito real, motor doblado)", () => {
     await flush();
 
     document.getElementById("btn-solver-generate").click();
-    await flush();
+    await waitFor(() => doble.llamadas.generar.length > 0);
 
     expect(doble.llamadas.generar[0].opts.weights.deadHours).toBe(1000);
 
@@ -411,7 +413,7 @@ describe("el panel del generador (monolito real, motor doblado)", () => {
 
     cambio(document.getElementById("solver-topk"), "9999");
     document.getElementById("btn-solver-generate").click();
-    await flush();
+    await waitFor(() => doble.llamadas.generar.length > 0);
 
     // El problema que llega al motor: la selección del cuatrimestre activo
     // (el dominio lo entrega como códigos, no como fichas).
