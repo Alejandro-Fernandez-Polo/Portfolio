@@ -28,12 +28,15 @@
  * que la muestra las lleva tal cual y sin contraseña el horario ya enseña los
  * profesores reales de cada grupo.
  *
- * Qué es «muestra» (decisión del autor): los perfiles de profesor del fixture
- * —con sus dificultades— son la red de la app sin contraseña; el volcado
- * completo de la hoja viaja cifrado en el paquete que genera
- * `build-package.mjs`. Por eso el dataset se marca con
+ * Qué es «muestra» (decisión del autor): las asignaciones reales de las guías
+ * —los nombres de profesor los publica la ETSIIT—, el plan y los perfiles de
+ * profesor del fixture. Las **opiniones** de esos perfiles son **inventadas**
+ * (`sample-opinions.js`) y el catálogo sale marcado con `meta.sampleOpinions`
+ * para que la interfaz lo avise donde se leen; el texto real de la hoja, con sus
+ * dificultades y comentarios, vive en `privado/` y viaja cifrado en el paquete
+ * que genera `build-package.mjs`. El dataset se marca además con
  * `meta.sampleDocents: true`: significa «los docentes de este catálogo son la
- * muestra pública», no «son inventados».
+ * muestra pública».
  *
  * El hash del dataset cubre `{subjects, docents, profesores, menciones,
  * extraSubjects}` y lo verifica el cliente al descargarlo, así que este script es
@@ -71,10 +74,12 @@ const DOCENTES_HEADER = `/* UGR Horario - Docentes (capa de datos)
  *
  * Las asignaciones son las que publica la ETSIIT en sus guías docentes: las
  * deriva tools/ugr-pipeline/guias.js de guias-docentes.json. Los perfiles son la
- * muestra del autor (sample-docents.json); el volcado completo de la hoja viaja
- * cifrado en datasets/ugr/gi/package.enc.json y se superpone al escribir la
- * contraseña. Fichero generado: no lo edites a mano; cambia los fixtures y
- * ejecuta tools/ugr-pipeline/emit-seed.mjs.
+ * muestra: con los nombres reales que publican las guías y opiniones
+ * **inventadas** (tools/ugr-pipeline/sample-opinions.js), porque el texto que
+ * opina nadie sobre ellos viaja cifrado en
+ * datasets/ugr/gi/package.enc.json y se superpone al escribir la contraseña.
+ * Fichero generado: no lo edites a mano; cambia los fixtures y ejecuta
+ * tools/ugr-pipeline/emit-seed.mjs.
  */`;
 
 function loadLegacyGlobal(filePath, name) {
@@ -193,6 +198,9 @@ const dataset = {
     hash,
     sources,
     sampleDocents: true,
+    // Las opiniones que trae este catálogo son inventadas: la interfaz lo avisa
+    // donde se leen. El texto real viaja solo en el paquete cifrado.
+    sampleOpinions: fixture.opinionesFicticias === true,
   },
   subjects: catalog.subjects,
   docents: catalog.docents,
@@ -217,6 +225,7 @@ const manifest = {
       updatedAt: new Date().toISOString(),
       sources,
       sampleDocents: true,
+      sampleOpinions: fixture.opinionesFicticias === true,
     },
   ],
 };

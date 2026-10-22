@@ -12,6 +12,7 @@ import {
 import { validateCatalogJSON } from "../../public/ugr/src/ingest/schema.js";
 import { buildAsignaciones, rellenoDeLaUGR } from "../../tools/ugr-pipeline/guias.js";
 import { practicasPorAsignatura } from "../../tools/ugr-pipeline/horarios.js";
+import { esOpinionFicticia } from "../../tools/ugr-pipeline/sample-opinions.js";
 
 // Invariantes de los datos de EJEMPLO que siembra `tools/ugr-pipeline/emit-seed.mjs`
 // en su forma nueva. La app consulta dos copias de cada lista —el global
@@ -124,6 +125,19 @@ describe("datos de ejemplo sembrados", () => {
     expect(validateCatalog(dataset).ok).toBe(true);
     expect(dataset.meta.sampleDocents).toBe(true);
     expect(manifest.catalogs[0].sampleDocents).toBe(true);
+    // Las opiniones que trae son de ejemplo, y el catálogo lo dice para que la
+    // ficha del profesor lo avise.
+    expect(dataset.meta.sampleOpinions).toBe(true);
+    expect(manifest.catalogs[0].sampleOpinions).toBe(true);
+    expect(fixture.opinionesFicticias).toBe(true);
+  });
+
+  it("las opiniones de la muestra salen del repertorio inventado", () => {
+    const ajenas = [
+      ...dataset.profesores.flatMap((perfil) => perfil.opinions || []),
+      ...fixture.profesores.flatMap((perfil) => perfil.opinions || []),
+    ].filter((texto) => !esOpinionFicticia(texto));
+    expect(ajenas).toEqual([]);
   });
 
   it("cada asignación apunta a un grupo o subgrupo que existe en el catálogo", () => {

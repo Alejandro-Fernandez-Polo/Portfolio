@@ -234,6 +234,10 @@ export const CATALOG_SCHEMA = {
         // catálogo son la muestra que sirve la app sin contraseña; el catálogo
         // real del autor lo lleva a `false` y viaja cifrado en el paquete.
         sampleDocents: { type: "boolean" },
+        // Marca de las opiniones de ejemplo: `true` cuando los textos de
+        // `profesores[].opinions` son inventados (la muestra), para que la
+        // interfaz lo avise donde se leen. El catálogo del paquete no la lleva.
+        sampleOpinions: { type: "boolean" },
         updatedAt: { type: "string" },
         // Cómo se obtuvieron los datos, línea a línea: fuentes, scripts,
         // correcciones aplicadas y huecos conocidos. Lo lleva el maestro del

@@ -7,13 +7,14 @@
       "plan": "2022",
       "version": "2026-1",
       "url": "/ugr/datasets/ugr/gi/2026-1.json",
-      "hash": "sha256-8932e0d693f7e03e1782b852516d9d6fee8f6f68340ba5bb10015dd6e2bfad70",
-      "updatedAt": "2026-10-16T14:36:39.878Z",
+      "hash": "sha256-306084008e0f08e967dbe78e1c6376d311b746ddb072b43eb3f92e996a85da80",
+      "updatedAt": "2026-10-22T09:13:20.381Z",
       "sources": [
         "legacy",
         "muestra"
       ],
-      "sampleDocents": true
+      "sampleDocents": true,
+      "sampleOpinions": true
     }
   ]
 }

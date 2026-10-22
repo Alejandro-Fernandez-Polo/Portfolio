@@ -3,15 +3,16 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, it, expect } from "vitest";
 
-// Guarda contra fugas del maestro privado: el repositorio puede llevar
-// las **asignaciones** de la muestra (los docentes por letra del autor, que son
-// públicos a propósito) y el **paquete cifrado**, pero no el
-// contenido del volcado en claro.
+import { esOpinionFicticia } from "../../tools/ugr-pipeline/sample-opinions.js";
+
+// Guarda contra fugas del maestro privado: el repositorio puede llevar los
+// **nombres** de los profesores de la muestra —los publica la ETSIIT y la app
+// los enseña sin contraseña— y el **paquete cifrado**, pero no el texto que
+// opina nadie sobre ellos: ni opiniones ni comentarios del volcado en claro.
 //
-// Qué vigila exactamente: las opiniones y los comentarios del maestro —texto de
-// terceros que vive en la hoja—, no los nombres. Los nombres de los 46
-// profesores de la muestra están en `public/` a propósito; las **opiniones** del
-// volcado, no.
+// Las opiniones que la muestra enseña son **inventadas** (`sample-opinions.js`),
+// así que no hay nada publicado a propósito que dispensar: si una opinión real
+// aparece en `public/`, es una fuga.
 //
 // Cómo funciona: si existe `privado/` (el maestro del autor), recoge esos textos
 // y comprueba que no aparezcan en ningún fichero de `public/`. Se limita a los
@@ -23,6 +24,8 @@ import { describe, it, expect } from "vitest";
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const MASTER_PATH = path.join(ROOT, "privado/catalogo.json");
 const FIXTURE_PATH = path.join(ROOT, "tools/ugr-pipeline/sample-docents.json");
+const DATASET_PATH = path.join(ROOT, "public/ugr/datasets/ugr/gi/2026-1.json");
+const GUIAS_PATH = path.join(ROOT, "tools/ugr-pipeline/guias-docentes.json");
 const PACKAGE_PATH = path.join(ROOT, "public/ugr/datasets/ugr/gi/package.enc.json");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const MIN_LENGTH = 12;
@@ -58,33 +61,54 @@ function masterSecrets(master) {
 }
 
 /**
- * Lo que la muestra publica **a propósito**: 8 de sus opiniones son texto que
- * también está en la hoja (decisión del autor: se publican y la
- * guarda protege solo lo exclusivo del volcado). Una de ellas es el mismo texto
- * con un punto de más, así que la dispensa se comprueba con `includes` —igual
- * que se detecta la fuga— y no por igualdad literal.
- *
- * Se leen del propio fixture en vez de fijarlas a mano, así que la dispensa es
- * visible y revisable: si la muestra creciera con más texto de la hoja, habría
- * que verlo en el fixture.
+ * Las opiniones que la muestra publica son inventadas: ninguna es texto de la
+ * hoja. Este caso no necesita `privado/` —compara contra el repertorio del
+ * repositorio y el marcador del catálogo—, así que también corre en un clon
+ * limpio.
  */
-function sampleTexts() {
+describe("las opiniones de la muestra son inventadas", () => {
   const fixture = JSON.parse(readFileSync(FIXTURE_PATH, "utf8"));
-  return longTexts([
-    ...(fixture.profesores || []).flatMap((p) => p.opinions || []),
-    ...(fixture.profesores || []).flatMap((p) => (p.razon ? [p.razon] : [])),
-  ]);
-}
+  const dataset = JSON.parse(readFileSync(DATASET_PATH, "utf8"));
+
+  it("el fixture lo declara y todas sus opiniones salen del repertorio", () => {
+    expect(fixture.opinionesFicticias).toBe(true);
+    const ajenas = (fixture.profesores || [])
+      .flatMap((perfil) => perfil.opinions || [])
+      .filter((texto) => !esOpinionFicticia(texto));
+    expect(ajenas).toEqual([]);
+    expect((fixture.profesores || []).some((perfil) => (perfil.opinions || []).length > 0)).toBe(true);
+  });
+
+  it("el catálogo que se sirve lleva la marca y el mismo repertorio", () => {
+    expect(dataset.meta.sampleOpinions).toBe(true);
+    const ajenas = (dataset.profesores || [])
+      .flatMap((perfil) => perfil.opinions || [])
+      .filter((texto) => !esOpinionFicticia(texto));
+    expect(ajenas).toEqual([]);
+  });
+
+  it("los nombres siguen siendo los reales que publican las guías", () => {
+    const guias = JSON.parse(readFileSync(GUIAS_PATH, "utf8")).guias || [];
+    const nombres = new Set();
+    for (const guia of guias) {
+      for (const entrada of [...(guia.teorico || []), ...(guia.practico || [])]) {
+        if (entrada && entrada.nombre) nombres.add(entrada.nombre.trim());
+      }
+    }
+    const deLasGuias = dataset.docents
+      .map((asignacion) => asignacion.name)
+      .filter((nombre) => nombres.has(nombre));
+    expect(nombres.size).toBeGreaterThan(0);
+    expect(deLasGuias.length).toBeGreaterThan(0);
+  });
+});
 
 const hasMaster = existsSync(MASTER_PATH);
 
 describe.skipIf(!hasMaster)("fuga del maestro privado", () => {
-  it("ninguna opinión ni comentario exclusivo del volcado aparece en los ficheros versionados de public/", () => {
+  it("ninguna opinión ni comentario del volcado aparece en los ficheros versionados de public/", () => {
     const master = JSON.parse(readFileSync(MASTER_PATH, "utf8"));
-    const muestra = sampleTexts();
-    // Publicado a propósito = la muestra contiene ese texto (idéntico o con
-    // retoques), que es la misma relación con la que se detecta la fuga.
-    const secrets = masterSecrets(master).filter((s) => !muestra.some((t) => t.includes(s)));
+    const secrets = masterSecrets(master);
     expect(secrets.length).toBeGreaterThan(0);
 
     const tracked = trackedFiles();
